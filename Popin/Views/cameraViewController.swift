@@ -8,106 +8,178 @@ import UIKit
 import AVFoundation
 import Photos
 
-class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
-    var captureSession: AVCaptureSession?
-    var photoOutput: AVCapturePhotoOutput?
-    var previewLayer: AVCaptureVideoPreviewLayer?
+    let imagePicker = UIImagePickerController()
+    let cameraAuthButton = UIButton(type: .system)
+    let albumAuthButton = UIButton(type: .system)
+    var selectedPhoto: UIImage?
+    var capturedPhoto: UIImage?
     
+    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        // 카메라 뷰 생성
-        captureSession = AVCaptureSession()
-        guard let captureDevice = AVCaptureDevice.default(for: .video),
-              let input = try? AVCaptureDeviceInput(device: captureDevice)
-        else {
-            print("카메라를 초기화하는데 실패하였습니다.")
-            return
-        }
+        view.backgroundColor = .white
+        self.imagePicker.delegate = self
+        setupButtons()
+    }
+    private func setupButtons() {
+        cameraAuthButton.setTitle("카메라 버튼", for: .normal)
+        cameraAuthButton.addTarget(self, action: #selector(cameraAuthButtonTapped), for: .touchUpInside)
         
-        captureSession?.addInput(input)
+        albumAuthButton.setTitle("앨범 버튼", for: .normal)
+        albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
         
-        // 프리뷰 레이어 설정
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-        previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        previewLayer?.frame = view.bounds
-        view.layer.addSublayer(previewLayer!)
+        let stackView = UIStackView(arrangedSubviews: [cameraAuthButton, albumAuthButton])
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        // 사진을 찍을 수 있는 기능 추가
-        photoOutput = AVCapturePhotoOutput()
-        captureSession?.addOutput(photoOutput!)
+        view.addSubview(stackView)
         
-        captureSession?.startRunning()
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
-    // 사진 찍기 버튼을 눌렀을 때 호출되는 메소드
-    @IBAction func takePhotoButtonTapped(_ sender: UIButton) {
-        guard let photoOutput = self.photoOutput else {
-            return
-        }
-        
-        let photoSettings = AVCapturePhotoSettings()
-        photoOutput.capturePhoto(with: photoSettings, delegate: self)
+    // 카메라 권한 확인 버튼 액션
+    @objc private func cameraAuthButtonTapped() {
+        cameraAuth()
     }
     
-    // 사진 캡처가 완료되었을 때 호출되는 메소드
-    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        if let imageData = photo.fileDataRepresentation(),
-           let image = UIImage(data: imageData) {
-            print(image, "capture image")
-        }
+    // 앨범 권한 확인 버튼 액션
+    @objc private func albumAuthButtonTapped() {
+        albumAuth()
     }
     
-    // 갤러리에서 사진을 선택하는 버튼을 눌렀을 때 호출되는 메소드
-    @IBAction func chooseFromGalleryButtonTapped(_ sender: UIButton) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    // 갤러리에서 사진 선택이 완료되었을 때 호출되는 메소드
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            // 선택한 사진을 사용하여 원하는 동작 수행
-            // 예: 사진 저장, 필터 적용 등
-        }
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    // 갤러리에서 사진 선택이 취소되었을 때 호출되는 메소드
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    // 갤러리 접근 권한 요청
-    func requestGalleryPermission() {
-        PHPhotoLibrary.requestAuthorization { (status) in
-            switch status {
-            case .authorized:
-                // 권한 허용됨
-                DispatchQueue.main.async {
-                    // 갤러리에서 사진을 가져올 수 있는 버튼을 활성화
-                    // 예: chooseFromGalleryButton.isEnabled = true
-                }
-            case .denied, .restricted, .notDetermined:
-                // 권한 거부됨 또는 설정에서 제한됨
-                DispatchQueue.main.async {
-                    // 갤러리에서 사진을 가져올 수 있는 버튼을 비활성화
-                    // 예: chooseFromGalleryButton.isEnabled = false
-                }
-            @unknown default:
-                break
+    /**
+     카메라 접근 권한 판별하는 함수
+     */
+    func cameraAuth() {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                print("권한 허용")
+                self.openCamera()
+            } else {
+                print("권한 거부")
+                self.showAlertAuth("카메라")
             }
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // 앱이 실행되면 갤러리 접근 권한을 확인하고 요청
-        requestGalleryPermission()
+    /**
+     앨범 접근 권한 판별하는 함수
+     */
+    func albumAuth() {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .denied:
+            print("거부")
+            self.showAlertAuth("앨범")
+        case .authorized:
+            print("허용")
+            self.openAlbum()
+        case .notDetermined, .restricted:
+            print("아직 결정하지 않은 상태")
+            PHPhotoLibrary.requestAuthorization { state in
+                if state == .authorized {
+                    self.openAlbum()
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        default:
+            break
+        }
     }
+    
+    /**
+     권한을 거부했을 때 띄어주는 Alert 함수
+     - Parameters:
+     - type: 권한 종류
+     */
+    func showAlertAuth(
+        _ type: String
+    ) {
+        if let appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String {
+            let alertVC = UIAlertController(
+                title: "설정",
+                message: "\(appName)이(가) \(type) 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?",
+                preferredStyle: .alert
+            )
+            let cancelAction = UIAlertAction(
+                title: "취소",
+                style: .cancel,
+                handler: nil
+            )
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+            alertVC.addAction(cancelAction)
+            alertVC.addAction(confirmAction)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
+    
+    /**
+     아이폰에서 앨범에 접근하는 함수
+     */
+    func openAlbum() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+    }
+
+    // "카메라" 버튼을 눌렀을 때의 처리
+    func openCamera() {
+        DispatchQueue.main.async {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
+
+    
+    /**
+     UIImagePickerControllerDelegate에 정의된 메소드 - 선택한 미디어의 정보를 알 수 있음
+     */
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            if picker.sourceType == .photoLibrary {
+                selectedPhoto = image
+                // 앨범에서 선택한 사진을 selectedPhoto 변수에 저장합니다.
+            } else if picker.sourceType == .camera {
+                capturedPhoto = image
+                // 카메라로 찍은 사진을 capturedPhoto 변수에 저장합니다.
+            }
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = selectedPhoto
+            view.addSubview(imageView)
+        }
+    }
+
+    
+    func savePhotoToLibrary(image: UIImage) {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            if status == .authorized {
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAsset(from: image)
+                }) { (success, error) in
+                    if success {
+                        print("사진이 앨범에 저장되었습니다.")
+                    } else if let error = error {
+                        print("사진 저장 중 오류 발생: \(error.localizedDescription)")
+                    }
+                }
+            } else {
+                print("앨범 접근 권한이 거부되었습니다.")
+            }
+        }
+    }
+    
 }
