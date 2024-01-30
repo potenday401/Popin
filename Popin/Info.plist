@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MKDirectionsApplicationSupportedModes</key>
+	<array/>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&lt;string&gt;앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.&lt;/string&gt;
+&lt;string&gt;앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.&lt;/string&gt;
+&lt;string&gt;앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.&lt;/string&gt;
+앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다</string>
+	<key>NSCameraUsageDescription</key>
+	<string>카메라 권한 허용 하시겠습니꺄?</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>&lt;string&gt;앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.&lt;/string&gt;
+&lt;string&gt;앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.&lt;/string&gt;
+사용자의 위치를 받아오려고 합니다</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>앨범 권한 허용하시겠습니까?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>엘범 사용 권한 허용하시겠습니까?</string>
+</dict>
+</plist>
