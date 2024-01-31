@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct NetworkConstant {
+    static let APIKey: String = "..."
+}

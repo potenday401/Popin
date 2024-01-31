@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
 		9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B22B68A0D600677403 /* ViewController.swift */; };
-		9F0BA2B92B68A0D600677403 /* fourpin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */; };
+		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
 		9F0BA2C92B68A0D700677403 /* fourpinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2C82B68A0D700677403 /* fourpinTests.swift */; };
@@ -36,6 +37,8 @@
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
 		9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */; };
+		C37AD76B9836F0E9764DE0BB /* Pods_Popin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385C69A0120B919D7AE1402 /* Pods_Popin.framework */; };
+		EA6903174429832D52E01D25 /* Pods_PopinTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.debug.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3385C69A0120B919D7AE1402 /* Pods_Popin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.release.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.release.xcconfig"; sourceTree = "<group>"; };
+		633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin_PopinUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.debug.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.debug.xcconfig"; sourceTree = "<group>"; };
+		9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.release.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +98,9 @@
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopinTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopinTests.debug.xcconfig"; path = "Target Support Files/Pods-PopinTests/Pods-PopinTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopinTests.release.xcconfig"; path = "Target Support Files/Pods-PopinTests/Pods-PopinTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C37AD76B9836F0E9764DE0BB /* Pods_Popin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA6903174429832D52E01D25 /* Pods_PopinTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +138,8 @@
 				9F0BA2C72B68A0D700677403 /* PopinTests */,
 				9F0BA2D12B68A0D700677403 /* PopinUITests */,
 				9F0BA2AC2B68A0D600677403 /* Products */,
+				C1FC4E259A9748702D836F96 /* Pods */,
+				B4AAA1C38442D1642B0E61DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,7 +168,7 @@
 				9F0BA2BA2B68A0D700677403 /* Assets.xcassets */,
 				9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */,
 				9F0BA2BF2B68A0D700677403 /* Info.plist */,
-				9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */,
+				9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */,
 			);
 			path = Popin;
 			sourceTree = "<group>";
@@ -347,6 +364,29 @@
 			path = AlbumDetailViewModel;
 			sourceTree = "<group>";
 		};
+		B4AAA1C38442D1642B0E61DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3385C69A0120B919D7AE1402 /* Pods_Popin.framework */,
+				633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */,
+				B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C1FC4E259A9748702D836F96 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */,
+				4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */,
+				161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */,
+				9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */,
+				E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */,
+				FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -354,9 +394,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2D82B68A0D700677403 /* Build configuration list for PBXNativeTarget "Popin" */;
 			buildPhases = (
+				3AD464089EF6A19B62611428 /* [CP] Check Pods Manifest.lock */,
 				9F0BA2A72B68A0D600677403 /* Sources */,
 				9F0BA2A82B68A0D600677403 /* Frameworks */,
 				9F0BA2A92B68A0D600677403 /* Resources */,
+				7B0E40EADF269218CA8E56E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -371,6 +413,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2DB2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinTests" */;
 			buildPhases = (
+				78E8AAF717B9AB46CC7EAD26 /* [CP] Check Pods Manifest.lock */,
 				9F0BA2C02B68A0D700677403 /* Sources */,
 				9F0BA2C12B68A0D700677403 /* Frameworks */,
 				9F0BA2C22B68A0D700677403 /* Resources */,
@@ -389,9 +432,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2DE2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinUITests" */;
 			buildPhases = (
+				EB5E9D88905D6BC07581AF3B /* [CP] Check Pods Manifest.lock */,
 				9F0BA2CA2B68A0D700677403 /* Sources */,
 				9F0BA2CB2B68A0D700677403 /* Frameworks */,
 				9F0BA2CC2B68A0D700677403 /* Resources */,
+				5958E9F1FEAF3488924777B9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -472,6 +517,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3AD464089EF6A19B62611428 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Popin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5958E9F1FEAF3488924777B9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78E8AAF717B9AB46CC7EAD26 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PopinTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B0E40EADF269218CA8E56E2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB5E9D88905D6BC07581AF3B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Popin-PopinUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9F0BA2A72B68A0D600677403 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -498,7 +646,7 @@
 				9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateTab.swift in Sources */,
-				9F0BA2B92B68A0D600677403 /* fourpin.xcdatamodeld in Sources */,
+				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
@@ -664,6 +812,7 @@
 		};
 		9F0BA2D92B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -691,6 +840,7 @@
 		};
 		9F0BA2DA2B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -718,6 +868,7 @@
 		};
 		9F0BA2DC2B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -738,6 +889,7 @@
 		};
 		9F0BA2DD2B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -758,6 +910,7 @@
 		};
 		9F0BA2DF2B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -776,6 +929,7 @@
 		};
 		9F0BA2E02B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -834,13 +988,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */ = {
+		9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */,
 			);
 			currentVersion = 9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */;
-			path = fourpin.xcdatamodeld;
+			path = Popin.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
