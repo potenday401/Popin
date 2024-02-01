@@ -13,6 +13,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     let imagePicker = UIImagePickerController()
     let cameraAuthButton = UIButton(type: .system)
     let albumAuthButton = UIButton(type: .system)
+    let sendButton = UIButton(type: .system)
     var selectedPhoto: UIImage?
     var capturedPhoto: UIImage?
     
@@ -31,7 +32,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
         albumAuthButton.setTitle("앨범 버튼", for: .normal)
         albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
         
-        let stackView = UIStackView(arrangedSubviews: [cameraAuthButton, albumAuthButton])
+        sendButton.setTitle("전송 버튼", for: .normal)
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        
+        let stackView = UIStackView(arrangedSubviews: [cameraAuthButton, albumAuthButton, sendButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +56,11 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     // 앨범 권한 확인 버튼 액션
     @objc private func albumAuthButtonTapped() {
         albumAuth()
+    }
+    
+    // 전송 버튼 액션
+    @objc private func sendButtonTapped() {
+        sendAction()
     }
     
     /**
@@ -92,6 +101,27 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
         default:
             break
         }
+    }
+    
+    func sendAction() {
+        if let selectedPhoto = selectedPhoto {
+            if let base64String = selectedPhoto.toBase64() {
+                print("Base64 String: \(base64String)")
+                
+            } else {
+                print("Failed to convert image to base64 string.")
+            }
+        } else if let capturedPhoto = capturedPhoto {
+            if let base64String = capturedPhoto.toBase64() {
+                print("Base64 String: \(base64String)")
+            } else {
+                print("Failed to convert image to base64 string.")
+            }
+        } else {
+            print("Captured photo is nil.")
+        }
+
+
     }
     
     /**
@@ -153,9 +183,12 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             if picker.sourceType == .photoLibrary {
                 selectedPhoto = image
                 // 앨범에서 선택한 사진을 selectedPhoto 변수에 저장합니다.
-            } else if picker.sourceType == .camera {
+            } else {
                 capturedPhoto = image
-                // 카메라로 찍은 사진을 capturedPhoto 변수에 저장합니다.
+                imageView.contentMode = .scaleAspectFit
+                imageView.image = capturedPhoto
+                view.addSubview(imageView)
+                // 카메라로 찍은 사진을 capturedPhoto 변수에 저장합니다... 안되고있음
             }
             imageView.contentMode = .scaleAspectFit
             imageView.image = selectedPhoto
@@ -181,5 +214,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             }
         }
     }
-    
 }
+
+extension UIImage {
+    func toBase64() -> String? {
+        guard let imageData = self.jpegData(compressionQuality: 0.8) else {
+            return nil
+        }
+        return imageData.base64EncodedString(options: .lineLength64Characters)
+    }
+}
+

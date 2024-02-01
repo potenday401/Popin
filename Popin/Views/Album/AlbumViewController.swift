@@ -76,6 +76,7 @@ class AlbumHeaderView: UIView {
 
         plusButton = UIButton(type: .system)
         plusButton.setTitle("Plus", for: .normal)
+        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
 
         addSubview(backButton)
         addSubview(plusButton)
@@ -89,6 +90,10 @@ class AlbumHeaderView: UIView {
             make.trailing.equalToSuperview().offset(-25)
             make.centerY.equalToSuperview().offset(25)
         }
+    }
+    @objc private func plusButtonTapped() {
+        print("1")
+        let cameraViewController = CameraViewController()
     }
 }
 
@@ -359,7 +364,8 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     }
 
     @objc private func selectButtonTapped() {
-        ///
+        let cameraViewController = CameraViewController()
+        navigationController?.pushViewController(cameraViewController, animated: true)
     }
 
 
