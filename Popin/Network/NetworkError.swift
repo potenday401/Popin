@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+enum JHNetworkError: Error {
+    
+    enum ParameterEncodingError: Error {
+        case missingURL
+        case invalidJSON
+        case jsonEncodingFailed
+    }
+    
+    case invalidURLString
+    case endpointCongifureFailed
+    case parameterEnocdingFailed(ParameterEncodingError)
+}

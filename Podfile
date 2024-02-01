@@ -8,6 +8,7 @@ target 'Popin' do
   # Pods for Popin
 
   pod 'SnapKit'
+  pod 'Kingfisher', '~> 7.0'
 
   target 'PopinTests' do
     inherit! :search_paths

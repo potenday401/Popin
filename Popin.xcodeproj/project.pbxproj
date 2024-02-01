@@ -10,7 +10,6 @@
 		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
-		9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B22B68A0D600677403 /* ViewController.swift */; };
 		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
@@ -68,7 +67,6 @@
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9F0BA2B22B68A0D600677403 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fourpin.xcdatamodel; sourceTree = "<group>"; };
 		9F0BA2BA2B68A0D700677403 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F0BA2BD2B68A0D700677403 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 				9F0BA3122B68F55D00677403 /* DateTab */,
 				9F0BA30F2B68F54E00677403 /* TagTab */,
 				9F0BA30C2B68F53A00677403 /* MapTab */,
-				9F0BA2B22B68A0D600677403 /* ViewController.swift */,
 				9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */,
 			);
 			path = Views;
@@ -626,7 +623,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */,
-				9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */,
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
