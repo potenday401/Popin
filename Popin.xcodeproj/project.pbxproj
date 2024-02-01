@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
+		9E8EBF602B6AF12700255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */; };
+		9E8EBF622B6AF13300255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBF612B6AF13300255D0D /* BaseView.swift */; };
+		9E8EBFC12B6B53D400255D0D /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFC02B6B53D400255D0D /* DateViewController.swift */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
 		9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B22B68A0D600677403 /* ViewController.swift */; };
@@ -33,7 +36,7 @@
 		9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3072B68F4CB00677403 /* LaunchScreen.swift */; };
 		9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA30D2B68F54500677403 /* MapTab.swift */; };
 		9F0BA3112B68F55700677403 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3102B68F55700677403 /* TagTab.swift */; };
-		9F0BA3142B68F56A00677403 /* DateTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateTab.swift */; };
+		9F0BA3142B68F56A00677403 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateView.swift */; };
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
 		9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */; };
@@ -65,6 +68,9 @@
 		633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin_PopinUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.debug.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.release.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		9E8EBF612B6AF13300255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		9E8EBFC02B6B53D400255D0D /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,7 +100,7 @@
 		9F0BA3072B68F4CB00677403 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		9F0BA30D2B68F54500677403 /* MapTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTab.swift; sourceTree = "<group>"; };
 		9F0BA3102B68F55700677403 /* TagTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTab.swift; sourceTree = "<group>"; };
-		9F0BA3132B68F56A00677403 /* DateTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTab.swift; sourceTree = "<group>"; };
+		9F0BA3132B68F56A00677403 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +137,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E8EBF5E2B6AF11B00255D0D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9E8EBF612B6AF13300255D0D /* BaseView.swift */,
+				9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		9E8EBF682B6AF17F00255D0D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		9E8EBF692B6AF1A400255D0D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		9F0BA2A22B68A0D600677403 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +185,7 @@
 		9F0BA2AD2B68A0D600677403 /* Popin */ = {
 			isa = PBXGroup;
 			children = (
+				9E8EBF5E2B6AF11B00255D0D /* Base */,
 				9F0BA30B2B68F51000677403 /* ViewModels */,
 				9F0BA30A2B68F50A00677403 /* Views */,
 				9F0BA3062B68F4B700677403 /* LaunchScreen */,
@@ -273,6 +303,7 @@
 		9F0BA30A2B68F50A00677403 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9E8EBF682B6AF17F00255D0D /* Login */,
 				9F0BA31B2B68F5A200677403 /* AlbumDetail */,
 				9F0BA3182B68F58A00677403 /* Album */,
 				9F0BA3152B68F57C00677403 /* Home */,
@@ -288,6 +319,7 @@
 		9F0BA30B2B68F51000677403 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9E8EBF692B6AF1A400255D0D /* Login */,
 				9F0BA3202B68F5DA00677403 /* AlbumDetailViewModel */,
 				9F0BA31F2B68F5D000677403 /* HomeViewModel */,
 				9F0BA31E2B68F5C900677403 /* AlbumViewmodel */,
@@ -314,7 +346,8 @@
 		9F0BA3122B68F55D00677403 /* DateTab */ = {
 			isa = PBXGroup;
 			children = (
-				9F0BA3132B68F56A00677403 /* DateTab.swift */,
+				9F0BA3132B68F56A00677403 /* DateView.swift */,
+				9E8EBFC02B6B53D400255D0D /* DateViewController.swift */,
 			);
 			path = DateTab;
 			sourceTree = "<group>";
@@ -626,6 +659,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */,
+				9E8EBF622B6AF13300255D0D /* BaseView.swift in Sources */,
 				9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */,
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
@@ -645,9 +679,11 @@
 				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
 				9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
-				9F0BA3142B68F56A00677403 /* DateTab.swift in Sources */,
+				9E8EBF602B6AF12700255D0D /* BaseViewController.swift in Sources */,
+				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
+				9E8EBFC12B6B53D400255D0D /* DateViewController.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
