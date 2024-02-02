@@ -59,6 +59,7 @@ class CustomImageAnnotationView: MKAnnotationView {
 class AlbumHeaderView: UIView {
     var backButton: UIButton!
     var plusButton: UIButton!
+    weak var delegate: AlbumHeaderViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,12 +72,30 @@ class AlbumHeaderView: UIView {
     }
 
     private func setupViews() {
-        backButton = UIButton(type: .system)
-        backButton.setTitle("Back", for: .normal)
+        
+        let backButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("Back", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .gray
+            button.layer.cornerRadius = 18
+            button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            return button
+        }()
+        
 
-        plusButton = UIButton(type: .system)
-        plusButton.setTitle("Plus", for: .normal)
-        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        let plusButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("plus", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .gray
+            button.layer.cornerRadius = 18
+            button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            return button
+        }()
+       
 
         addSubview(backButton)
         addSubview(plusButton)
@@ -84,16 +103,25 @@ class AlbumHeaderView: UIView {
         backButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.centerY.equalToSuperview().offset(25)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
         }
 
         plusButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-25)
             make.centerY.equalToSuperview().offset(25)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
         }
     }
+    
+    @objc private func backButtonTapped() {
+            print("Back button tapped")
+        //navigation back...
+        }
+
     @objc private func plusButtonTapped() {
-        print("1")
-        let cameraViewController = CameraViewController()
+        delegate?.plusButtonTapped()
     }
 }
 
@@ -124,7 +152,7 @@ class AlbumInfoView: UIView {
 
         addSubview(dateLabel)
         addSubview(photoCountLabel)
-
+        
         dateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.top.equalToSuperview().offset(8)
@@ -137,7 +165,6 @@ class AlbumInfoView: UIView {
             make.trailing.equalToSuperview().offset(-16)
         }
     }
-
     func updateDate(_ date: String) {
         dateLabel.text = "Date: " + date
     }
@@ -149,24 +176,34 @@ class AlbumInfoView: UIView {
 
 
 
-class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    
+class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, AlbumHeaderViewDelegate {
     
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"
     private let imageUrl = "https://placekitten.com/200/300"
-    
+    var selectedImages: Set<UIImageView> = []
+    private var containerView: UIView!
+    var isSelectionEnabled = false
+    private var cancelButton: UIButton!
+    private var selectButton: UIButton!
+    private var selectedIconViews: Set<UIView> = []
+
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
     let initialLocation = CLLocation(latitude: 37.517496, longitude: 126.959118)
     
+    func plusButtonTapped() {
+        let cameraViewController = CameraViewController()
+        navigationController?.pushViewController(cameraViewController, animated: true)
+    }
     func setupStatusBarView() {
             let statusBarView = UIView()
 
             view.addSubview(statusBarView)
 
             let headerView = AlbumHeaderView()
+            headerView.delegate = self
             statusBarView.addSubview(headerView)
 
             let infoView = AlbumInfoView()
@@ -176,17 +213,17 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                 make.top.leading.trailing.equalToSuperview()
                 make.height.equalTo(163)
             }
-
+        
             headerView.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(8)
+                make.top.equalToSuperview().offset(0)
                 make.leading.trailing.equalToSuperview()
-                make.height.equalTo(44)
+                make.height.equalTo(134)
             }
-
+    
             infoView.snp.makeConstraints { make in
-                make.bottom.equalToSuperview().offset(-8)
+                make.bottom.equalToSuperview().offset(-38)
                 make.leading.trailing.equalToSuperview()
-                make.height.equalTo(64)
+                make.height.equalTo(0)
             }
         }
 
@@ -272,27 +309,59 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             make.height.equalToSuperview().multipliedBy(0.3)
         }
 
-        let selectButton: UIButton = {
-            let button = UIButton()
-            button.setTitle("선택", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .gray
-            button.layer.cornerRadius = 18
-            button.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-            return button
-        }()
+        selectButton = UIButton()
+        selectButton.setTitle("선택", for: .normal)
+        selectButton.setTitleColor(.white, for: .normal)
+        selectButton.backgroundColor = .gray
+        selectButton.layer.cornerRadius = 18
+        selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
+        selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
 
-        view.addSubview(selectButton)
-
-        view.addSubview(selectButton)
+            view.addSubview(selectButton)
 
         selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(16)
-            make.trailing.equalTo(view.snp.trailing).offset(-326)
-            make.width.equalTo(50)
-            make.height.equalTo(33)
-        }
+                make.top.equalTo(containerView.snp.top).offset(16)
+                make.trailing.equalTo(view.snp.trailing).offset(-326)
+                make.width.equalTo(50)
+                make.height.equalTo(33)
+            }
+        
+        
+        cancelButton = UIButton()
+            cancelButton.setTitle("취소", for: .normal)
+            cancelButton.setTitleColor(.white, for: .normal)
+            cancelButton.backgroundColor = .gray
+            cancelButton.layer.cornerRadius = 18
+            cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+            cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+
+            view.addSubview(cancelButton)
+
+            cancelButton.snp.makeConstraints { make in
+                make.top.equalTo(containerView.snp.top).offset(16)
+                make.trailing.equalTo(view.snp.trailing).offset(-326)
+                make.width.equalTo(50)
+                make.height.equalTo(33)
+            }
+        
+        let deleteButton: UIButton = {
+                let button = UIButton()
+                button.setTitle("Delete", for: .normal)
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .red
+                button.layer.cornerRadius = 18
+                button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+                button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                button.isHidden = true // Initially hide the delete button
+                return button
+            }()
+
+            containerView.addSubview(deleteButton)
+            
+            deleteButton.snp.makeConstraints { make in
+                make.top.equalTo(containerView.snp.top).offset(8)
+                make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+            }
 
 
         let scrollView = UIScrollView()
@@ -339,11 +408,16 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                 imageView.layer.cornerRadius = 12
                 imageView.layer.masksToBounds = true
 
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+                iconView.addGestureRecognizer(tapGestureRecognizer)
+                iconView.isUserInteractionEnabled = true
+
                 rowView.addArrangedSubview(iconView)
             }
 
             stackView.addArrangedSubview(rowView)
         }
+
 
         containerView.addSubview(selectButton)
         selectButton.snp.makeConstraints { make in
@@ -364,11 +438,84 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     }
 
     @objc private func selectButtonTapped() {
-        let cameraViewController = CameraViewController()
-        navigationController?.pushViewController(cameraViewController, animated: true)
+        isSelectionEnabled.toggle()
+        updateButtonAppearance()
+        guard let containerView = self.containerView else {
+                    return
+                }
+        
+        if isSelectionEnabled {
+               containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = true
+               containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = false
+           } else {
+               containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = false
+               containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = true
+           }
+    }
+    
+    @objc private func cancelButtonTapped() {
+        isSelectionEnabled = false
+        updateButtonAppearance()
+       
+        for iconView in selectedIconViews {
+            removeCheckmarkFromView(iconView)
+        }
+
+        selectedIconViews.removeAll()
+
     }
 
+    private func updateButtonAppearance() {
+        if isSelectionEnabled {
+            selectButton.isHidden = true
+            cancelButton.isHidden = false
+        } else {
+            selectButton.isHidden = false
+            cancelButton.isHidden = true
+        }
+    }
+    
+    @objc private func deleteButtonTapped() {
+          // todo....
 
+            selectedIconViews.removeAll()
+            isSelectionEnabled = false
+            updateButtonAppearance()
+        }
+
+
+
+    private func removeCheckmarkFromView(_ iconView: UIView) {
+        if let checkmarkImageView = iconView.viewWithTag(100) as? UIImageView {
+            checkmarkImageView.removeFromSuperview()
+        }
+    }
+
+    @objc private func iconViewTapped(_ gesture: UITapGestureRecognizer) {
+        guard isSelectionEnabled,
+              let iconView = gesture.view as? UIView else {
+            return
+        }
+
+        let checkmarkTag = 100
+
+        if selectedIconViews.contains(iconView) {
+            selectedIconViews.remove(iconView)
+            removeCheckmarkFromView(iconView)
+        } else {
+            selectedIconViews.insert(iconView)
+            let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+            checkmarkImageView.tintColor = .blue
+            checkmarkImageView.contentMode = .scaleAspectFit
+            checkmarkImageView.tag = checkmarkTag
+
+            iconView.addSubview(checkmarkImageView)
+            checkmarkImageView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.height.equalTo(24)
+            }
+        }
+    }
 }
 
 
@@ -399,3 +546,6 @@ struct CustomLocation {
     }
 }
 
+protocol AlbumHeaderViewDelegate: AnyObject {
+    func plusButtonTapped()
+}
