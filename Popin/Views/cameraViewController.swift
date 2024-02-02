@@ -7,6 +7,7 @@
 import UIKit
 import AVFoundation
 import Photos
+import Alamofire
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
@@ -16,7 +17,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     let sendButton = UIButton(type: .system)
     var selectedPhoto: UIImage?
     var capturedPhoto: UIImage?
-    
+    let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
 
     override func viewDidLoad() {
@@ -104,25 +105,48 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     }
     
     func sendAction() {
-        if let selectedPhoto = selectedPhoto {
-            if let base64String = selectedPhoto.toBase64() {
-                print("Base64 String: \(base64String)")
-                
-            } else {
-                print("Failed to convert image to base64 string.")
+        guard let base64String = selectedPhoto?.toBase64() ?? capturedPhoto?.toBase64() else {
+                print("Image is nil.")
+                return
             }
-        } else if let capturedPhoto = capturedPhoto {
-            if let base64String = capturedPhoto.toBase64() {
-                print("Base64 String: \(base64String)")
-            } else {
-                print("Failed to convert image to base64 string.")
+
+        let parameters: [String: Any] = [
+            "latLng": [
+                "latitude": 0,
+                "longitude": 0
+            ],
+            "memberId": "string",
+            "photoDateTime": 0,
+            "photoFileBase64Payload": base64String,
+            "photoFileExt": "string",
+            "photoPinId": "string",
+            "tagIds": [
+                "string"
+            ]
+        ]
+        
+        let uploadURL = baseUrl + "photo-pins"
+        AF.session.configuration.timeoutIntervalForRequest = 10
+
+        AF.request(uploadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate(statusCode: 200..<600).responseData() { response in
+            switch response.result {
+            case .success:
+                if let data = response.data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        print("Response JSON: \(json)")
+                    } catch {
+                        print("Error parsing JSON: \(error)")
+                    }
+                } else {
+                    print("Response data is nil.")
+                }
+            case .failure(let error):
+                print("Error: \(error)")
             }
-        } else {
-            print("Captured photo is nil.")
         }
-
-
     }
+    
     
     /**
      권한을 거부했을 때 띄어주는 Alert 함수
@@ -218,10 +242,12 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
 
 extension UIImage {
     func toBase64() -> String? {
-        guard let imageData = self.jpegData(compressionQuality: 0.8) else {
+        guard let imageData = self.jpegData(compressionQuality: 0.1) else {
             return nil
         }
-        return imageData.base64EncodedString(options: .lineLength64Characters)
+        return imageData.base64EncodedString()
     }
 }
+
+
 
