@@ -8,6 +8,7 @@ target 'Popin' do
   # Pods for Popin
 
   pod 'SnapKit'
+  pod 'FSCalendar'
 
   target 'PopinTests' do
     inherit! :search_paths

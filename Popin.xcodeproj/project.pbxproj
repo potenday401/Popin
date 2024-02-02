@@ -11,6 +11,9 @@
 		9E8EBF602B6AF12700255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */; };
 		9E8EBF622B6AF13300255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBF612B6AF13300255D0D /* BaseView.swift */; };
 		9E8EBFC12B6B53D400255D0D /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFC02B6B53D400255D0D /* DateViewController.swift */; };
+		9E8EBFCC2B6C2B6100255D0D /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFCB2B6C2B6100255D0D /* ReusableProtocol.swift */; };
+		9E8EBFCE2B6C2B8000255D0D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFCD2B6C2B8000255D0D /* BaseCollectionViewCell.swift */; };
+		9E8EBFD22B6C32AD00255D0D /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFD12B6C32AD00255D0D /* DateCell.swift */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
 		9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B22B68A0D600677403 /* ViewController.swift */; };
@@ -71,6 +74,9 @@
 		9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9E8EBF612B6AF13300255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		9E8EBFC02B6B53D400255D0D /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
+		9E8EBFCB2B6C2B6100255D0D /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		9E8EBFCD2B6C2B8000255D0D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		9E8EBFD12B6C32AD00255D0D /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 			children = (
 				9E8EBF612B6AF13300255D0D /* BaseView.swift */,
 				9E8EBF5F2B6AF12700255D0D /* BaseViewController.swift */,
+				9E8EBFCD2B6C2B8000255D0D /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -255,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA2EC2B68F37900677403 /* Array +.swift */,
+				9E8EBFCB2B6C2B6100255D0D /* ReusableProtocol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -348,6 +356,7 @@
 			children = (
 				9F0BA3132B68F56A00677403 /* DateView.swift */,
 				9E8EBFC02B6B53D400255D0D /* DateViewController.swift */,
+				9E8EBFD12B6C32AD00255D0D /* DateCell.swift */,
 			);
 			path = DateTab;
 			sourceTree = "<group>";
@@ -659,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */,
+				9E8EBFD22B6C32AD00255D0D /* DateCell.swift in Sources */,
 				9E8EBF622B6AF13300255D0D /* BaseView.swift in Sources */,
 				9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */,
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
@@ -679,7 +689,9 @@
 				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
 				9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
+				9E8EBFCE2B6C2B8000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				9E8EBF602B6AF12700255D0D /* BaseViewController.swift in Sources */,
+				9E8EBFCC2B6C2B6100255D0D /* ReusableProtocol.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
