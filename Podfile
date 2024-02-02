@@ -8,6 +8,7 @@ target 'Popin' do
   # Pods for Popin
 
   pod 'SnapKit'
+  pod 'SDWebImage'
   pod 'Kingfisher', '~> 7.0'
   pod 'Alamofire', '~> 5.2'
 
