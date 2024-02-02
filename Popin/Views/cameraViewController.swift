@@ -7,15 +7,17 @@
 import UIKit
 import AVFoundation
 import Photos
+import Alamofire
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     let imagePicker = UIImagePickerController()
     let cameraAuthButton = UIButton(type: .system)
     let albumAuthButton = UIButton(type: .system)
+    let sendButton = UIButton(type: .system)
     var selectedPhoto: UIImage?
     var capturedPhoto: UIImage?
-    
+    let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
 
     override func viewDidLoad() {
@@ -31,7 +33,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
         albumAuthButton.setTitle("앨범 버튼", for: .normal)
         albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
         
-        let stackView = UIStackView(arrangedSubviews: [cameraAuthButton, albumAuthButton])
+        sendButton.setTitle("전송 버튼", for: .normal)
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        
+        let stackView = UIStackView(arrangedSubviews: [cameraAuthButton, albumAuthButton, sendButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +57,11 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     // 앨범 권한 확인 버튼 액션
     @objc private func albumAuthButtonTapped() {
         albumAuth()
+    }
+    
+    // 전송 버튼 액션
+    @objc private func sendButtonTapped() {
+        sendAction()
     }
     
     /**
@@ -93,6 +103,50 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             break
         }
     }
+    
+    func sendAction() {
+        guard let base64String = selectedPhoto?.toBase64() ?? capturedPhoto?.toBase64() else {
+                print("Image is nil.")
+                return
+            }
+
+        let parameters: [String: Any] = [
+            "latLng": [
+                "latitude": 0,
+                "longitude": 0
+            ],
+            "memberId": "string",
+            "photoDateTime": 0,
+            "photoFileBase64Payload": base64String,
+            "photoFileExt": "string",
+            "photoPinId": "string",
+            "tagIds": [
+                "string"
+            ]
+        ]
+        
+        let uploadURL = baseUrl + "photo-pins"
+        AF.session.configuration.timeoutIntervalForRequest = 10
+
+        AF.request(uploadURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate(statusCode: 200..<600).responseData() { response in
+            switch response.result {
+            case .success:
+                if let data = response.data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        print("Response JSON: \(json)")
+                    } catch {
+                        print("Error parsing JSON: \(error)")
+                    }
+                } else {
+                    print("Response data is nil.")
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+    }
+    
     
     /**
      권한을 거부했을 때 띄어주는 Alert 함수
@@ -153,9 +207,12 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             if picker.sourceType == .photoLibrary {
                 selectedPhoto = image
                 // 앨범에서 선택한 사진을 selectedPhoto 변수에 저장합니다.
-            } else if picker.sourceType == .camera {
+            } else {
                 capturedPhoto = image
-                // 카메라로 찍은 사진을 capturedPhoto 변수에 저장합니다.
+                imageView.contentMode = .scaleAspectFit
+                imageView.image = capturedPhoto
+                view.addSubview(imageView)
+                // 카메라로 찍은 사진을 capturedPhoto 변수에 저장합니다... 안되고있음
             }
             imageView.contentMode = .scaleAspectFit
             imageView.image = selectedPhoto
@@ -181,5 +238,16 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             }
         }
     }
-    
 }
+
+extension UIImage {
+    func toBase64() -> String? {
+        guard let imageData = self.jpegData(compressionQuality: 0.1) else {
+            return nil
+        }
+        return imageData.base64EncodedString()
+    }
+}
+
+
+
