@@ -34,14 +34,17 @@ class CustomImageAnnotationView: MKAnnotationView {
         guard let customAnnotation = self.annotation as? CustomImageAnnotation else {
             return
         }
-        
+
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         imageView.layer.cornerRadius = imageView.frame.size.width / 5
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = UIColor.white.cgColor
-        
+        self.isUserInteractionEnabled = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        imageView.addGestureRecognizer(tap)
         let url = URL(string: customAnnotation.imageUrl)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let data = data, let image = UIImage(data: data) {
@@ -51,9 +54,13 @@ class CustomImageAnnotationView: MKAnnotationView {
             }
         }.resume()
         
+        
         self.addSubview(imageView)
     }
     
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        print("dkdkdkdkd")
+    }
 }
 
 class AlbumHeaderView: UIView {
@@ -176,7 +183,7 @@ class AlbumInfoView: UIView {
 
 
 
-class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, AlbumHeaderViewDelegate {
+class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHeaderViewDelegate, MKMapViewDelegate {
     
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
@@ -188,10 +195,11 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     private var cancelButton: UIButton!
     private var selectButton: UIButton!
     private var selectedIconViews: Set<UIView> = []
+    var currentLocation: CustomLocation?
+    var initialLocation: CLLocation?
 
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
-    let initialLocation = CLLocation(latitude: 37.517496, longitude: 126.959118)
     
     func plusButtonTapped() {
         let cameraViewController = CameraViewController()
@@ -243,6 +251,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return view
     }
     
+        
     func setupMapView() {
         mapView = MKMapView()
         mapView.delegate = self
@@ -253,29 +262,59 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             make.width.height.equalTo(450)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
         }
-        
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.centerToLocation(initialLocation)
+        
+        locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+
+        
+        if let currentLocation = locationManager.location {
+                    initialLocation = currentLocation
+                    mapView.centerToLocation(currentLocation)
+                } else {
+                    initialLocation = CLLocation(latitude: 37.517496, longitude: 126.959118)
+                    mapView.centerToLocation(initialLocation!)
+                }
+        mapView.centerToLocation(initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118)
+    )
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
+            mapView.addGestureRecognizer(tapGesture)
+    }
+    
+    //todo: annotation 많을때 navigation 체크
+    @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
+        let touchPoint = gesture.location(in: mapView)
+        let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+        currentLocation = CustomLocation(currentLatitude: coordinates.latitude, currentLongitude: coordinates.longitude)
+
+        if let initialLocation = initialLocation {
+            let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+            let distance = touchLocation.distance(from: initialLocation)
+
+            let thresholdDistance: CLLocationDistance = 100.0
+            let albumDetailViewController = AlbumDetailViewController()
+
+            if distance <= thresholdDistance {
+                navigationController?.pushViewController(albumDetailViewController, animated: true)
+            }
+        }
     }
 
+
     
-    private func setupAnnotation() {
+    private func setupAnnotation(location: CLLocation) {
         let imageUrl = "https://placekitten.com/200/300"
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.517496, longitude: 126.959118), imageUrl: imageUrl)
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
         mapView.addAnnotation(imageAnnotation)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupMapView()
-        setupStatusBarView()
-        setupCardListView()
-        setupAnnotation()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLocationManager()
+        setupMapView()
+        setupStatusBarView()
+        setupCardListView()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -291,10 +330,22 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let currentLocation = locations.last {
+                initialLocation = currentLocation
+                mapView.centerToLocation(currentLocation)
+                locationManager.stopUpdatingLocation()
+            setupAnnotation(location: initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118))
+            } else {
+                print("No valid location found in the update.")
+            }
+    }
+    
     private func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     private func setupCardListView() {
@@ -534,12 +585,12 @@ private extension MKMapView {
 }
 
 struct CustomLocation {
-    let currentLatitude: Int
-    let currentLongitude: Int
+    let currentLatitude: Double
+    let currentLongitude: Double
     
     init(
-        currentLatitude: Int,
-        currentLongitude: Int
+        currentLatitude: Double,
+        currentLongitude: Double
     ) {
         self.currentLatitude = currentLatitude
         self.currentLongitude = currentLongitude
