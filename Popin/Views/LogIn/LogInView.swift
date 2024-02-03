@@ -41,6 +41,7 @@ final class LogInView: BaseView {
         view.font = variousFont.textFieldFont
         view.backgroundColor = Color.shared.textFieldColor
         view.attributedPlaceholder = NSAttributedString(string: "사용자 이메일", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        view.keyboardType = .emailAddress
         return view
     }()
     let pwTextField: UITextField = {
@@ -51,6 +52,7 @@ final class LogInView: BaseView {
         view.font = variousFont.textFieldFont
         view.backgroundColor = Color.shared.textFieldColor
         view.attributedPlaceholder = NSAttributedString(string: "비밀번호", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        view.keyboardType = .asciiCapable
         return view
     }()
     let loginButton: UIButton = {

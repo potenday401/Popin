@@ -21,7 +21,7 @@ import Foundation
      }
 
      @objc func clickedButton() {
-         self.navigationController?.pushViewController(AlbumViewController(), animated: true)
+         self.navigationController?.pushViewController(HomeViewController(), animated: true)
      }
 
  }
