@@ -13,7 +13,7 @@ class DateCell: FSCalendarCell {
     
     var viewModel: DateViewModel? {
         didSet {
-            setUI()
+            viewModel?.updateDateImage(image: backImageView)
         }
     }
     
@@ -73,10 +73,6 @@ class DateCell: FSCalendarCell {
         let height = contentView.bounds.height - 5
         
         return (width > height) ? height : width
-    }
-    
-    private func setUI() {
-        backImageView.image = viewModel?.mainImage?.image
     }
 }
 

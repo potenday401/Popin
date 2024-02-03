@@ -34,10 +34,9 @@ final class DateViewModel {
                 let urlString = self?.dateData?.map {  $0.photoURL }
                 self?.imageUrlArray = urlString
                 
-                //                if let imageURL = URL(string: urlString) {
-                //                    self?.changeURLtoImage(imageUrl: imageURL)
-                //                }
-                
+//                if let imageURL = URL(string: urlString) {
+//                    self?.changeURLtoImage(imageUrl: imageURL)
+//                }
                 
             case .failure(let error):
                 print("fail to API networking")
