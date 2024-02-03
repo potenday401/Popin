@@ -10,6 +10,11 @@
 		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
 		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
 		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
+		9E4684742B6ED2E500AD005A /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684732B6ED2E500AD005A /* LogInView.swift */; };
+		9E4684772B6ED33D00AD005A /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684762B6ED33D00AD005A /* Font.swift */; };
+		9E4684792B6ED34800AD005A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684782B6ED34800AD005A /* Color.swift */; };
+		9E46847B2B6ED38200AD005A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46847A2B6ED38100AD005A /* LogInViewController.swift */; };
+		9E46847E2B6ED3B600AD005A /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46847D2B6ED3B600AD005A /* LogInViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
 		9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */; };
 		9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */; };
@@ -78,6 +83,11 @@
 		9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.release.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
+		9E4684732B6ED2E500AD005A /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		9E4684762B6ED33D00AD005A /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		9E4684782B6ED34800AD005A /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		9E46847A2B6ED38100AD005A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		9E46847D2B6ED3B600AD005A /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -169,6 +179,32 @@
 			path = DateViewModel;
 			sourceTree = "<group>";
 		};
+		9E4684722B6ED2DA00AD005A /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				9E4684732B6ED2E500AD005A /* LogInView.swift */,
+				9E46847A2B6ED38100AD005A /* LogInViewController.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		9E4684752B6ED32500AD005A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				9E4684762B6ED33D00AD005A /* Font.swift */,
+				9E4684782B6ED34800AD005A /* Color.swift */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		9E46847C2B6ED3AD00AD005A /* LogInViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9E46847D2B6ED3B600AD005A /* LogInViewModel.swift */,
+			);
+			path = LogInViewModel;
+			sourceTree = "<group>";
+		};
 		9E8EBFE82B6E5CE300255D0D /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +240,7 @@
 		9F0BA2AD2B68A0D600677403 /* Popin */ = {
 			isa = PBXGroup;
 			children = (
+				9E4684752B6ED32500AD005A /* Resource */,
 				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA30B2B68F51000677403 /* ViewModels */,
 				9F0BA30A2B68F50A00677403 /* Views */,
@@ -325,6 +362,7 @@
 		9F0BA30A2B68F50A00677403 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9E4684722B6ED2DA00AD005A /* LogIn */,
 				9F0BA31B2B68F5A200677403 /* AlbumDetail */,
 				9F0BA3182B68F58A00677403 /* Album */,
 				9F0BA3152B68F57C00677403 /* Home */,
@@ -339,6 +377,7 @@
 		9F0BA30B2B68F51000677403 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9E46847C2B6ED3AD00AD005A /* LogInViewModel */,
 				9E4684612B6E7A6500AD005A /* DateViewModel */,
 				9F0BA3202B68F5DA00677403 /* AlbumDetailViewModel */,
 				9F0BA31F2B68F5D000677403 /* HomeViewModel */,
@@ -688,10 +727,12 @@
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
+				9E4684742B6ED2E500AD005A /* LogInView.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */,
+				9E4684792B6ED34800AD005A /* Color.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
@@ -712,9 +753,12 @@
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
+				9E46847B2B6ED38200AD005A /* LogInViewController.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
+				9E46847E2B6ED3B600AD005A /* LogInViewModel.swift in Sources */,
+				9E4684772B6ED33D00AD005A /* Font.swift in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
