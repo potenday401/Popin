@@ -2,10 +2,13 @@ PODS:
   - Alamofire (5.8.1)
   - FSCalendar (2.8.4)
   - Kingfisher (7.10.2)
+  - Pageboy (4.0.2)
   - SDWebImage (5.18.10):
     - SDWebImage/Core (= 5.18.10)
   - SDWebImage/Core (5.18.10)
   - SnapKit (5.6.0)
+  - Tabman (3.0.2):
+    - Pageboy (~> 4.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -13,22 +16,27 @@ DEPENDENCIES:
   - Kingfisher (~> 7.0)
   - SDWebImage
   - SnapKit
+  - Tabman (~> 3.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - FSCalendar
     - Kingfisher
+    - Pageboy
     - SDWebImage
     - SnapKit
+    - Tabman
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   Kingfisher: 99edc495d3b7607e6425f0d6f6847b2abd6d716d
+  Pageboy: 34ff11e8d1041b81769d5bcde9b19a0cb7218bd9
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  Tabman: 6326ec3a792da1c2a6e79c7eddb56af7b591c9d6
 
-PODFILE CHECKSUM: 21af5b0927eec6e03fc7313c8547ea63685a9974
+PODFILE CHECKSUM: 5eab26b33467799e43e5cc82c9fb8a0fabfaa983
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0
