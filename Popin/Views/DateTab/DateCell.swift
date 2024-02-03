@@ -11,6 +11,12 @@ import SnapKit
 
 class DateCell: FSCalendarCell {
     
+    var viewModel: DateViewModel? {
+        didSet {
+            setUI()
+        }
+    }
+    
     var backImageView = {
         let view = UIImageView()
         //view.image = UIImage(named: "Logo")
@@ -67,6 +73,10 @@ class DateCell: FSCalendarCell {
         let height = contentView.bounds.height - 5
         
         return (width > height) ? height : width
+    }
+    
+    private func setUI() {
+        backImageView.image = viewModel?.mainImage?.image
     }
 }
 

@@ -10,6 +10,12 @@ import FSCalendar
 
 final class DateViewController: BaseViewController {
 
+    let viewModel: DateViewModel?
+    
+    init(viewModel: DateViewModel?) {
+        self.viewModel = viewModel
+    }
+    
     let mainView = DateView()
     override func loadView() {
         self.view = mainView

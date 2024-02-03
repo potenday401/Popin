@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
+		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
+		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
 		9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */; };
 		9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */; };
 		9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEF2B6E5D6600255D0D /* DateViewController.swift */; };
 		9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF12B6E5D7900255D0D /* DateCell.swift */; };
 		9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */; };
+		9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
 		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
@@ -72,12 +75,15 @@
 		633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin_PopinUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.debug.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.debug.xcconfig"; sourceTree = "<group>"; };
 		9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.release.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		9E8EBFEF2B6E5D6600255D0D /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
 		9E8EBFF12B6E5D7900255D0D /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +151,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E46845C2B6E6E6C00AD005A /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				9E46845D2B6E6FA800AD005A /* Date.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		9E4684612B6E7A6500AD005A /* DateViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9E4684622B6E7A7000AD005A /* DateViewModel.swift */,
+			);
+			path = DateViewModel;
+			sourceTree = "<group>";
+		};
 		9E8EBFE82B6E5CE300255D0D /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +246,7 @@
 				9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */,
 				9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */,
 				9F0BA2FE2B68F44A00677403 /* JHRequest.swift */,
+				9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -275,6 +298,7 @@
 		9F0BA2EF2B68F3B100677403 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				9E46845C2B6E6E6C00AD005A /* Date */,
 				9F0BA2F12B68F3E100677403 /* Pin */,
 			);
 			path = DTO;
@@ -312,6 +336,7 @@
 		9F0BA30B2B68F51000677403 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9E4684612B6E7A6500AD005A /* DateViewModel */,
 				9F0BA3202B68F5DA00677403 /* AlbumDetailViewModel */,
 				9F0BA31F2B68F5D000677403 /* HomeViewModel */,
 				9F0BA31E2B68F5C900677403 /* AlbumViewmodel */,
@@ -673,7 +698,9 @@
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
+				9E46845E2B6E6FA900AD005A /* Date.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
+				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
 				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
@@ -684,6 +711,7 @@
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
+				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
