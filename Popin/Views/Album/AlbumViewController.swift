@@ -205,6 +205,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     
     func plusButtonTapped() {
         let cameraViewController = CameraViewController()
+        cameraViewController.initialLocation = initialLocation
         navigationController?.pushViewController(cameraViewController, animated: true)
     }
     func setupStatusBarView() {
