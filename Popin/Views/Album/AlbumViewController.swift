@@ -205,8 +205,10 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     
     func plusButtonTapped() {
         let cameraViewController = CameraViewController()
+        cameraViewController.initialLocation = initialLocation
         navigationController?.pushViewController(cameraViewController, animated: true)
     }
+    
     func setupStatusBarView() {
         let statusBarView = UIView()
         
@@ -307,7 +309,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         }
     }
     
-    private func setupAnnotation(location: CLLocation) {
+    func setupAnnotation(location: CLLocation) {
         let imageUrl = "https://placekitten.com/200/300"
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
         mapView.addAnnotation(imageAnnotation)
@@ -319,6 +321,9 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         setupMapView()
         setupStatusBarView()
         setupCardListView()
+        isSelectionEnabled = true
+        updateButtonAppearance()
+        navigationItem.hidesBackButton = true
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -345,7 +350,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         }
     }
     
-    private func setupLocationManager() {
+    func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -574,7 +579,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
 }
 
 
-private extension MKMapView {
+extension MKMapView {
     func centerToLocation(
         _ location: CLLocation,
         regionRadius: CLLocationDistance = 1000

@@ -45,6 +45,7 @@
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
 		9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */; };
+		9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */; };
 		9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */; };
 		9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */; };
 		C37AD76B9836F0E9764DE0BB /* Pods_Popin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385C69A0120B919D7AE1402 /* Pods_Popin.framework */; };
@@ -116,6 +117,7 @@
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapVIewController.swift; sourceTree = "<group>"; };
 		9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
 		B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopinTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +331,7 @@
 				9F0BA3122B68F55D00677403 /* DateTab */,
 				9F0BA30C2B68F53A00677403 /* MapTab */,
 				9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */,
+				9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
+				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
