@@ -16,7 +16,7 @@ final class DateView: BaseView {
         let appearance = view.appearance
         
         view.setCurrentPage(Date(), animated: true)
-       // view.today = nil
+        view.today = nil
         view.translatesAutoresizingMaskIntoConstraints = false
         
         view.scrollEnabled = true

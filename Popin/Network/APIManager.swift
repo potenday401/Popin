@@ -28,6 +28,8 @@ final class APIManager {
             switch response.result {
             case .success(let data):
                 print("success")
+                let str = String(decoding: data, as: UTF8.self)
+                print(str)
                 guard let result = self.parseJSON(data) else {
                     print("fail to parsing")
                     return }
@@ -43,6 +45,7 @@ final class APIManager {
     private func parseJSON(_ data: Data) -> [DayOfMonthToItem]? {
         do {
             let data = try JSONDecoder().decode(DateRecord.self, from: data)
+            print(data)
             return data.dayOfMonthToItem
         } catch {
             print(error.localizedDescription)

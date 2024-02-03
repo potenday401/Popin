@@ -8,6 +8,7 @@
 import UIKit
 import FSCalendar
 import SnapKit
+import Kingfisher
 
 class DateCell: FSCalendarCell {
     
@@ -19,8 +20,14 @@ class DateCell: FSCalendarCell {
     
     var backImageView = {
         let view = UIImageView()
-        //view.image = UIImage(named: "Logo")
+        view.image = UIImage(named: "Logo")
         view.alpha = 0.5
+        
+        //임의의 이미지, 나중에 삭제
+        
+        let imageUrl = URL(string: "https://placekitten.com/100/100?image=1")!
+        view.kf.setImage(with: imageUrl)
+        
         //view.layer.borderColor = UIColor.white.cgColor
         //view.layer.borderWidth = 5
         view.contentMode = .scaleAspectFill
@@ -33,6 +40,9 @@ class DateCell: FSCalendarCell {
         
         configure()
         constraints()
+        
+        //통신되면 지우기
+        viewModel?.updateDateImage(image: backImageView)
     }
     
     required init(coder aDecoder: NSCoder!) {
@@ -46,7 +56,7 @@ class DateCell: FSCalendarCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        backImageView.image = nil
+        //backImageView.image = nil
     }
     
     func configure() {

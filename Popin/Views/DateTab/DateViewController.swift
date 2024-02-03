@@ -7,6 +7,7 @@
 
 import UIKit
 import FSCalendar
+import Kingfisher
 
 final class DateViewController: BaseViewController {
 
@@ -14,6 +15,7 @@ final class DateViewController: BaseViewController {
     
     init(viewModel: DateViewModel?) {
         self.viewModel = viewModel
+        viewModel?.fetchURLData(id: "aaa", year: 2024, month: 2)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,6 +49,7 @@ extension DateViewController: FSCalendarDelegate, FSCalendarDataSource {
         
         // (viewModel) url을 받아서, 배경 이미지를 띄워준다
         cell.viewModel = viewModel
+      
         return cell
     }
     

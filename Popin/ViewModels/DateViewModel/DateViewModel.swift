@@ -16,6 +16,13 @@ final class DateViewModel {
     //Data
     var imageUrlArray: [String]?
     var dateData: [DayOfMonthToItem]?
+    var id: String?
+    var year: Int {
+        return changeDateToYear(date: Date())
+    }
+    var month: Int {
+        return changeDateToMonth(date: Date())
+    }
     
     //Output
     var mainImage: UIImageView?
@@ -32,7 +39,9 @@ final class DateViewModel {
                 print("success API networking")
                 self?.dateData = data
                 let urlString = self?.dateData?.map {  $0.photoURL }
-                self?.imageUrlArray = urlString
+               // self?.imageUrlArray = urlString
+                
+                self?.imageUrlArray = ["https://placekitten.com/100/100?image=1", "https://placekitten.com/100/100?image=2"]
                 
 //                if let imageURL = URL(string: urlString) {
 //                    self?.changeURLtoImage(imageUrl: imageURL)
@@ -55,7 +64,21 @@ final class DateViewModel {
         currentVC.navigationController?.pushViewController(pushVC, animated: true)
     }
     
+    func changeDateToYear(date: Date) -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        let convertDate = Int(dateFormatter.string(from: date))
+        return convertDate ?? 2024
+    }
     
+    func changeDateToMonth(date: Date) -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M"
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        let convertDate = Int(dateFormatter.string(from: date))
+        return convertDate ?? 1
+    }
     
     //비동기처리하는게 맞는지 고민해보기..
     //    private func changeURLtoImage(imageUrl: URL) {
