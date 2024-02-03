@@ -16,7 +16,7 @@ final class DateView: BaseView {
         let appearance = view.appearance
         
         view.setCurrentPage(Date(), animated: true)
-       // view.today = nil
+        view.today = nil
         view.translatesAutoresizingMaskIntoConstraints = false
         
         view.scrollEnabled = true
@@ -36,7 +36,7 @@ final class DateView: BaseView {
         appearance.headerMinimumDissolvedAlpha = 0.0
         
         view.register(DateCell.self, forCellReuseIdentifier: DateCell.description())
-        
+    
         return view
     }()
     
