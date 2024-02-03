@@ -16,7 +16,8 @@ class HomeViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dateViewController = DateViewController()
+        let viewModel = DateViewModel()
+        let dateViewController = DateViewController(viewModel: viewModel)
         let homeMapViewController = HomeMapViewController()
         
         viewControllers.append(homeMapViewController)
