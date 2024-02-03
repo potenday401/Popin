@@ -7,10 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */; };
+		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
+		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
+		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
+		9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */; };
+		9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */; };
+		9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEF2B6E5D6600255D0D /* DateViewController.swift */; };
+		9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF12B6E5D7900255D0D /* DateCell.swift */; };
+		9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */; };
+		9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
 		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
-		9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B22B68A0D600677403 /* ViewController.swift */; };
-		9F0BA2B92B68A0D600677403 /* fourpin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */; };
+		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
 		9F0BA2C92B68A0D700677403 /* fourpinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2C82B68A0D700677403 /* fourpinTests.swift */; };
@@ -32,10 +41,15 @@
 		9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3072B68F4CB00677403 /* LaunchScreen.swift */; };
 		9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA30D2B68F54500677403 /* MapTab.swift */; };
 		9F0BA3112B68F55700677403 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3102B68F55700677403 /* TagTab.swift */; };
-		9F0BA3142B68F56A00677403 /* DateTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateTab.swift */; };
+		9F0BA3142B68F56A00677403 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateView.swift */; };
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
 		9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */; };
+		9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */; };
+		9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */; };
+		9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */; };
+		C37AD76B9836F0E9764DE0BB /* Pods_Popin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3385C69A0120B919D7AE1402 /* Pods_Popin.framework */; };
+		EA6903174429832D52E01D25 /* Pods_PopinTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +70,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.debug.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3385C69A0120B919D7AE1402 /* Pods_Popin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.release.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.release.xcconfig"; sourceTree = "<group>"; };
+		633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Popin_PopinUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin.debug.xcconfig"; path = "Target Support Files/Pods-Popin/Pods-Popin.debug.xcconfig"; sourceTree = "<group>"; };
+		9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Popin-PopinUITests.release.xcconfig"; path = "Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
+		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		9E8EBFEF2B6E5D6600255D0D /* DateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewController.swift; sourceTree = "<group>"; };
+		9E8EBFF12B6E5D7900255D0D /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9F0BA2B22B68A0D600677403 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fourpin.xcdatamodel; sourceTree = "<group>"; };
 		9F0BA2BA2B68A0D700677403 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F0BA2BD2B68A0D700677403 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,10 +113,16 @@
 		9F0BA3072B68F4CB00677403 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		9F0BA30D2B68F54500677403 /* MapTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTab.swift; sourceTree = "<group>"; };
 		9F0BA3102B68F55700677403 /* TagTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTab.swift; sourceTree = "<group>"; };
-		9F0BA3132B68F56A00677403 /* DateTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTab.swift; sourceTree = "<group>"; };
+		9F0BA3132B68F56A00677403 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapVIewController.swift; sourceTree = "<group>"; };
+		9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
+		9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
+		B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PopinTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopinTests.debug.xcconfig"; path = "Target Support Files/Pods-PopinTests/Pods-PopinTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PopinTests.release.xcconfig"; path = "Target Support Files/Pods-PopinTests/Pods-PopinTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C37AD76B9836F0E9764DE0BB /* Pods_Popin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA6903174429832D52E01D25 /* Pods_PopinTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,12 +146,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2034396BF5E25DD62A41BBCE /* Pods_Popin_PopinUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E46845C2B6E6E6C00AD005A /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				9E46845D2B6E6FA800AD005A /* Date.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		9E4684612B6E7A6500AD005A /* DateViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9E4684622B6E7A7000AD005A /* DateViewModel.swift */,
+			);
+			path = DateViewModel;
+			sourceTree = "<group>";
+		};
+		9E8EBFE82B6E5CE300255D0D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */,
+				9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */,
+				9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		9F0BA2A22B68A0D600677403 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +186,8 @@
 				9F0BA2C72B68A0D700677403 /* PopinTests */,
 				9F0BA2D12B68A0D700677403 /* PopinUITests */,
 				9F0BA2AC2B68A0D600677403 /* Products */,
+				C1FC4E259A9748702D836F96 /* Pods */,
+				B4AAA1C38442D1642B0E61DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +204,7 @@
 		9F0BA2AD2B68A0D600677403 /* Popin */ = {
 			isa = PBXGroup;
 			children = (
+				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA30B2B68F51000677403 /* ViewModels */,
 				9F0BA30A2B68F50A00677403 /* Views */,
 				9F0BA3062B68F4B700677403 /* LaunchScreen */,
@@ -151,7 +217,7 @@
 				9F0BA2BA2B68A0D700677403 /* Assets.xcassets */,
 				9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */,
 				9F0BA2BF2B68A0D700677403 /* Info.plist */,
-				9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */,
+				9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */,
 			);
 			path = Popin;
 			sourceTree = "<group>";
@@ -182,6 +248,7 @@
 				9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */,
 				9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */,
 				9F0BA2FE2B68F44A00677403 /* JHRequest.swift */,
+				9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -208,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA2EC2B68F37900677403 /* Array +.swift */,
+				9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -232,6 +300,7 @@
 		9F0BA2EF2B68F3B100677403 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				9E46845C2B6E6E6C00AD005A /* Date */,
 				9F0BA2F12B68F3E100677403 /* Pin */,
 			);
 			path = DTO;
@@ -260,10 +329,9 @@
 				9F0BA3182B68F58A00677403 /* Album */,
 				9F0BA3152B68F57C00677403 /* Home */,
 				9F0BA3122B68F55D00677403 /* DateTab */,
-				9F0BA30F2B68F54E00677403 /* TagTab */,
 				9F0BA30C2B68F53A00677403 /* MapTab */,
-				9F0BA2B22B68A0D600677403 /* ViewController.swift */,
 				9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */,
+				9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,6 +339,7 @@
 		9F0BA30B2B68F51000677403 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9E4684612B6E7A6500AD005A /* DateViewModel */,
 				9F0BA3202B68F5DA00677403 /* AlbumDetailViewModel */,
 				9F0BA31F2B68F5D000677403 /* HomeViewModel */,
 				9F0BA31E2B68F5C900677403 /* AlbumViewmodel */,
@@ -297,7 +366,10 @@
 		9F0BA3122B68F55D00677403 /* DateTab */ = {
 			isa = PBXGroup;
 			children = (
-				9F0BA3132B68F56A00677403 /* DateTab.swift */,
+				9F0BA3132B68F56A00677403 /* DateView.swift */,
+				9E8EBFEF2B6E5D6600255D0D /* DateViewController.swift */,
+				9E8EBFF12B6E5D7900255D0D /* DateCell.swift */,
+				9F0BA30F2B68F54E00677403 /* TagTab */,
 			);
 			path = DateTab;
 			sourceTree = "<group>";
@@ -322,6 +394,8 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */,
+				9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */,
+				9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */,
 			);
 			path = AlbumDetail;
 			sourceTree = "<group>";
@@ -347,6 +421,29 @@
 			path = AlbumDetailViewModel;
 			sourceTree = "<group>";
 		};
+		B4AAA1C38442D1642B0E61DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3385C69A0120B919D7AE1402 /* Pods_Popin.framework */,
+				633DF0581F1DD3BF25BE935F /* Pods_Popin_PopinUITests.framework */,
+				B3B2E6A383455F65799CB743 /* Pods_PopinTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C1FC4E259A9748702D836F96 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */,
+				4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */,
+				161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */,
+				9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */,
+				E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */,
+				FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -354,9 +451,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2D82B68A0D700677403 /* Build configuration list for PBXNativeTarget "Popin" */;
 			buildPhases = (
+				3AD464089EF6A19B62611428 /* [CP] Check Pods Manifest.lock */,
 				9F0BA2A72B68A0D600677403 /* Sources */,
 				9F0BA2A82B68A0D600677403 /* Frameworks */,
 				9F0BA2A92B68A0D600677403 /* Resources */,
+				7B0E40EADF269218CA8E56E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -371,6 +470,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2DB2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinTests" */;
 			buildPhases = (
+				78E8AAF717B9AB46CC7EAD26 /* [CP] Check Pods Manifest.lock */,
 				9F0BA2C02B68A0D700677403 /* Sources */,
 				9F0BA2C12B68A0D700677403 /* Frameworks */,
 				9F0BA2C22B68A0D700677403 /* Resources */,
@@ -389,9 +489,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F0BA2DE2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinUITests" */;
 			buildPhases = (
+				EB5E9D88905D6BC07581AF3B /* [CP] Check Pods Manifest.lock */,
 				9F0BA2CA2B68A0D700677403 /* Sources */,
 				9F0BA2CB2B68A0D700677403 /* Frameworks */,
 				9F0BA2CC2B68A0D700677403 /* Resources */,
+				5958E9F1FEAF3488924777B9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -472,20 +574,126 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3AD464089EF6A19B62611428 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Popin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5958E9F1FEAF3488924777B9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Popin-PopinUITests/Pods-Popin-PopinUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78E8AAF717B9AB46CC7EAD26 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PopinTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B0E40EADF269218CA8E56E2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Popin/Pods-Popin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB5E9D88905D6BC07581AF3B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Popin-PopinUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9F0BA2A72B68A0D600677403 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */,
-				9F0BA2B32B68A0D600677403 /* ViewController.swift in Sources */,
+				9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */,
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
+				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
+				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
+				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
 				9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */,
 				9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */,
@@ -493,13 +701,21 @@
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
+				9E46845E2B6E6FA900AD005A /* Date.swift in Sources */,
+				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
+				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
+				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
 				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
 				9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
-				9F0BA3142B68F56A00677403 /* DateTab.swift in Sources */,
-				9F0BA2B92B68A0D600677403 /* fourpin.xcdatamodeld in Sources */,
+				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
+				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
+				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
+				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
+				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
+				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -664,6 +880,7 @@
 		};
 		9F0BA2D92B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B0D3B84FC2B811DBFABCA67 /* Pods-Popin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -691,6 +908,7 @@
 		};
 		9F0BA2DA2B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F595A13E53EAA7E047E0663 /* Pods-Popin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -718,6 +936,7 @@
 		};
 		9F0BA2DC2B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E638CA65FA96B8254B1AD613 /* Pods-PopinTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -738,6 +957,7 @@
 		};
 		9F0BA2DD2B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA5A86904CF9B397B3C0107A /* Pods-PopinTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -758,6 +978,7 @@
 		};
 		9F0BA2DF2B68A0D700677403 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 161878CE928E84EAB7B35867 /* Pods-Popin-PopinUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -776,6 +997,7 @@
 		};
 		9F0BA2E02B68A0D700677403 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C9D922F9F9314337DE1FF83 /* Pods-Popin-PopinUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -834,13 +1056,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9F0BA2B72B68A0D600677403 /* fourpin.xcdatamodeld */ = {
+		9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */,
 			);
 			currentVersion = 9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */;
-			path = fourpin.xcdatamodeld;
+			path = Popin.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

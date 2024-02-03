@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+
+typealias HTTPHeaders = [String: String]
+
+typealias Parameters = [String: Any]
+
+enum HTTPMethod: String {
+    case get
+    case post
+    case put
+    case delete
+    
+    var uppercasedValue: String {
+        return self.rawValue.uppercased()
+    }
+}
