@@ -61,9 +61,6 @@ class AlbumDetailViewController: UIViewController {
         }
         setupComponents()
         setupConstraints()
-//        locationLabel.isHidden = false
-//        locationLabel.backgroundColor = .red // or any other color
-//        locationLabel.frame = CGRect(x: 16, y: 100, width: 200, height: 30)
     }
 
     override func loadView() {
@@ -74,7 +71,6 @@ class AlbumDetailViewController: UIViewController {
 
     func setupHierarchy() {
         self.view.addSubview(carousel)
-//        self.view.addSubview(locationLabel)
     }
 
     func setupComponents() {
@@ -87,10 +83,6 @@ class AlbumDetailViewController: UIViewController {
             carousel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             carousel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             carousel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-//            locationLabel.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 16),
-//            locationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
 }
