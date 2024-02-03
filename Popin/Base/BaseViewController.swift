@@ -14,8 +14,14 @@ class BaseViewController: UIViewController {
 
         configure()
         constraints()
+        setNavibar()
     }
     
     func configure() { }
     func constraints() { }
+    func setNavibar() {
+        
+        let logoImage = UIImage(named: "Logo")
+        self.navigationItem.titleView = UIImageView(image: logoImage)
+    }
 }

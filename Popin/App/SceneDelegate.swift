@@ -16,9 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
             
         let window = UIWindow(windowScene: windowScene)
-        let albumViewController = AlbumViewController()
-        let navigationController = UINavigationController(rootViewController: albumViewController)
-        window.rootViewController = navigationController
+        window.rootViewController = UINavigationController(rootViewController: LogInViewController())
+//        let albumViewController = AlbumViewController()
+//        let navigationController = UINavigationController(rootViewController: albumViewController)
+//        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
     }
