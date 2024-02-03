@@ -51,6 +51,12 @@ final class DateViewModel {
         imageCache.loadImage(urlString: imageUrlString, image: image)
     }
     
+    func goToAlbumView(currentVC: UIViewController, pushVC: AlbumViewController) {
+        currentVC.navigationController?.pushViewController(pushVC, animated: true)
+    }
+    
+    
+    
     //비동기처리하는게 맞는지 고민해보기..
     //    private func changeURLtoImage(imageUrl: URL) {
     //        DispatchQueue.global().async { [weak self] in

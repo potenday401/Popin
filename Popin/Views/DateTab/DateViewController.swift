@@ -14,6 +14,11 @@ final class DateViewController: BaseViewController {
     
     init(viewModel: DateViewModel?) {
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     let mainView = DateView()
@@ -41,7 +46,11 @@ extension DateViewController: FSCalendarDelegate, FSCalendarDataSource {
         //let currentPageDate = calendar.currentPage
         
         // (viewModel) url을 받아서, 배경 이미지를 띄워준다
-        
+        cell.viewModel = viewModel
         return cell
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        viewModel?.goToAlbumView(currentVC: self, pushVC: AlbumViewController())
     }
 }

@@ -36,7 +36,7 @@ final class DateView: BaseView {
         appearance.headerMinimumDissolvedAlpha = 0.0
         
         view.register(DateCell.self, forCellReuseIdentifier: DateCell.description())
-        
+    
         return view
     }()
     
