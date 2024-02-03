@@ -11,6 +11,7 @@ target 'Popin' do
   pod 'SDWebImage'
   pod 'Kingfisher', '~> 7.0'
   pod 'Alamofire', '~> 5.2'
+  pod 'FSCalendar'
 
   target 'PopinTests' do
     inherit! :search_paths

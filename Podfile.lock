@@ -1,13 +1,15 @@
 PODS:
   - Alamofire (5.8.1)
+  - FSCalendar (2.8.4)
   - Kingfisher (7.10.2)
-  - SDWebImage (5.15.5):
-    - SDWebImage/Core (= 5.15.5)
-  - SDWebImage/Core (5.15.5)
+  - SDWebImage (5.18.10):
+    - SDWebImage/Core (= 5.18.10)
+  - SDWebImage/Core (5.18.10)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
+  - FSCalendar
   - Kingfisher (~> 7.0)
   - SDWebImage
   - SnapKit
@@ -15,16 +17,18 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FSCalendar
     - Kingfisher
     - SDWebImage
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   Kingfisher: 99edc495d3b7607e6425f0d6f6847b2abd6d716d
-  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
+  SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 21269d09f260f598608a729bd33f2a291558dd3a
+PODFILE CHECKSUM: 21af5b0927eec6e03fc7313c8547ea63685a9974
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
