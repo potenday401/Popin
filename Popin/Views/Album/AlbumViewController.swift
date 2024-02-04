@@ -224,7 +224,8 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     private var selectedIconViews: Set<UIView> = []
     var currentLocation: CustomLocation?
     var initialLocation: CLLocation?
-    
+    var annotationImage: String?
+
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
     
