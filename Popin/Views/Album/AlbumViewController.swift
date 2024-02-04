@@ -81,51 +81,51 @@ class AlbumHeaderView: UIView {
     private func setupViews() {
         
         let backButton: UIButton = {
-            let button = UIButton()
-            button.setTitle("Back", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .gray
-            button.layer.cornerRadius = 18
-            button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-            return button
-        }()
-        
-        
-        let plusButton: UIButton = {
-            let button = UIButton()
-            button.setTitle("plus", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = .gray
-            button.layer.cornerRadius = 18
-            button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-            return button
-        }()
-        
-        
-        addSubview(backButton)
-        addSubview(plusButton)
-        
-        backButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(25)
-            make.centerY.equalToSuperview().offset(25)
-            make.width.equalTo(50)
-            make.height.equalTo(33)
-        }
-        
-        plusButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-25)
-            make.centerY.equalToSuperview().offset(25)
-            make.width.equalTo(50)
-            make.height.equalTo(33)
-        }
-    }
-    
-    @objc private func backButtonTapped() {
-        print("Back button tapped")
-        //navigation back...
-    }
+                    let button = UIButton()
+                    let backImage = UIImage(named: "back")
+                    button.setImage(backImage, for: .normal)
+                    button.setTitleColor(.white, for: .normal)
+                    button.backgroundColor = .black
+                    button.layer.cornerRadius = 18
+                    button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+                    button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                    return button
+                }()
+                
+                let plusButton: UIButton = {
+                    let button = UIButton()
+                    let plusImage = UIImage(named: "plus")
+                    button.setImage(plusImage, for: .normal)
+                    button.tintColor = .white
+                    button.backgroundColor = .black
+                    button.layer.cornerRadius = 18
+                    button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+                    return button
+                }()
+                
+                
+                addSubview(backButton)
+                addSubview(plusButton)
+                
+                backButton.snp.makeConstraints { make in
+                    make.leading.equalToSuperview().offset(25)
+                    make.centerY.equalToSuperview().offset(25)
+                    make.width.equalTo(50)
+                    make.height.equalTo(33)
+                }
+                
+                plusButton.snp.makeConstraints { make in
+                    make.trailing.equalToSuperview().offset(-25)
+                    make.centerY.equalToSuperview().offset(25)
+                    make.width.equalTo(50)
+                    make.height.equalTo(33)
+                }
+            }
+            
+            @objc private func backButtonTapped() {
+                delegate?.backButtonTapped()
+            }
+
     
     @objc private func plusButtonTapped() {
         delegate?.plusButtonTapped()
@@ -147,30 +147,58 @@ class AlbumInfoView: UIView {
     }
     
     private func setupViews() {
-        dateLabel = UILabel()
-        dateLabel.text = "Date: January 30, 2024"
-        dateLabel.textColor = .white
-        dateLabel.numberOfLines = 0
-        
-        photoCountLabel = UILabel()
-        photoCountLabel.text = "Photos: 10"
-        photoCountLabel.textColor = .white
-        photoCountLabel.numberOfLines = 0
-        
-        addSubview(dateLabel)
-        addSubview(photoCountLabel)
-        
-        dateLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.top.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-16)
-        }
-        
-        photoCountLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.top.equalTo(dateLabel.snp.bottom).offset(8)
-            make.trailing.equalToSuperview().offset(-16)
-        }
+        let dateIconView: UIImageView = {
+                let imageView = UIImageView(image: UIImage(named: "date"))
+                imageView.contentMode = .scaleAspectFit
+                return imageView
+            }()
+            
+            let mapIconView: UIImageView = {
+                let imageView = UIImageView(image: UIImage(systemName: "map"))
+                imageView.tintColor = .white
+                imageView.contentMode = .scaleAspectFit
+                return imageView
+            }()
+            
+            dateLabel = UILabel()
+            dateLabel.text = "23.12.08"
+            dateLabel.textColor = .white
+            dateLabel.numberOfLines = 0
+            
+            photoCountLabel = UILabel()
+            photoCountLabel.text = "56장의 기록 | 5곳의 장소"
+            photoCountLabel.textColor = .white
+            photoCountLabel.numberOfLines = 0
+            
+            addSubview(dateIconView)
+            addSubview(dateLabel)
+            addSubview(mapIconView)
+            addSubview(photoCountLabel)
+            
+            dateIconView.snp.makeConstraints { make in
+                make.leading.equalToSuperview().offset(16)
+                make.centerY.equalTo(dateLabel)
+                make.width.height.equalTo(20)
+            }
+            
+            dateLabel.snp.makeConstraints { make in
+                make.leading.equalTo(dateIconView.snp.trailing).offset(8)
+                make.top.equalToSuperview().offset(8)
+                make.trailing.equalToSuperview().offset(-16)
+            }
+            
+            mapIconView.snp.makeConstraints { make in
+                make.leading.equalToSuperview().offset(16)
+                make.centerY.equalTo(photoCountLabel)
+                make.width.height.equalTo(20)
+            }
+            
+            photoCountLabel.snp.makeConstraints { make in
+                make.leading.equalTo(mapIconView.snp.trailing).offset(8)
+                make.top.equalTo(dateLabel.snp.bottom).offset(8)
+                make.trailing.equalToSuperview().offset(-16)
+            }
+
     }
     func updateDate(_ date: String) {
         dateLabel.text = "Date: " + date
@@ -203,6 +231,10 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     var annotations: [CustomImageAnnotation] = []
     
     
+    func backButtonTapped() {
+            navigationController?.popViewController(animated: true)
+        }
+
     func plusButtonTapped() {
         let cameraViewController = CameraViewController()
         cameraViewController.initialLocation = initialLocation
@@ -608,4 +640,5 @@ struct CustomLocation {
 
 protocol AlbumHeaderViewDelegate: AnyObject {
     func plusButtonTapped()
+    func backButtonTapped()
 }
