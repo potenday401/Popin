@@ -225,6 +225,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     var currentLocation: CustomLocation?
     var initialLocation: CLLocation?
     var annotationImage: String?
+    var currentLocationRecord: CLLocation?
 
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
@@ -306,50 +307,46 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         locationManager.startUpdatingLocation()
         
         
-        if let currentLocation = locationManager.location {
-            initialLocation = currentLocation
-            mapView.centerToLocation(currentLocation)
-        } else {
-            initialLocation = CLLocation(latitude: 37.517496, longitude: 126.959118)
-            mapView.centerToLocation(initialLocation!)
-        }
-        mapView.centerToLocation(initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118)
-        )
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
         mapView.addGestureRecognizer(tapGesture)
+        mapView.isUserInteractionEnabled = true
     }
     
-    //todo: annotation 많을때 navigation 체크
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
+        // 일단 이동... todo: 모든 annotation 이동 가능하게
+        let albumDetailViewController = AlbumDetailViewController()
+        albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+        navigationController?.pushViewController(albumDetailViewController, animated: true)
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         currentLocation = CustomLocation(currentLatitude: coordinates.latitude, currentLongitude: coordinates.longitude)
-        
-        if let initialLocation = initialLocation {
+
+        if let currentLocationRecord = currentLocationRecord {
             let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-            let distance = touchLocation.distance(from: initialLocation)
-            
+            let distance = touchLocation.distance(from: currentLocationRecord)
+
             let thresholdDistance: CLLocationDistance = 100.0
-            
+
             if distance <= thresholdDistance {
                 let albumDetailViewController = AlbumDetailViewController()
-                
-                // Pass the list of annotations to AlbumDetailViewController
                 albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
-                print(mapView.annotations.compactMap { $0 as? CustomImageAnnotation }, "???")
                 navigationController?.pushViewController(albumDetailViewController, animated: true)
             }
         }
     }
-    
-    func setupAnnotation(location: CLLocation) {
-        let imageUrl = "https://placekitten.com/200/300"
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
-        mapView.addAnnotation(imageAnnotation)
-    }
+
+
+    func setupAnnotation(location: CLLocation, imageUrl: String) {
+            let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
+            mapView.addAnnotation(imageAnnotation)
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        for annotation in annotations {
+            print(annotation.coordinate, "checkAnnotation", annotation.imageUrl)
+        }
         setupLocationManager()
         setupMapView()
         setupStatusBarView()
@@ -373,11 +370,16 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        for annotation in annotations {
+            let coordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+            let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            mapView.centerToLocation(location)
+            currentLocationRecord = location
+            setupAnnotation(location: location, imageUrl: annotation.imageUrl)
+        }
+
         if let currentLocation = locations.last {
-            initialLocation = currentLocation
-            mapView.centerToLocation(currentLocation)
             locationManager.stopUpdatingLocation()
-            setupAnnotation(location: initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118))
         } else {
             print("No valid location found in the update.")
         }
@@ -569,8 +571,6 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     }
     
     @objc private func deleteButtonTapped() {
-        // todo....
-        
         selectedIconViews.removeAll()
         isSelectionEnabled = false
         updateButtonAppearance()
