@@ -81,51 +81,51 @@ class AlbumHeaderView: UIView {
     private func setupViews() {
         
         let backButton: UIButton = {
-                    let button = UIButton()
-                    let backImage = UIImage(named: "back")
-                    button.setImage(backImage, for: .normal)
-                    button.setTitleColor(.white, for: .normal)
-                    button.backgroundColor = .black
-                    button.layer.cornerRadius = 18
-                    button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-                    button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-                    return button
-                }()
-                
-                let plusButton: UIButton = {
-                    let button = UIButton()
-                    let plusImage = UIImage(named: "plus")
-                    button.setImage(plusImage, for: .normal)
-                    button.tintColor = .white
-                    button.backgroundColor = .black
-                    button.layer.cornerRadius = 18
-                    button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-                    return button
-                }()
-                
-                
-                addSubview(backButton)
-                addSubview(plusButton)
-                
-                backButton.snp.makeConstraints { make in
-                    make.leading.equalToSuperview().offset(25)
-                    make.centerY.equalToSuperview().offset(25)
-                    make.width.equalTo(50)
-                    make.height.equalTo(33)
-                }
-                
-                plusButton.snp.makeConstraints { make in
-                    make.trailing.equalToSuperview().offset(-25)
-                    make.centerY.equalToSuperview().offset(25)
-                    make.width.equalTo(50)
-                    make.height.equalTo(33)
-                }
-            }
-            
-            @objc private func backButtonTapped() {
-                delegate?.backButtonTapped()
-            }
-
+            let button = UIButton()
+            let backImage = UIImage(named: "back")
+            button.setImage(backImage, for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.backgroundColor = .black
+            button.layer.cornerRadius = 18
+            button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            return button
+        }()
+        
+        let plusButton: UIButton = {
+            let button = UIButton()
+            let plusImage = UIImage(named: "plus")
+            button.setImage(plusImage, for: .normal)
+            button.tintColor = .white
+            button.backgroundColor = .black
+            button.layer.cornerRadius = 18
+            button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+            return button
+        }()
+        
+        
+        addSubview(backButton)
+        addSubview(plusButton)
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(25)
+            make.centerY.equalToSuperview().offset(25)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
+        }
+        
+        plusButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-25)
+            make.centerY.equalToSuperview().offset(25)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
+        }
+    }
+    
+    @objc private func backButtonTapped() {
+        delegate?.backButtonTapped()
+    }
+    
     
     @objc private func plusButtonTapped() {
         delegate?.plusButtonTapped()
@@ -148,57 +148,57 @@ class AlbumInfoView: UIView {
     
     private func setupViews() {
         let dateIconView: UIImageView = {
-                let imageView = UIImageView(image: UIImage(named: "date"))
-                imageView.contentMode = .scaleAspectFit
-                return imageView
-            }()
-            
-            let mapIconView: UIImageView = {
-                let imageView = UIImageView(image: UIImage(systemName: "map"))
-                imageView.tintColor = .white
-                imageView.contentMode = .scaleAspectFit
-                return imageView
-            }()
-            
-            dateLabel = UILabel()
-            dateLabel.text = "23.12.08"
-            dateLabel.textColor = .white
-            dateLabel.numberOfLines = 0
-            
-            photoCountLabel = UILabel()
-            photoCountLabel.text = "56장의 기록 | 5곳의 장소"
-            photoCountLabel.textColor = .white
-            photoCountLabel.numberOfLines = 0
-            
-            addSubview(dateIconView)
-            addSubview(dateLabel)
-            addSubview(mapIconView)
-            addSubview(photoCountLabel)
-            
-            dateIconView.snp.makeConstraints { make in
-                make.leading.equalToSuperview().offset(16)
-                make.centerY.equalTo(dateLabel)
-                make.width.height.equalTo(20)
-            }
-            
-            dateLabel.snp.makeConstraints { make in
-                make.leading.equalTo(dateIconView.snp.trailing).offset(8)
-                make.top.equalToSuperview().offset(8)
-                make.trailing.equalToSuperview().offset(-16)
-            }
-            
-            mapIconView.snp.makeConstraints { make in
-                make.leading.equalToSuperview().offset(16)
-                make.centerY.equalTo(photoCountLabel)
-                make.width.height.equalTo(20)
-            }
-            
-            photoCountLabel.snp.makeConstraints { make in
-                make.leading.equalTo(mapIconView.snp.trailing).offset(8)
-                make.top.equalTo(dateLabel.snp.bottom).offset(8)
-                make.trailing.equalToSuperview().offset(-16)
-            }
-
+            let imageView = UIImageView(image: UIImage(named: "date"))
+            imageView.contentMode = .scaleAspectFit
+            return imageView
+        }()
+        
+        let mapIconView: UIImageView = {
+            let imageView = UIImageView(image: UIImage(systemName: "map"))
+            imageView.tintColor = .white
+            imageView.contentMode = .scaleAspectFit
+            return imageView
+        }()
+        
+        dateLabel = UILabel()
+        dateLabel.text = "23.12.08"
+        dateLabel.textColor = .white
+        dateLabel.numberOfLines = 0
+        
+        photoCountLabel = UILabel()
+        photoCountLabel.text = "56장의 기록 | 5곳의 장소"
+        photoCountLabel.textColor = .white
+        photoCountLabel.numberOfLines = 0
+        
+        addSubview(dateIconView)
+        addSubview(dateLabel)
+        addSubview(mapIconView)
+        addSubview(photoCountLabel)
+        
+        dateIconView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalTo(dateLabel)
+            make.width.height.equalTo(20)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.leading.equalTo(dateIconView.snp.trailing).offset(8)
+            make.top.equalToSuperview().offset(8)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        
+        mapIconView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalTo(photoCountLabel)
+            make.width.height.equalTo(20)
+        }
+        
+        photoCountLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mapIconView.snp.trailing).offset(8)
+            make.top.equalTo(dateLabel.snp.bottom).offset(8)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        
     }
     func updateDate(_ date: String) {
         dateLabel.text = "Date: " + date
@@ -226,7 +226,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     var initialLocation: CLLocation?
     var annotationImage: String?
     var currentLocationRecord: CLLocation?
-
+    
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
     
@@ -234,9 +234,9 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     
     
     func backButtonTapped() {
-            navigationController?.popViewController(animated: true)
-        }
-
+        navigationController?.popViewController(animated: true)
+    }
+    
     func plusButtonTapped() {
         let cameraViewController = CameraViewController()
         cameraViewController.initialLocation = initialLocation
@@ -307,7 +307,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         locationManager.startUpdatingLocation()
         
         
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
         mapView.addGestureRecognizer(tapGesture)
         mapView.isUserInteractionEnabled = true
@@ -321,13 +321,13 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         currentLocation = CustomLocation(currentLatitude: coordinates.latitude, currentLongitude: coordinates.longitude)
-
+        
         if let currentLocationRecord = currentLocationRecord {
             let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
             let distance = touchLocation.distance(from: currentLocationRecord)
-
+            
             let thresholdDistance: CLLocationDistance = 100.0
-
+            
             if distance <= thresholdDistance {
                 let albumDetailViewController = AlbumDetailViewController()
                 albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
@@ -335,12 +335,12 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
             }
         }
     }
-
-
+    
+    
     func setupAnnotation(location: CLLocation, imageUrl: String) {
-            let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
-            mapView.addAnnotation(imageAnnotation)
-        }
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
+        mapView.addAnnotation(imageAnnotation)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -377,7 +377,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
             currentLocationRecord = location
             setupAnnotation(location: location, imageUrl: annotation.imageUrl)
         }
-
+        
         if let currentLocation = locations.last {
             locationManager.stopUpdatingLocation()
         } else {
@@ -484,8 +484,11 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
             
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
+                var imageUrl:URL?
                 let imageIndex = columnIndex + 1
-                let imageUrl = URL(string: "https://placekitten.com/100/100?image=\(imageIndex)")!
+                for annotation in annotations {
+                    imageUrl = URL(string: annotation.imageUrl)!
+                }
                 
                 let imageView: UIImageView = {
                     let imageView = UIImageView()
@@ -589,22 +592,22 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
               let iconView = gesture.view as? UIView else {
             return
         }
-        
+
         let checkmarkTag = 100
-        
+
         if selectedIconViews.contains(iconView) {
             selectedIconViews.remove(iconView)
             removeCheckmarkFromView(iconView)
         } else {
             selectedIconViews.insert(iconView)
-            let checkmarkImageView = UIImageView(image: UIImage(systemName: "checkmark"))
+            let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))
             checkmarkImageView.tintColor = .blue
             checkmarkImageView.contentMode = .scaleAspectFit
             checkmarkImageView.tag = checkmarkTag
-            
+
             iconView.addSubview(checkmarkImageView)
             checkmarkImageView.snp.makeConstraints { make in
-                make.center.equalToSuperview()
+                make.trailing.bottom.equalToSuperview().inset(15)
                 make.width.height.equalTo(24)
             }
         }
