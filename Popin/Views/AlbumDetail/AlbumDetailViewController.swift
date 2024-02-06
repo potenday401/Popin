@@ -20,7 +20,7 @@ class AlbumDetailViewController: UIViewController {
     let locationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.text = "Default Location"
         return label
     }()
@@ -59,7 +59,7 @@ class AlbumDetailViewController: UIViewController {
         }
         setupComponents()
         setupConstraints()
-        //        navigationItem.hidesBackButton = true
+        navigationItem.hidesBackButton = true
     }
     
     override func loadView() {

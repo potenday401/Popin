@@ -26,6 +26,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
         view.backgroundColor = .black
         self.imagePicker.delegate = self
         setupButtons()
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.title = "뒤로 가기"
     }
     let locationLabel: UILabel = {
         let label = UILabel()
@@ -52,13 +54,16 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
     }()
     
     private func setupButtons() {
-        cameraAuthButton.setTitle("카메라 버튼", for: .normal)
-        cameraAuthButton.addTarget(self, action: #selector(cameraAuthButtonTapped), for: .touchUpInside)
-        
-        albumAuthButton.setTitle("앨범 버튼", for: .normal)
+        sendButton.setTitle("내 추억 '핀하기'", for: .normal)
+        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        sendButton.setTitleColor(.white, for: .normal)
+
+        albumAuthButton.setTitle("내 추억 불러오기", for: .normal)
         albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
-        
-        sendButton.setTitle("전송 버튼", for: .normal)
+        albumAuthButton.setTitleColor(.white, for: .normal)
+
+        cameraAuthButton.setTitle("추억 찍기", for: .normal)
+        cameraAuthButton.setTitleColor(.white, for: .normal)
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         headerStackView.addArrangedSubview(sendButton)
         headerStackView.addArrangedSubview(albumAuthButton)
@@ -116,8 +121,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UI
             locationLabel.heightAnchor.constraint(equalToConstant: 150),
             locationLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         ])
-        updateLocationLabel(with: initialLocation!
-        )
     }
     
     func updateLocationLabel(with annotation: CLLocation) {
