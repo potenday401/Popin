@@ -20,7 +20,7 @@ struct DefaultTextInputDesignSystem: TextInputDesignSystem {
     let backgroundColor: UIColor = UIColor.grey300
     let borderColor: UIColor = .grey300
     let borderWidth: CGFloat = 1.0
-    let cornerRadius: CGFloat = 5.0
+    let cornerRadius: CGFloat = 12.0
 }
 
 class CustomTextField: UITextField {

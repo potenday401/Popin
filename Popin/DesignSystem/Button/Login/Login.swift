@@ -71,3 +71,38 @@ extension UIButton {
         self.titleLabel?.font = style.font
     }
 }
+
+//example of use
+//        let customButtonStyle = ButtonStyle.custom(
+//            backgroundColorClosure: { return .orange },
+//            titleColor: .black,
+//            cornerRadius: 10,
+//            borderWidth: 1,
+//            borderColor: .gray,
+//            font: UIFont.systemFont(ofSize: 16, weight: .regular)
+//        )
+//
+//        let customButton = UIButton(style: customButtonStyle)
+//        customButton.setTitle("Custom Button", for: .normal)
+//        customButton.setSize(width: 200, height: 40)
+//        customButton.addTarget(self, action: #selector(customButtonTapped), for: .touchUpInside)
+//
+//        // Add the custom button to your view
+//        view.addSubview(customButton)
+//
+//        // Example of using predefined button styles
+//        let largeButton = UIButton(style: .large)
+//        largeButton.setTitle("Large Button", for: .normal)
+//        largeButton.setSize(width: 200, height: 40)
+//        largeButton.addTarget(self, action: #selector(largeButtonTapped), for: .touchUpInside)
+//
+//        let smallButton = UIButton(style: .small)
+//        smallButton.setTitle("Small Button", for: .normal)
+//        smallButton.setSize(width: 200, height: 40)
+//        smallButton.addTarget(self, action: #selector(smallButtonTapped), for: .touchUpInside)
+//
+//        let xsmallButton = UIButton(style: .xsmall)
+//        xsmallButton.setTitle("X-Small Button", for: .normal)
+//        xsmallButton.setSize(width: 200, height: 40)
+//        xsmallButton.addTarget(self, action: #selector(xsmallButtonTapped), for: .touchUpInside)
+//
