@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 import CoreLocation
 
 class Carousel: UIView {
@@ -98,7 +98,7 @@ extension Carousel: UICollectionViewDataSource {
         let imageView = UIImageView(frame: cell.contentView.bounds)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.sd_setImage(with: urls[indexPath.row], placeholderImage: UIImage(named: "placeholder"))
+        imageView.kf.setImage(with: urls[indexPath.row], placeholder: UIImage(named: "placeholder"))
         cell.contentView.addSubview(imageView)
         
         let locationLabel = UILabel(frame: CGRect(x: 16, y: 450, width: 200, height: 30))
@@ -145,7 +145,7 @@ extension Carousel: UICollectionViewDelegate {
         let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
         
-        if let indexPath = collectionView.indexPathForItem(at: visiblePoint) {
+        if collectionView.indexPathForItem(at: visiblePoint) != nil {
         }
     }
 }
