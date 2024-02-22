@@ -44,16 +44,6 @@
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
 		9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */; };
-		9F1654162B851BB600F339AE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654152B851BB600F339AE /* Colors.swift */; };
-		9F1654182B85225600F339AE /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654172B85225600F339AE /* Text.swift */; };
-		9F16541B2B85257700F339AE /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16541A2B85257700F339AE /* Login.swift */; };
-		9F16541E2B8526F400F339AE /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16541D2B8526F400F339AE /* InputField.swift */; };
-		9F1654212B85271100F339AE /* TopNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654202B85271100F339AE /* TopNavigationBar.swift */; };
-		9F1654232B85274200F339AE /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654222B85274200F339AE /* TagButton.swift */; };
-		9F1654252B85274D00F339AE /* checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654242B85274D00F339AE /* checkbox.swift */; };
-		9F1654272B85276400F339AE /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654262B85276400F339AE /* Alert.swift */; };
-		9F16542A2B8527B700F339AE /* VerifacationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1654292B8527B700F339AE /* VerifacationCode.swift */; };
-		9F16542F2B85283400F339AE /* AlbumCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F16542E2B85283400F339AE /* AlbumCard.swift */; };
 		9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */; };
 		9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */; };
 		9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */; };
@@ -126,16 +116,6 @@
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		9F0BA31C2B68F5AE00677403 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
-		9F1654152B851BB600F339AE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		9F1654172B85225600F339AE /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
-		9F16541A2B85257700F339AE /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		9F16541D2B8526F400F339AE /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
-		9F1654202B85271100F339AE /* TopNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationBar.swift; sourceTree = "<group>"; };
-		9F1654222B85274200F339AE /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
-		9F1654242B85274D00F339AE /* checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checkbox.swift; sourceTree = "<group>"; };
-		9F1654262B85276400F339AE /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		9F1654292B8527B700F339AE /* VerifacationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifacationCode.swift; sourceTree = "<group>"; };
-		9F16542E2B85283400F339AE /* AlbumCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCard.swift; sourceTree = "<group>"; };
 		9F5206722B6EA3BF005D634D /* HomeMapVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapVIewController.swift; sourceTree = "<group>"; };
 		9F5E3CBD2B6D5D0500FBD1AB /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		9F5E3CBF2B6D5D2200FBD1AB /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
@@ -223,7 +203,6 @@
 		9F0BA2AD2B68A0D600677403 /* Popin */ = {
 			isa = PBXGroup;
 			children = (
-				9F1654142B851BA300F339AE /* DesignSystem */,
 				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA30B2B68F51000677403 /* ViewModels */,
 				9F0BA30A2B68F50A00677403 /* Views */,
@@ -420,79 +399,6 @@
 			path = AlbumDetail;
 			sourceTree = "<group>";
 		};
-		9F1654142B851BA300F339AE /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-				9F1654282B85279B00F339AE /* Album */,
-				9F16541F2B8526FA00F339AE /* NavigationBar */,
-				9F16541C2B8526E300F339AE /* InputField */,
-				9F1654192B85256700F339AE /* Button */,
-				9F1654152B851BB600F339AE /* Colors.swift */,
-				9F1654172B85225600F339AE /* Text.swift */,
-				9F1654262B85276400F339AE /* Alert.swift */,
-				9F1654292B8527B700F339AE /* VerifacationCode.swift */,
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		9F1654192B85256700F339AE /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				9F16542D2B85281E00F339AE /* Tag */,
-				9F16542C2B85280D00F339AE /* Date */,
-				9F16542B2B85280100F339AE /* Login */,
-				9F1654242B85274D00F339AE /* checkbox.swift */,
-			);
-			path = Button;
-			sourceTree = "<group>";
-		};
-		9F16541C2B8526E300F339AE /* InputField */ = {
-			isa = PBXGroup;
-			children = (
-				9F16541D2B8526F400F339AE /* InputField.swift */,
-			);
-			path = InputField;
-			sourceTree = "<group>";
-		};
-		9F16541F2B8526FA00F339AE /* NavigationBar */ = {
-			isa = PBXGroup;
-			children = (
-				9F1654202B85271100F339AE /* TopNavigationBar.swift */,
-			);
-			path = NavigationBar;
-			sourceTree = "<group>";
-		};
-		9F1654282B85279B00F339AE /* Album */ = {
-			isa = PBXGroup;
-			children = (
-				9F16542E2B85283400F339AE /* AlbumCard.swift */,
-			);
-			path = Album;
-			sourceTree = "<group>";
-		};
-		9F16542B2B85280100F339AE /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				9F16541A2B85257700F339AE /* Login.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		9F16542C2B85280D00F339AE /* Date */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Date;
-			sourceTree = "<group>";
-		};
-		9F16542D2B85281E00F339AE /* Tag */ = {
-			isa = PBXGroup;
-			children = (
-				9F1654222B85274200F339AE /* TagButton.swift */,
-			);
-			path = Tag;
-			sourceTree = "<group>";
-		};
 		9FC267EB2B846F46000BD089 /* AlbumVIewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,40 +581,30 @@
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
-				9F16541B2B85257700F339AE /* Login.swift in Sources */,
 				9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */,
 				9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */,
-				9F16541E2B8526F400F339AE /* InputField.swift in Sources */,
-				9F1654232B85274200F339AE /* TagButton.swift in Sources */,
-				9F1654252B85274D00F339AE /* checkbox.swift in Sources */,
 				9F0BA3112B68F55700677403 /* TagTab.swift in Sources */,
 				9FC267EA2B846F42000BD089 /* HomeVIewModel.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */,
 				9FC267E82B846F3B000BD089 /* AlbumDetailViewModel.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
-				9F1654272B85276400F339AE /* Alert.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* Date.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
 				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
-				9F1654182B85225600F339AE /* Text.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
 				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
 				9F0BA30E2B68F54500677403 /* MapTab.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
-				9F16542F2B85283400F339AE /* AlbumCard.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
-				9F1654212B85271100F339AE /* TopNavigationBar.swift in Sources */,
-				9F1654162B851BB600F339AE /* Colors.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
-				9F16542A2B8527B700F339AE /* VerifacationCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
