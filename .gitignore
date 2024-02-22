@@ -133,3 +133,7 @@ xcuserdata
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+# Additional rules to ignore Xcode user-specific files
+*.xcuserstate
+xcschememanagement.plist
