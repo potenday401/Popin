@@ -561,11 +561,11 @@
 			);
 			mainGroup = 9F0BA2A22B68A0D600677403;
 			packageReferences = (
-				9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
-				9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
-				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
-				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */,
-				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */,
+				9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 9F0BA2AC2B68A0D600677403 /* Products */;
 			projectDirPath = "";
@@ -988,7 +988,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -996,7 +996,7 @@
 				kind = branch;
 			};
 		};
-		9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -1004,7 +1004,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
+		9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -1012,7 +1012,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */ = {
+		9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
@@ -1020,7 +1020,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */ = {
+		9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
 			requirement = {
@@ -1033,27 +1033,27 @@
 /* Begin XCSwiftPackageProductDependency section */
 		9FC267EF2B8471E1000BD089 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		9FC267F22B847237000BD089 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 		9FC267F52B847261000BD089 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
+			package = 9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 		9FC267F82B847282000BD089 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */;
+			package = 9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
 		};
 		9FC267FB2B8472B3000BD089 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */;
+			package = 9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
