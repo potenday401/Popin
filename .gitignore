@@ -1,3 +1,6 @@
+# Created by https://www.toptal.com/developers/gitignore/api/macos,swift,xcode,swiftpackagemanager
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,swift,xcode,swiftpackagemanager
+
 ### macOS ###
 # General
 .DS_Store
@@ -115,12 +118,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-### SwiftPackageManager ###
-Packages
-xcuserdata
-*.xcodeproj
-
-
 ### Xcode ###
 
 ## Xcode 8 and earlier
@@ -134,6 +131,4 @@ xcuserdata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# Additional rules to ignore Xcode user-specific files
-*.xcuserstate
-xcschememanagement.plist
+# End of https://www.toptal.com/developers/gitignore/api/macos,swift,xcode,swiftpackagemanager

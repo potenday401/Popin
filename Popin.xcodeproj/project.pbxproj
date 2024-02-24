@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
+		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
+		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
+		6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4932B88C9160063BD16 /* UIImage+Utils.swift */; };
 		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
 		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
@@ -75,6 +79,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
+		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
+		6525D4932B88C9160063BD16 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -154,6 +162,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6525D4892B88BADC0063BD16 /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				6525D48A2B88BB040063BD16 /* Color */,
+			);
+			path = "UI Components";
+			sourceTree = "<group>";
+		};
+		6525D48A2B88BB040063BD16 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */,
+				6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
 		9E46845C2B6E6E6C00AD005A /* Date */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +228,7 @@
 		9F0BA2AD2B68A0D600677403 /* Popin */ = {
 			isa = PBXGroup;
 			children = (
+				6525D4892B88BADC0063BD16 /* UI Components */,
 				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA30B2B68F51000677403 /* ViewModels */,
 				9F0BA30A2B68F50A00677403 /* Views */,
@@ -275,6 +301,8 @@
 			children = (
 				9F0BA2EC2B68F37900677403 /* Array +.swift */,
 				9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */,
+				6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */,
+				6525D4932B88C9160063BD16 /* UIImage+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -519,11 +547,11 @@
 			);
 			mainGroup = 9F0BA2A22B68A0D600677403;
 			packageReferences = (
-				9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */,
+				9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
+				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */,
+				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */,
 			);
 			productRefGroup = 9F0BA2AC2B68A0D600677403 /* Products */;
 			projectDirPath = "";
@@ -572,11 +600,14 @@
 				9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */,
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
+				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
+				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
+				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
 				9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
@@ -601,6 +632,7 @@
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
+				6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
@@ -940,7 +972,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -948,7 +980,7 @@
 				kind = branch;
 			};
 		};
-		9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -956,7 +988,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -964,7 +996,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+		9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
@@ -972,7 +1004,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+		9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
 			requirement = {
@@ -985,27 +1017,27 @@
 /* Begin XCSwiftPackageProductDependency section */
 		9FC267EF2B8471E1000BD089 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 		9FC267F22B847237000BD089 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 9FC267F12B847237000BD089 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 		9FC267F52B847261000BD089 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 		9FC267F82B847282000BD089 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			package = 9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar.git" */;
 			productName = FSCalendar;
 		};
 		9FC267FB2B8472B3000BD089 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */;
+			package = 9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman.git" */;
 			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
