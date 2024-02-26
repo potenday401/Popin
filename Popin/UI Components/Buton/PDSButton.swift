@@ -74,7 +74,7 @@ final class PDSButton: UIButton {
         clipsToBounds = true
         layer.cornerRadius = 8
         Self.colors[style]?.forEach {
-            setBackgroundImage(UIImage.image(with: $0.value), for: $0.state)
+            setBackgroundImage(UIImage(color: $0.value), for: $0.state)
         }
         
         addSubview(stackView)
