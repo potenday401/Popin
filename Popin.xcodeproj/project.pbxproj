@@ -13,6 +13,7 @@
 		6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4932B88C9160063BD16 /* UIImage+Utils.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
+		65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */; };
 		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
 		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
@@ -87,6 +88,7 @@
 		6525D4932B88C9160063BD16 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
+		65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSCheckbox.swift; sourceTree = "<group>"; };
 		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				65D2D1862B8CA7030015CD0D /* Checkbox */,
 				65A8E73F2B88CE6200BC7470 /* Buton */,
 				6525D48A2B88BB040063BD16 /* Color */,
 			);
@@ -191,6 +194,14 @@
 				65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */,
 			);
 			path = Buton;
+			sourceTree = "<group>";
+		};
+		65D2D1862B8CA7030015CD0D /* Checkbox */ = {
+			isa = PBXGroup;
+			children = (
+				65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */,
+			);
+			path = Checkbox;
 			sourceTree = "<group>";
 		};
 		9E46845C2B6E6E6C00AD005A /* Date */ = {
@@ -634,6 +645,7 @@
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */,
 				9FC267E82B846F3B000BD089 /* AlbumDetailViewModel.swift in Sources */,
+				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* Date.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
