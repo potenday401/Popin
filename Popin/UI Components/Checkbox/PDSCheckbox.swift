@@ -43,7 +43,8 @@ final class PDSCheckbox: UIView {
         addSubview(button)
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }    }
+        }
+    }
     
     // MARK: - Intrinsic Content Size
     
