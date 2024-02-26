@@ -18,6 +18,7 @@
 		65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */; };
 		65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */; };
 		65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */; };
+		65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */; };
 		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
 		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
@@ -97,6 +98,7 @@
 		65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBar.swift; sourceTree = "<group>"; };
 		65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
 		65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBarItem.swift; sourceTree = "<group>"; };
+		65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSNavigationBar+Preview.swift"; sourceTree = "<group>"; };
 		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */,
 				65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */,
+				65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */,
 			);
 			path = NavigationBar;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
+				65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
 				65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */,
