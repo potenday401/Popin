@@ -11,27 +11,12 @@ extension UIColor {
     
     // MARK: - Grayscale
     
-    static let gray100 = UIColor(hex: 0x848794)
-    static let gray200 = UIColor(hex: 0x565D68)
-    static let gray300 = UIColor(hex: 0x3D444F)
-    static let gray400 = UIColor(hex: 0x212730)
-    static var gray500 = UIColor(hex: 0x11161F)
-    static var gray600 = UIColor(hex: 0x0A0E18)
-    static var gray700 = UIColor(hex: 0x0A0514)
-    
-    static let lightGray100 = UIColor(hex: 0xF2F2F7)
-    static let lightGray200 = UIColor(hex: 0xE5E5EA)
-    static let lightGray300 = UIColor(hex: 0xD1D1D6)
-    static let lightGray400 = UIColor(hex: 0xC7C7CC)
-    static var lightGray500 = UIColor(hex: 0xAEAEB2)
-    static var lightGray600 = UIColor(hex: 0x8E8E93)
-    
-    static let darkGray100 = UIColor(hex: 0x8E8E93)
-    static let darkGray200 = UIColor(hex: 0x636366)
-    static let darkGray300 = UIColor(hex: 0x48484A)
-    static let darkGray400 = UIColor(hex: 0x3A3A3C)
-    static let darkGray500 = UIColor(hex: 0x2C2C2E)
-    static let darkGray600 = UIColor(hex: 0x1C1C1E)
+    static let gray100 = UIColor(hex: 0x8E8E93)
+    static let gray200 = UIColor(hex: 0x636366)
+    static let gray300 = UIColor(hex: 0x48484A)
+    static let gray400 = UIColor(hex: 0x3A3A3C)
+    static var gray500 = UIColor(hex: 0x2C2C2E)
+    static var gray600 = UIColor(hex: 0x0A0514)
     
     // MARK: - Color
     
