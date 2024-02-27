@@ -12,12 +12,10 @@ class VerificationCodeDigit: UIView {
     
     // MARK: - Interface
     
-    var number: String? {
-        get { label.text }
-        set {
-            label.text = newValue
-            dot.isHidden = newValue != nil
-        }
+    func setNumber(_ number: String) {
+        let isNumber = number.allSatisfy { $0.isNumber }
+        label.text = isNumber ? number : nil
+        dot.isHidden = isNumber
     }
     
     // MARK: - UI

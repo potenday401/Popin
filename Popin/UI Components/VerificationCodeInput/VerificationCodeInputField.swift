@@ -12,6 +12,14 @@ final class VerificationCodeInputField: UIView {
     
     // MARK: - UI
     
+    private lazy var textField: UITextField = {
+        let textField = UITextField()
+        textField.keyboardType = .numberPad
+        textField.textContentType = .oneTimeCode
+        textField.delegate = self
+        return textField
+    }()
+    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
@@ -31,9 +39,7 @@ final class VerificationCodeInputField: UIView {
     init(numberOfDigits: Int) {
         self.numberOfDigits = numberOfDigits
         digits = (0..<numberOfDigits).map { index in
-            let digit = VerificationCodeDigit()
-            digit.number = String(index)
-            return digit
+            return VerificationCodeDigit()
         }
         super.init(frame: .zero)
         setUpUI()
@@ -44,11 +50,64 @@ final class VerificationCodeInputField: UIView {
     }
     
     private func setUpUI() {
+        addTapGesture()
+        
+        addSubview(textField)
+        
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         digits.forEach(stackView.addArrangedSubview(_:))
+    }
+    
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(tapGestureHandler(_:))
+        )
+        addGestureRecognizer(tapGesture)
+    }
+}
+
+// MARK: - Actions
+
+private extension VerificationCodeInputField {
+    
+    @objc
+    func tapGestureHandler(_ recognizer: UITapGestureRecognizer) {
+        textField.becomeFirstResponder()
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension VerificationCodeInputField: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else {
+            return true
+        }
+        
+        guard !string.isEmpty else {
+            return true
+        }
+        
+        return text.count < numberOfDigits
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text?.padding(
+            toLength: numberOfDigits,
+            withPad: "-",
+            startingAt: 0
+        ) else {
+            return
+        }
+        
+        zip(text.map(String.init), digits).forEach { number, digit in
+            digit.setNumber(number)
+        }
     }
 }
