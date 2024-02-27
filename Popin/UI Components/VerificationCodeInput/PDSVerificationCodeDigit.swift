@@ -35,7 +35,7 @@ class PDSVerificationCodeDigit: UIView {
     
     private let dot: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .darkGray200
+        view.backgroundColor = .gray200
         view.layer.cornerRadius = Metric.dotSize.width / 2
         return view
     }()

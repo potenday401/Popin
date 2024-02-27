@@ -31,7 +31,7 @@ fileprivate final class VerificationCodeInputFieldPreviewViewController: UIViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .gray700
+        view.backgroundColor = .gray600
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in

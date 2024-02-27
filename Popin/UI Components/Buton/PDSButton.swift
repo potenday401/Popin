@@ -109,12 +109,12 @@ fileprivate extension PDSButton {
         .primary: [
             Color(value: .indigo200, state: .normal),
             Color(value: .indigo300, state: .highlighted),
-            Color(value: .darkGray500, state: .disabled),
+            Color(value: .gray500, state: .disabled),
         ],
         .secondary: [
-            Color(value: .darkGray300, state: .normal),
-            Color(value: .darkGray500, state: .highlighted),
-            Color(value: .darkGray400, state: .disabled),
+            Color(value: .gray300, state: .normal),
+            Color(value: .gray500, state: .highlighted),
+            Color(value: .gray400, state: .disabled),
         ],
     ]
 }

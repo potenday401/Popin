@@ -83,7 +83,7 @@ final class PDSNavigationBar: UIView {
     }
     
     private func setUpUI() {
-        backgroundColor = .gray700
+        backgroundColor = .gray600
         
         [leftStackView, titleStackView, rightStackView].forEach(addSubview(_:))
         leftStackView.snp.makeConstraints { make in
