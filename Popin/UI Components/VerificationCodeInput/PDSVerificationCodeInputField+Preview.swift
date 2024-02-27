@@ -1,5 +1,5 @@
 //
-//  VerificationCodeInputField+Preview.swift
+//  PDSVerificationCodeInputField+Preview.swift
 //  Popin
 //
 //  Created by chamsol kim on 2/26/24.
@@ -18,7 +18,7 @@ fileprivate final class VerificationCodeInputFieldPreviewViewController: UIViewC
         return button
     }()
     
-    private let verificationCodeInputField = VerificationCodeInputField(numberOfDigits: 5)
+    private let verificationCodeInputField = PDSVerificationCodeInputField(numberOfDigits: 5)
     
     private var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -55,14 +55,14 @@ fileprivate final class VerificationCodeInputFieldPreviewViewController: UIViewC
     VerificationCodeInputFieldPreviewViewController()
 }
 
-fileprivate extension VerificationCodeInputField {
+fileprivate extension PDSVerificationCodeInputField {
     
     func setNumber(_ number: String) {
         let digits = subviews
             .compactMap { $0 as? UIStackView }
             .compactMap { $0.arrangedSubviews }
             .flatMap { $0 }
-            .compactMap { $0 as? VerificationCodeDigit }
+            .compactMap { $0 as? PDSVerificationCodeDigit }
         
         zip(number.map(String.init), digits).forEach { number, digit in
             digit.setNumber(number)

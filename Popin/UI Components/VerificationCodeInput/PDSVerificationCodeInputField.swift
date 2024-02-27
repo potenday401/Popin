@@ -1,5 +1,5 @@
 //
-//  VerificationCodeInputField.swift
+//  PDSVerificationCodeInputField.swift
 //  Popin
 //
 //  Created by chamsol kim on 2/26/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class VerificationCodeInputField: UIView {
+final class PDSVerificationCodeInputField: UIView {
     
     // MARK: - Interface
     
@@ -38,7 +38,7 @@ final class VerificationCodeInputField: UIView {
         return stackView
     }()
     
-    private let digits: [VerificationCodeDigit]
+    private let digits: [PDSVerificationCodeDigit]
     
     // MARK: - Properties
     
@@ -49,7 +49,7 @@ final class VerificationCodeInputField: UIView {
     init(numberOfDigits: Int) {
         self.numberOfDigits = numberOfDigits
         digits = (0..<numberOfDigits).map { index in
-            return VerificationCodeDigit()
+            return PDSVerificationCodeDigit()
         }
         super.init(frame: .zero)
         setUpUI()
@@ -83,7 +83,7 @@ final class VerificationCodeInputField: UIView {
 
 // MARK: - Actions
 
-private extension VerificationCodeInputField {
+private extension PDSVerificationCodeInputField {
     
     @objc
     func tapGestureHandler(_ recognizer: UITapGestureRecognizer) {
@@ -93,7 +93,7 @@ private extension VerificationCodeInputField {
 
 // MARK: - UITextFieldDelegate
 
-extension VerificationCodeInputField: UITextFieldDelegate {
+extension PDSVerificationCodeInputField: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else {

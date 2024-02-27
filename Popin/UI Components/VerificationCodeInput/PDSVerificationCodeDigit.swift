@@ -1,5 +1,5 @@
 //
-//  VerificationCodeDigit.swift
+//  PDSVerificationCodeDigit.swift
 //  Popin
 //
 //  Created by chamsol kim on 2/26/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class VerificationCodeDigit: UIView {
+class PDSVerificationCodeDigit: UIView {
     
     // MARK: - Interface
     
@@ -71,7 +71,7 @@ class VerificationCodeDigit: UIView {
     }
 }
 
-private extension VerificationCodeDigit {
+private extension PDSVerificationCodeDigit {
     
     enum Metric {
         static let dotSize = CGSize(width: 12, height: 12)
