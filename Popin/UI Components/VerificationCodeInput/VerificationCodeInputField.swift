@@ -109,7 +109,7 @@ extension VerificationCodeInputField: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         defer {
-            isFailure = true
+            isFailure = false
         }
         
         guard let text = textField.text?.padding(
