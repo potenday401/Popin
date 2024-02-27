@@ -10,6 +10,16 @@ import SnapKit
 
 final class VerificationCodeInputField: UIView {
     
+    // MARK: - Interface
+    
+    var isFailure = false {
+        didSet {
+            digits.forEach {
+                $0.isFailure = isFailure
+            }
+        }
+    }
+    
     // MARK: - UI
     
     private lazy var textField: UITextField = {
@@ -98,6 +108,10 @@ extension VerificationCodeInputField: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        defer {
+            isFailure = true
+        }
+        
         guard let text = textField.text?.padding(
             toLength: numberOfDigits,
             withPad: "-",

@@ -12,6 +12,12 @@ class VerificationCodeDigit: UIView {
     
     // MARK: - Interface
     
+    var isFailure = false {
+        didSet {
+            label.textColor = isFailure ? .pink100 : .white
+        }
+    }
+    
     func setNumber(_ number: String) {
         let isNumber = number.allSatisfy { $0.isNumber }
         label.text = isNumber ? number : nil
