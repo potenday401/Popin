@@ -15,6 +15,7 @@
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
 		65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */; };
+		65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */; };
 		65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */; };
 		65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */; };
 		65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */; };
@@ -100,6 +101,7 @@
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
 		65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
+		65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSInputField+Preview.swift"; sourceTree = "<group>"; };
 		65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSCheckbox.swift; sourceTree = "<group>"; };
 		65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSCheckbox+Preview.swift"; sourceTree = "<group>"; };
 		65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBar.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				9F0BA3082B68F4CB00677403 /* LaunchScreen.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
+				65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */,
 				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
 				65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */,
