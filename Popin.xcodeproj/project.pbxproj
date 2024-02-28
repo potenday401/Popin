@@ -25,7 +25,7 @@
 		65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1972B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift */; };
 		65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1992B8CCB110015CD0D /* PDSVerificationCodeInputField.swift */; };
 		65D2D19C2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D19B2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift */; };
-		9E46845E2B6E6FA900AD005A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* Date.swift */; };
+		9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E46845D2B6E6FA800AD005A /* DateRecord.swift */; };
 		9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4684622B6E7A7000AD005A /* DateViewModel.swift */; };
 		9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */; };
 		9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */; };
@@ -44,8 +44,6 @@
 		9F0BA2D52B68A0D700677403 /* fourpinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */; };
 		9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */; };
 		9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */; };
-		9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2EC2B68F37900677403 /* Array +.swift */; };
-		9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F22B68F3E900677403 /* Pin.swift */; };
 		9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F42B68F40000677403 /* Endpoint.swift */; };
 		9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F62B68F40C00677403 /* NetworkError.swift */; };
 		9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F82B68F41900677403 /* NetworkClient.swift */; };
@@ -53,8 +51,6 @@
 		9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */; };
 		9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2FE2B68F44A00677403 /* JHRequest.swift */; };
 		9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3002B68F46200677403 /* NetworkManageError.swift */; };
-		9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3022B68F47900677403 /* AlertManager.swift */; };
-		9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3042B68F49000677403 /* JSONDecoderError.swift */; };
 		9F0BA3142B68F56A00677403 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateView.swift */; };
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
@@ -105,7 +101,7 @@
 		65D2D1972B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSVerificationCodeDigit.swift; sourceTree = "<group>"; };
 		65D2D1992B8CCB110015CD0D /* PDSVerificationCodeInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSVerificationCodeInputField.swift; sourceTree = "<group>"; };
 		65D2D19B2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSVerificationCodeInputField+Preview.swift"; sourceTree = "<group>"; };
-		9E46845D2B6E6FA800AD005A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		9E46845D2B6E6FA800AD005A /* DateRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRecord.swift; sourceTree = "<group>"; };
 		9E4684622B6E7A7000AD005A /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 		9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -128,8 +124,6 @@
 		9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraViewController.swift; sourceTree = "<group>"; };
 		9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
-		9F0BA2EC2B68F37900677403 /* Array +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array +.swift"; sourceTree = "<group>"; };
-		9F0BA2F22B68F3E900677403 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		9F0BA2F42B68F40000677403 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		9F0BA2F62B68F40C00677403 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9F0BA2F82B68F41900677403 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -137,8 +131,6 @@
 		9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
 		9F0BA2FE2B68F44A00677403 /* JHRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHRequest.swift; sourceTree = "<group>"; };
 		9F0BA3002B68F46200677403 /* NetworkManageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManageError.swift; sourceTree = "<group>"; };
-		9F0BA3022B68F47900677403 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		9F0BA3042B68F49000677403 /* JSONDecoderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderError.swift; sourceTree = "<group>"; };
 		9F0BA3132B68F56A00677403 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
@@ -205,9 +197,8 @@
 			children = (
 				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA2E42B68F2E600677403 /* Network */,
-				9F0BA2E62B68F2FF00677403 /* Error */,
 				9F0BA2E92B68F34F00677403 /* ImageCache */,
-				9F0BA2E52B68F2F700677403 /* Model */,
+				653EE5D02B8F4B8F003F29AF /* Reusable */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
 			);
 			path = Common;
@@ -296,6 +287,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		653EE5D02B8F4B8F003F29AF /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */,
+			);
+			path = Reusable;
+			sourceTree = "<group>";
+		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,7 +345,7 @@
 		9E46845C2B6E6E6C00AD005A /* Date */ = {
 			isa = PBXGroup;
 			children = (
-				9E46845D2B6E6FA800AD005A /* Date.swift */,
+				9E46845D2B6E6FA800AD005A /* DateRecord.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -414,38 +413,20 @@
 			children = (
 				9F0BA2F42B68F40000677403 /* Endpoint.swift */,
 				9F0BA2F62B68F40C00677403 /* NetworkError.swift */,
+				9F0BA3002B68F46200677403 /* NetworkManageError.swift */,
 				9F0BA2F82B68F41900677403 /* NetworkClient.swift */,
 				9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */,
 				9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */,
 				9F0BA2FE2B68F44A00677403 /* JHRequest.swift */,
 				9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		9F0BA2E52B68F2F700677403 /* Model */ = {
-			isa = PBXGroup;
-			children = (
 				9F0BA2EF2B68F3B100677403 /* DTO */,
 			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		9F0BA2E62B68F2FF00677403 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				9F0BA3002B68F46200677403 /* NetworkManageError.swift */,
-				9F0BA3022B68F47900677403 /* AlertManager.swift */,
-				9F0BA3042B68F49000677403 /* JSONDecoderError.swift */,
-			);
-			path = Error;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		9F0BA2E72B68F30800677403 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9F0BA2EC2B68F37900677403 /* Array +.swift */,
-				9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */,
 				6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */,
 				6525D4932B88C9160063BD16 /* UIImage+Utils.swift */,
 				65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */,
@@ -475,17 +456,8 @@
 			isa = PBXGroup;
 			children = (
 				9E46845C2B6E6E6C00AD005A /* Date */,
-				9F0BA2F12B68F3E100677403 /* Pin */,
 			);
 			path = DTO;
-			sourceTree = "<group>";
-		};
-		9F0BA2F12B68F3E100677403 /* Pin */ = {
-			isa = PBXGroup;
-			children = (
-				9F0BA2F22B68F3E900677403 /* Pin.swift */,
-			);
-			path = Pin;
 			sourceTree = "<group>";
 		};
 		9F0BA3122B68F55D00677403 /* Date */ = {
@@ -659,12 +631,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F0BA3032B68F47900677403 /* AlertManager.swift in Sources */,
 				9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */,
 				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
 				65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */,
-				9F0BA3052B68F49000677403 /* JSONDecoderError.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
 				65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
@@ -685,11 +655,10 @@
 				9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
-				9F0BA2F32B68F3E900677403 /* Pin.swift in Sources */,
 				65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
-				9E46845E2B6E6FA900AD005A /* Date.swift in Sources */,
+				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
@@ -706,7 +675,6 @@
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
 				6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
-				9F0BA2ED2B68F37900677403 /* Array +.swift in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
 				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
