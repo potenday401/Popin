@@ -145,7 +145,7 @@ final class PDSInputField: UIView {
     // MARK: - Intrinsic Content Size
     
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 0, height: 64)
+        CGSize(width: CGFloat.greatestFiniteMagnitude, height: 64)
     }
 }
 
