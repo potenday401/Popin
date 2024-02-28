@@ -8,14 +8,29 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
+    // MARK: - Initialization
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
-        constraints()
+        view.backgroundColor = .gray600
+        setUpUI()
     }
     
-    func configure() { }
-    func constraints() { }
+    // MARK: - Setup
+    
+    func setUpUI() {
+        
+    }
 }
