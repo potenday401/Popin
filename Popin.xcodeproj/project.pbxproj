@@ -36,7 +36,6 @@
 		9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */; };
 		9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */; };
 		9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */; };
-		9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */; };
 		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
@@ -114,7 +113,6 @@
 		9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		9F0BA2AB2B68A0D600677403 /* Popin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9F0BA2B82B68A0D600677403 /* fourpin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fourpin.xcdatamodel; sourceTree = "<group>"; };
 		9F0BA2BA2B68A0D700677403 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F0BA2BD2B68A0D700677403 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -450,7 +448,6 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */,
-				9F0BA2B02B68A0D600677403 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -678,7 +675,6 @@
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
 				65D2D19C2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift in Sources */,
 				65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */,
-				9F0BA2B12B68A0D600677403 /* SceneDelegate.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
@@ -860,6 +856,11 @@
 				DEVELOPMENT_TEAM = 9FWA649AZW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Popin/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 허용 하시겠습니꺄?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n사용자의 위치를 받아오려고 합니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "엘범 사용 권한 허용하시겠습니까?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범 권한 허용하시겠습니까?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -888,6 +889,11 @@
 				DEVELOPMENT_TEAM = 9FWA649AZW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Popin/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한 허용 하시겠습니꺄?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n사용자의 위치를 받아오려고 합니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n<string>앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다.</string>\n앱에서 위치 정보를 사용하려고 합니다. 위치 정보를 사용하여 주변 서비스를 제공할 수 있습니다";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "엘범 사용 권한 허용하시겠습니까?";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범 권한 허용하시겠습니까?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
