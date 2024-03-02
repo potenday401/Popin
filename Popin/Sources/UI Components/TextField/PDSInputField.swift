@@ -22,19 +22,14 @@ final class PDSInputField: UIView {
         set {
             textField.text = newValue
             updatePlaceholderLabel(hasText: newValue != nil)
+            updateSecureTextVisibilityButtonShowing()
         }
     }
     
-    var isSecureTextEntry: Bool {
-        get { textField.isSecureTextEntry }
-        set {
-            textField.isSecureTextEntry = newValue
-            
-            if newValue {
-                stackView.addArrangedSubview(showPasswordButton)
-            } else {
-                showPasswordButton.removeFromSuperview()
-            }
+    var isSecureTextEntry = false {
+        didSet {
+            textField.isSecureTextEntry = isSecureTextEntry
+            updateSecureTextVisibilityButtonShowing()
         }
     }
     
@@ -59,6 +54,19 @@ final class PDSInputField: UIView {
         }
     }
     
+    private var isSecureTextVisible = false {
+        didSet {
+            secureTextVisibilityButton.alpha = Constant.secureTextVisibilityAlpha(isVisible: isSecureTextVisible)
+            
+            guard isSecureTextEntry else {
+                textField.isSecureTextEntry = false
+                return
+            }
+            
+            textField.isSecureTextEntry = !isSecureTextVisible
+        }
+    }
+    
     // MARK: - UI
     
     private let placeholderLabel = UILabel()
@@ -70,10 +78,11 @@ final class PDSInputField: UIView {
         return textField
     }()
     
-    private lazy var showPasswordButton: UIButton = {
+    private lazy var secureTextVisibilityButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(resource: .eye), for: .normal)
         button.addTarget(self, action: #selector(showPasswordDidTap), for: .touchUpInside)
+        button.alpha = Constant.secureTextVisibilityAlpha(isVisible: false)
         return button
     }()
     
@@ -121,7 +130,7 @@ final class PDSInputField: UIView {
         
         updatePlaceholderLabel(hasText: false)
         
-        showPasswordButton.snp.makeConstraints { make in
+        secureTextVisibilityButton.snp.makeConstraints { make in
             make.size.equalTo(Metric.imageSize)
         }
     }
@@ -144,6 +153,14 @@ final class PDSInputField: UIView {
             } else {
                 make.centerY.equalToSuperview()
             }
+        }
+    }
+    
+    private func updateSecureTextVisibilityButtonShowing() {
+        if isSecureTextEntry, let text, !text.isEmpty {
+            stackView.addArrangedSubview(secureTextVisibilityButton)
+        } else {
+            secureTextVisibilityButton.removeFromSuperview()
         }
     }
     
@@ -177,7 +194,7 @@ private extension PDSInputField {
     
     @objc
     func showPasswordDidTap() {
-        textField.isSecureTextEntry.toggle()
+        isSecureTextVisible.toggle()
     }
 }
 
@@ -191,6 +208,10 @@ extension PDSInputField: UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        updateSecureTextVisibilityButtonShowing()
+    }
+    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         state = .normal
         
@@ -199,6 +220,7 @@ extension PDSInputField: UITextFieldDelegate {
         }
         
         updatePlaceholderLabel(hasText: false)
+        updateSecureTextVisibilityButtonShowing()
         return true
     }
 }
@@ -252,5 +274,11 @@ private extension PDSInputField {
     enum Font {
         static let mainFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let subFont = UIFont.systemFont(ofSize: 14, weight: .regular)
+    }
+    
+    enum Constant {
+        static func secureTextVisibilityAlpha(isVisible: Bool) -> CGFloat {
+            isVisible ? 1 : 0.2
+        }
     }
 }
