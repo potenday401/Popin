@@ -14,6 +14,7 @@
 		6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E79D2B8F606B000D932C /* LoginViewController.swift */; };
 		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
 		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
+		6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -41,7 +42,6 @@
 		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
-		9F0BA2C92B68A0D700677403 /* fourpinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2C82B68A0D700677403 /* fourpinTests.swift */; };
 		9F0BA2D32B68A0D700677403 /* fourpinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2D22B68A0D700677403 /* fourpinUITests.swift */; };
 		9F0BA2D52B68A0D700677403 /* fourpinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */; };
 		9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */; };
@@ -92,6 +92,7 @@
 		6567E79D2B8F606B000D932C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6567E7AF2B92E170000D932C /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorage.swift; sourceTree = "<group>"; };
+		6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorageTests.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -122,7 +123,6 @@
 		9F0BA2BD2B68A0D700677403 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F0BA2BF2B68A0D700677403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F0BA2C42B68A0D700677403 /* PopinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F0BA2C82B68A0D700677403 /* fourpinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinTests.swift; sourceTree = "<group>"; };
 		9F0BA2CE2B68A0D700677403 /* PopinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0BA2D22B68A0D700677403 /* fourpinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinUITests.swift; sourceTree = "<group>"; };
 		9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -327,6 +327,37 @@
 			path = Token;
 			sourceTree = "<group>";
 		};
+		6567E7B72B931304000D932C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6567E7B82B93130F000D932C /* Storage */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		6567E7B82B93130F000D932C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				6567E7B92B931311000D932C /* Token */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		6567E7B92B931311000D932C /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		6567E7BC2B93138F000D932C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +430,7 @@
 				9F0BA2C72B68A0D700677403 /* PopinTests */,
 				9F0BA2D12B68A0D700677403 /* PopinUITests */,
 				9F0BA2AC2B68A0D600677403 /* Products */,
+				6567E7BC2B93138F000D932C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -426,7 +458,7 @@
 		9F0BA2C72B68A0D700677403 /* PopinTests */ = {
 			isa = PBXGroup;
 			children = (
-				9F0BA2C82B68A0D700677403 /* fourpinTests.swift */,
+				6567E7B72B931304000D932C /* Common */,
 			);
 			path = PopinTests;
 			sourceTree = "<group>";
@@ -559,6 +591,8 @@
 				9F0BA2C62B68A0D700677403 /* PBXTargetDependency */,
 			);
 			name = PopinTests;
+			packageProductDependencies = (
+			);
 			productName = fourpinTests;
 			productReference = 9F0BA2C42B68A0D700677403 /* PopinTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -717,7 +751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F0BA2C92B68A0D700677403 /* fourpinTests.swift in Sources */,
+				6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,7 +841,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -861,7 +895,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -946,7 +980,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P72UR4K32D;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = swift.fourpinTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -966,7 +1000,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P72UR4K32D;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = swift.fourpinTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
