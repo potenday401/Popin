@@ -12,6 +12,8 @@
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
 		6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4932B88C9160063BD16 /* UIImage+Utils.swift */; };
 		6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E79D2B8F606B000D932C /* LoginViewController.swift */; };
+		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
+		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -88,6 +90,8 @@
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
 		6525D4932B88C9160063BD16 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		6567E79D2B8F606B000D932C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6567E7AF2B92E170000D932C /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
+		6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorage.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 			children = (
 				9E8EBFE82B6E5CE300255D0D /* Base */,
 				9F0BA2E42B68F2E600677403 /* Network */,
+				6567E7AE2B92E15D000D932C /* Storage */,
 				9F0BA2E92B68F34F00677403 /* ImageCache */,
 				653EE5D02B8F4B8F003F29AF /* Reusable */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
@@ -302,6 +307,24 @@
 				6567E79D2B8F606B000D932C /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		6567E7AE2B92E15D000D932C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				6567E7B12B92E173000D932C /* Token */,
+			);
+			name = Storage;
+			path = Base/Storage;
+			sourceTree = "<group>";
+		};
+		6567E7B12B92E173000D932C /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				6567E7AF2B92E170000D932C /* TokenStorage.swift */,
+				6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */,
+			);
+			path = Token;
 			sourceTree = "<group>";
 		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
@@ -662,9 +685,11 @@
 				9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */,
 				9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
+				6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
+				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
 				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
