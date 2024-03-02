@@ -38,6 +38,19 @@ final class PDSInputField: UIView {
         }
     }
     
+    var isFailure: Bool {
+        get { state == .error }
+        set {
+            guard newValue else {
+                let state: State = textField.isFirstResponder ? .focused : .normal
+                updateColors(for: state)
+                return
+            }
+            
+            updateColors(for: .error)
+        }
+    }
+    
     // MARK: - Property
     
     private var state: State = .normal {
@@ -136,7 +149,7 @@ final class PDSInputField: UIView {
     
     private func updateColors(for state: State) {
         backgroundColor = state.backgroundColor
-        layer.borderWidth = state == .focused ? 1 : 0
+        layer.borderWidth = state == .normal ? 0 : 1
         layer.borderColor = state.primaryColor.cgColor
         textField.textColor = state.primaryColor
         placeholderLabel.textColor = state.secondaryColor
@@ -197,11 +210,13 @@ extension PDSInputField {
     enum State {
         case normal
         case focused
+        case error
         
         var primaryColor: UIColor {
             switch self {
             case .normal:   .white
             case .focused:  .indigo100
+            case .error:    .pink200
             }
         }
         
@@ -209,6 +224,7 @@ extension PDSInputField {
             switch self {
             case .normal:   .white
             case .focused:  .gray300
+            case .error:    .white
             }
         }
         
@@ -216,6 +232,7 @@ extension PDSInputField {
             switch self {
             case .normal:   .gray300
             case .focused:  .gray500
+            case .error:    .gray300
             }
         }
     }
