@@ -22,19 +22,27 @@ final class PDSInputField: UIView {
         set {
             textField.text = newValue
             updatePlaceholderLabel(hasText: newValue != nil)
+            updateSecureTextVisibilityButtonShowing()
         }
     }
     
-    var isSecureTextEntry: Bool {
-        get { textField.isSecureTextEntry }
+    var isSecureTextEntry = false {
+        didSet {
+            textField.isSecureTextEntry = isSecureTextEntry
+            updateSecureTextVisibilityButtonShowing()
+        }
+    }
+    
+    var isFailure: Bool {
+        get { state == .error }
         set {
-            textField.isSecureTextEntry = newValue
-            
-            if newValue {
-                stackView.addArrangedSubview(showPasswordButton)
-            } else {
-                showPasswordButton.removeFromSuperview()
+            guard newValue else {
+                let state: State = textField.isFirstResponder ? .focused : .normal
+                updateColors(for: state)
+                return
             }
+            
+            updateColors(for: .error)
         }
     }
     
@@ -43,6 +51,19 @@ final class PDSInputField: UIView {
     private var state: State = .normal {
         didSet {
             updateColors(for: state)
+        }
+    }
+    
+    private var isSecureTextVisible = false {
+        didSet {
+            secureTextVisibilityButton.alpha = Constant.secureTextVisibilityAlpha(isVisible: isSecureTextVisible)
+            
+            guard isSecureTextEntry else {
+                textField.isSecureTextEntry = false
+                return
+            }
+            
+            textField.isSecureTextEntry = !isSecureTextVisible
         }
     }
     
@@ -57,10 +78,11 @@ final class PDSInputField: UIView {
         return textField
     }()
     
-    private lazy var showPasswordButton: UIButton = {
+    private lazy var secureTextVisibilityButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(resource: .eye), for: .normal)
         button.addTarget(self, action: #selector(showPasswordDidTap), for: .touchUpInside)
+        button.alpha = Constant.secureTextVisibilityAlpha(isVisible: false)
         return button
     }()
     
@@ -108,7 +130,7 @@ final class PDSInputField: UIView {
         
         updatePlaceholderLabel(hasText: false)
         
-        showPasswordButton.snp.makeConstraints { make in
+        secureTextVisibilityButton.snp.makeConstraints { make in
             make.size.equalTo(Metric.imageSize)
         }
     }
@@ -134,9 +156,17 @@ final class PDSInputField: UIView {
         }
     }
     
+    private func updateSecureTextVisibilityButtonShowing() {
+        if isSecureTextEntry, let text, !text.isEmpty {
+            stackView.addArrangedSubview(secureTextVisibilityButton)
+        } else {
+            secureTextVisibilityButton.removeFromSuperview()
+        }
+    }
+    
     private func updateColors(for state: State) {
         backgroundColor = state.backgroundColor
-        layer.borderWidth = state == .focused ? 1 : 0
+        layer.borderWidth = state == .normal ? 0 : 1
         layer.borderColor = state.primaryColor.cgColor
         textField.textColor = state.primaryColor
         placeholderLabel.textColor = state.secondaryColor
@@ -164,7 +194,7 @@ private extension PDSInputField {
     
     @objc
     func showPasswordDidTap() {
-        textField.isSecureTextEntry.toggle()
+        isSecureTextVisible.toggle()
     }
 }
 
@@ -178,6 +208,10 @@ extension PDSInputField: UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        updateSecureTextVisibilityButtonShowing()
+    }
+    
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         state = .normal
         
@@ -186,6 +220,7 @@ extension PDSInputField: UITextFieldDelegate {
         }
         
         updatePlaceholderLabel(hasText: false)
+        updateSecureTextVisibilityButtonShowing()
         return true
     }
 }
@@ -197,11 +232,13 @@ extension PDSInputField {
     enum State {
         case normal
         case focused
+        case error
         
         var primaryColor: UIColor {
             switch self {
             case .normal:   .white
             case .focused:  .indigo100
+            case .error:    .pink200
             }
         }
         
@@ -209,6 +246,7 @@ extension PDSInputField {
             switch self {
             case .normal:   .white
             case .focused:  .gray300
+            case .error:    .white
             }
         }
         
@@ -216,6 +254,7 @@ extension PDSInputField {
             switch self {
             case .normal:   .gray300
             case .focused:  .gray500
+            case .error:    .gray300
             }
         }
     }
@@ -235,5 +274,11 @@ private extension PDSInputField {
     enum Font {
         static let mainFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let subFont = UIFont.systemFont(ofSize: 14, weight: .regular)
+    }
+    
+    enum Constant {
+        static func secureTextVisibilityAlpha(isVisible: Bool) -> CGFloat {
+            isVisible ? 1 : 0.2
+        }
     }
 }

@@ -173,7 +173,7 @@
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
-				65BC1F3E2B8E02F500CB2F15 /* TextField */,
+				65BC1F3E2B8E02F500CB2F15 /* InputField */,
 				65D2D1962B8CC8870015CD0D /* VerificationCodeInput */,
 				65D2D18D2B8CB1070015CD0D /* NavigationBar */,
 				65D2D1862B8CA7030015CD0D /* Checkbox */,
@@ -313,13 +313,13 @@
 			path = Buton;
 			sourceTree = "<group>";
 		};
-		65BC1F3E2B8E02F500CB2F15 /* TextField */ = {
+		65BC1F3E2B8E02F500CB2F15 /* InputField */ = {
 			isa = PBXGroup;
 			children = (
 				65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */,
 				65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */,
 			);
-			path = TextField;
+			path = InputField;
 			sourceTree = "<group>";
 		};
 		65D2D1862B8CA7030015CD0D /* Checkbox */ = {
