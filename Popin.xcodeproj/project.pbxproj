@@ -15,6 +15,7 @@
 		652C0E782B94591B00A87458 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E772B94591B00A87458 /* HTTPMethod.swift */; };
 		652C0E7A2B945C7300A87458 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E792B945C7300A87458 /* Request.swift */; };
 		652C0E7C2B945C7F00A87458 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E7B2B945C7F00A87458 /* Response.swift */; };
+		652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E9A2B946BEF00A87458 /* AlamofireNetwork.swift */; };
 		6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E79D2B8F606B000D932C /* LoginViewController.swift */; };
 		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
 		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
@@ -91,6 +92,7 @@
 		652C0E772B94591B00A87458 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		652C0E792B945C7300A87458 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		652C0E7B2B945C7F00A87458 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		652C0E9A2B946BEF00A87458 /* AlamofireNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireNetwork.swift; sourceTree = "<group>"; };
 		6567E79D2B8F606B000D932C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6567E7AF2B92E170000D932C /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorage.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				652C0E792B945C7300A87458 /* Request.swift */,
 				652C0E7B2B945C7F00A87458 /* Response.swift */,
 				652C0E732B94546800A87458 /* Network.swift */,
+				652C0E9A2B946BEF00A87458 /* AlamofireNetwork.swift */,
 				9F0BA2F42B68F40000677403 /* Endpoint.swift */,
 				9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */,
 				9F0BA2EF2B68F3B100677403 /* DTO */,
@@ -701,6 +704,7 @@
 				65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */,
 				65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */,
 				65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */,
+				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
