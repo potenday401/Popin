@@ -30,8 +30,6 @@ final class LoginViewControllerTests: XCTestCase {
         let email = "aaa@bbb.com"
         let password = "1234"
         
-        sut.loadViewIfNeeded()
-        
         sut.view.first(
             of: PDSInputField.self,
             with: "loginviewcontroller_email_inputfield"
