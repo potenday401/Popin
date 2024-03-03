@@ -77,6 +77,22 @@ final class LoginViewController: BaseViewController {
         return stackView
     }()
     
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let loginService: LoginService
+        let tokenRepository: TokenRepository
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        super.init()
+    }
+    
     // MARK: - Setup
     
     override func setUpUI() {
@@ -129,7 +145,30 @@ private extension LoginViewController {
     
     @objc
     func signInDidTap() {
-        print(#function)
+        guard let email = emailInputField.text,
+              let password = passwordInputField.text
+        else {
+            return
+        }
+        
+        login(email: email, password: password)
+    }
+    
+    func login(email: String, password: String) {
+        dependency.loginService
+            .login(email: email, password: password) { [weak self] result in
+                do {
+                    let response = try result.get()
+                    self?.dependency.tokenRepository.storeToken(
+                        accessToken: response.accessToken,
+                        refreshToken: response.refreshToken
+                    )
+                    // TODO: Go to Home
+                } catch {
+                    // TODO: error message 표시
+                    print(error.localizedDescription)
+                }
+            }
     }
     
     @objc

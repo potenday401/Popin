@@ -15,11 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = LoginViewController()
-        window.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
         
-        self.window = window
+        let alamofireNetwork = AlamofireNetwork()
+        let tokenStorage = TokenKeychainStorage()
+        let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
+        window?.rootViewController = LoginViewController(
+            dependency: .init(
+                loginService: LoginServiceImp(network: alamofireNetwork),
+                tokenRepository: tokenRepository
+            )
+        )
         
         return true
     }
