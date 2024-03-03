@@ -47,12 +47,6 @@
 		9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */; };
 		9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */; };
 		9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F42B68F40000677403 /* Endpoint.swift */; };
-		9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F62B68F40C00677403 /* NetworkError.swift */; };
-		9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F82B68F41900677403 /* NetworkClient.swift */; };
-		9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */; };
-		9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */; };
-		9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2FE2B68F44A00677403 /* JHRequest.swift */; };
-		9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3002B68F46200677403 /* NetworkManageError.swift */; };
 		9F0BA3142B68F56A00677403 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3132B68F56A00677403 /* DateView.swift */; };
 		9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3162B68F58600677403 /* HomeViewController.swift */; };
 		9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA3192B68F59B00677403 /* AlbumViewController.swift */; };
@@ -129,12 +123,6 @@
 		9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraViewController.swift; sourceTree = "<group>"; };
 		9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		9F0BA2F42B68F40000677403 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		9F0BA2F62B68F40C00677403 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		9F0BA2F82B68F41900677403 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstant.swift; sourceTree = "<group>"; };
-		9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		9F0BA2FE2B68F44A00677403 /* JHRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHRequest.swift; sourceTree = "<group>"; };
-		9F0BA3002B68F46200677403 /* NetworkManageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManageError.swift; sourceTree = "<group>"; };
 		9F0BA3132B68F56A00677403 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9F0BA3162B68F58600677403 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9F0BA3192B68F59B00677403 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
@@ -476,12 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA2F42B68F40000677403 /* Endpoint.swift */,
-				9F0BA2F62B68F40C00677403 /* NetworkError.swift */,
-				9F0BA3002B68F46200677403 /* NetworkManageError.swift */,
-				9F0BA2F82B68F41900677403 /* NetworkClient.swift */,
-				9F0BA2FA2B68F42800677403 /* NetworkConstant.swift */,
-				9F0BA2FC2B68F43800677403 /* ParameterEncoding.swift */,
-				9F0BA2FE2B68F44A00677403 /* JHRequest.swift */,
 				9E8EBFF52B6E6BDB00255D0D /* APIManager.swift */,
 				9F0BA2EF2B68F3B100677403 /* DTO */,
 			);
@@ -697,7 +679,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8EBFEA2B6E5D1B00255D0D /* BaseView.swift in Sources */,
-				9F0BA2FF2B68F44A00677403 /* JHRequest.swift in Sources */,
 				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
 				65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
@@ -710,21 +691,17 @@
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
-				9F0BA3012B68F46200677403 /* NetworkManageError.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */,
 				65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
-				9F0BA2F92B68F41900677403 /* NetworkClient.swift in Sources */,
-				9F0BA2FB2B68F42800677403 /* NetworkConstant.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
 				6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
 				65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
-				9F0BA2FD2B68F43800677403 /* ParameterEncoding.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
@@ -743,7 +720,6 @@
 				6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,
-				9F0BA2F72B68F40C00677403 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
