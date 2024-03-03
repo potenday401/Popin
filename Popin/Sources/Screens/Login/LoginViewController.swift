@@ -23,6 +23,7 @@ final class LoginViewController: BaseViewController {
     private let emailInputField: PDSInputField = {
         let inputField = PDSInputField()
         inputField.placeholder = Text.emailPlaceholder
+        inputField.accessibilityIdentifier = "loginviewcontroller_email_inputfield"
         return inputField
     }()
     
@@ -30,6 +31,7 @@ final class LoginViewController: BaseViewController {
         let inputField = PDSInputField()
         inputField.placeholder = Text.passwordPlaceholder
         inputField.isSecureTextEntry = true
+        inputField.accessibilityIdentifier = "loginviewcontroller_password_inputfield"
         return inputField
     }()
     
@@ -46,6 +48,7 @@ final class LoginViewController: BaseViewController {
         let button = PDSButton(style: .primary)
         button.setTitle(Text.signInButtonTitle)
         button.addTarget(self, action: #selector(signInDidTap), for: .touchUpInside)
+        button.accessibilityIdentifier = "loginviewcontroller_signin_button"
         return button
     }()
     
