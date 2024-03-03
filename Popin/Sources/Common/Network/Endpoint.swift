@@ -7,14 +7,18 @@
 
 import Foundation
 
-struct Endpoint { }
-extension Endpoint {
-    enum Pin {
-        static let baseURL: String = "https://..."
+struct Endpoint {
+    
+    static let baseURL = URL(string: "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/")!
+    
+    enum Auth {
+        case login
+        
+        var url: URL {
+            Endpoint.baseURL.appending(path: "/auth/login")
+        }
     }
-}
-
-extension Endpoint {
+    
     enum Date {
         static let baseURL: String = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/calendar-album?"
         static let memberId: String = "memberId="
