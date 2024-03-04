@@ -29,24 +29,12 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9F0BA2C32B68A0D700677403"
                BuildableName = "PopinTests.xctest"
                BlueprintName = "PopinTests"
-               ReferencedContainer = "container:Popin.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F0BA2CD2B68A0D700677403"
-               BuildableName = "PopinUITests.xctest"
-               BlueprintName = "PopinUITests"
                ReferencedContainer = "container:Popin.xcodeproj">
             </BuildableReference>
          </TestableReference>

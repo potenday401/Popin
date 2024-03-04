@@ -61,8 +61,6 @@
 		9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2B72B68A0D600677403 /* Popin.xcdatamodeld */; };
 		9F0BA2BB2B68A0D700677403 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BA2B68A0D700677403 /* Assets.xcassets */; };
 		9F0BA2BE2B68A0D700677403 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BA2BC2B68A0D700677403 /* LaunchScreen.storyboard */; };
-		9F0BA2D32B68A0D700677403 /* fourpinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2D22B68A0D700677403 /* fourpinUITests.swift */; };
-		9F0BA2D52B68A0D700677403 /* fourpinUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */; };
 		9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */; };
 		9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */; };
 		9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0BA2F42B68F40000677403 /* Endpoint.swift */; };
@@ -82,13 +80,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		9F0BA2C52B68A0D700677403 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F0BA2A32B68A0D600677403 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9F0BA2AA2B68A0D600677403;
-			remoteInfo = fourpin;
-		};
-		9F0BA2CF2B68A0D700677403 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9F0BA2A32B68A0D600677403 /* Project object */;
 			proxyType = 1;
@@ -155,9 +146,6 @@
 		9F0BA2BD2B68A0D700677403 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F0BA2BF2B68A0D700677403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F0BA2C42B68A0D700677403 /* PopinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F0BA2CE2B68A0D700677403 /* PopinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F0BA2D22B68A0D700677403 /* fourpinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinUITests.swift; sourceTree = "<group>"; };
-		9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fourpinUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9F0BA2E12B68EBEC00677403 /* cameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraViewController.swift; sourceTree = "<group>"; };
 		9F0BA2EA2B68F36200677403 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		9F0BA2F42B68F40000677403 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -184,13 +172,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9F0BA2C12B68A0D700677403 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F0BA2CB2B68A0D700677403 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -570,7 +551,6 @@
 			children = (
 				9F0BA2AD2B68A0D600677403 /* Popin */,
 				9F0BA2C72B68A0D700677403 /* PopinTests */,
-				9F0BA2D12B68A0D700677403 /* PopinUITests */,
 				9F0BA2AC2B68A0D600677403 /* Products */,
 				6567E7BC2B93138F000D932C /* Frameworks */,
 			);
@@ -581,7 +561,6 @@
 			children = (
 				9F0BA2AB2B68A0D600677403 /* Popin.app */,
 				9F0BA2C42B68A0D700677403 /* PopinTests.xctest */,
-				9F0BA2CE2B68A0D700677403 /* PopinUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -605,15 +584,6 @@
 				652C0E8F2B94650D00A87458 /* TestSupport */,
 			);
 			path = PopinTests;
-			sourceTree = "<group>";
-		};
-		9F0BA2D12B68A0D700677403 /* PopinUITests */ = {
-			isa = PBXGroup;
-			children = (
-				9F0BA2D22B68A0D700677403 /* fourpinUITests.swift */,
-				9F0BA2D42B68A0D700677403 /* fourpinUITestsLaunchTests.swift */,
-			);
-			path = PopinUITests;
 			sourceTree = "<group>";
 		};
 		9F0BA2E42B68F2E600677403 /* Network */ = {
@@ -740,24 +710,6 @@
 			productReference = 9F0BA2C42B68A0D700677403 /* PopinTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9F0BA2CD2B68A0D700677403 /* PopinUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9F0BA2DE2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinUITests" */;
-			buildPhases = (
-				9F0BA2CA2B68A0D700677403 /* Sources */,
-				9F0BA2CB2B68A0D700677403 /* Frameworks */,
-				9F0BA2CC2B68A0D700677403 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9F0BA2D02B68A0D700677403 /* PBXTargetDependency */,
-			);
-			name = PopinUITests;
-			productName = fourpinUITests;
-			productReference = 9F0BA2CE2B68A0D700677403 /* PopinUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -772,10 +724,6 @@
 						CreatedOnToolsVersion = 14.2;
 					};
 					9F0BA2C32B68A0D700677403 = {
-						CreatedOnToolsVersion = 14.2;
-						TestTargetID = 9F0BA2AA2B68A0D600677403;
-					};
-					9F0BA2CD2B68A0D700677403 = {
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 9F0BA2AA2B68A0D600677403;
 					};
@@ -803,7 +751,6 @@
 			targets = (
 				9F0BA2AA2B68A0D600677403 /* Popin */,
 				9F0BA2C32B68A0D700677403 /* PopinTests */,
-				9F0BA2CD2B68A0D700677403 /* PopinUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -819,13 +766,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9F0BA2C22B68A0D700677403 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F0BA2CC2B68A0D700677403 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -911,15 +851,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9F0BA2CA2B68A0D700677403 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9F0BA2D52B68A0D700677403 /* fourpinUITestsLaunchTests.swift in Sources */,
-				9F0BA2D32B68A0D700677403 /* fourpinUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -927,11 +858,6 @@
 			isa = PBXTargetDependency;
 			target = 9F0BA2AA2B68A0D600677403 /* Popin */;
 			targetProxy = 9F0BA2C52B68A0D700677403 /* PBXContainerItemProxy */;
-		};
-		9F0BA2D02B68A0D700677403 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9F0BA2AA2B68A0D600677403 /* Popin */;
-			targetProxy = 9F0BA2CF2B68A0D700677403 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1167,42 +1093,6 @@
 			};
 			name = Release;
 		};
-		9F0BA2DF2B68A0D700677403 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P72UR4K32D;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swift.fourpinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = fourpin;
-			};
-			name = Debug;
-		};
-		9F0BA2E02B68A0D700677403 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P72UR4K32D;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swift.fourpinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = fourpin;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1229,15 +1119,6 @@
 			buildConfigurations = (
 				9F0BA2DC2B68A0D700677403 /* Debug */,
 				9F0BA2DD2B68A0D700677403 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9F0BA2DE2B68A0D700677403 /* Build configuration list for PBXNativeTarget "PopinUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9F0BA2DF2B68A0D700677403 /* Debug */,
-				9F0BA2E02B68A0D700677403 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
