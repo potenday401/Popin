@@ -29,6 +29,8 @@
 		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
 		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
 		6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */; };
+		65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */; };
+		65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -115,6 +117,8 @@
 		6567E7AF2B92E170000D932C /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorage.swift; sourceTree = "<group>"; };
 		6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorageTests.swift; sourceTree = "<group>"; };
+		65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSAlertLabel.swift; sourceTree = "<group>"; };
+		65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSAlertLabel+Preview.swift"; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				65779EB72B957DE000D8C98E /* AlertLabel */,
 				65BC1F3E2B8E02F500CB2F15 /* InputField */,
 				65D2D1962B8CC8870015CD0D /* VerificationCodeInput */,
 				65D2D18D2B8CB1070015CD0D /* NavigationBar */,
@@ -459,6 +464,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65779EB72B957DE000D8C98E /* AlertLabel */ = {
+			isa = PBXGroup;
+			children = (
+				65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */,
+				65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */,
+			);
+			path = AlertLabel;
 			sourceTree = "<group>";
 		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
@@ -809,6 +823,7 @@
 				652C0E7C2B945C7F00A87458 /* Response.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
 				65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */,
+				65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */,
 				65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */,
 				65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
@@ -819,6 +834,7 @@
 				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */,
+				65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */,
 				65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				652C0EA12B94831600A87458 /* LoginserviceImp.swift in Sources */,
