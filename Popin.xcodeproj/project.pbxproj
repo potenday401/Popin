@@ -32,6 +32,8 @@
 		65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */; };
 		65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */; };
 		65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBC2B9584F500D8C98E /* LoginError.swift */; };
+		65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */; };
+		65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -121,6 +123,8 @@
 		65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSAlertLabel.swift; sourceTree = "<group>"; };
 		65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSAlertLabel+Preview.swift"; sourceTree = "<group>"; };
 		65779EBC2B9584F500D8C98E /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
+		65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidator.swift; sourceTree = "<group>"; };
+		65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidatorTests.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 				9F0BA2E42B68F2E600677403 /* Network */,
 				6567E7AE2B92E15D000D932C /* Storage */,
 				9F0BA2E92B68F34F00677403 /* ImageCache */,
+				65779EC52B95D68900D8C98E /* Validator */,
 				653EE5D02B8F4B8F003F29AF /* Reusable */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
 			);
@@ -442,6 +447,7 @@
 			children = (
 				652C0E932B9467A400A87458 /* Repository */,
 				6567E7B82B93130F000D932C /* Storage */,
+				65779EC62B95D69D00D8C98E /* Validator */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -476,6 +482,22 @@
 				65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */,
 			);
 			path = AlertLabel;
+			sourceTree = "<group>";
+		};
+		65779EC52B95D68900D8C98E /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */,
+			);
+			path = Validator;
+			sourceTree = "<group>";
+		};
+		65779EC62B95D69D00D8C98E /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */,
+			);
+			path = Validator;
 			sourceTree = "<group>";
 		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
@@ -841,6 +863,7 @@
 				65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */,
 				65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
+				65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */,
 				652C0EA12B94831600A87458 /* LoginserviceImp.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
@@ -883,6 +906,7 @@
 				652C0E8E2B9464C100A87458 /* LoginViewControllerTests.swift in Sources */,
 				652C0E9D2B946C7200A87458 /* LoginServiceMock.swift in Sources */,
 				6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */,
+				65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */,
 				652C0E962B9467B600A87458 /* TokenRepositoryMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
