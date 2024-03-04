@@ -44,6 +44,14 @@ final class LoginViewController: BaseViewController {
         return stackView
     }()
     
+    private let alertLabel: PDSAlertLabel = {
+        let label = PDSAlertLabel()
+        label.state = .error
+        label.isHidden = true
+        label.accessibilityIdentifier = "loginviewcontroller_alert_label"
+        return label
+    }()
+    
     private lazy var signInButton: PDSButton = {
         let button = PDSButton(style: .primary)
         button.setTitle(Text.signInButtonTitle)
@@ -122,9 +130,15 @@ final class LoginViewController: BaseViewController {
         }
         [emailInputField, passwordInputField].forEach(inputStackView.addArrangedSubview(_:))
         
+        view.addSubview(alertLabel)
+        alertLabel.snp.makeConstraints { make in
+            make.top.equalTo(inputStackView.snp.bottom).offset(38)
+            make.centerX.equalToSuperview()
+        }
+        
         view.addSubview(signInButton)
         signInButton.snp.makeConstraints { make in
-            make.top.equalTo(inputStackView.snp.bottom).offset(80)
+            make.top.equalTo(alertLabel.snp.bottom).offset(18)
             make.leading.trailing.equalToSuperview().inset(inset)
         }
         
@@ -168,8 +182,8 @@ private extension LoginViewController {
                     )
                     // TODO: Go to Home
                 } catch {
-                    // TODO: error message 표시
-                    print(error.localizedDescription)
+                    self?.alertLabel.text = error.localizedDescription
+                    self?.alertLabel.isHidden = false
                 }
             }
     }
@@ -196,4 +210,18 @@ private extension LoginViewController {
         static let findPasswordButtonTitle = "비밀번호 찾기"
         static let signUpButtonTitle = "회원가입하기"
     }
+}
+
+// MARK: - Preview
+
+#Preview {
+    let alamofireNetwork = AlamofireNetwork()
+    let tokenStorage = TokenKeychainStorage()
+    let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
+    return LoginViewController(
+        dependency: .init(
+            loginService: LoginServiceImp(network: alamofireNetwork),
+            tokenRepository: tokenRepository
+        )
+    )
 }

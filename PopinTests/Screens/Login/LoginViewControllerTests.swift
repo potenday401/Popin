@@ -13,7 +13,7 @@ final class LoginViewControllerTests: XCTestCase {
     private var sut: LoginViewController!
     private var loginService: LoginServiceMock!
     private var tokenRepository: TokenRepositoryMock!
-
+    
     override func setUpWithError() throws {
         loginService = LoginServiceMock()
         tokenRepository = TokenRepositoryMock()
@@ -24,7 +24,7 @@ final class LoginViewControllerTests: XCTestCase {
             )
         )
     }
-
+    
     func testRequestLogin() {
         // given
         let email = "aaa@bbb.com"
@@ -70,5 +70,42 @@ final class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(tokenRepository.storeTokenCallCount, 1)
         XCTAssertEqual(tokenRepository.accessToken, accessToken)
         XCTAssertEqual(tokenRepository.refreshToken, refreshToken)
+    }
+    
+    func testSetErrorToAlertLabel() {
+        // given
+        let error = LoginError.invalidEmail
+        loginService.loginError = error
+        let alertLabel = sut.view.first(
+            of: PDSAlertLabel.self,
+            with: "loginviewcontroller_alert_label"
+        )
+        
+        // when
+        sut.view.first(
+            of: PDSButton.self,
+            with: "loginviewcontroller_signin_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(alertLabel?.text, error.localizedDescription)
+    }
+    
+    func testAlertLabelVisibleIfFailure() {
+        // given
+        loginService.loginError = NSError(domain: "", code: 0)
+        let alertLabel = sut.view.first(
+            of: PDSAlertLabel.self,
+            with: "loginviewcontroller_alert_label"
+        )
+        
+        // when
+        sut.view.first(
+            of: PDSButton.self,
+            with: "loginviewcontroller_signin_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertFalse(alertLabel!.isHidden)
     }
 }

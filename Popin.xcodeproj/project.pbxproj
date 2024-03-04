@@ -31,6 +31,7 @@
 		6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */; };
 		65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */; };
 		65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */; };
+		65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBC2B9584F500D8C98E /* LoginError.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -119,6 +120,7 @@
 		6567E7BA2B93131E000D932C /* TokenKeychainStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorageTests.swift; sourceTree = "<group>"; };
 		65779EB82B957DF300D8C98E /* PDSAlertLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSAlertLabel.swift; sourceTree = "<group>"; };
 		65779EBA2B95802300D8C98E /* PDSAlertLabel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSAlertLabel+Preview.swift"; sourceTree = "<group>"; };
+		65779EBC2B9584F500D8C98E /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				652C0E752B9456C800A87458 /* LoginService.swift */,
 				652C0EA02B94831600A87458 /* LoginserviceImp.swift */,
 				652C0E832B9462F600A87458 /* LoginRequest.swift */,
+				65779EBC2B9584F500D8C98E /* LoginError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */,
 				65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */,
 				65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */,
+				65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
