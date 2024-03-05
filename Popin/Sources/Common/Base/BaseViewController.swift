@@ -9,6 +9,10 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
+    // MARK: - Interface
+    
+    var shouldEndEditingIfTouchesEnded = false
+    
     // MARK: - Initialization
     
     init() {
@@ -32,5 +36,15 @@ class BaseViewController: UIViewController {
     
     func setUpUI() {
         
+    }
+    
+    // MARK: - Touch
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        guard shouldEndEditingIfTouchesEnded else {
+            return
+        }
+        view.endEditing(true)
     }
 }

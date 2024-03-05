@@ -107,6 +107,8 @@ final class LoginViewController: BaseViewController {
     // MARK: - Setup
     
     override func setUpUI() {
+        shouldEndEditingIfTouchesEnded = true
+        
         let appIconMargin: CGFloat = 74
         let inset: CGFloat = 13
         
@@ -148,11 +150,6 @@ final class LoginViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         [findPasswordButton, signUpButton].forEach(buttonStackView.addArrangedSubview(_:))
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        view.endEditing(true)
     }
 }
 
