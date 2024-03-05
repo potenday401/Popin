@@ -10,27 +10,51 @@ import SnapKit
 
 fileprivate final class PDSNavigationBarPreviewViewController: UIViewController {
     
-    private let bar1: PDSNavigationBar = {
+    private lazy var bar1: PDSNavigationBar = {
         let bar = PDSNavigationBar()
         bar.title = "Text"
-        bar.leftItem = .init(image: UIImage(systemName: "chevron.left"))
-        bar.rightItem = .init(image: UIImage(systemName: "plus"))
+        bar.leftItem = .init(
+            image: UIImage(systemName: "chevron.left"),
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
+        bar.rightItem = .init(
+            image: UIImage(systemName: "plus"),
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
         return bar
     }()
     
-    private let bar2: PDSNavigationBar = {
+    private lazy var bar2: PDSNavigationBar = {
         let bar = PDSNavigationBar()
         bar.titleView = UIImageView(image: UIImage(resource: .logo))
-        bar.leftItem = .init(image: UIImage(systemName: "chevron.left"))
-        bar.rightItem = .init(image: UIImage(systemName: "magnifyingglass"))
+        bar.leftItem = .init(
+            image: UIImage(systemName: "chevron.left"),
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
+        bar.rightItem = .init(
+            image: UIImage(systemName: "magnifyingglass"),
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
         return bar
     }()
     
-    private let bar3: PDSNavigationBar = {
+    private lazy var bar3: PDSNavigationBar = {
         let bar = PDSNavigationBar()
         bar.title = "Text"
-        bar.leftItem = .init(image: UIImage(systemName: "chevron.left"))
-        bar.rightItem = .init(title: "저장")
+        bar.leftItem = .init(
+            image: UIImage(systemName: "chevron.left"),
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
+        bar.rightItem = .init(
+            title: "저장",
+            target: self,
+            action: #selector(buttonItemDidTap)
+        )
         return bar
     }()
     
@@ -53,6 +77,11 @@ fileprivate final class PDSNavigationBarPreviewViewController: UIViewController 
         }
         
         [bar1, bar2, bar3].forEach(stackView.addArrangedSubview(_:))
+    }
+    
+    @objc
+    private func buttonItemDidTap() {
+        print(#function)
     }
 }
 

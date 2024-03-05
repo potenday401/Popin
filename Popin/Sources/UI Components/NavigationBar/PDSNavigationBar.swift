@@ -41,7 +41,7 @@ final class PDSNavigationBar: UIView {
         }
     }
     
-    var leftItem: PDSNavigationBarItem? {
+    var leftItem: PDSNavigationBarButtonItem? {
         didSet {
             leftStackView.removeAllArrangedSubviews()
             
@@ -53,7 +53,7 @@ final class PDSNavigationBar: UIView {
         }
     }
     
-    var rightItem: PDSNavigationBarItem? {
+    var rightItem: PDSNavigationBarButtonItem? {
         didSet {
             rightStackView.removeAllArrangedSubviews()
             
