@@ -110,7 +110,7 @@ final class LoginViewController: BaseViewController {
         shouldEndEditingIfTouchesEnded = true
         
         let appIconMargin: CGFloat = 74
-        let inset: CGFloat = 13
+        let inset: CGFloat = 16
         
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
