@@ -42,17 +42,63 @@ class HomeViewController: TabmanViewController {
         
         return navigationBar
     }()
-
+    private let recentMemoryStack:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 6
+        return stackView
+    }()
+    private let recentMemoryLabel:UILabel = {
+        let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .gray100
+        label.text = Text.recentMemoryTitle
+        return label
+    }()
+    
+    private let recentPinLabel:UILabel = {
+        let label = UILabel(frame: CGRect(x: 16, y: 50, width: 112, height: 50))
+        label.textColor = .white
+        label.text = "일본..."
+        label.lineBreakMode = .byWordWrapping
+        label.font = .systemFont(ofSize: 26, weight: .medium)
+        return label
+    }()
+    
+    @objc private func cameraButtonTapped() {
+        let cameraViewController = CameraViewController()
+        navigationController?.pushViewController(cameraViewController, animated: true)
+    }
+    
+    private lazy var cameraButton: UIButton = {
+        let button = makeButton(title: Text.uploadPhotoTitle)
+          button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+          return button
+      }()
+    
+    private func makeButton(title: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.backgroundColor = .indigo200
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 343).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        button.layer.cornerRadius = 8
+        return button
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dateViewController = DateViewController(viewModel: nil)
+//        let dateViewController = DateViewController(viewModel: nil)
         let homeMapViewController = HomeMapViewController()
         
         viewControllers.append(homeMapViewController)
-        viewControllers.append(dateViewController)
-        
+//        viewControllers.append(dateViewController)
+
         let bar = TMBar.ButtonBar()
         
         //  Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
@@ -69,29 +115,45 @@ class HomeViewController: TabmanViewController {
         bar.indicator.tintColor = .clear
         dataSource = self
         
-        let cameraButton = UIButton(type: .system)
-        cameraButton.setTitle("사진등록하기", for: .normal)
-        cameraButton.setTitleColor(.white, for: .normal)
-        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
-        
         view.addSubview(cameraButton)
         view.addSubview(navigationBar)
-        
+
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
         
+        view.addSubview(recentMemoryStack)
+
+        recentMemoryStack.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom).offset(42)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.height.equalTo(54)
+            
+        }
+        
+        recentMemoryStack.addArrangedSubview(recentMemoryLabel)
+        recentMemoryLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+        }
+        recentMemoryStack.addArrangedSubview(recentPinLabel)
+        recentPinLabel.snp.makeConstraints { make in
+            make.height.equalTo(31)
+
+        }
+        
+        homeMapViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(recentMemoryStack.snp.bottom).offset(-170)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         cameraButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.top.equalTo(homeMapViewController.view.snp.bottom).offset(-145)
         }
     }
-    @objc private func cameraButtonTapped() {
-        let cameraViewController = CameraViewController()
-        navigationController?.pushViewController(cameraViewController, animated: true)
-    }
-    
 }
 
 extension HomeViewController: PageboyViewControllerDataSource {
@@ -119,6 +181,15 @@ extension HomeViewController: TMBarDataSource {
     }
 }
 
+private extension HomeViewController {
+
+    enum Text {
+        static let recentMemoryTitle = "최근 업로드 된 추억"
+        static let uploadPhotoTitle = "사진등록하기"
+    }
+}
+
 #Preview {
      HomeViewController()
 }
+
