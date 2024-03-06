@@ -192,7 +192,8 @@ private extension LoginViewController {
     
     @objc
     func signUpDidTap() {
-        print(#function)
+        let signUpViewController = SignUpViewController()
+        present(signUpViewController, animated: true)
     }
 }
 
