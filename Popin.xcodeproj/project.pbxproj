@@ -34,6 +34,10 @@
 		65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBC2B9584F500D8C98E /* LoginError.swift */; };
 		65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */; };
 		65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */; };
+		6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711B2B981F2B00875FEE /* KeyboardSupport.swift */; };
+		6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */; };
+		658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711F2B9823CF00875FEE /* KeyboardNotification.swift */; };
+		658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471212B98246700875FEE /* NotificationCenter+Utils.swift */; };
 		658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471242B982E4000875FEE /* SignUpProgressView.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
@@ -119,6 +123,10 @@
 		65779EBC2B9584F500D8C98E /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidator.swift; sourceTree = "<group>"; };
 		65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidatorTests.swift; sourceTree = "<group>"; };
+		6584711B2B981F2B00875FEE /* KeyboardSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSupport.swift; sourceTree = "<group>"; };
+		6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationUserInfo.swift; sourceTree = "<group>"; };
+		6584711F2B9823CF00875FEE /* KeyboardNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		658471212B98246700875FEE /* NotificationCenter+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Utils.swift"; sourceTree = "<group>"; };
 		658471242B982E4000875FEE /* SignUpProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProgressView.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
@@ -305,6 +313,7 @@
 				9F0BA2E92B68F34F00677403 /* ImageCache */,
 				65779EC52B95D68900D8C98E /* Validator */,
 				653EE5D02B8F4B8F003F29AF /* Reusable */,
+				6584711A2B981F1700875FEE /* Keyboard */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
 			);
 			path = Common;
@@ -489,6 +498,16 @@
 			path = Validator;
 			sourceTree = "<group>";
 		};
+		6584711A2B981F1700875FEE /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				6584711B2B981F2B00875FEE /* KeyboardSupport.swift */,
+				6584711F2B9823CF00875FEE /* KeyboardNotification.swift */,
+				6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
 		658471232B982E3500875FEE /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -633,6 +652,7 @@
 				6525D4932B88C9160063BD16 /* UIImage+Utils.swift */,
 				65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */,
 				65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */,
+				658471212B98246700875FEE /* NotificationCenter+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -819,6 +839,7 @@
 				65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */,
 				65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
+				658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */,
 				65BC5BD12B96D815003EABD5 /* EmailVerificationViewController.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
@@ -841,10 +862,12 @@
 				652C0E782B94591B00A87458 /* HTTPMethod.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
+				6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
+				6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */,
 				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				652C0E842B9462F600A87458 /* LoginRequest.swift in Sources */,
 				652C0E7A2B945C7300A87458 /* Request.swift in Sources */,
@@ -854,6 +877,7 @@
 				652C0E742B94546800A87458 /* Network.swift in Sources */,
 				65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
+				658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,

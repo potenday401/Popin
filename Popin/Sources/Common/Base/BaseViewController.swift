@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController, KeyboardSupport {
     
     // MARK: - Interface
     
@@ -30,6 +30,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray600
+        observeKeyboardNotification()
         setUpUI()
     }
     
@@ -47,5 +48,31 @@ class BaseViewController: UIViewController {
             return
         }
         view.endEditing(true)
+    }
+    
+    // MARK: - Keyboard
+    
+    func keyboardWillShowNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
+    }
+    
+    func keyboardWillHideNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
+    }
+    
+    func keyboardDidShowNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
+    }
+    
+    func keyboardDidHideNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
+    }
+    
+    func keyboardWillChangeFrameNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
+    }
+    
+    func keyboardDidChangeFrameNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        
     }
 }
