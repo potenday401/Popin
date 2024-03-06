@@ -34,6 +34,7 @@
 		65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBC2B9584F500D8C98E /* LoginError.swift */; };
 		65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */; };
 		65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */; };
+		658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471242B982E4000875FEE /* SignUpProgressView.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -117,6 +118,7 @@
 		65779EBC2B9584F500D8C98E /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidator.swift; sourceTree = "<group>"; };
 		65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidatorTests.swift; sourceTree = "<group>"; };
+		658471242B982E4000875FEE /* SignUpProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProgressView.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				6567E79D2B8F606B000D932C /* LoginViewController.swift */,
+				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
 			path = Login;
@@ -481,6 +484,14 @@
 				65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */,
 			);
 			path = Validator;
+			sourceTree = "<group>";
+		};
+		658471232B982E3500875FEE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				658471242B982E4000875FEE /* SignUpProgressView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
@@ -833,6 +844,7 @@
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
+				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,
 				6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
