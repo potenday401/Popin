@@ -8,47 +8,10 @@
 import UIKit
 import SnapKit
 
-final class EmailVerificationViewController: BaseViewController {
-    
-    // MARK: - Interface
-    
-    var showsProgress = false {
-        didSet {
-            progressView.isHidden = !showsProgress
-        }
-    }
+final class EmailVerificationViewController: LoginDetailBaseViewController {
     
     // MARK: - UI
     
-    private lazy var _navigationBar: PDSNavigationBar = {
-        let navigationBar = PDSNavigationBar()
-        navigationBar.titleView = UIImageView(image: UIImage(resource: .logo))
-        navigationBar.leftItem = .init(
-            image: UIImage(resource: .chevronLeft),
-            target: self,
-            action: #selector(
-                backDidTap
-            )
-        )
-        return navigationBar
-    }()
-    
-    private let progressView: SignUpProgressView = {
-        let progressView = SignUpProgressView(step: 4)
-        progressView.isHidden = true
-        return progressView
-    }()
-    
-    private let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 25
-        return stackView
-    }()
-    
-    private let titleLabel: UILabel
     private let emailInputField: PDSInputField = {
         let inputField = PDSInputField()
         inputField.placeholder = Text.emailPlaceholder
@@ -60,40 +23,15 @@ final class EmailVerificationViewController: BaseViewController {
         button.addTarget(self, action: #selector(verifyDidTap), for: .touchUpInside)
         return button
     }()
-
-    
-    // MARK: - Initializer
-    
-    init(title: String) {
-        let label = UILabel()
-        label.text = title
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 24, weight: .semibold)
-        titleLabel = label
-        
-        super.init()
-    }
     
     // MARK: - Setup
     
     override func setUpUI() {
-        shouldEndEditingIfTouchesEnded = true
+        super.setUpUI()
         
-        view.addSubview(_navigationBar)
-        _navigationBar.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        view.addSubview(progressView)
-        progressView.snp.makeConstraints { make in
-            make.top.equalTo(_navigationBar.snp.bottom).offset(30)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(34)
-        }
-        
-        view.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(35)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Metric.inset)
+        contentView.addSubview(emailInputField)
+        emailInputField.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         view.addSubview(verificationButton)
@@ -101,8 +39,6 @@ final class EmailVerificationViewController: BaseViewController {
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Metric.inset)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Metric.inset)
         }
-        
-        [titleLabel, emailInputField].forEach(stackView.addArrangedSubview(_:))
     }
     
     // MARK: - Keyboard

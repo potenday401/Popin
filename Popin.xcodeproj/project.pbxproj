@@ -39,6 +39,7 @@
 		658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711F2B9823CF00875FEE /* KeyboardNotification.swift */; };
 		658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471212B98246700875FEE /* NotificationCenter+Utils.swift */; };
 		658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471242B982E4000875FEE /* SignUpProgressView.swift */; };
+		658471272B9856D900875FEE /* LoginDetailBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
@@ -129,6 +130,7 @@
 		6584711F2B9823CF00875FEE /* KeyboardNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
 		658471212B98246700875FEE /* NotificationCenter+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Utils.swift"; sourceTree = "<group>"; };
 		658471242B982E4000875FEE /* SignUpProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProgressView.swift; sourceTree = "<group>"; };
+		658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetailBaseViewController.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				658471242B982E4000875FEE /* SignUpProgressView.swift */,
+				658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 				6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */,
 				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				652C0E842B9462F600A87458 /* LoginRequest.swift in Sources */,
+				658471272B9856D900875FEE /* LoginDetailBaseViewController.swift in Sources */,
 				652C0E7A2B945C7300A87458 /* Request.swift in Sources */,
 				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
