@@ -1,5 +1,5 @@
 //
-//  EmailVerificationViewController.swift
+//  RequestVerificationEmailViewController.swift
 //  Popin
 //
 //  Created by chamsol kim on 3/5/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class EmailVerificationViewController: LoginDetailBaseViewController {
+final class RequestVerificationEmailViewController: LoginDetailBaseViewController {
     
     // MARK: - UI
     
@@ -77,7 +77,7 @@ final class EmailVerificationViewController: LoginDetailBaseViewController {
 
 // MARK: - Action
 
-private extension EmailVerificationViewController {
+private extension RequestVerificationEmailViewController {
     
     @objc
     func backDidTap() {
@@ -92,7 +92,7 @@ private extension EmailVerificationViewController {
 
 // MARK: - Constant
 
-private extension EmailVerificationViewController {
+private extension RequestVerificationEmailViewController {
     
     enum Metric {
         static let inset: CGFloat = 16
