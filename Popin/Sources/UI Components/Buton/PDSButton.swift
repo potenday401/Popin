@@ -84,6 +84,12 @@ final class PDSButton: UIButton {
         
         stackView.addArrangedSubview(_titleLabel)
     }
+    
+    // MARK: - Intrinsic Content Size
+    
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: CGFloat.greatestFiniteMagnitude, height: 56)
+    }
 }
 
 // MARK: - Style

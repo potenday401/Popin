@@ -16,11 +16,7 @@ final class DateViewController: BaseViewController {
     init(viewModel: DateViewModel?) {
         self.viewModel = viewModel
         viewModel?.fetchURLData(id: "aaa", year: 2024, month: 2)
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init()
     }
     
     let mainView = DateView()
@@ -28,7 +24,7 @@ final class DateViewController: BaseViewController {
         self.view = mainView
     }
     
-    override func configure() {
+    override func setUpUI() {
         mainView.calendar.delegate = self
         mainView.calendar.dataSource = self
     }
