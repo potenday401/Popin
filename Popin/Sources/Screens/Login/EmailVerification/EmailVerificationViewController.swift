@@ -104,6 +104,39 @@ final class EmailVerificationViewController: BaseViewController {
         
         [titleLabel, emailInputField].forEach(stackView.addArrangedSubview(_:))
     }
+    
+    // MARK: - Keyboard
+    
+    override func keyboardWillShowNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        print(#function, userInfo)
+        updateVerificationButtonLayout(
+            withDuration: userInfo.animationDuration,
+            options: userInfo.animationCurveOptions,
+            with: -userInfo.endFrame.height
+        )
+    }
+    
+    override func keyboardWillHideNotification(_ userInfo: KeyboardNotificationUserInfo) {
+        print(#function, userInfo)
+        updateVerificationButtonLayout(
+            withDuration: userInfo.animationDuration,
+            options: userInfo.animationCurveOptions,
+            with: -Metric.inset
+        )
+    }
+    
+    private func updateVerificationButtonLayout(
+        withDuration duration: TimeInterval,
+        options: UIView.AnimationOptions,
+        with offset: CGFloat
+    ) {
+        UIView.animate(withDuration: duration, delay: 0, options: options) {
+            self.verificationButton.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(offset)
+            }
+        }
+        view.layoutIfNeeded()
+    }
 }
 
 // MARK: - Action
