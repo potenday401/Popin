@@ -115,3 +115,45 @@ private extension SignUpProgressView {
         ]
     }
 }
+
+#if DEBUG
+
+fileprivate class SignUpProgressViewPreviewViewController: UIViewController {
+    
+    let progressViewProgress1 = SignUpProgressView(step: 4, initial: 1)
+    let progressViewProgressStep2 = SignUpProgressView(step: 4, initial: 2)
+    let progressViewProgressStep3 = SignUpProgressView(step: 4, initial: 3)
+    let progressViewProgressStep4 = SignUpProgressView(step: 4, initial: 4)
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .gray600
+        
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        [
+            progressViewProgress1,
+            progressViewProgressStep2,
+            progressViewProgressStep3,
+            progressViewProgressStep4
+        ].forEach(stackView.addArrangedSubview(_:))
+    }
+}
+
+#Preview {
+    SignUpProgressViewPreviewViewController()
+}
+
+#endif
