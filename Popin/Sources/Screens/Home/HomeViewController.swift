@@ -6,29 +6,62 @@
 //
 
 import UIKit
-import Tabman
+//import Tabman
 import Pageboy
 import SnapKit
+import Photos
 
-class HomeViewController: TabmanViewController {
+//Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
+//class HomeViewController: TabmanViewController {
+class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    private var viewControllers: [UIViewController] = []
+//    private var viewControllers: [UIViewController] = []
     
+    func cameraAuth() {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                print("권한 허용")
+                self.openCamera()
+            } else {
+                print("권한 거부")
+            }
+        }
+    }
+        
+    func openCamera() {
+        DispatchQueue.main.async {
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.delegate = self
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                print("Camera not available")
+            }
+        }
+    }
+
+        
     private let navigationBar: PDSNavigationBar = {
         let navigationBar = PDSNavigationBar()
         navigationBar.titleView = UIImageView(image: UIImage(resource: .logo))
         
         let leftImageView = UIImageView(image: UIImage(resource: .cameraButton))
+        let cameraButton = UIButton()
+        cameraButton.setImage(UIImage(resource: .cameraButton), for: .normal)
+        cameraButton.addTarget(self, action: #selector(cameraShootButtonTapped), for: .touchUpInside)
+        cameraButton.layer.zPosition = 1
+
         let leftItem = PDSNavigationBarItem()
-        leftItem.addSubview(leftImageView)
-        leftImageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 24, height: 24))
-            make.left.equalToSuperview().offset(12)
-        }
-        leftImageView.contentMode = .scaleAspectFit
-        navigationBar.leftItem = leftItem
-        
+            leftItem.addSubview(cameraButton)
+            cameraButton.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.size.equalTo(CGSize(width: 24, height: 24))
+                make.left.equalToSuperview().offset(12)
+            }
+            cameraButton.contentMode = .scaleAspectFit
+            navigationBar.leftItem = leftItem
+
         let rightImageView = UIImageView(image: UIImage(resource: .profileButton))
         let rightItem = PDSNavigationBarItem()
         rightItem.addSubview(rightImageView)
@@ -66,14 +99,18 @@ class HomeViewController: TabmanViewController {
         return label
     }()
     
-    @objc private func cameraButtonTapped() {
+    @objc private func cameraShootButtonTapped() {
+        cameraAuth()
+    }
+    
+    @objc private func cameraUploadButtonTapped() {
         let cameraViewController = CameraViewController()
         navigationController?.pushViewController(cameraViewController, animated: true)
     }
     
     private lazy var cameraButton: UIButton = {
         let button = makeButton(title: Text.uploadPhotoTitle)
-          button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+          button.addTarget(self, action: #selector(cameraUploadButtonTapped), for: .touchUpInside)
           return button
       }()
     
@@ -92,28 +129,24 @@ class HomeViewController: TabmanViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 //        let dateViewController = DateViewController(viewModel: nil)
         let homeMapViewController = HomeMapViewController()
-        
-        viewControllers.append(homeMapViewController)
+//        viewControllers.append(homeMapViewController)
 //        viewControllers.append(dateViewController)
 
-        let bar = TMBar.ButtonBar()
-        
-        //  Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
-        //  addBar(bar, dataSource: self, at: .top)
-        bar.layout.transitionStyle = .snap
-        bar.layout.contentMode = .fit
-        bar.backgroundView.style = .clear
-        bar.backgroundColor = .black
-        bar.buttons.customize { (button) in
-            button.tintColor = .gray
-            button.selectedTintColor = .white
-        }
-        
-        bar.indicator.tintColor = .clear
-        dataSource = self
+//        let bar = TMBar.ButtonBar()
+//
+//        addBar(bar, dataSource: self, at: .top)
+//        bar.layout.transitionStyle = .snap
+//        bar.layout.contentMode = .fit
+//        bar.backgroundView.style = .clear
+//        bar.backgroundColor = .black
+//        bar.buttons.customize { (button) in
+//            button.tintColor = .gray
+//            button.selectedTintColor = .white
+//        }
+//        bar.indicator.tintColor = .clear
+//        dataSource = self
         
         view.addSubview(cameraButton)
         view.addSubview(navigationBar)
@@ -124,13 +157,12 @@ class HomeViewController: TabmanViewController {
         }
         
         view.addSubview(recentMemoryStack)
-
+        view.addSubview(homeMapViewController.view)
         recentMemoryStack.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(42)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
             make.height.equalTo(54)
-            
         }
         
         recentMemoryStack.addArrangedSubview(recentMemoryLabel)
@@ -140,46 +172,45 @@ class HomeViewController: TabmanViewController {
         recentMemoryStack.addArrangedSubview(recentPinLabel)
         recentPinLabel.snp.makeConstraints { make in
             make.height.equalTo(31)
-
         }
         
         homeMapViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(recentMemoryStack.snp.bottom).offset(-170)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(359)
+//            todo: 반응형(다른 기기 확인)
+            make.top.equalTo(recentMemoryStack.snp.bottom).offset(-70)
         }
         
         cameraButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(homeMapViewController.view.snp.bottom).offset(-145)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.12 * view.bounds.height)
         }
     }
 }
 
-extension HomeViewController: PageboyViewControllerDataSource {
-    
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        return viewControllers.count
-    }
-    
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return viewControllers[index]
-    }
-    
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
-    }
-}
+//extension HomeViewController: PageboyViewControllerDataSource {
+//    
+//    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+//        return viewControllers.count
+//    }
+//    
+//    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
+//        return viewControllers[index]
+//    }
+//    
+//    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+//        return nil
+//    }
+//}
 
 // MARK: - TMBarDataSource
 
-extension HomeViewController: TMBarDataSource {
-    
-    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        let title = index == 0 ? "지도뷰" : "날짜뷰"
-        return TMBarItem(title: title)
-    }
-}
+//extension HomeViewController: TMBarDataSource {
+//    
+//    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+//        let title = index == 0 ? "지도뷰" : "날짜뷰"
+//        return TMBarItem(title: title)
+//    }
+//}
 
 private extension HomeViewController {
 
@@ -189,7 +220,7 @@ private extension HomeViewController {
     }
 }
 
-#Preview {
-     HomeViewController()
-}
+//#Preview {
+//     HomeViewController()
+//}
 
