@@ -20,12 +20,12 @@ final class SignUpProgressView: UIView {
     private let trackView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray400
-        view.layer.cornerRadius = Metric.cornerRadius
+        view.layer.cornerRadius = Metric.trackWidth / 2
         return view
     }()
     private let progressView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = Metric.cornerRadius
+        view.layer.cornerRadius = Metric.trackWidth / 2
         view.clipsToBounds = true
         return view
     }()
@@ -45,9 +45,9 @@ final class SignUpProgressView: UIView {
     
     // MARK: - Initializer
     
-    init(step: CGFloat) {
+    init(step: Int, initial: Int = 1) {
         self.step = CGFloat(step)
-        progress = 1 / step
+        progress = CGFloat(min(initial, step)) / self.step
         super.init(frame: .zero)
         setUpUI()
     }
@@ -57,24 +57,25 @@ final class SignUpProgressView: UIView {
     }
     
     private func setUpUI() {
-        addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
-        }
-        
         addSubview(trackView)
         trackView.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(5)
-            make.leading.equalToSuperview().inset(5)
+            make.leading.bottom.equalToSuperview()
             make.trailing.bottom.equalToSuperview()
             make.width.equalTo(78)
-            make.height.equalTo(7)
+            make.height.equalTo(Metric.trackWidth)
         }
         
         addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.top.leading.bottom.equalTo(trackView)
             make.width.equalTo(trackView).multipliedBy(progress)
+        }
+        
+        addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalTo(progressView.snp.top).offset(-5)
+            make.centerX.equalTo(progressView.snp.trailing).offset(-Metric.trackWidth / 2)
         }
         
         progressView.layer.addSublayer(gradientLayer)
@@ -94,7 +95,7 @@ final class SignUpProgressView: UIView {
     // MARK: - Intrinsic Content Size
     
     override var intrinsicContentSize: CGSize {
-        CGSize(width: 83, height: 39)
+        CGSize(width: 84, height: 40)
     }
 }
 
@@ -103,7 +104,7 @@ final class SignUpProgressView: UIView {
 private extension SignUpProgressView {
     
     enum Metric {
-        static let cornerRadius: CGFloat = 4
+        static let trackWidth: CGFloat = 8
     }
     
     enum Color {
