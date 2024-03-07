@@ -41,7 +41,7 @@ final class PDSNavigationBar: UIView {
         }
     }
     
-    var leftItem: PDSNavigationBarItem? {
+    var leftItem: PDSNavigationBarButtonItem? {
         didSet {
             leftStackView.removeAllArrangedSubviews()
             
@@ -53,7 +53,7 @@ final class PDSNavigationBar: UIView {
         }
     }
     
-    var rightItem: PDSNavigationBarItem? {
+    var rightItem: PDSNavigationBarButtonItem? {
         didSet {
             rightStackView.removeAllArrangedSubviews()
             
@@ -85,15 +85,17 @@ final class PDSNavigationBar: UIView {
     private func setUpUI() {
         backgroundColor = .gray600
         
+        let inset: CGFloat = 16
+        
         [leftStackView, titleStackView, rightStackView].forEach(addSubview(_:))
         leftStackView.snp.makeConstraints { make in
-            make.leading.centerY.equalToSuperview().inset(Metric.inset)
+            make.leading.centerY.equalToSuperview().inset(inset)
         }
         titleStackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         rightStackView.snp.makeConstraints { make in
-            make.trailing.centerY.equalToSuperview().inset(Metric.inset)
+            make.trailing.centerY.equalToSuperview().inset(inset)
         }
     }
     
@@ -101,14 +103,5 @@ final class PDSNavigationBar: UIView {
     
     override var intrinsicContentSize: CGSize {
         CGSize(width: 0, height: 50)
-    }
-}
-
-// MARK: - Constant
-
-private extension PDSNavigationBar {
-    
-    enum Metric {
-        static let inset = UIEdgeInsets(top: 13, left: 13, bottom: 13, right: 13)
     }
 }

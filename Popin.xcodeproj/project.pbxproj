@@ -34,16 +34,25 @@
 		65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBC2B9584F500D8C98E /* LoginError.swift */; };
 		65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */; };
 		65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */; };
+		6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711B2B981F2B00875FEE /* KeyboardSupport.swift */; };
+		6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */; };
+		658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584711F2B9823CF00875FEE /* KeyboardNotification.swift */; };
+		658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471212B98246700875FEE /* NotificationCenter+Utils.swift */; };
+		658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471242B982E4000875FEE /* SignUpProgressView.swift */; };
+		658471272B9856D900875FEE /* LoginDetailBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */; };
 		65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7402B88CE6A00BC7470 /* PDSButton.swift */; };
 		65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */; };
 		65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */; };
 		65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */; };
 		65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */; };
+		65BC5BCE2B96D550003EABD5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */; };
+		65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */; };
+		65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */; };
 		65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */; };
 		65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */; };
 		65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */; };
 		65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */; };
-		65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */; };
+		65D2D1932B8CBAB60015CD0D /* PDSNavigationBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1922B8CBAB60015CD0D /* PDSNavigationBarButtonItem.swift */; };
 		65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */; };
 		65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1972B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift */; };
 		65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1992B8CCB110015CD0D /* PDSVerificationCodeInputField.swift */; };
@@ -116,16 +125,25 @@
 		65779EBC2B9584F500D8C98E /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		65779EBF2B959AE600D8C98E /* EmailPasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidator.swift; sourceTree = "<group>"; };
 		65779EC32B95A4B300D8C98E /* EmailPasswordValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordValidatorTests.swift; sourceTree = "<group>"; };
+		6584711B2B981F2B00875FEE /* KeyboardSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSupport.swift; sourceTree = "<group>"; };
+		6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationUserInfo.swift; sourceTree = "<group>"; };
+		6584711F2B9823CF00875FEE /* KeyboardNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		658471212B98246700875FEE /* NotificationCenter+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Utils.swift"; sourceTree = "<group>"; };
+		658471242B982E4000875FEE /* SignUpProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProgressView.swift; sourceTree = "<group>"; };
+		658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetailBaseViewController.swift; sourceTree = "<group>"; };
 		65A8E7402B88CE6A00BC7470 /* PDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSButton.swift; sourceTree = "<group>"; };
 		65A8E7442B88D1D700BC7470 /* PDSButton+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSButton+Preview.swift"; sourceTree = "<group>"; };
 		65BC1F3F2B8E054500CB2F15 /* PDSInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSInputField.swift; sourceTree = "<group>"; };
 		65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSInputField+Preview.swift"; sourceTree = "<group>"; };
+		65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationEmailViewController.swift; sourceTree = "<group>"; };
+		65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSCheckbox.swift; sourceTree = "<group>"; };
 		65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSCheckbox+Preview.swift"; sourceTree = "<group>"; };
 		65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBar.swift; sourceTree = "<group>"; };
 		65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
-		65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBarItem.swift; sourceTree = "<group>"; };
+		65D2D1922B8CBAB60015CD0D /* PDSNavigationBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSNavigationBarButtonItem.swift; sourceTree = "<group>"; };
 		65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSNavigationBar+Preview.swift"; sourceTree = "<group>"; };
 		65D2D1972B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSVerificationCodeDigit.swift; sourceTree = "<group>"; };
 		65D2D1992B8CCB110015CD0D /* PDSVerificationCodeInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSVerificationCodeInputField.swift; sourceTree = "<group>"; };
@@ -299,6 +317,7 @@
 				9F0BA2E92B68F34F00677403 /* ImageCache */,
 				65779EC52B95D68900D8C98E /* Validator */,
 				653EE5D02B8F4B8F003F29AF /* Reusable */,
+				6584711A2B981F1700875FEE /* Keyboard */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
 			);
 			path = Common;
@@ -400,6 +419,9 @@
 			isa = PBXGroup;
 			children = (
 				6567E79D2B8F606B000D932C /* LoginViewController.swift */,
+				65BC5BCC2B96D546003EABD5 /* SignUp */,
+				65BC5BCF2B96D800003EABD5 /* EmailVerification */,
+				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
 			path = Login;
@@ -481,6 +503,25 @@
 			path = Validator;
 			sourceTree = "<group>";
 		};
+		6584711A2B981F1700875FEE /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				6584711B2B981F2B00875FEE /* KeyboardSupport.swift */,
+				6584711F2B9823CF00875FEE /* KeyboardNotification.swift */,
+				6584711D2B98221C00875FEE /* KeyboardNotificationUserInfo.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		658471232B982E3500875FEE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				658471242B982E4000875FEE /* SignUpProgressView.swift */,
+				658471262B9856D900875FEE /* LoginDetailBaseViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		65A8E73F2B88CE6200BC7470 /* Buton */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,6 +540,22 @@
 			path = InputField;
 			sourceTree = "<group>";
 		};
+		65BC5BCC2B96D546003EABD5 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		65BC5BCF2B96D800003EABD5 /* EmailVerification */ = {
+			isa = PBXGroup;
+			children = (
+				65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */,
+			);
+			path = EmailVerification;
+			sourceTree = "<group>";
+		};
 		65D2D1862B8CA7030015CD0D /* Checkbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,7 +569,7 @@
 			isa = PBXGroup;
 			children = (
 				65D2D18E2B8CB1E70015CD0D /* PDSNavigationBar.swift */,
-				65D2D1922B8CBAB60015CD0D /* PDSNavigationBarItem.swift */,
+				65D2D1922B8CBAB60015CD0D /* PDSNavigationBarButtonItem.swift */,
 				65D2D1942B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift */,
 			);
 			path = NavigationBar;
@@ -541,6 +598,7 @@
 			children = (
 				9E8EBFE92B6E5D1B00255D0D /* BaseView.swift */,
 				9E8EBFEB2B6E5D2300255D0D /* BaseViewController.swift */,
+				65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */,
 				9E8EBFED2B6E5D4000255D0D /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
@@ -608,6 +666,7 @@
 				6525D4932B88C9160063BD16 /* UIImage+Utils.swift */,
 				65D2D1902B8CB6920015CD0D /* UIStackView+Utils.swift */,
 				65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */,
+				658471212B98246700875FEE /* NotificationCenter+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -787,17 +846,21 @@
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				652C0E7C2B945C7F00A87458 /* Response.swift in Sources */,
 				9F0BA2F52B68F40000677403 /* Endpoint.swift in Sources */,
-				65D2D1932B8CBAB60015CD0D /* PDSNavigationBarItem.swift in Sources */,
+				65D2D1932B8CBAB60015CD0D /* PDSNavigationBarButtonItem.swift in Sources */,
 				65779EB92B957DF300D8C98E /* PDSAlertLabel.swift in Sources */,
 				65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */,
 				65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */,
 				65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */,
+				65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
+				658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */,
+				65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
 				652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
+				65BC5BCE2B96D550003EABD5 /* SignUpViewController.swift in Sources */,
 				9F0BA3172B68F58600677403 /* HomeViewController.swift in Sources */,
 				65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */,
 				65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */,
@@ -814,12 +877,15 @@
 				652C0E782B94591B00A87458 /* HTTPMethod.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
+				6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
+				6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */,
 				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				652C0E842B9462F600A87458 /* LoginRequest.swift in Sources */,
+				658471272B9856D900875FEE /* LoginDetailBaseViewController.swift in Sources */,
 				652C0E7A2B945C7300A87458 /* Request.swift in Sources */,
 				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
@@ -827,8 +893,10 @@
 				652C0E742B94546800A87458 /* Network.swift in Sources */,
 				65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
+				658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
+				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,
 				6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,

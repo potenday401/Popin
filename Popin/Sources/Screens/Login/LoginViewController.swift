@@ -107,8 +107,10 @@ final class LoginViewController: BaseViewController {
     // MARK: - Setup
     
     override func setUpUI() {
+        shouldEndEditingIfTouchesEnded = true
+        
         let appIconMargin: CGFloat = 74
-        let inset: CGFloat = 13
+        let inset: CGFloat = 16
         
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
@@ -148,11 +150,6 @@ final class LoginViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         [findPasswordButton, signUpButton].forEach(buttonStackView.addArrangedSubview(_:))
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        view.endEditing(true)
     }
 }
 
@@ -195,7 +192,8 @@ private extension LoginViewController {
     
     @objc
     func signUpDidTap() {
-        print(#function)
+        let signUpViewController = SignUpViewController()
+        present(signUpViewController, animated: true)
     }
 }
 

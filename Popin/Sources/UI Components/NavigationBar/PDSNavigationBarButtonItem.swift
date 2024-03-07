@@ -1,5 +1,5 @@
 //
-//  PDSNavigationBarItem.swift
+//  PDSNavigationBarButtonItem.swift
 //  Popin
 //
 //  Created by chamsol kim on 2/26/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class PDSNavigationBarItem: UIView {
+final class PDSNavigationBarButtonItem: UIView {
     
     // MARK: - UI
     
@@ -16,21 +16,29 @@ final class PDSNavigationBarItem: UIView {
     
     // MARK: - Initializer
     
-    convenience init(image: UIImage?) {
+    convenience init(image: UIImage?, target: Any, action: Selector) {
         self.init(frame: .zero)
         
-        let imageView = UIImageView(image: image)
-        stackView.addArrangedSubview(imageView)
+        let button = makeButton(with: target, action: action)
+        button.setBackgroundImage(image, for: .normal)
+        stackView.addArrangedSubview(button)
     }
     
-    convenience init(title: String) {
+    convenience init(title: String, target: Any, action: Selector) {
         self.init(frame: .zero)
         
-        let titleLabel = UILabel()
-        titleLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        titleLabel.text = title
-        titleLabel.textColor = .white
-        stackView.addArrangedSubview(titleLabel)
+        let button = makeButton(with: target, action: action)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        button.setTitle(title, for: .normal)
+        stackView.addArrangedSubview(button)
+    }
+    
+    private func makeButton(with target: Any, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.titleLabel?.textColor = .white
+        button.addTarget(target, action: action, for: .touchUpInside)
+        return button
     }
     
     override init(frame: CGRect) {
