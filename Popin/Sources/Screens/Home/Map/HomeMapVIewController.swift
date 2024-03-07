@@ -39,6 +39,7 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
     let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     var locationManager = CLLocationManager()
     var annotations: [CustomImageAnnotation] = []
+    var pinCountByCoordinate: [String: Int] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMapView()
@@ -91,7 +92,6 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
         .responseJSON { response in
             switch response.result {
             case .success(let value):
-
                 if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
                    let photoPinContainer = try? JSONDecoder().decode([PhotoPin].self, from: jsonData) {
                     self.handlePhotoPins(photoPinContainer)
@@ -112,18 +112,30 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
             let latitude = Double(pin.latLng.latitude) ?? 0.0
             let longitude = Double(pin.latLng.longitude) ?? 0.0
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude);            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl)
+            let coordinateKey = "\(pin.latLng.latitude)-\(pin.latLng.longitude)"
+            
+            if let count = self.pinCountByCoordinate[coordinateKey] {
+                self.pinCountByCoordinate[coordinateKey] = count + 1
+            } else {
+                self.pinCountByCoordinate[coordinateKey] = 1
+            }
+            
+            let pinCount = self.pinCountByCoordinate[coordinateKey, default: 0]
+            currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount)
             self.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl)
+            
+            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: 3)
             self.mapView.addAnnotation(imageAnnotation)
             annotations.append(imageAnnotation)
         }
     }
 
-    func setupAnnotation(location: CLLocation, imageUrl: String) {
-            let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
-            mapView.addAnnotation(imageAnnotation)
-        }
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: 4)
+        mapView.addAnnotation(imageAnnotation)
+    }
+
 
     func setupLocationManager() {
         locationManager = CLLocationManager()
