@@ -44,7 +44,6 @@ final class RequestVerificationEmailViewController: LoginDetailBaseViewControlle
     // MARK: - Keyboard
     
     override func keyboardWillShowNotification(_ userInfo: KeyboardNotificationUserInfo) {
-        print(#function, userInfo)
         updateVerificationButtonLayout(
             withDuration: userInfo.animationDuration,
             options: userInfo.animationCurveOptions,
@@ -53,7 +52,6 @@ final class RequestVerificationEmailViewController: LoginDetailBaseViewControlle
     }
     
     override func keyboardWillHideNotification(_ userInfo: KeyboardNotificationUserInfo) {
-        print(#function, userInfo)
         updateVerificationButtonLayout(
             withDuration: userInfo.animationDuration,
             options: userInfo.animationCurveOptions,
