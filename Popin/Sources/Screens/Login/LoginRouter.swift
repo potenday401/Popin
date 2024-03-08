@@ -14,6 +14,8 @@ protocol LoginRouter {
 
 final class LoginRouterImp: LoginRouter {
     
+    // MARK: - Interface
+    
     weak var window: UIWindow?
     weak var viewController: UIViewController?
     
@@ -25,8 +27,24 @@ final class LoginRouterImp: LoginRouter {
     
     func routeToSignUp() {
         DispatchQueue.main.async {
-            let signUpViewController = SignUpViewController()
+            let signUpViewController = SignUpViewController(
+                dependency: .init(network: self.dependency.network)
+            )
             self.viewController?.present(signUpViewController, animated: true)
         }
+    }
+    
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let network: Network
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
     }
 }

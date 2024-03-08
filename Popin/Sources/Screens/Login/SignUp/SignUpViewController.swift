@@ -17,11 +17,30 @@ final class SignUpViewController: BaseViewController {
         _navigationController
     }
     
-    private let requestVerificationCodeViewController: UIViewController = {
-        let viewController = RequestVerificationCodeViewController(title: "이메일을 적어주세요")
+    private lazy var requestVerificationCodeViewController: UIViewController = {
+        let service = VerificationServiceImp(network: dependency.network)
+        let viewController = RequestVerificationCodeViewController(
+            title: "이메일을 적어주세요",
+            dependency: .init(loginService: service)
+        )
         viewController.showsProgress = true
         return viewController
     }()
+    
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let network: Network
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        super.init()
+    }
     
     // MARK: - Setup
     
