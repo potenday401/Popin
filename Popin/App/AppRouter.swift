@@ -29,7 +29,7 @@ final class AppRouterImp: AppRouter {
             tokenRepository: dependency.tokenRepository
         )
         
-        let loginRouter = LoginRouterImp()
+        let loginRouter = LoginRouterImp(dependency: .init(network: dependency.network))
         loginRouter.window = window
         
         let loginViewController = LoginViewController(dependency: loginDependency)

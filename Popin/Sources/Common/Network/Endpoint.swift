@@ -19,6 +19,17 @@ struct Endpoint {
         }
     }
     
+    enum Member {
+        case requestVerificationCode
+        
+        var url: URL {
+            switch self {
+            case .requestVerificationCode:
+                Endpoint.baseURL.appending(path: "member/pre-signup")
+            }
+        }
+    }
+    
     enum Date {
         static let baseURL: String = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/calendar-album?"
         static let memberId: String = "memberId="

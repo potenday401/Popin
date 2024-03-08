@@ -24,6 +24,21 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
         return button
     }()
     
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let loginService: VerificationService
+    }
+    
+    init(title: String, dependency: Dependency) {
+        self.dependency = dependency
+        super.init(title: title)
+    }
+    
     // MARK: - Setup
     
     override func setUpUI() {
@@ -84,7 +99,19 @@ private extension RequestVerificationCodeViewController {
     
     @objc
     func verifyDidTap() {
-        // TODO: Request verification
+        guard let email = emailInputField.text else {
+            // TODO: Show error message
+            return
+        }
+        
+        dependency.loginService.requestVerificationCode(email: email) { result in
+            do {
+                try result.get()
+                // TODO: Go to Verification View
+            } catch {
+                // TODO: Show error message
+            }
+        }
     }
 }
 
