@@ -228,6 +228,17 @@
 			path = TestSupport;
 			sourceTree = "<group>";
 		};
+		6513C3FA2B9AF4FA00E14C0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6513C3F02B9AEB1900E14C0F /* VerificationCodeRequest.swift */,
+				6513C3F22B9AEB2F00E14C0F /* VerificationError.swift */,
+				6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */,
+				6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,10 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */,
-				6513C3F02B9AEB1900E14C0F /* VerificationCodeRequest.swift */,
-				6513C3F22B9AEB2F00E14C0F /* VerificationError.swift */,
-				6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */,
-				6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */,
+				6513C3FA2B9AF4FA00E14C0F /* Network */,
 			);
 			path = Verification;
 			sourceTree = "<group>";
