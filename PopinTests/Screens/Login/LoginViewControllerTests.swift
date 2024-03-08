@@ -75,20 +75,6 @@ final class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(tokenRepository.refreshToken, refreshToken)
     }
     
-    func testRouteToHome() {
-        // given
-        
-        
-        // when
-        sut.view.first(
-            of: PDSButton.self,
-            with: "loginviewcontroller_signin_button"
-        )?.sendActions(for: .touchUpInside)
-        
-        // then
-        XCTAssertEqual(router.routeToHomeCallCount, 1)
-    }
-    
     func testSetErrorToAlertLabel() {
         // given
         let error = LoginError.invalidEmail
@@ -124,5 +110,30 @@ final class LoginViewControllerTests: XCTestCase {
         
         // then
         XCTAssertFalse(alertLabel!.isHidden)
+    }
+    
+    func testRouteToHome() {
+        // given
+        
+        
+        // when
+        sut.view.first(
+            of: PDSButton.self,
+            with: "loginviewcontroller_signin_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(router.routeToHomeCallCount, 1)
+    }
+    
+    func testRouteToSignUp() {
+        // when
+        sut.view.first(
+            of: UIButton.self,
+            with: "loginviewcontroller_signup_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(router.routeToSignUpCallCount, 1)
     }
 }

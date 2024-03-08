@@ -73,6 +73,7 @@ final class LoginViewController: BaseViewController {
     private lazy var signUpButton: UIButton = {
         let button = makeButton(title: Text.signUpButtonTitle)
         button.addTarget(self, action: #selector(signUpDidTap), for: .touchUpInside)
+        button.accessibilityIdentifier = "loginviewcontroller_signup_button"
         return button
     }()
     
@@ -196,8 +197,7 @@ private extension LoginViewController {
     
     @objc
     func signUpDidTap() {
-        let signUpViewController = SignUpViewController()
-        present(signUpViewController, animated: true)
+        router?.routeToSignUp()
     }
 }
 

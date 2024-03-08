@@ -14,4 +14,9 @@ final class LoginRouterMock: LoginRouter {
     func routeToHome() {
         routeToHomeCallCount += 1
     }
+    
+    var routeToSignUpCallCount = 0
+    func routeToSignUp() {
+        routeToSignUpCallCount += 1
+    }
 }

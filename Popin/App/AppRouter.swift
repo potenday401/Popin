@@ -34,6 +34,7 @@ final class AppRouterImp: AppRouter {
         
         let loginViewController = LoginViewController(dependency: loginDependency)
         loginViewController.router = loginRouter
+        loginRouter.viewController = loginViewController
         
         return loginViewController
     }
