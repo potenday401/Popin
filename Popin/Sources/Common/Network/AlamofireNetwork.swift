@@ -43,8 +43,8 @@ final class AlamofireNetwork: Network {
     
     // MARK: - Initializer
     
-    init(session: Session = .default) {
-        self.session = session
+    init(configuration: URLSessionConfiguration) {
+        self.session = Session(configuration: configuration)
     }
 }
 

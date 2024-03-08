@@ -18,17 +18,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let alamofireNetwork = AlamofireNetwork()
+        let network = AlamofireNetwork(configuration: sessionConfiguration)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
         window?.rootViewController = LoginViewController(
             dependency: .init(
-                loginService: LoginServiceImp(network: alamofireNetwork),
+                loginService: LoginServiceImp(network: network),
                 tokenRepository: tokenRepository
             )
         )
         
         return true
+    }
+    
+    private var sessionConfiguration: URLSessionConfiguration {
+        #if DEBUG
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [PopinURLProtocolMock.self]
+        PopinTestSupport.setUpURLProtocol()
+        #else
+        let configuration = URLSessionConfiguration.default
+        #endif
+        
+        
+        return configuration
     }
 }
 
