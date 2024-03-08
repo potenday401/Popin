@@ -31,7 +31,7 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
     // MARK: - Initializer
     
     struct Dependency {
-        let loginService: VerificationService
+        let verificationService: VerificationService
     }
     
     init(title: String, dependency: Dependency) {
@@ -104,7 +104,7 @@ private extension RequestVerificationCodeViewController {
             return
         }
         
-        dependency.loginService.requestVerificationCode(email: email) { result in
+        dependency.verificationService.requestVerificationCode(email: email) { result in
             do {
                 try result.get()
                 // TODO: Go to Verification View
