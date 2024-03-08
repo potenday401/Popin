@@ -44,6 +44,12 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
     override func setUpUI() {
         super.setUpUI()
         
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backDidTap)
+        )
+        
         contentView.addSubview(emailInputField)
         emailInputField.snp.makeConstraints { make in
             make.edges.equalToSuperview()
