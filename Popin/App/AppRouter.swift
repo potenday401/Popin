@@ -28,7 +28,14 @@ final class AppRouterImp: AppRouter {
             loginService: loginService,
             tokenRepository: dependency.tokenRepository
         )
-        return LoginViewController(dependency: loginDependency)
+        
+        let loginRouter = LoginRouterImp()
+        loginRouter.window = window
+        
+        let loginViewController = LoginViewController(dependency: loginDependency)
+        loginViewController.router = loginRouter
+        
+        return loginViewController
     }
     
     private var homeViewController: UIViewController {

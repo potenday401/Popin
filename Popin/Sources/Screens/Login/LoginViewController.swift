@@ -10,6 +10,10 @@ import SnapKit
 
 final class LoginViewController: BaseViewController {
     
+    // MARK: - Interface
+    
+    var router: LoginRouter?
+    
     // MARK: - UI
     
     private let navigationBar: PDSNavigationBar = {
@@ -177,7 +181,7 @@ private extension LoginViewController {
                         accessToken: response.accessToken,
                         refreshToken: response.refreshToken
                     )
-                    // TODO: Go to Home
+                    self?.router?.routeToHome()
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false
@@ -208,18 +212,4 @@ private extension LoginViewController {
         static let findPasswordButtonTitle = "비밀번호 찾기"
         static let signUpButtonTitle = "회원가입하기"
     }
-}
-
-// MARK: - Preview
-
-#Preview {
-    let alamofireNetwork = AlamofireNetwork()
-    let tokenStorage = TokenKeychainStorage()
-    let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
-    return LoginViewController(
-        dependency: .init(
-            loginService: LoginServiceImp(network: alamofireNetwork),
-            tokenRepository: tokenRepository
-        )
-    )
 }
