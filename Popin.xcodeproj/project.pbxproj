@@ -51,7 +51,7 @@
 		65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */; };
 		65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */; };
 		65BC5BCE2B96D550003EABD5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */; };
-		65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */; };
+		65BC5BD12B96D815003EABD5 /* RequestVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */; };
 		65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */; };
 		65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */; };
 		65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */; };
@@ -147,7 +147,7 @@
 		65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSInputField+Preview.swift"; sourceTree = "<group>"; };
 		65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationEmailViewController.swift; sourceTree = "<group>"; };
+		65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSCheckbox.swift; sourceTree = "<group>"; };
 		65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSCheckbox+Preview.swift"; sourceTree = "<group>"; };
@@ -442,7 +442,7 @@
 				6567E79D2B8F606B000D932C /* LoginViewController.swift */,
 				6513C3EA2B9AE49300E14C0F /* LoginRouter.swift */,
 				65BC5BCC2B96D546003EABD5 /* SignUp */,
-				65BC5BCF2B96D800003EABD5 /* EmailVerification */,
+				65BC5BCF2B96D800003EABD5 /* Verification */,
 				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
@@ -570,12 +570,12 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		65BC5BCF2B96D800003EABD5 /* EmailVerification */ = {
+		65BC5BCF2B96D800003EABD5 /* Verification */ = {
 			isa = PBXGroup;
 			children = (
-				65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */,
+				65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */,
 			);
-			path = EmailVerification;
+			path = Verification;
 			sourceTree = "<group>";
 		};
 		65D2D1862B8CA7030015CD0D /* Checkbox */ = {
@@ -877,7 +877,7 @@
 				65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
 				658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */,
-				65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */,
+				65BC5BD12B96D815003EABD5 /* RequestVerificationCodeViewController.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
 				652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */,

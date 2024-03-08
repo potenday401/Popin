@@ -17,8 +17,8 @@ final class SignUpViewController: BaseViewController {
         _navigationController
     }
     
-    private let requestVerificationEmailViewController: UIViewController = {
-        let viewController = RequestVerificationEmailViewController(title: "이메일을 적어주세요")
+    private let requestVerificationCodeViewController: UIViewController = {
+        let viewController = RequestVerificationCodeViewController(title: "이메일을 적어주세요")
         viewController.showsProgress = true
         return viewController
     }()
@@ -30,7 +30,7 @@ final class SignUpViewController: BaseViewController {
     }
     
     private func addChildNavigationController() {
-        let navigationController = BaseNavigationViewController(rootViewController: requestVerificationEmailViewController)
+        let navigationController = BaseNavigationViewController(rootViewController: requestVerificationCodeViewController)
         
         addChild(navigationController)
         
