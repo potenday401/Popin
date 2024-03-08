@@ -47,3 +47,12 @@ final class SignUpViewController: BaseViewController {
         _navigationController = childNavigationController
     }
 }
+
+// MARK: - RequestVerificationCodeViewControllerDelegate
+
+extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
+    
+    func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController) {
+        dismiss(animated: true)
+    }
+}

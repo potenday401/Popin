@@ -27,9 +27,19 @@ final class LoginRouterImp: LoginRouter {
     
     func routeToSignUp() {
         DispatchQueue.main.async {
+            let signUpRouter = SignUpRouterImp(
+                dependency: .init(
+                    verificationService: VerificationServiceImp(
+                        network: self.dependency.network
+                    )
+                )
+            )
             let signUpViewController = SignUpViewController(
                 dependency: .init(network: self.dependency.network)
             )
+            signUpViewController.router = signUpRouter
+            signUpRouter.signUpViewController = signUpViewController
+            
             self.viewController?.present(signUpViewController, animated: true)
         }
     }

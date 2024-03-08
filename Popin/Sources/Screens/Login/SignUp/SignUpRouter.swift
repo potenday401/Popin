@@ -15,7 +15,7 @@ final class SignUpRouterImp: SignUpRouter {
     
     // MARK: - Interface
     
-    weak var signUpViewController: UIViewController?
+    weak var signUpViewController: SignUpViewController?
     
     func routeToRequestVerificationCode() -> UINavigationController? {
         let viewController = RequestVerificationCodeViewController(
@@ -23,6 +23,7 @@ final class SignUpRouterImp: SignUpRouter {
             dependency: .init(verificationService: dependency.verificationService)
         )
         viewController.showsProgress = true
+        viewController.delegate = signUpViewController
         
         let navigationController = BaseNavigationViewController(rootViewController: viewController)
         

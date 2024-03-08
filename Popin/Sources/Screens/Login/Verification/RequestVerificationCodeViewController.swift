@@ -8,7 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol RequestVerificationCodeViewControllerDelegate: AnyObject {
+    func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController)
+}
+
 final class RequestVerificationCodeViewController: LoginDetailBaseViewController {
+    
+    // MARK: - Interface
+    
+    weak var delegate: RequestVerificationCodeViewControllerDelegate?
     
     // MARK: - UI
     
@@ -100,7 +108,7 @@ private extension RequestVerificationCodeViewController {
     
     @objc
     func backDidTap() {
-        dismiss(animated: true)
+        delegate?.requestVerificationCodeViewControllerBackDidTap(self)
     }
     
     @objc
