@@ -12,6 +12,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var appRouter: AppRouter?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -21,12 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let network = AlamofireNetwork(configuration: sessionConfiguration)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
-        window?.rootViewController = LoginViewController(
-            dependency: .init(
-                loginService: LoginServiceImp(network: network),
-                tokenRepository: tokenRepository
-            )
-        )
+        appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository))
+        appRouter?.window = window
+        appRouter?.launch()
         
         return true
     }
