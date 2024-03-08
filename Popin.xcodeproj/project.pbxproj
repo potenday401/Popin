@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6513C3E12B9AD4F400E14C0F /* PopinURLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */; };
+		6513C3E32B9AD84200E14C0F /* PopinTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -100,6 +101,7 @@
 
 /* Begin PBXFileReference section */
 		6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopinURLProtocolMock.swift; sourceTree = "<group>"; };
+		6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopinTestSupport.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */,
+				6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */,
 			);
 			path = TestSupport;
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */,
 				65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */,
 				65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */,
+				6513C3E32B9AD84200E14C0F /* PopinTestSupport.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */,
 				652C0EA12B94831600A87458 /* LoginserviceImp.swift in Sources */,
