@@ -13,16 +13,19 @@ final class LoginViewControllerTests: XCTestCase {
     private var sut: LoginViewController!
     private var loginService: LoginServiceMock!
     private var tokenRepository: TokenRepositoryMock!
+    private var router: LoginRouterMock!
     
     override func setUpWithError() throws {
         loginService = LoginServiceMock()
         tokenRepository = TokenRepositoryMock()
+        router = LoginRouterMock()
         sut = LoginViewController(
             dependency: .init(
                 loginService: loginService,
                 tokenRepository: tokenRepository
             )
         )
+        sut.router = router
     }
     
     func testRequestLogin() {
@@ -70,6 +73,20 @@ final class LoginViewControllerTests: XCTestCase {
         XCTAssertEqual(tokenRepository.storeTokenCallCount, 1)
         XCTAssertEqual(tokenRepository.accessToken, accessToken)
         XCTAssertEqual(tokenRepository.refreshToken, refreshToken)
+    }
+    
+    func testRouteToHome() {
+        // given
+        
+        
+        // when
+        sut.view.first(
+            of: PDSButton.self,
+            with: "loginviewcontroller_signin_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(router.routeToHomeCallCount, 1)
     }
     
     func testSetErrorToAlertLabel() {
