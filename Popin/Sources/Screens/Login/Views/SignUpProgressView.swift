@@ -10,6 +10,13 @@ import SnapKit
 
 final class SignUpProgressView: UIView {
     
+    // MARK: - Interface
+    
+    var step: Int {
+        get { currentStep }
+        set { currentStep = newValue }
+    }
+    
     // MARK: - UI
     
     private let imageView: UIImageView = {
@@ -40,14 +47,27 @@ final class SignUpProgressView: UIView {
     
     // MARK: - Property
     
-    private let step: CGFloat
-    private var progress: CGFloat
+    private let numberOfStep: Int
+    private var currentStep: Int {
+        didSet {
+            progress = CGFloat(min(step, numberOfStep)) / CGFloat(numberOfStep)
+        }
+    }
+    private var progress: CGFloat {
+        didSet {
+            makeProgressConstraints()
+        }
+    }
+    
+    private var progressConstraint: Constraint?
+    private var isConstraintUpdated = false
     
     // MARK: - Initializer
     
-    init(step: Int, initial: Int = 1) {
-        self.step = CGFloat(step)
-        progress = CGFloat(min(initial, step)) / self.step
+    init(numberOfStep: Int, initial: Int = 1) {
+        self.numberOfStep = max(0, numberOfStep)
+        currentStep = initial
+        progress = CGFloat(max(0, min(initial, currentStep))) / CGFloat(self.numberOfStep)
         super.init(frame: .zero)
         setUpUI()
     }
@@ -66,10 +86,7 @@ final class SignUpProgressView: UIView {
         }
         
         addSubview(progressView)
-        progressView.snp.makeConstraints { make in
-            make.top.leading.bottom.equalTo(trackView)
-            make.width.equalTo(trackView).multipliedBy(progress)
-        }
+        makeProgressConstraints()
         
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
@@ -81,7 +98,14 @@ final class SignUpProgressView: UIView {
         progressView.layer.addSublayer(gradientLayer)
     }
     
-    // MARK: - Layout Subviews
+    private func makeProgressConstraints() {
+        progressView.snp.remakeConstraints { make in
+            make.top.leading.bottom.equalTo(trackView)
+            make.width.equalTo(trackView).multipliedBy(progress)
+        }
+    }
+    
+    // MARK: - Lifecycle
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -120,10 +144,14 @@ private extension SignUpProgressView {
 
 fileprivate class SignUpProgressViewPreviewViewController: UIViewController {
     
-    let progressViewProgress1 = SignUpProgressView(step: 4, initial: 1)
-    let progressViewProgressStep2 = SignUpProgressView(step: 4, initial: 2)
-    let progressViewProgressStep3 = SignUpProgressView(step: 4, initial: 3)
-    let progressViewProgressStep4 = SignUpProgressView(step: 4, initial: 4)
+    let progressViewProgress1 = SignUpProgressView(numberOfStep: 4, initial: 1)
+    let progressViewProgressStep2 = SignUpProgressView(numberOfStep: 4, initial: 2)
+    let progressViewProgressStep3 = SignUpProgressView(numberOfStep: 4, initial: 3)
+    let progressViewProgressStep4 = SignUpProgressView(numberOfStep: 4, initial: 4)
+    
+    let progressViewProgressDynamic = SignUpProgressView(numberOfStep: 4)
+    let stepper = UIStepper()
+    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -136,6 +164,11 @@ fileprivate class SignUpProgressViewPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        stepper.minimumValue = 1
+        stepper.maximumValue = 4
+        stepper.stepValue = 1
+        stepper.addTarget(self, action: #selector(stepperValueChanged), for: .valueChanged)
+        
         view.backgroundColor = .gray600
         
         view.addSubview(stackView)
@@ -147,8 +180,15 @@ fileprivate class SignUpProgressViewPreviewViewController: UIViewController {
             progressViewProgress1,
             progressViewProgressStep2,
             progressViewProgressStep3,
-            progressViewProgressStep4
+            progressViewProgressStep4,
+            progressViewProgressDynamic,
+            stepper
         ].forEach(stackView.addArrangedSubview(_:))
+    }
+    
+    @objc
+    func stepperValueChanged(_ stepper: UIStepper) {
+        progressViewProgressDynamic.step = Int(stepper.value)
     }
 }
 

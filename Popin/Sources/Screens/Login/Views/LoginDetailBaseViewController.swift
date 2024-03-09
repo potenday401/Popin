@@ -35,7 +35,7 @@ class LoginDetailBaseViewController: BaseViewController {
     }()
     
     private let progressView: SignUpProgressView = {
-        let progressView = SignUpProgressView(step: 4)
+        let progressView = SignUpProgressView(numberOfStep: 4)
         progressView.isHidden = true
         return progressView
     }()
