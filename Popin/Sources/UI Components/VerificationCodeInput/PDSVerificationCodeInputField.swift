@@ -12,6 +12,10 @@ final class PDSVerificationCodeInputField: UIView {
     
     // MARK: - Interface
     
+    var code: String? {
+        textField.text
+    }
+    
     var isFailure = false {
         didSet {
             digits.forEach {
