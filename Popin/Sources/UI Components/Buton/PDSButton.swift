@@ -33,6 +33,7 @@ final class PDSButton: UIButton {
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         stackView.spacing = 8
+        stackView.isUserInteractionEnabled = false
         return stackView
     }()
     

@@ -13,16 +13,19 @@ final class LoginViewControllerTests: XCTestCase {
     private var sut: LoginViewController!
     private var loginService: LoginServiceMock!
     private var tokenRepository: TokenRepositoryMock!
+    private var router: LoginRouterMock!
     
     override func setUpWithError() throws {
         loginService = LoginServiceMock()
         tokenRepository = TokenRepositoryMock()
+        router = LoginRouterMock()
         sut = LoginViewController(
             dependency: .init(
                 loginService: loginService,
                 tokenRepository: tokenRepository
             )
         )
+        sut.router = router
     }
     
     func testRequestLogin() {
@@ -107,5 +110,30 @@ final class LoginViewControllerTests: XCTestCase {
         
         // then
         XCTAssertFalse(alertLabel!.isHidden)
+    }
+    
+    func testRouteToHome() {
+        // given
+        
+        
+        // when
+        sut.view.first(
+            of: PDSButton.self,
+            with: "loginviewcontroller_signin_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(router.routeToHomeCallCount, 1)
+    }
+    
+    func testRouteToSignUp() {
+        // when
+        sut.view.first(
+            of: UIButton.self,
+            with: "loginviewcontroller_signup_button"
+        )?.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(router.routeToSignUpCallCount, 1)
     }
 }

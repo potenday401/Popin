@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6513C3E12B9AD4F400E14C0F /* PopinURLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */; };
+		6513C3E32B9AD84200E14C0F /* PopinTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */; };
+		6513C3E92B9AE3B800E14C0F /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3E82B9AE3B800E14C0F /* AppRouter.swift */; };
+		6513C3EB2B9AE49300E14C0F /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3EA2B9AE49300E14C0F /* LoginRouter.swift */; };
+		6513C3EF2B9AE61C00E14C0F /* LoginRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3EE2B9AE61C00E14C0F /* LoginRouterMock.swift */; };
+		6513C3F12B9AEB1900E14C0F /* VerificationCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F02B9AEB1900E14C0F /* VerificationCodeRequest.swift */; };
+		6513C3F32B9AEB2F00E14C0F /* VerificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F22B9AEB2F00E14C0F /* VerificationError.swift */; };
+		6513C3F52B9AEB3E00E14C0F /* VerificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */; };
+		6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */; };
+		6513C3F92B9AF05800E14C0F /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F82B9AF05800E14C0F /* SignUpRouter.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -46,7 +56,7 @@
 		65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */; };
 		65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */; };
 		65BC5BCE2B96D550003EABD5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */; };
-		65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */; };
+		65BC5BD12B96D815003EABD5 /* RequestVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */; };
 		65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */; };
 		65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */; };
 		65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */; };
@@ -98,6 +108,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopinURLProtocolMock.swift; sourceTree = "<group>"; };
+		6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopinTestSupport.swift; sourceTree = "<group>"; };
+		6513C3E82B9AE3B800E14C0F /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		6513C3EA2B9AE49300E14C0F /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		6513C3EE2B9AE61C00E14C0F /* LoginRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouterMock.swift; sourceTree = "<group>"; };
+		6513C3F02B9AEB1900E14C0F /* VerificationCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeRequest.swift; sourceTree = "<group>"; };
+		6513C3F22B9AEB2F00E14C0F /* VerificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationError.swift; sourceTree = "<group>"; };
+		6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationService.swift; sourceTree = "<group>"; };
+		6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationServiceImp.swift; sourceTree = "<group>"; };
+		6513C3F82B9AF05800E14C0F /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -137,7 +157,7 @@
 		65BC1F412B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		65BC1F432B8E0F1100CB2F15 /* PDSInputField+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSInputField+Preview.swift"; sourceTree = "<group>"; };
 		65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationEmailViewController.swift; sourceTree = "<group>"; };
+		65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		65BC5BD22B96D85E003EABD5 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		65D2D1872B8CA9290015CD0D /* PDSCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDSCheckbox.swift; sourceTree = "<group>"; };
 		65D2D18B2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDSCheckbox+Preview.swift"; sourceTree = "<group>"; };
@@ -199,6 +219,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6513C3DF2B9AD4E700E14C0F /* TestSupport */ = {
+			isa = PBXGroup;
+			children = (
+				6513C3E02B9AD4F400E14C0F /* PopinURLProtocolMock.swift */,
+				6513C3E22B9AD84200E14C0F /* PopinTestSupport.swift */,
+			);
+			path = TestSupport;
+			sourceTree = "<group>";
+		};
+		6513C3FA2B9AF4FA00E14C0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6513C3F02B9AEB1900E14C0F /* VerificationCodeRequest.swift */,
+				6513C3F22B9AEB2F00E14C0F /* VerificationError.swift */,
+				6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */,
+				6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				652C0E9C2B946C7200A87458 /* LoginServiceMock.swift */,
+				6513C3EE2B9AE61C00E14C0F /* LoginRouterMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -319,6 +360,7 @@
 				653EE5D02B8F4B8F003F29AF /* Reusable */,
 				6584711A2B981F1700875FEE /* Keyboard */,
 				9F0BA2E72B68F30800677403 /* Extensions */,
+				6513C3DF2B9AD4E700E14C0F /* TestSupport */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -419,8 +461,9 @@
 			isa = PBXGroup;
 			children = (
 				6567E79D2B8F606B000D932C /* LoginViewController.swift */,
+				6513C3EA2B9AE49300E14C0F /* LoginRouter.swift */,
 				65BC5BCC2B96D546003EABD5 /* SignUp */,
-				65BC5BCF2B96D800003EABD5 /* EmailVerification */,
+				65BC5BCF2B96D800003EABD5 /* Verification */,
 				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
@@ -544,16 +587,18 @@
 			isa = PBXGroup;
 			children = (
 				65BC5BCD2B96D550003EABD5 /* SignUpViewController.swift */,
+				6513C3F82B9AF05800E14C0F /* SignUpRouter.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		65BC5BCF2B96D800003EABD5 /* EmailVerification */ = {
+		65BC5BCF2B96D800003EABD5 /* Verification */ = {
 			isa = PBXGroup;
 			children = (
-				65BC5BD02B96D815003EABD5 /* RequestVerificationEmailViewController.swift */,
+				65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */,
+				6513C3FA2B9AF4FA00E14C0F /* Network */,
 			);
-			path = EmailVerification;
+			path = Verification;
 			sourceTree = "<group>";
 		};
 		65D2D1862B8CA7030015CD0D /* Checkbox */ = {
@@ -675,6 +720,7 @@
 			isa = PBXGroup;
 			children = (
 				9F0BA2AE2B68A0D600677403 /* AppDelegate.swift */,
+				6513C3E82B9AE3B800E14C0F /* AppRouter.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -854,10 +900,11 @@
 				65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
 				658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */,
-				65BC5BD12B96D815003EABD5 /* RequestVerificationEmailViewController.swift in Sources */,
+				65BC5BD12B96D815003EABD5 /* RequestVerificationCodeViewController.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
 				652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */,
+				6513C3F92B9AF05800E14C0F /* SignUpRouter.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,
 				6525D4942B88C9160063BD16 /* UIImage+Utils.swift in Sources */,
 				65BC5BCE2B96D550003EABD5 /* SignUpViewController.swift in Sources */,
@@ -865,13 +912,17 @@
 				65A8E7412B88CE6A00BC7470 /* PDSButton.swift in Sources */,
 				65779EBB2B95802300D8C98E /* PDSAlertLabel+Preview.swift in Sources */,
 				65BC1F402B8E054500CB2F15 /* PDSInputField.swift in Sources */,
+				6513C3E32B9AD84200E14C0F /* PopinTestSupport.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */,
 				652C0EA12B94831600A87458 /* LoginserviceImp.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
+				6513C3EB2B9AE49300E14C0F /* LoginRouter.swift in Sources */,
+				6513C3E92B9AE3B800E14C0F /* AppRouter.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
 				6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
+				6513C3E12B9AD4F400E14C0F /* PopinURLProtocolMock.swift in Sources */,
 				65D2D19A2B8CCB110015CD0D /* PDSVerificationCodeInputField.swift in Sources */,
 				652C0E882B9463FA00A87458 /* TokenRepository.swift in Sources */,
 				652C0E782B94591B00A87458 /* HTTPMethod.swift in Sources */,
@@ -879,6 +930,7 @@
 				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
 				6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
+				6513C3F12B9AEB1900E14C0F /* VerificationCodeRequest.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
@@ -889,8 +941,10 @@
 				652C0E7A2B945C7300A87458 /* Request.swift in Sources */,
 				9F5E3CBE2B6D5D0500FBD1AB /* Carousel.swift in Sources */,
 				9F0BA2E22B68EBEC00677403 /* cameraViewController.swift in Sources */,
+				6513C3F52B9AEB3E00E14C0F /* VerificationService.swift in Sources */,
 				65D2D19C2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift in Sources */,
 				652C0E742B94546800A87458 /* Network.swift in Sources */,
+				6513C3F32B9AEB2F00E14C0F /* VerificationError.swift in Sources */,
 				65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
 				658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */,
@@ -898,6 +952,7 @@
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,
 				6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */,
+				6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
 				6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */,
@@ -916,6 +971,7 @@
 				6567E7BB2B93131E000D932C /* TokenKeychainStorageTests.swift in Sources */,
 				65779EC42B95A4B300D8C98E /* EmailPasswordValidatorTests.swift in Sources */,
 				652C0E962B9467B600A87458 /* TokenRepositoryMock.swift in Sources */,
+				6513C3EF2B9AE61C00E14C0F /* LoginRouterMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,7 +18,13 @@ class LoginDetailBaseViewController: BaseViewController {
         }
     }
     
-    let contentView = UIView()
+    var contentView: UIView {
+        _contentView
+    }
+    
+    var navigationBar: PDSNavigationBar {
+        _navigationBar
+    }
     
     // MARK: - UI
     
@@ -33,6 +39,8 @@ class LoginDetailBaseViewController: BaseViewController {
         progressView.isHidden = true
         return progressView
     }()
+    
+    private let _contentView = UIView()
     
     private let titleLabel: UILabel
     

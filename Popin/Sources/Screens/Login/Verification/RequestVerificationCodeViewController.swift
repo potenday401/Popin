@@ -1,5 +1,5 @@
 //
-//  RequestVerificationEmailViewController.swift
+//  RequestVerificationCodeViewController.swift
 //  Popin
 //
 //  Created by chamsol kim on 3/5/24.
@@ -8,7 +8,15 @@
 import UIKit
 import SnapKit
 
-final class RequestVerificationEmailViewController: LoginDetailBaseViewController {
+protocol RequestVerificationCodeViewControllerDelegate: AnyObject {
+    func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController)
+}
+
+final class RequestVerificationCodeViewController: LoginDetailBaseViewController {
+    
+    // MARK: - Interface
+    
+    weak var delegate: RequestVerificationCodeViewControllerDelegate?
     
     // MARK: - UI
     
@@ -24,10 +32,31 @@ final class RequestVerificationEmailViewController: LoginDetailBaseViewControlle
         return button
     }()
     
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let verificationService: VerificationService
+    }
+    
+    init(title: String, dependency: Dependency) {
+        self.dependency = dependency
+        super.init(title: title)
+    }
+    
     // MARK: - Setup
     
     override func setUpUI() {
         super.setUpUI()
+        
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backDidTap)
+        )
         
         contentView.addSubview(emailInputField)
         emailInputField.snp.makeConstraints { make in
@@ -75,22 +104,34 @@ final class RequestVerificationEmailViewController: LoginDetailBaseViewControlle
 
 // MARK: - Action
 
-private extension RequestVerificationEmailViewController {
+private extension RequestVerificationCodeViewController {
     
     @objc
     func backDidTap() {
-        dismiss(animated: true)
+        delegate?.requestVerificationCodeViewControllerBackDidTap(self)
     }
     
     @objc
     func verifyDidTap() {
-        // TODO: Request verification
+        guard let email = emailInputField.text else {
+            // TODO: Show error message
+            return
+        }
+        
+        dependency.verificationService.requestVerificationCode(email: email) { result in
+            do {
+                try result.get()
+                // TODO: Go to Verification View
+            } catch {
+                // TODO: Show error message
+            }
+        }
     }
 }
 
 // MARK: - Constant
 
-private extension RequestVerificationEmailViewController {
+private extension RequestVerificationCodeViewController {
     
     enum Metric {
         static let inset: CGFloat = 16

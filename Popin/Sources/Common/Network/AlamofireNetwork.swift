@@ -23,6 +23,7 @@ final class AlamofireNetwork: Network {
                 parameters: request.query,
                 encoding: JSONEncoding.default
             )
+            .validate(statusCode: 200..<500)
             .responseDecodable(of: T.Output.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let output):
@@ -43,8 +44,8 @@ final class AlamofireNetwork: Network {
     
     // MARK: - Initializer
     
-    init(session: Session = .default) {
-        self.session = session
+    init(configuration: URLSessionConfiguration) {
+        self.session = Session(configuration: configuration)
     }
 }
 

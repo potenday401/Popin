@@ -10,6 +10,10 @@ import SnapKit
 
 final class SignUpViewController: BaseViewController {
     
+    // MARK: - Interface
+    
+    var router: SignUpRouter?
+    
     // MARK: - UI
     
     private var _navigationController: UINavigationController?
@@ -17,11 +21,20 @@ final class SignUpViewController: BaseViewController {
         _navigationController
     }
     
-    private let requestVerificationEmailViewController: UIViewController = {
-        let viewController = RequestVerificationEmailViewController(title: "이메일을 적어주세요")
-        viewController.showsProgress = true
-        return viewController
-    }()
+    // MARK: - Property
+    
+    private let dependency: Dependency
+    
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let network: Network
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        super.init()
+    }
     
     // MARK: - Setup
     
@@ -30,18 +43,16 @@ final class SignUpViewController: BaseViewController {
     }
     
     private func addChildNavigationController() {
-        let navigationController = BaseNavigationViewController(rootViewController: requestVerificationEmailViewController)
-        
-        addChild(navigationController)
-        
-        let subview = navigationController.view!
-        view.addSubview(subview)
-        subview.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        didMove(toParent: self)
-        
-        _navigationController = navigationController
+        let childNavigationController = router?.routeToRequestVerificationCode()
+        _navigationController = childNavigationController
+    }
+}
+
+// MARK: - RequestVerificationCodeViewControllerDelegate
+
+extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
+    
+    func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController) {
+        dismiss(animated: true)
     }
 }
