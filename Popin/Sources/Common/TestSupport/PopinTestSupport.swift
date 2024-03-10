@@ -20,9 +20,15 @@ enum PopinTestSupport {
             withJSONObject: requestVerificationCodeResponse
         )
         
+        let requestVerificationResponse = ["verifiedToken": "asdf"]
+        let requestVerificationResponseData = try! JSONSerialization.data(
+            withJSONObject: requestVerificationResponse
+        )
+        
         PopinURLProtocolMock.successMock = [
             "/auth/login": (200, loginResponseData),
-            "/member/pre-signup": (200, requestVerificationCodeResponseData)
+            "/member/pre-signup": (200, requestVerificationCodeResponseData),
+            "/member/email-verification": (200, requestVerificationResponseData),
         ]
     }
 }
