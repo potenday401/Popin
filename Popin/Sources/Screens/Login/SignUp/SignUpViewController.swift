@@ -21,21 +21,6 @@ final class SignUpViewController: BaseViewController {
         _navigationController
     }
     
-    // MARK: - Property
-    
-    private let dependency: Dependency
-    
-    // MARK: - Initializer
-    
-    struct Dependency {
-        let network: Network
-    }
-    
-    init(dependency: Dependency) {
-        self.dependency = dependency
-        super.init()
-    }
-    
     // MARK: - Setup
     
     override func setUpUI() {

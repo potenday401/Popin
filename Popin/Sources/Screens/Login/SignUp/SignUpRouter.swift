@@ -36,7 +36,7 @@ final class SignUpRouterImp: SignUpRouter {
             make.edges.equalToSuperview()
         }
         
-        signUpViewController?.didMove(toParent: signUpViewController)
+        navigationController.didMove(toParent: signUpViewController)
         
         return navigationController
     }
@@ -46,6 +46,7 @@ final class SignUpRouterImp: SignUpRouter {
             title: "인증번호를 확인하세요",
             dependency: .init(verificationService: dependency.verificationService)
         )
+        viewController.showsProgress = true
         viewController.delegate = signUpViewController
         
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)

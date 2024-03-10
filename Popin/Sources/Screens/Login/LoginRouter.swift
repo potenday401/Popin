@@ -34,9 +34,7 @@ final class LoginRouterImp: LoginRouter {
                     )
                 )
             )
-            let signUpViewController = SignUpViewController(
-                dependency: .init(network: self.dependency.network)
-            )
+            let signUpViewController = SignUpViewController()
             signUpViewController.router = signUpRouter
             signUpRouter.signUpViewController = signUpViewController
             
