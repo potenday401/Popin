@@ -1,31 +1,26 @@
 //
-//  RequestVerificationCodeViewController.swift
+//  RequestVerificationViewController.swift
 //  Popin
 //
-//  Created by chamsol kim on 3/5/24.
+//  Created by chamsol kim on 3/10/24.
 //
 
 import UIKit
 import SnapKit
 
-protocol RequestVerificationCodeViewControllerDelegate: AnyObject {
-    func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController)
-    func requestVerificationCodeViewControllerDidSuccessRequest(_ viewController: RequestVerificationCodeViewController)
+protocol RequestVerificationViewControllerDelegate: AnyObject {
+    func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController)
 }
 
-final class RequestVerificationCodeViewController: LoginDetailBaseViewController {
+final class RequestVerificationViewController: LoginDetailBaseViewController {
     
     // MARK: - Interface
     
-    weak var delegate: RequestVerificationCodeViewControllerDelegate?
+    weak var delegate: RequestVerificationViewControllerDelegate?
     
     // MARK: - UI
     
-    private let emailInputField: PDSInputField = {
-        let inputField = PDSInputField()
-        inputField.placeholder = Text.emailPlaceholder
-        return inputField
-    }()
+    private let verificationCodeInputField = PDSVerificationCodeInputField(numberOfDigits: 5)
     private lazy var verificationButton: PDSButton = {
         let button = PDSButton(style: .primary)
         button.setTitle(Text.verificationButtonTitle)
@@ -59,9 +54,10 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
             action: #selector(backDidTap)
         )
         
-        contentView.addSubview(emailInputField)
-        emailInputField.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        contentView.addSubview(verificationCodeInputField)
+        verificationCodeInputField.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
         
         view.addSubview(verificationButton)
@@ -105,45 +101,33 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
 
 // MARK: - Action
 
-private extension RequestVerificationCodeViewController {
+private extension RequestVerificationViewController {
     
     @objc
     func backDidTap() {
-        delegate?.requestVerificationCodeViewControllerBackDidTap(self)
+        delegate?.requestVerificationViewControllerBackDidTap(self)
     }
     
     @objc
     func verifyDidTap() {
-        guard let email = emailInputField.text else {
+        guard let verificationCode = verificationCodeInputField.code else {
             // TODO: Show error message
             return
         }
         
-        dependency.verificationService.requestVerificationCode(email: email) { [weak self] result in
-            guard let self else {
-                return
-            }
-            
-            do {
-                try result.get()
-                self.delegate?.requestVerificationCodeViewControllerDidSuccessRequest(self)
-            } catch {
-                // TODO: Show error message
-            }
-        }
+        // TODO: Request Verification
     }
 }
 
 // MARK: - Constant
 
-private extension RequestVerificationCodeViewController {
+private extension RequestVerificationViewController {
     
     enum Metric {
         static let inset: CGFloat = 16
     }
     
     enum Text {
-        static let emailPlaceholder = "사용자 이메일"
-        static let verificationButtonTitle = "이메일 인증받기"
+        static let verificationButtonTitle = "이메일 재인증받기"
     }
 }

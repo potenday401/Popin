@@ -55,4 +55,17 @@ extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
     func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController) {
         dismiss(animated: true)
     }
+    
+    func requestVerificationCodeViewControllerDidSuccessRequest(_ viewController: RequestVerificationCodeViewController) {
+        router?.routeToRequestVerification()
+    }
+}
+
+// MARK: - RequestVerificationViewControllerDelegate
+
+extension SignUpViewController: RequestVerificationViewControllerDelegate {
+    
+    func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController) {
+        navigationController?.popViewController(animated: true)
+    }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 protocol SignUpRouter {
     func routeToRequestVerificationCode() -> UINavigationController?
+    func routeToRequestVerification()
 }
 
 final class SignUpRouterImp: SignUpRouter {
@@ -38,6 +39,16 @@ final class SignUpRouterImp: SignUpRouter {
         signUpViewController?.didMove(toParent: signUpViewController)
         
         return navigationController
+    }
+    
+    func routeToRequestVerification() {
+        let viewController = RequestVerificationViewController(
+            title: "인증번호를 확인하세요",
+            dependency: .init(verificationService: dependency.verificationService)
+        )
+        viewController.delegate = signUpViewController
+        
+        signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
     // MARK: - Property

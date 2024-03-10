@@ -17,6 +17,7 @@
 		6513C3F52B9AEB3E00E14C0F /* VerificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */; };
 		6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */; };
 		6513C3F92B9AF05800E14C0F /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C3F82B9AF05800E14C0F /* SignUpRouter.swift */; };
+		6513C41C2B9D6F2F00E14C0F /* RequestVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C41B2B9D6F2F00E14C0F /* RequestVerificationViewController.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -118,6 +119,7 @@
 		6513C3F42B9AEB3E00E14C0F /* VerificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationService.swift; sourceTree = "<group>"; };
 		6513C3F62B9AEB4D00E14C0F /* VerificationServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationServiceImp.swift; sourceTree = "<group>"; };
 		6513C3F82B9AF05800E14C0F /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		6513C41B2B9D6F2F00E14C0F /* RequestVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationViewController.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 			isa = PBXGroup;
 			children = (
 				65BC5BD02B96D815003EABD5 /* RequestVerificationCodeViewController.swift */,
+				6513C41B2B9D6F2F00E14C0F /* RequestVerificationViewController.swift */,
 				6513C3FA2B9AF4FA00E14C0F /* Network */,
 			);
 			path = Verification;
@@ -932,6 +935,7 @@
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				6513C3F12B9AEB1900E14C0F /* VerificationCodeRequest.swift in Sources */,
 				65D2D1912B8CB6920015CD0D /* UIStackView+Utils.swift in Sources */,
+				6513C41C2B9D6F2F00E14C0F /* RequestVerificationViewController.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
 				6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */,
