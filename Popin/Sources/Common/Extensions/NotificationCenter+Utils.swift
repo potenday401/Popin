@@ -9,12 +9,7 @@ import Foundation
 
 extension NotificationCenter {
     
-    func addObserver(for keyboardNotification: KeyboardNotification, using block: @escaping (KeyboardNotificationUserInfo) -> Void) {
-        addObserver(forName: keyboardNotification.notificationName, object: nil, queue: .main) { notification in
-            guard let userInfo = KeyboardNotificationUserInfo(notification) else {
-                return
-            }
-            block(userInfo)
-        }
+    func addObserver(for keyboardNotification: KeyboardNotification, using block: @escaping (Notification) -> Void) {
+        addObserver(forName: keyboardNotification.notificationName, object: nil, queue: .main, using: block) 
     }
 }
