@@ -10,7 +10,7 @@ import UIKit
 protocol SignUpRouter {
     func routeToRequestVerificationCode() -> UINavigationController?
     func dismissFromRequestVerificationCode()
-    func routeToRequestVerification()
+    func routeToRequestVerification(email: String)
     func dismissFromRequestVerification()
 }
 
@@ -49,10 +49,10 @@ final class SignUpRouterImp: SignUpRouter {
         signUpViewController?.dismiss(animated: true)
     }
     
-    func routeToRequestVerification() {
+    func routeToRequestVerification(email: String) {
         let viewController = RequestVerificationViewController(
             title: "인증번호를 확인하세요",
-            dependency: .init(verificationService: dependency.verificationService)
+            dependency: .init(email: email, verificationService: dependency.verificationService)
         )
         viewController.showsProgress = true
         viewController.delegate = signUpViewController

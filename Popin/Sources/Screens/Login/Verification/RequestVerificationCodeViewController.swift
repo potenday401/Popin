@@ -10,7 +10,7 @@ import SnapKit
 
 protocol RequestVerificationCodeViewControllerDelegate: AnyObject {
     func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController)
-    func requestVerificationCodeViewControllerDidSuccessRequest(_ viewController: RequestVerificationCodeViewController)
+    func requestVerificationCodeViewController(_ viewController: RequestVerificationCodeViewController, didSuccessRequestForEmail email: String)
 }
 
 final class RequestVerificationCodeViewController: LoginDetailBaseViewController {
@@ -126,7 +126,7 @@ private extension RequestVerificationCodeViewController {
             
             do {
                 try result.get()
-                self.delegate?.requestVerificationCodeViewControllerDidSuccessRequest(self)
+                self.delegate?.requestVerificationCodeViewController(self, didSuccessRequestForEmail: email)
             } catch {
                 // TODO: Show error message
             }

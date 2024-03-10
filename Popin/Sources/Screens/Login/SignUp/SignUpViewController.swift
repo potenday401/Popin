@@ -41,8 +41,8 @@ extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
         router?.dismissFromRequestVerificationCode()
     }
     
-    func requestVerificationCodeViewControllerDidSuccessRequest(_ viewController: RequestVerificationCodeViewController) {
-        router?.routeToRequestVerification()
+    func requestVerificationCodeViewController(_ viewController: RequestVerificationCodeViewController, didSuccessRequestForEmail email: String) {
+        router?.routeToRequestVerification(email: email)
     }
 }
 
