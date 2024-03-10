@@ -13,7 +13,8 @@ final class PDSVerificationCodeInputField: UIView {
     // MARK: - Interface
     
     var code: String? {
-        textField.text
+        get { textField.text }
+        set { textField.text = newValue}
     }
     
     var isFailure = false {

@@ -20,11 +20,16 @@ final class RequestVerificationViewController: LoginDetailBaseViewController {
     
     // MARK: - UI
     
-    private let verificationCodeInputField = PDSVerificationCodeInputField(numberOfDigits: 5)
+    private let verificationCodeInputField: PDSVerificationCodeInputField = {
+        let inputField = PDSVerificationCodeInputField(numberOfDigits: 5)
+        inputField.accessibilityIdentifier = "requestverificationviewcontroller_email_inputfield"
+        return inputField
+    }()
     private lazy var verificationButton: PDSButton = {
         let button = PDSButton(style: .primary)
         button.setTitle(Text.verificationButtonTitle)
         button.addTarget(self, action: #selector(verifyDidTap), for: .touchUpInside)
+        button.accessibilityIdentifier = "requestverificationviewcontroller_verification_button"
         return button
     }()
     
@@ -116,7 +121,7 @@ private extension RequestVerificationViewController {
             return
         }
         
-        dependency.verificationService.requestVerificationCode(
+        dependency.verificationService.requestVerification(
             email: dependency.email,
             verificationCode: verificationCode
         ) { result in

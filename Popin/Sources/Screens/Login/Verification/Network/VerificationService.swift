@@ -14,7 +14,7 @@ protocol VerificationService {
             Result<Void, Error>
         ) -> Void
     )
-    func requestVerificationCode(
+    func requestVerification(
         email: String,
         verificationCode: String,
         completion: @escaping (

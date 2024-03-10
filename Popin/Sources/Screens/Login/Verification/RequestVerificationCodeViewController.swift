@@ -24,12 +24,14 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
     private let emailInputField: PDSInputField = {
         let inputField = PDSInputField()
         inputField.placeholder = Text.emailPlaceholder
+        inputField.accessibilityIdentifier = "requestverificationcodeviewcontroller_email_inputfield"
         return inputField
     }()
     private lazy var verificationButton: PDSButton = {
         let button = PDSButton(style: .primary)
         button.setTitle(Text.verificationButtonTitle)
         button.addTarget(self, action: #selector(verifyDidTap), for: .touchUpInside)
+        button.accessibilityIdentifier = "requestverificationcodeviewcontroller_verification_button"
         return button
     }()
     
