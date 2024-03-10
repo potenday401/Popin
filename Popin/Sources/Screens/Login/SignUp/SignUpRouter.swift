@@ -9,7 +9,9 @@ import UIKit
 
 protocol SignUpRouter {
     func routeToRequestVerificationCode() -> UINavigationController?
+    func dismissFromRequestVerificationCode()
     func routeToRequestVerification()
+    func dismissFromRequestVerification()
 }
 
 final class SignUpRouterImp: SignUpRouter {
@@ -41,6 +43,12 @@ final class SignUpRouterImp: SignUpRouter {
         return navigationController
     }
     
+    func dismissFromRequestVerificationCode() {
+        signUpViewController?.navigationController?.view.removeFromSuperview()
+        signUpViewController?.navigationController?.viewControllers = []
+        signUpViewController?.dismiss(animated: true)
+    }
+    
     func routeToRequestVerification() {
         let viewController = RequestVerificationViewController(
             title: "인증번호를 확인하세요",
@@ -50,6 +58,10 @@ final class SignUpRouterImp: SignUpRouter {
         viewController.delegate = signUpViewController
         
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func dismissFromRequestVerification() {
+        signUpViewController?.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Property

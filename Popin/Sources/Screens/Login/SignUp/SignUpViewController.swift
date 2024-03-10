@@ -38,7 +38,7 @@ final class SignUpViewController: BaseViewController {
 extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
     
     func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController) {
-        dismiss(animated: true)
+        router?.dismissFromRequestVerificationCode()
     }
     
     func requestVerificationCodeViewControllerDidSuccessRequest(_ viewController: RequestVerificationCodeViewController) {
@@ -51,6 +51,6 @@ extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
 extension SignUpViewController: RequestVerificationViewControllerDelegate {
     
     func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController) {
-        navigationController?.popViewController(animated: true)
+        router?.dismissFromRequestVerification()
     }
 }
