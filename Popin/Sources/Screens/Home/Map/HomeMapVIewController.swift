@@ -22,6 +22,12 @@ struct PhotoPin: Decodable {
 
 
 class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
+    weak var delegate: HomeMapViewControllerDelegate?
+    func userDidSelectLocation() {
+            delegate?.didSelectLocation(annotations: self.annotations)
+        }
+
+    var parentNavigationController: UINavigationController?
     private var mapView = MKMapView()
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
@@ -40,8 +46,10 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     var annotations: [CustomImageAnnotation] = []
     var pinCountByCoordinate: [String: Int] = [:]
+    var selectedLocation: CLLocation?
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupMapView()
         setupMapView()
         setupLocationManager()
         getPin()
@@ -62,18 +70,17 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
             let thresholdDistance: CLLocationDistance = 100.0
 
             if distance <= thresholdDistance {
+                delegate?.didSelectLocation(annotations: self.annotations)
                 let albumViewController = AlbumViewController()
-                albumViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+                albumViewController.annotations = self.mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumViewController, animated: true)
             }
         }
     }
 
-
-
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let currentLocation = locations.last {
+        if locations.last != nil {
             locationManager.stopUpdatingLocation()
         } else {
             print("No valid location found in the update.")
@@ -146,6 +153,8 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
     func setupMapView() {
         mapView = MKMapView()
         mapView.delegate = self
+        mapView.isUserInteractionEnabled = true
+        mapView.isMultipleTouchEnabled = true
         view.addSubview(mapView)
         
         mapView.snp.makeConstraints { make in
@@ -163,12 +172,14 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
         mapView.centerToLocation(initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118)
         )
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
+        tapGesture.delegate = self
         mapView.addGestureRecognizer(tapGesture)
     }
 }
 
 extension HomeMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
         guard let annotation = annotation as? CustomImageAnnotation else { return nil }
         
         if let cluster = annotation as? MKClusterAnnotation {
@@ -202,4 +213,8 @@ extension HomeMapViewController: MKMapViewDelegate {
     }
 }
 
-
+extension HomeMapViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}

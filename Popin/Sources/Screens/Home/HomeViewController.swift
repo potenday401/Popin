@@ -6,16 +6,22 @@
 //
 
 import UIKit
-//import Tabman
+import Tabman
 import Pageboy
 import SnapKit
 import Photos
 
 //Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
 //class HomeViewController: TabmanViewController {
-class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate {
+    func didSelectLocation(annotations: [CustomImageAnnotation]) {
+        let albumViewController = AlbumViewController()
+        albumViewController.annotations = annotations
+        navigationController?.pushViewController(albumViewController, animated: true)
+      }
     
-//    private var viewControllers: [UIViewController] = []
+    private let homeMapViewController = HomeMapViewController()
+    private var viewControllers: [UIViewController] = []
     
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -50,7 +56,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         let cameraButton = UIButton()
         cameraButton.setImage(UIImage(resource: .cameraButton), for: .normal)
         cameraButton.addTarget(self, action: #selector(cameraShootButtonTapped), for: .touchUpInside)
-        cameraButton.layer.zPosition = 1
 
         let leftItem = PDSNavigationBarItem()
             leftItem.addSubview(cameraButton)
@@ -128,12 +133,15 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     override func viewDidLoad() {
+        homeMapViewController.delegate = self
         super.viewDidLoad()
-//        let dateViewController = DateViewController(viewModel: nil)
-        let homeMapViewController = HomeMapViewController()
-//        viewControllers.append(homeMapViewController)
-//        viewControllers.append(dateViewController)
+        //        let dateViewController = DateViewController(viewModel: nil)
 
+//        let navigationController = UINavigationController(rootViewController: homeMapViewController)
+//        viewControllers.append(navigationController)
+////        viewControllers.append(homeMapViewController)
+//        viewControllers.append(dateViewController)
+//
 //        let bar = TMBar.ButtonBar()
 //
 //        addBar(bar, dataSource: self, at: .top)
@@ -147,7 +155,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
 //        }
 //        bar.indicator.tintColor = .clear
 //        dataSource = self
-        
+
         view.addSubview(cameraButton)
         view.addSubview(navigationBar)
 
@@ -185,6 +193,11 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.12 * view.bounds.height)
         }
     }
+    func didSelectLocation() {
+          // 선택된 위치에 대한 동작 수행
+          let albumViewController = AlbumViewController()
+          navigationController?.pushViewController(albumViewController, animated: true)
+      }
 }
 
 //extension HomeViewController: PageboyViewControllerDataSource {
@@ -204,13 +217,13 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
 
 // MARK: - TMBarDataSource
 
-//extension HomeViewController: TMBarDataSource {
-//    
-//    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-//        let title = index == 0 ? "지도뷰" : "날짜뷰"
-//        return TMBarItem(title: title)
-//    }
-//}
+extension HomeViewController: TMBarDataSource {
+    
+    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+        let title = index == 0 ? "지도뷰" : "날짜뷰"
+        return TMBarItem(title: title)
+    }
+}
 
 private extension HomeViewController {
 
@@ -220,7 +233,15 @@ private extension HomeViewController {
     }
 }
 
+//protocol HomeMapViewControllerDelegate: AnyObject {
+//    func didSelectLocation()
+//}
+
+protocol HomeMapViewControllerDelegate: AnyObject {
+  func didSelectLocation(annotations: [CustomImageAnnotation])
+}
+
+
 //#Preview {
 //     HomeViewController()
 //}
-
