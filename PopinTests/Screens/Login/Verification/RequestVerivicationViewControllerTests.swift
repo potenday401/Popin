@@ -19,6 +19,8 @@ final class RequestVerivicationViewControllerTests: XCTestCase {
         verificationService = VerificationServiceMock()
         sut = RequestVerificationViewController(
             title: "인증번호를 확인하세요",
+            numberOfStep: 4,
+            step: 2,
             dependency: .init(
                 email: email,
                 verificationService: verificationService

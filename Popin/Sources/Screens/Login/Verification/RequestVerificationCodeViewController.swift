@@ -45,9 +45,9 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
         let verificationService: VerificationService
     }
     
-    init(title: String, dependency: Dependency) {
+    init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
         self.dependency = dependency
-        super.init(title: title)
+        super.init(title: title, numberOfStep: numberOfStep, step: step)
     }
     
     // MARK: - Setup

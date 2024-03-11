@@ -23,6 +23,8 @@ final class SignUpRouterImp: SignUpRouter {
     func routeToRequestVerificationCode() -> UINavigationController? {
         let viewController = RequestVerificationCodeViewController(
             title: "이메일을 적어주세요",
+            numberOfStep: numberOfStep,
+            step: 1,
             dependency: .init(verificationService: dependency.verificationService)
         )
         viewController.showsProgress = true
@@ -52,6 +54,8 @@ final class SignUpRouterImp: SignUpRouter {
     func routeToRequestVerification(email: String) {
         let viewController = RequestVerificationViewController(
             title: "인증번호를 확인하세요",
+            numberOfStep: numberOfStep,
+            step: 2,
             dependency: .init(email: email, verificationService: dependency.verificationService)
         )
         viewController.showsProgress = true
@@ -67,6 +71,8 @@ final class SignUpRouterImp: SignUpRouter {
     // MARK: - Property
     
     private let dependency: Dependency
+    
+    private let numberOfStep = 4
     
     // MARK: - Initializer
     
