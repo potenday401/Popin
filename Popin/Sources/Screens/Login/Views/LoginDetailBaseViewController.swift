@@ -88,7 +88,7 @@ class LoginDetailBaseViewController: BaseViewController {
         
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(25)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(inset)
         }
     }

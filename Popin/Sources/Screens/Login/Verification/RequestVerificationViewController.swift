@@ -62,7 +62,8 @@ final class RequestVerificationViewController: LoginDetailBaseViewController {
         
         contentView.addSubview(verificationCodeInputField)
         verificationCodeInputField.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(42)
+            make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
         }
         

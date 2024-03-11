@@ -63,7 +63,8 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
         
         contentView.addSubview(emailInputField)
         emailInputField.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(25)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         view.addSubview(verificationButton)
