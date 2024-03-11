@@ -56,11 +56,13 @@ final class PDSButton: UIButton {
     // MARK: - Property
     
     private let style: Style
+    private let isFullWidth: Bool
     
     // MARK: - Initialization
     
-    init(style: Style) {
+    init(style: Style, isFullWidth: Bool = true) {
         self.style = style
+        self.isFullWidth = isFullWidth
         super.init(frame: .zero)
         setUpUI()
     }
@@ -78,18 +80,21 @@ final class PDSButton: UIButton {
             setBackgroundImage(UIImage(color: $0.value), for: $0.state)
         }
         
+        snp.makeConstraints { make in
+            make.height.equalTo(56)
+        }
+        
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            if isFullWidth {
+                make.center.equalToSuperview()
+            } else {
+                make.leading.trailing.equalToSuperview().inset(27)
+                make.centerY.equalToSuperview()
+            }
         }
         
         stackView.addArrangedSubview(_titleLabel)
-    }
-    
-    // MARK: - Intrinsic Content Size
-    
-    override var intrinsicContentSize: CGSize {
-        CGSize(width: CGFloat.greatestFiniteMagnitude, height: 56)
     }
 }
 
