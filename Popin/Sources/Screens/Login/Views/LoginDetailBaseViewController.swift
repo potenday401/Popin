@@ -12,6 +12,12 @@ class LoginDetailBaseViewController: BaseViewController {
     
     // MARK: - Interface
     
+    var showsNavigationBar = true {
+        didSet {
+            _navigationBar.isHidden = !showsNavigationBar
+        }
+    }
+    
     var showsProgress = false {
         didSet {
             progressView.isHidden = !showsProgress
