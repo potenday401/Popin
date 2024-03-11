@@ -27,6 +27,9 @@
 		6513C4632BA0175C00E14C0F /* PasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4622BA0175C00E14C0F /* PasswordError.swift */; };
 		6513C4652BA0181B00E14C0F /* PasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4642BA0181B00E14C0F /* PasswordService.swift */; };
 		6513C4672BA0183F00E14C0F /* PasswordServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */; };
+		6513C46D2BA01C9500E14C0F /* AgreeAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4682BA01C9500E14C0F /* AgreeAllView.swift */; };
+		6513C46E2BA01C9500E14C0F /* AgreementItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4692BA01C9500E14C0F /* AgreementItemView.swift */; };
+		6513C46F2BA01C9500E14C0F /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C46B2BA01C9500E14C0F /* AgreementViewController.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -138,6 +141,9 @@
 		6513C4622BA0175C00E14C0F /* PasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordError.swift; sourceTree = "<group>"; };
 		6513C4642BA0181B00E14C0F /* PasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordService.swift; sourceTree = "<group>"; };
 		6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordServiceImp.swift; sourceTree = "<group>"; };
+		6513C4682BA01C9500E14C0F /* AgreeAllView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreeAllView.swift; sourceTree = "<group>"; };
+		6513C4692BA01C9500E14C0F /* AgreementItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementItemView.swift; sourceTree = "<group>"; };
+		6513C46B2BA01C9500E14C0F /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -287,6 +293,24 @@
 				6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		6513C46A2BA01C9500E14C0F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6513C4682BA01C9500E14C0F /* AgreeAllView.swift */,
+				6513C4692BA01C9500E14C0F /* AgreementItemView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6513C46C2BA01C9500E14C0F /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+				6513C46B2BA01C9500E14C0F /* AgreementViewController.swift */,
+				6513C46A2BA01C9500E14C0F /* Views */,
+			);
+			path = Agreement;
 			sourceTree = "<group>";
 		};
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
@@ -517,6 +541,7 @@
 				65BC5BCC2B96D546003EABD5 /* SignUp */,
 				65BC5BCF2B96D800003EABD5 /* Verification */,
 				6513C45C2BA00EC500E14C0F /* Password */,
+				6513C46C2BA01C9500E14C0F /* Agreement */,
 				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
@@ -979,6 +1004,7 @@
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
 				6513C3EB2B9AE49300E14C0F /* LoginRouter.swift in Sources */,
 				6513C3E92B9AE3B800E14C0F /* AppRouter.swift in Sources */,
+				6513C46E2BA01C9500E14C0F /* AgreementItemView.swift in Sources */,
 				65D2D18F2B8CB1E70015CD0D /* PDSNavigationBar.swift in Sources */,
 				6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */,
 				9F0BA2EB2B68F36200677403 /* ImageCacheManager.swift in Sources */,
@@ -995,6 +1021,7 @@
 				6513C41C2B9D6F2F00E14C0F /* RequestVerificationViewController.swift in Sources */,
 				65A8E7452B88D1D700BC7470 /* PDSButton+Preview.swift in Sources */,
 				9E8EBFEC2B6E5D2300255D0D /* BaseViewController.swift in Sources */,
+				6513C46D2BA01C9500E14C0F /* AgreeAllView.swift in Sources */,
 				6584711C2B981F2B00875FEE /* KeyboardSupport.swift in Sources */,
 				9E8EBFF62B6E6BDB00255D0D /* APIManager.swift in Sources */,
 				652C0E842B9462F600A87458 /* LoginRequest.swift in Sources */,
@@ -1011,6 +1038,7 @@
 				658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
+				6513C46F2BA01C9500E14C0F /* AgreementViewController.swift in Sources */,
 				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,
 				6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */,
 				6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */,
