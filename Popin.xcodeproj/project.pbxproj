@@ -22,6 +22,7 @@
 		6513C4242B9D9FA800E14C0F /* RequestVerificationCodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4232B9D9FA800E14C0F /* RequestVerificationCodeViewControllerTests.swift */; };
 		6513C4262B9D9FF600E14C0F /* VerificationServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4252B9D9FF600E14C0F /* VerificationServiceMock.swift */; };
 		6513C42F2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C42E2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift */; };
+		6513C45E2BA00EE200E14C0F /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -128,6 +129,7 @@
 		6513C4232B9D9FA800E14C0F /* RequestVerificationCodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationCodeViewControllerTests.swift; sourceTree = "<group>"; };
 		6513C4252B9D9FF600E14C0F /* VerificationServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationServiceMock.swift; sourceTree = "<group>"; };
 		6513C42E2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerivicationViewControllerTests.swift; sourceTree = "<group>"; };
+		6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -257,6 +259,14 @@
 				6513C42E2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift */,
 			);
 			path = Verification;
+			sourceTree = "<group>";
+		};
+		6513C45C2BA00EC500E14C0F /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */,
+			);
+			path = Password;
 			sourceTree = "<group>";
 		};
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
@@ -939,6 +949,7 @@
 				6513C3E32B9AD84200E14C0F /* PopinTestSupport.swift in Sources */,
 				9E8EBFEE2B6E5D4000255D0D /* BaseCollectionViewCell.swift in Sources */,
 				65779EC02B959AE600D8C98E /* EmailPasswordValidator.swift in Sources */,
+				6513C45E2BA00EE200E14C0F /* PasswordViewController.swift in Sources */,
 				652C0EA12B94831600A87458 /* LoginserviceImp.swift in Sources */,
 				9F0BA2AF2B68A0D600677403 /* AppDelegate.swift in Sources */,
 				6513C3EB2B9AE49300E14C0F /* LoginRouter.swift in Sources */,
