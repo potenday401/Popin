@@ -10,10 +10,11 @@ import Tabman
 import Pageboy
 import SnapKit
 import Photos
+import CoreLocation
 
 //Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
 //class HomeViewController: TabmanViewController {
-class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate {
+class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
@@ -21,8 +22,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
       }
     
     private let homeMapViewController = HomeMapViewController()
-    private var viewControllers: [UIViewController] = []
-    
+//    private var viewControllers: [UIViewController] = []
+    private let locationManager = CLLocationManager()
+
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -98,7 +100,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     private let recentPinLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 50, width: 112, height: 50))
         label.textColor = .white
-        label.text = "일본..."
+        label.text = ""
         label.lineBreakMode = .byWordWrapping
         label.font = .systemFont(ofSize: 26, weight: .medium)
         return label
@@ -135,6 +137,10 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     override func viewDidLoad() {
         homeMapViewController.delegate = self
         super.viewDidLoad()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+
         //        let dateViewController = DateViewController(viewModel: nil)
 
 //        let navigationController = UINavigationController(rootViewController: homeMapViewController)
@@ -193,8 +199,41 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.12 * view.bounds.height)
         }
     }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        updateLocationLabel(latitude, longitude)
+      }
+    
+    func updateLocationLabel(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let placemark = placemarks?.first {
+                var locationString = ""
+                
+                if let locality = placemark.locality {
+                    locationString += locality
+                }
+                
+                if let sublocality = placemark.subLocality {
+                    if !locationString.isEmpty {
+                        locationString += ", "
+                    }
+                    locationString += sublocality
+                }
+                
+                self.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
+            } else {
+                self.recentPinLabel.text = "Unknown Location"
+            }
+        }
+    }
+    
     func didSelectLocation() {
-          // 선택된 위치에 대한 동작 수행
           let albumViewController = AlbumViewController()
           navigationController?.pushViewController(albumViewController, animated: true)
       }
