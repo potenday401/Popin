@@ -52,6 +52,7 @@ final class PasswordViewController: LoginDetailBaseViewController {
     
     struct Dependency {
         let email: String
+        let passwordService: PasswordService
     }
     
     init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
@@ -113,6 +114,18 @@ private extension PasswordViewController {
             return
         }
         
+        dependency.passwordService.requestUpdatePassword(email: dependency.email, password: password) { [weak self] result in
+            guard let self else {
+                return
+            }
+            
+            do {
+                try result.get()
+                delegate?.passwordViewControllerDidSuccessRequest(self)
+            } catch {
+                // TODO: Error handling
+            }
+        }
     }
 }
 

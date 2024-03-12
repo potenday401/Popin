@@ -23,6 +23,10 @@
 		6513C4262B9D9FF600E14C0F /* VerificationServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4252B9D9FF600E14C0F /* VerificationServiceMock.swift */; };
 		6513C42F2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C42E2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift */; };
 		6513C45E2BA00EE200E14C0F /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */; };
+		6513C4612BA0170800E14C0F /* PasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4602BA0170800E14C0F /* PasswordRequest.swift */; };
+		6513C4632BA0175C00E14C0F /* PasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4622BA0175C00E14C0F /* PasswordError.swift */; };
+		6513C4652BA0181B00E14C0F /* PasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4642BA0181B00E14C0F /* PasswordService.swift */; };
+		6513C4672BA0183F00E14C0F /* PasswordServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */; };
 		6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */; };
 		6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */; };
 		6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */; };
@@ -130,6 +134,10 @@
 		6513C4252B9D9FF600E14C0F /* VerificationServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationServiceMock.swift; sourceTree = "<group>"; };
 		6513C42E2B9DA38600E14C0F /* RequestVerivicationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerivicationViewControllerTests.swift; sourceTree = "<group>"; };
 		6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		6513C4602BA0170800E14C0F /* PasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRequest.swift; sourceTree = "<group>"; };
+		6513C4622BA0175C00E14C0F /* PasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordError.swift; sourceTree = "<group>"; };
+		6513C4642BA0181B00E14C0F /* PasswordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordService.swift; sourceTree = "<group>"; };
+		6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordServiceImp.swift; sourceTree = "<group>"; };
 		6525D4872B88BA9C0063BD16 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		6525D48B2B88BB100063BD16 /* UIColor+PDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS.swift"; sourceTree = "<group>"; };
 		6525D48D2B88BBA20063BD16 /* UIColor+PDS+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PDS+Preview.swift"; sourceTree = "<group>"; };
@@ -265,8 +273,20 @@
 			isa = PBXGroup;
 			children = (
 				6513C45D2BA00EE200E14C0F /* PasswordViewController.swift */,
+				6513C45F2BA0138400E14C0F /* Network */,
 			);
 			path = Password;
+			sourceTree = "<group>";
+		};
+		6513C45F2BA0138400E14C0F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6513C4602BA0170800E14C0F /* PasswordRequest.swift */,
+				6513C4622BA0175C00E14C0F /* PasswordError.swift */,
+				6513C4642BA0181B00E14C0F /* PasswordService.swift */,
+				6513C4662BA0183F00E14C0F /* PasswordServiceImp.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
@@ -496,6 +516,7 @@
 				6513C3EA2B9AE49300E14C0F /* LoginRouter.swift */,
 				65BC5BCC2B96D546003EABD5 /* SignUp */,
 				65BC5BCF2B96D800003EABD5 /* Verification */,
+				6513C45C2BA00EC500E14C0F /* Password */,
 				658471232B982E3500875FEE /* Views */,
 				652C0E7E2B945F8A00A87458 /* Network */,
 			);
@@ -921,6 +942,7 @@
 				6525D48E2B88BBA20063BD16 /* UIColor+PDS+Preview.swift in Sources */,
 				65BC1F442B8E0F1100CB2F15 /* PDSInputField+Preview.swift in Sources */,
 				9E8EBFF02B6E5D6600255D0D /* DateViewController.swift in Sources */,
+				6513C4612BA0170800E14C0F /* PasswordRequest.swift in Sources */,
 				65D2D1952B8CBCA90015CD0D /* PDSNavigationBar+Preview.swift in Sources */,
 				9F0BA31D2B68F5AE00677403 /* AlbumDetailViewController.swift in Sources */,
 				652C0E7C2B945C7F00A87458 /* Response.swift in Sources */,
@@ -930,13 +952,16 @@
 				65D2D1982B8CC89F0015CD0D /* PDSVerificationCodeDigit.swift in Sources */,
 				65BC1F422B8E06AC00CB2F15 /* UIEdgeInsets+Utils.swift in Sources */,
 				65779EBD2B9584F500D8C98E /* LoginError.swift in Sources */,
+				6513C4632BA0175C00E14C0F /* PasswordError.swift in Sources */,
 				65BC5BD32B96D85E003EABD5 /* BaseNavigationViewController.swift in Sources */,
+				6513C4652BA0181B00E14C0F /* PasswordService.swift in Sources */,
 				652C0E9B2B946BEF00A87458 /* AlamofireNetwork.swift in Sources */,
 				658471202B9823CF00875FEE /* KeyboardNotification.swift in Sources */,
 				6513C41E2B9D943E00E14C0F /* VerificationRequest.swift in Sources */,
 				65BC5BD12B96D815003EABD5 /* RequestVerificationCodeViewController.swift in Sources */,
 				6525D4882B88BA9C0063BD16 /* UIColor+Hex.swift in Sources */,
 				652C0E762B9456C800A87458 /* LoginService.swift in Sources */,
+				6513C4672BA0183F00E14C0F /* PasswordServiceImp.swift in Sources */,
 				652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */,
 				6513C3F92B9AF05800E14C0F /* SignUpRouter.swift in Sources */,
 				9E8EBFF42B6E5DA000255D0D /* ReusableProtocol.swift in Sources */,

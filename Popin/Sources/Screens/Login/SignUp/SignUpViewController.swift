@@ -53,4 +53,21 @@ extension SignUpViewController: RequestVerificationViewControllerDelegate {
     func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController) {
         router?.dismissFromRequestVerification()
     }
+    
+    func requestVerificationViewController(_ viewController: RequestVerificationViewController, didSuccessRequestForEmail email: String) {
+        router?.routeToPassword(email: email)
+    }
+}
+
+// MARK: - PasswordViewControllerDelegate
+
+extension SignUpViewController: PasswordViewControllerDelegate {
+    
+    func passwordViewControllerDidTapBack(_ viewController: PasswordViewController) {
+        // TODO: Dismiss from password
+    }
+    
+    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController) {
+        // TODO: Route to agreement
+    }
 }

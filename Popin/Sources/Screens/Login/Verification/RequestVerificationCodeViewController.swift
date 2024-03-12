@@ -129,7 +129,7 @@ private extension RequestVerificationCodeViewController {
             
             do {
                 try result.get()
-                self.delegate?.requestVerificationCodeViewController(self, didSuccessRequestForEmail: email)
+                delegate?.requestVerificationCodeViewController(self, didSuccessRequestForEmail: email)
             } catch {
                 // TODO: Show error message
             }

@@ -10,6 +10,7 @@ import SnapKit
 
 protocol RequestVerificationViewControllerDelegate: AnyObject {
     func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController)
+    func requestVerificationViewController(_ viewController: RequestVerificationViewController, didSuccessRequestForEmail email: String)
 }
 
 final class RequestVerificationViewController: LoginDetailBaseViewController {
@@ -125,10 +126,14 @@ private extension RequestVerificationViewController {
         dependency.verificationService.requestVerification(
             email: dependency.email,
             verificationCode: verificationCode
-        ) { result in
+        ) { [weak self] result in
+            guard let self else {
+                return
+            }
+            
             do {
                 try result.get()
-                // TODO: Go to password view
+                delegate?.requestVerificationViewController(self, didSuccessRequestForEmail: dependency.email)
             } catch {
                 // TODO: Show error message
             }

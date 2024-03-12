@@ -12,6 +12,7 @@ protocol SignUpRouter {
     func dismissFromRequestVerificationCode()
     func routeToRequestVerification(email: String)
     func dismissFromRequestVerification()
+    func routeToPassword(email: String)
 }
 
 final class SignUpRouterImp: SignUpRouter {
@@ -68,6 +69,18 @@ final class SignUpRouterImp: SignUpRouter {
         signUpViewController?.navigationController?.popViewController(animated: true)
     }
     
+    func routeToPassword(email: String) {
+        let viewController = PasswordViewController(
+            title: "비밀번호를 적어주세요",
+            numberOfStep: numberOfStep,
+            step: 3,
+            dependency: .init(email: email, passwordService: dependency.passwordService)
+        )
+        viewController.delegate = signUpViewController
+        
+        signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     // MARK: - Property
     
     private let dependency: Dependency
@@ -78,6 +91,7 @@ final class SignUpRouterImp: SignUpRouter {
     
     struct Dependency {
         let verificationService: VerificationService
+        let passwordService: PasswordService
     }
     
     init(dependency: Dependency) {
