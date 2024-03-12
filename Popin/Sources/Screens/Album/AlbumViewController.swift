@@ -12,10 +12,12 @@ import Kingfisher
 class CustomImageAnnotation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let imageUrl: String
+    var pinCount: Int = 0
     
-    init(coordinate: CLLocationCoordinate2D, imageUrl: String) {
+    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int) {
         self.coordinate = coordinate
         self.imageUrl = imageUrl
+        self.pinCount = pinCount
     }
 }
 
@@ -34,6 +36,7 @@ class CustomImageAnnotationView: MKAnnotationView {
         guard let customAnnotation = self.annotation as? CustomImageAnnotation else {
             return
         }
+        print(customAnnotation.pinCount, "pinCount")
         
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -43,8 +46,19 @@ class CustomImageAnnotationView: MKAnnotationView {
         imageView.layer.borderColor = UIColor.white.cgColor
         self.isUserInteractionEnabled = true
         imageView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+                let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         imageView.addGestureRecognizer(tap)
+        
+        // countLabel load속도 체크필요
+        let countLabel = UILabel()
+        countLabel.text = "\(customAnnotation.pinCount)"
+        countLabel.textColor = .white
+        countLabel.font = UIFont.systemFont(ofSize: 14)
+        countLabel.textAlignment = .center
+        countLabel.backgroundColor = .indigo200
+        countLabel.layer.cornerRadius = 15
+        countLabel.clipsToBounds = true
+        
         let url = URL(string: customAnnotation.imageUrl)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let data = data, let image = UIImage(data: data) {
@@ -52,16 +66,20 @@ class CustomImageAnnotationView: MKAnnotationView {
                     imageView.image = image
                 }
             }
+            
+            countLabel.frame = CGRect(x: imageView.frame.maxX + 5, y: imageView.frame.origin.y, width: 33, height: 33)
         }.resume()
-        
-        
-        self.addSubview(imageView)
+        DispatchQueue.main.async {
+            self.addSubview(imageView)
+            self.addSubview(countLabel)
+        }
+    }
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+                print("dkdkdkdkd")
+            }
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        print("dkdkdkdkd")
-    }
-}
+
 
 class AlbumHeaderView: UIView {
     var backButton: UIButton!
@@ -338,7 +356,7 @@ class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHea
     
     
     func setupAnnotation(location: CLLocation, imageUrl: String) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: 2)
         mapView.addAnnotation(imageAnnotation)
     }
     

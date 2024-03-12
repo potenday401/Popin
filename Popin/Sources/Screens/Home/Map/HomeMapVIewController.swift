@@ -22,6 +22,12 @@ struct PhotoPin: Decodable {
 
 
 class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
+    weak var delegate: HomeMapViewControllerDelegate?
+    func userDidSelectLocation() {
+            delegate?.didSelectLocation(annotations: self.annotations)
+        }
+
+    var parentNavigationController: UINavigationController?
     private var mapView = MKMapView()
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
@@ -39,8 +45,11 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
     let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     var locationManager = CLLocationManager()
     var annotations: [CustomImageAnnotation] = []
+    var pinCountByCoordinate: [String: Int] = [:]
+    var selectedLocation: CLLocation?
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupMapView()
         setupMapView()
         setupLocationManager()
         getPin()
@@ -61,18 +70,17 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
             let thresholdDistance: CLLocationDistance = 100.0
 
             if distance <= thresholdDistance {
+                delegate?.didSelectLocation(annotations: self.annotations)
                 let albumViewController = AlbumViewController()
-                albumViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+                albumViewController.annotations = self.mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumViewController, animated: true)
             }
         }
     }
 
-
-
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let currentLocation = locations.last {
+        if locations.last != nil {
             locationManager.stopUpdatingLocation()
         } else {
             print("No valid location found in the update.")
@@ -91,7 +99,6 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
         .responseJSON { response in
             switch response.result {
             case .success(let value):
-
                 if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
                    let photoPinContainer = try? JSONDecoder().decode([PhotoPin].self, from: jsonData) {
                     self.handlePhotoPins(photoPinContainer)
@@ -112,18 +119,30 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
             let latitude = Double(pin.latLng.latitude) ?? 0.0
             let longitude = Double(pin.latLng.longitude) ?? 0.0
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude);            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl)
+            let coordinateKey = "\(pin.latLng.latitude)-\(pin.latLng.longitude)"
+            
+            if let count = self.pinCountByCoordinate[coordinateKey] {
+                self.pinCountByCoordinate[coordinateKey] = count + 1
+            } else {
+                self.pinCountByCoordinate[coordinateKey] = 1
+            }
+            
+            let pinCount = self.pinCountByCoordinate[coordinateKey, default: 0]
+            currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount)
             self.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl)
+            
+            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount)
             self.mapView.addAnnotation(imageAnnotation)
             annotations.append(imageAnnotation)
         }
     }
 
-    func setupAnnotation(location: CLLocation, imageUrl: String) {
-            let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl)
-            mapView.addAnnotation(imageAnnotation)
-        }
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount)
+        mapView.addAnnotation(imageAnnotation)
+    }
+
 
     func setupLocationManager() {
         locationManager = CLLocationManager()
@@ -134,11 +153,14 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
     func setupMapView() {
         mapView = MKMapView()
         mapView.delegate = self
+        mapView.isUserInteractionEnabled = true
+        mapView.isMultipleTouchEnabled = true
         view.addSubview(mapView)
         
         mapView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.width.height.equalTo(450)
+            make.width.equalTo(450)
+            make.height.equalTo(359)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
         }
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,24 +172,49 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
         mapView.centerToLocation(initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118)
         )
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
+        tapGesture.delegate = self
         mapView.addGestureRecognizer(tapGesture)
     }
 }
 
 extension HomeMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
         guard let annotation = annotation as? CustomImageAnnotation else { return nil }
-        let identifier = "customImageAnnotation"
-        var view: CustomImageAnnotationView
         
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
+        if let cluster = annotation as? MKClusterAnnotation {
+            let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
+            clusterView?.titleVisibility = .visible
+            clusterView?.subtitleVisibility = .visible
+
+            // Add animation
+            UIView.animate(withDuration: 0.3, animations: {
+                clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+            }) { _ in
+                UIView.animate(withDuration: 0.5) {
+                    clusterView?.transform = CGAffineTransform.identity
+                }
+            }
+
+            return clusterView
         } else {
-            view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            let identifier = "customImageAnnotation"
+            var view: CustomImageAnnotationView
+            
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
+                dequeuedView.annotation = annotation
+                view = dequeuedView
+            } else {
+                view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
+            
+            return view
         }
-        
-        return view
     }
 }
 
+extension HomeMapViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
