@@ -12,6 +12,12 @@ class LoginDetailBaseViewController: BaseViewController {
     
     // MARK: - Interface
     
+    var showsNavigationBar = true {
+        didSet {
+            _navigationBar.isHidden = !showsNavigationBar
+        }
+    }
+    
     var showsProgress = false {
         didSet {
             progressView.isHidden = !showsProgress
@@ -34,11 +40,7 @@ class LoginDetailBaseViewController: BaseViewController {
         return navigationBar
     }()
     
-    private let progressView: SignUpProgressView = {
-        let progressView = SignUpProgressView(step: 4)
-        progressView.isHidden = true
-        return progressView
-    }()
+    private let progressView: SignUpProgressView
     
     private let _contentView = UIView()
     
@@ -46,12 +48,16 @@ class LoginDetailBaseViewController: BaseViewController {
     
     // MARK: - Initializer
     
-    init(title: String) {
+    init(title: String, numberOfStep: Int, step: Int) {
         let label = UILabel()
         label.text = title
         label.textColor = .white
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         titleLabel = label
+        
+        let progressView = SignUpProgressView(numberOfStep: numberOfStep, initial: step)
+        progressView.isHidden = true
+        self.progressView = progressView
         
         super.init()
     }
@@ -82,7 +88,7 @@ class LoginDetailBaseViewController: BaseViewController {
         
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(25)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(inset)
         }
     }

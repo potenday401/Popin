@@ -30,6 +30,27 @@ final class VerificationServiceImp: VerificationService {
         }
     }
     
+    func requestVerification(email: String, verificationCode: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let request = VerificationRequest(email: email, verificationCode: verificationCode)
+        network.send(request) { result in
+            switch result {
+            case .success(let response):
+                switch response.statusCode {
+                case 200..<300:
+                    completion(.success(()))
+                case 400:
+                    completion(.failure(VerificationError.codeExpired))
+                case 404:
+                    completion(.failure(VerificationError.codeNotFound))
+                default:
+                    completion(.failure(VerificationError.serverError))
+                }
+            case .failure:
+                completion(.failure(VerificationError.serverError))
+            }
+        }
+    }
+    
     // MARK: - Property
     
     private let network: Network

@@ -21,11 +21,17 @@ struct Endpoint {
     
     enum Member {
         case requestVerificationCode
+        case requestVerification
+        case signUp
         
         var url: URL {
             switch self {
             case .requestVerificationCode:
                 Endpoint.baseURL.appending(path: "member/pre-signup")
+            case .requestVerification:
+                Endpoint.baseURL.appending(path: "member/email-verification")
+            case .signUp:
+                Endpoint.baseURL.appending(path: "member/signup")
             }
         }
     }

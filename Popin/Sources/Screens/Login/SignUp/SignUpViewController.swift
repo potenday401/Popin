@@ -21,21 +21,6 @@ final class SignUpViewController: BaseViewController {
         _navigationController
     }
     
-    // MARK: - Property
-    
-    private let dependency: Dependency
-    
-    // MARK: - Initializer
-    
-    struct Dependency {
-        let network: Network
-    }
-    
-    init(dependency: Dependency) {
-        self.dependency = dependency
-        super.init()
-    }
-    
     // MARK: - Setup
     
     override func setUpUI() {
@@ -53,6 +38,36 @@ final class SignUpViewController: BaseViewController {
 extension SignUpViewController: RequestVerificationCodeViewControllerDelegate {
     
     func requestVerificationCodeViewControllerBackDidTap(_ viewController: RequestVerificationCodeViewController) {
-        dismiss(animated: true)
+        router?.dismissFromRequestVerificationCode()
+    }
+    
+    func requestVerificationCodeViewController(_ viewController: RequestVerificationCodeViewController, didSuccessRequestForEmail email: String) {
+        router?.routeToRequestVerification(email: email)
+    }
+}
+
+// MARK: - RequestVerificationViewControllerDelegate
+
+extension SignUpViewController: RequestVerificationViewControllerDelegate {
+    
+    func requestVerificationViewControllerBackDidTap(_ viewController: RequestVerificationViewController) {
+        router?.dismissFromRequestVerification()
+    }
+    
+    func requestVerificationViewController(_ viewController: RequestVerificationViewController, didSuccessRequestForEmail email: String) {
+        router?.routeToPassword(email: email)
+    }
+}
+
+// MARK: - PasswordViewControllerDelegate
+
+extension SignUpViewController: PasswordViewControllerDelegate {
+    
+    func passwordViewControllerDidTapBack(_ viewController: PasswordViewController) {
+        router?.dismissFromPassword()
+    }
+    
+    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController) {
+        router?.routeToAgreement()
     }
 }
