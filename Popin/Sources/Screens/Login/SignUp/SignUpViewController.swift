@@ -68,6 +68,6 @@ extension SignUpViewController: PasswordViewControllerDelegate {
     }
     
     func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController) {
-        // TODO: Route to agreement
+        router?.routeToAgreement()
     }
 }

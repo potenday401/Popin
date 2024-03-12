@@ -13,6 +13,7 @@ protocol SignUpRouter {
     func routeToRequestVerification(email: String)
     func dismissFromRequestVerification()
     func routeToPassword(email: String)
+    func routeToAgreement()
 }
 
 final class SignUpRouterImp: SignUpRouter {
@@ -78,6 +79,11 @@ final class SignUpRouterImp: SignUpRouter {
         )
         viewController.delegate = signUpViewController
         
+        signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func routeToAgreement() {
+        let viewController = AgreementViewController(title: "약관동의", numberOfStep: numberOfStep, step: 4)
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
