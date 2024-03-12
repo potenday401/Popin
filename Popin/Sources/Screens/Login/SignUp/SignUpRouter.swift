@@ -13,6 +13,7 @@ protocol SignUpRouter {
     func routeToRequestVerification(email: String)
     func dismissFromRequestVerification()
     func routeToPassword(email: String)
+    func dismissFromPassword()
     func routeToAgreement()
 }
 
@@ -80,6 +81,10 @@ final class SignUpRouterImp: SignUpRouter {
         viewController.delegate = signUpViewController
         
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func dismissFromPassword() {
+        signUpViewController?.navigationController?.popViewController(animated: true)
     }
     
     func routeToAgreement() {
