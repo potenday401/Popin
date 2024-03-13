@@ -1,0 +1,123 @@
+<mxfile host="Electron" modified="2024-03-13T12:00:00.580Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="GD7FbiHo8dGnCB1R3RKW" version="24.0.4" type="device">
+  <diagram name="Page-1" id="_UzuwywObDAJU0cAz5nq">
+    <mxGraphModel dx="2133" dy="929" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-400" y="1000" width="470" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-2" target="6ZjQgTPz-QIVEgJ71Pdk-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-2" value="AppDelegate&lt;br&gt;(Composition Root)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="300" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-3" target="6ZjQgTPz-QIVEgJ71Pdk-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-3" target="6ZjQgTPz-QIVEgJ71Pdk-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-3" value="AppRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry y="400" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-7" value="HomeRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="160" y="520" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-20" target="6ZjQgTPz-QIVEgJ71Pdk-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-20" target="6ZjQgTPz-QIVEgJ71Pdk-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-20" value="LoginRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="520" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-25" value="SignUpRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="640" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-34" value="ChangePasswordRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-60" y="640" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-36" target="6ZjQgTPz-QIVEgJ71Pdk-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-41" value="weak" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="6ZjQgTPz-QIVEgJ71Pdk-39">
+          <mxGeometry x="-0.593" y="-1" relative="1" as="geometry">
+            <mxPoint y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-36" value="LoginRouter" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-380" y="1020" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-37" target="6ZjQgTPz-QIVEgJ71Pdk-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-37" target="6ZjQgTPz-QIVEgJ71Pdk-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-37" target="6ZjQgTPz-QIVEgJ71Pdk-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-37" value="LoginViewController" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-380" y="1120" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-53" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-180" y="1090" width="230" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-51" value="" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="6ZjQgTPz-QIVEgJ71Pdk-53">
+          <mxGeometry width="230" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-46" value="" style="group" vertex="1" connectable="0" parent="6ZjQgTPz-QIVEgJ71Pdk-53">
+          <mxGeometry x="20" y="20" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-42" value="ViewController" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="6ZjQgTPz-QIVEgJ71Pdk-46">
+          <mxGeometry width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-43" value="ViewController" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="6ZjQgTPz-QIVEgJ71Pdk-46">
+          <mxGeometry x="10" y="10" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-44" value="Subviews" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="6ZjQgTPz-QIVEgJ71Pdk-46">
+          <mxGeometry x="20" y="20" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-54" target="6ZjQgTPz-QIVEgJ71Pdk-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-54" target="6ZjQgTPz-QIVEgJ71Pdk-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-54" value="Dependency" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-380" y="1220" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-56" value="LoginService" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="1300" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-58" value="TokenRepository" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="1380" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-62" target="6ZjQgTPz-QIVEgJ71Pdk-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-62" value="LoginRouterImp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-380" y="920" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-64" target="6ZjQgTPz-QIVEgJ71Pdk-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-64" value="TokenRepositoryImp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="110" y="1380" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="6ZjQgTPz-QIVEgJ71Pdk-66" target="6ZjQgTPz-QIVEgJ71Pdk-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-66" value="LoginServiceImp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="110" y="1300" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ZjQgTPz-QIVEgJ71Pdk-71" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 18px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Router를 사용해서 LoginViewController가 띄워줄 구체적인 화면의 종류를 숨긴다.&lt;br&gt;Router가 없다면 화면 A에서 화면 B에 직접 의존해야 하므로&amp;nbsp;화면간 강한 결합이 형성된다.&lt;br&gt;각 화면의 VC는 서로 다른 모듈에 속할 수 있으므로, 의존성을 분리해서 모듈 간 결합을 끊을 수 있다.&lt;br&gt;띄우는 쪽에서 띄울 쪽에 대한 정보를 전혀 알지 못하게 만든다.&lt;br&gt;어떤 화면을(VC) 어떤 방법으로 띄울지는(present, push, addSubview) Router가 정한다.&lt;br&gt;VC는 그 Router 또한 직접 의존하지 않음으로써, 화면 전환에 관하여 어떤 정보도 알지 못하게 된다.&lt;br&gt;어떤 화면으로 보내겠다는 것만 router로 요청하고, 구체적으로 어디로 갈지는 모른다.&lt;/span&gt;" style="html=1;align=left;whiteSpace=wrap;fontSize=18;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1000" width="729" height="165" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
