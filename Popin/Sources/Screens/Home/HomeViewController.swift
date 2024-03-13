@@ -54,31 +54,16 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         let navigationBar = PDSNavigationBar()
         navigationBar.titleView = UIImageView(image: UIImage(resource: .logo))
         
-        let leftImageView = UIImageView(image: UIImage(resource: .cameraButton))
-        let cameraButton = UIButton()
-        cameraButton.setImage(UIImage(resource: .cameraButton), for: .normal)
-        cameraButton.addTarget(self, action: #selector(cameraShootButtonTapped), for: .touchUpInside)
-
-        let leftItem = PDSNavigationBarItem()
-            leftItem.addSubview(cameraButton)
-            cameraButton.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.size.equalTo(CGSize(width: 24, height: 24))
-                make.left.equalToSuperview().offset(12)
-            }
-            cameraButton.contentMode = .scaleAspectFit
-            navigationBar.leftItem = leftItem
-
-        let rightImageView = UIImageView(image: UIImage(resource: .profileButton))
-        let rightItem = PDSNavigationBarItem()
-        rightItem.addSubview(rightImageView)
-        rightImageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.size.equalTo(CGSize(width: 24, height: 24))
-            make.right.equalToSuperview().offset(-12)
-        }
-        rightImageView.contentMode = .scaleAspectFit
-        navigationBar.rightItem = rightItem
+//        let rightImageView = UIImageView(image: UIImage(resource: .profileButton))
+//        let rightItem = PDSNavigationBarItem()
+//        rightItem.addSubview(rightImageView)
+//        rightImageView.snp.makeConstraints { make in
+//            make.center.equalToSuperview()
+//            make.size.equalTo(CGSize(width: 24, height: 24))
+//            make.right.equalToSuperview().offset(-12)
+//        }
+//        rightImageView.contentMode = .scaleAspectFit
+//        navigationBar.rightItem = rightItem
         
         return navigationBar
     }()
@@ -110,16 +95,15 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         cameraAuth()
     }
     
+    @objc private func moveToProfileScreen() {
+//        let cameraViewController = CameraViewController()
+//        navigationController?.pushViewController(cameraViewController, animated: true)
+    }
+    
     @objc private func cameraUploadButtonTapped() {
         let cameraViewController = CameraViewController()
         navigationController?.pushViewController(cameraViewController, animated: true)
     }
-    
-    private lazy var cameraButton: UIButton = {
-        let button = makeButton(title: Text.uploadPhotoTitle)
-          button.addTarget(self, action: #selector(cameraUploadButtonTapped), for: .touchUpInside)
-          return button
-      }()
     
     private func makeButton(title: String) -> UIButton {
         let button = UIButton(type: .system)
@@ -140,6 +124,18 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .cameraButton),
+            target: self,
+            action: #selector(cameraShootButtonTapped)
+        )
+        
+        navigationBar.rightItem = .init(
+            image: UIImage(resource: .profileButton),
+            target: self,
+            action: #selector(cameraShootButtonTapped)
+        )
 
         //        let dateViewController = DateViewController(viewModel: nil)
 
@@ -162,7 +158,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
 //        bar.indicator.tintColor = .clear
 //        dataSource = self
 
-        view.addSubview(cameraButton)
         view.addSubview(navigationBar)
 
         navigationBar.snp.makeConstraints { make in
@@ -192,11 +187,6 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
             make.height.equalTo(359)
 //            todo: 반응형(다른 기기 확인)
             make.top.equalTo(recentMemoryStack.snp.bottom).offset(-70)
-        }
-        
-        cameraButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.12 * view.bounds.height)
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
