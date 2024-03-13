@@ -8,26 +8,43 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
+    
+    var router: ProfileRouter?
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let profileRouter = ProfileRouterImp()
+        profileRouter.viewController = self
+        router = profileRouter
+        navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
     }
     
     // MARK: - Private Methods
     
+    // animation 효과때문에 단순 back으로 하는게 좋을지?
+    @objc
+    func backDidTap() {
+        router?.routeToEditProfile()
+    }
+    
+    private let navigationBar: PDSNavigationBar = {
+        let navigationBar = PDSNavigationBar()
+        navigationBar.title = "마이페이지"
+        return navigationBar
+    }()
+    
     private func setupUI() {
-        let titleLabel = UILabel()
-        titleLabel.text = "Profile View"
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(titleLabel)
-        
-        NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+        }
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backDidTap)
+        )
     }
 }
