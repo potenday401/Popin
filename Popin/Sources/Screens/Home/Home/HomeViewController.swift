@@ -14,7 +14,7 @@ import CoreLocation
 
 //Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
 //class HomeViewController: TabmanViewController {
-class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
+class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
@@ -173,13 +173,13 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         }
         
         recentMemoryStack.addArrangedSubview(recentMemoryLabel)
-        recentMemoryLabel.snp.makeConstraints { make in
-            make.height.equalTo(17)
-        }
+//        recentMemoryLabel.snp.makeConstraints { make in
+//            make.height.equalTo(17)
+//        }
         recentMemoryStack.addArrangedSubview(recentPinLabel)
-        recentPinLabel.snp.makeConstraints { make in
-            make.height.equalTo(31)
-        }
+//        recentPinLabel.snp.makeConstraints { make in
+//            make.height.equalTo(31)
+//        }
         
         homeMapViewController.view.snp.makeConstraints { make in
             make.height.equalTo(359)

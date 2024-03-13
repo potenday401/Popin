@@ -21,7 +21,7 @@ struct PhotoPin: Decodable {
 }
 
 
-class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
+class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?
     func userDidSelectLocation() {
             delegate?.didSelectLocation(annotations: self.annotations)

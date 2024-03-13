@@ -228,7 +228,7 @@ class AlbumInfoView: UIView {
 
 
 
-class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHeaderViewDelegate, MKMapViewDelegate {
+class AlbumViewController: BaseViewController, CLLocationManagerDelegate, AlbumHeaderViewDelegate, MKMapViewDelegate {
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"

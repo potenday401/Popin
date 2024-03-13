@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: BaseViewController {
     
     var router: ProfileRouter?
     
