@@ -10,6 +10,7 @@ import UIKit
 protocol AppRouter {
     var window: UIWindow? { get set }
     func launch()
+    func createHomeRouter() -> HomeRouter
 }
 
 final class AppRouterImp: AppRouter {
@@ -20,6 +21,11 @@ final class AppRouterImp: AppRouter {
     
     func launch() {
         window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
+    }
+    
+    func createHomeRouter() -> HomeRouter {
+        let homeRouter = HomeRouterImp()
+        return homeRouter
     }
     
     private var loginViewController: UIViewController {
@@ -40,7 +46,9 @@ final class AppRouterImp: AppRouter {
     }
     
     private var homeViewController: UIViewController {
-        return HomeViewController()
+        let homeVC = HomeViewController()
+        let navigationController = UINavigationController(rootViewController: homeVC)
+        return navigationController
     }
     
     // MARK: - Property

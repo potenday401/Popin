@@ -21,6 +21,8 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         navigationController?.pushViewController(albumViewController, animated: true)
     }
     
+    var router: HomeRouter?
+    
     private let homeMapViewController = HomeMapViewController()
     //    private var viewControllers: [UIViewController] = []
     private let locationManager = CLLocationManager()
@@ -84,14 +86,11 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     @objc private func moveToProfileScreen() {
-        print("profile???")
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+        router?.routeToEditProfile()
     }
     
     @objc private func cameraUploadButtonTapped() {
-        let cameraViewController = CameraViewController()
-        navigationController?.pushViewController(cameraViewController, animated: true)
+        router?.routeToCameraView()
     }
     
     private lazy var cameraButton: UIButton = {
@@ -116,6 +115,9 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     override func viewDidLoad() {
         homeMapViewController.delegate = self
         super.viewDidLoad()
+        let homeRouter = HomeRouterImp()
+        homeRouter.viewController = self
+        router = homeRouter
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -187,7 +189,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
         
         cameraButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.17 * view.bounds.height)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.13 * view.bounds.height)
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -225,8 +227,7 @@ class HomeViewController: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func didSelectLocation() {
-        let albumViewController = AlbumViewController()
-        navigationController?.pushViewController(albumViewController, animated: true)
+        router?.routeToHomeMapView()
     }
 }
 
@@ -272,6 +273,6 @@ protocol HomeMapViewControllerDelegate: AnyObject {
 }
 
 
-#Preview {
-     HomeViewController()
-}
+//#Preview {
+//     HomeViewController()
+//}
