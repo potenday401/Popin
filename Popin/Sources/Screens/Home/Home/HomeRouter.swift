@@ -10,9 +10,14 @@ protocol HomeRouter {
     func routeToHomeMapView()
     func routeToCameraView()
     func routeToEditProfile()
+    func dismissFromProfileScreen()
 }
 
-final class HomeRouterImp: HomeRouter {
+final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate {
+    func requestProfileViewControllerBackDidTap(_ viewController: ProfileViewController) {
+        self.dismissFromProfileScreen()
+    }
+    
     
     weak var viewController: UIViewController?
 
@@ -34,8 +39,13 @@ final class HomeRouterImp: HomeRouter {
     func routeToEditProfile() {
         DispatchQueue.main.async {
             let profileViewController = ProfileViewController()
-            self.viewController?.navigationController?.pushViewController(profileViewController, animated: true)
-            
+            profileViewController.delegate = self
+            self.viewController?.navigationController?.pushViewController( profileViewController, animated: true)
         }
+    }
+    
+    func dismissFromProfileScreen() {
+        DispatchQueue.main.async {
+            self.viewController?.navigationController?.popViewController(animated: true)        }
     }
 }
