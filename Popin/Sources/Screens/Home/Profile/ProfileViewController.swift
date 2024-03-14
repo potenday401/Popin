@@ -99,7 +99,7 @@ final class ProfileViewController: BaseViewController {
     // animation 효과때문에 단순 back으로 하는게 좋을지?
     @objc
     func backDidTap() {
-        router?.routeToEditProfile()
+        router?.routeToHome()
     }
     
     private let navigationBar: PDSNavigationBar = {
@@ -157,6 +157,6 @@ final class ProfileViewController: BaseViewController {
 
 }
 
-#Preview {
-    ProfileViewController()
-}
+//#Preview {
+//    ProfileViewController()
+//}

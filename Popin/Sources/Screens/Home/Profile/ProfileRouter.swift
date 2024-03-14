@@ -8,18 +8,17 @@
 import UIKit
 
 protocol ProfileRouter {
-    func routeToEditProfile()
+    func routeToHome()
 }
 
 final class ProfileRouterImp: ProfileRouter {
     
     weak var viewController: UIViewController?
 
-    func routeToEditProfile() {
+    func routeToHome() {
         DispatchQueue.main.async {
-            let editProfileViewController = HomeViewController()
-            self.viewController?.navigationController?.pushViewController(editProfileViewController, animated: true)
+            let homeViewController = HomeViewController()
+            self.viewController?.navigationController?.pushViewController(homeViewController, animated: true)
         }
     }
-    // Implement other navigation methods for the profile screen
 }

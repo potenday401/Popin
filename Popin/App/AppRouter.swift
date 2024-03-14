@@ -16,7 +16,6 @@ protocol AppRouter {
 final class AppRouterImp: AppRouter {
     
     // MARK: - Interface
-    
     weak var window: UIWindow?
     
     func launch() {
@@ -46,10 +45,13 @@ final class AppRouterImp: AppRouter {
     }
     
     private var homeViewController: UIViewController {
-        let homeVC = HomeViewController()
-        let navigationController = UINavigationController(rootViewController: homeVC)
-        return navigationController
+        let homeViewController = HomeViewController()
+        let router = HomeRouterImp()
+        homeViewController.router = router
+      router.viewController = homeViewController
+      return homeViewController
     }
+
     
     // MARK: - Property
     

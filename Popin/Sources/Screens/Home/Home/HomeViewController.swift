@@ -87,6 +87,7 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
     
     @objc private func moveToProfileScreen() {
         router?.routeToEditProfile()
+        print("???")
     }
     
     @objc private func cameraUploadButtonTapped() {
@@ -115,9 +116,6 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
     override func viewDidLoad() {
         homeMapViewController.delegate = self
         super.viewDidLoad()
-        let homeRouter = HomeRouterImp()
-        homeRouter.viewController = self
-        router = homeRouter
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
