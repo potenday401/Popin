@@ -87,7 +87,6 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
     
     @objc private func moveToProfileScreen() {
         router?.routeToEditProfile()
-        print("???")
     }
     
     @objc private func cameraUploadButtonTapped() {
@@ -259,6 +258,12 @@ private extension HomeViewController {
     enum Text {
         static let recentMemoryTitle = "최근 업로드 된 추억"
         static let uploadPhotoTitle = "사진등록하기"
+    }
+}
+
+extension HomeViewController: ProfileViewControllerDelegate {
+    func requestProfileViewControllerBackDidTap(_ viewController: ProfileViewController) {
+        router?.dismissFromProfileScreen()
     }
 }
 

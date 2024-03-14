@@ -7,15 +7,19 @@
 
 import UIKit
 
+protocol ProfileViewControllerDelegate: AnyObject {
+    func requestProfileViewControllerBackDidTap(_ viewController: ProfileViewController)
+}
+
 final class ProfileViewController: BaseViewController {
-    
-    var router: ProfileRouter?
+    weak var delegate: ProfileViewControllerDelegate?
+    var router: HomeRouter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let profileRouter = ProfileRouterImp()
         profileRouter.viewController = self
-        router = profileRouter
+        
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
     }
@@ -96,10 +100,9 @@ final class ProfileViewController: BaseViewController {
         
     }
 
-    // animation 효과때문에 단순 back으로 하는게 좋을지?
     @objc
     func backDidTap() {
-        router?.routeToHome()
+        delegate?.requestProfileViewControllerBackDidTap(self)
     }
     
     private let navigationBar: PDSNavigationBar = {

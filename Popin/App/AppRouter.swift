@@ -48,10 +48,10 @@ final class AppRouterImp: AppRouter {
         let homeViewController = HomeViewController()
         let router = HomeRouterImp()
         homeViewController.router = router
-      router.viewController = homeViewController
-      return homeViewController
+        router.viewController = homeViewController
+        return UINavigationController(rootViewController: homeViewController)
     }
-
+    
     
     // MARK: - Property
     
