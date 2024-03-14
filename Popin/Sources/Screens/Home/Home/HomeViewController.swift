@@ -186,7 +186,7 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
         
         cameraButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-0.13 * view.bounds.height)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-157)
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
