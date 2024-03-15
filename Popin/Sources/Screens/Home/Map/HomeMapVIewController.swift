@@ -21,7 +21,7 @@ struct PhotoPin: Decodable {
 }
 
 
-class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
+class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?
     func userDidSelectLocation() {
             delegate?.didSelectLocation(annotations: self.annotations)
@@ -161,7 +161,7 @@ class HomeMapViewController: UIViewController, CLLocationManagerDelegate {
             make.leading.trailing.equalToSuperview()
             make.width.equalTo(450)
             make.height.equalTo(359)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
         }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         

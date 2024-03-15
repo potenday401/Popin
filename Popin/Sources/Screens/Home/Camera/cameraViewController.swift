@@ -9,7 +9,7 @@ import AVFoundation
 import Photos
 import Alamofire
 
-class CameraViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     let imagePicker = UIImagePickerController()
     let cameraAuthButton = UIButton(type: .system)

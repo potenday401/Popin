@@ -36,8 +36,7 @@ class CustomImageAnnotationView: MKAnnotationView {
         guard let customAnnotation = self.annotation as? CustomImageAnnotation else {
             return
         }
-        print(customAnnotation.pinCount, "pinCount")
-        
+
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         imageView.layer.cornerRadius = imageView.frame.size.width / 5
@@ -229,7 +228,7 @@ class AlbumInfoView: UIView {
 
 
 
-class AlbumViewController: UIViewController, CLLocationManagerDelegate, AlbumHeaderViewDelegate, MKMapViewDelegate {
+class AlbumViewController: BaseViewController, CLLocationManagerDelegate, AlbumHeaderViewDelegate, MKMapViewDelegate {
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"

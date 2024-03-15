@@ -7,7 +7,7 @@
 import UIKit
 import CoreLocation
 
-class AlbumDetailViewController: UIViewController {
+class AlbumDetailViewController: BaseViewController {
     var annotations: [CustomImageAnnotation] = []
     
     lazy var carousel: Carousel = {
