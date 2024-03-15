@@ -170,23 +170,22 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
         }
         
         recentMemoryStack.addArrangedSubview(recentMemoryLabel)
-//        recentMemoryLabel.snp.makeConstraints { make in
-//            make.height.equalTo(17)
-//        }
+        recentMemoryLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+        }
         recentMemoryStack.addArrangedSubview(recentPinLabel)
-//        recentPinLabel.snp.makeConstraints { make in
-//            make.height.equalTo(31)
-//        }
+        recentPinLabel.snp.makeConstraints { make in
+            make.height.equalTo(31)
+        }
         
         homeMapViewController.view.snp.makeConstraints { make in
             make.height.equalTo(359)
-            //            todo: 반응형(다른 기기 확인)
-            make.top.equalTo(recentMemoryStack.snp.bottom).offset(-70)
+            make.top.equalTo(recentMemoryStack.snp.bottom).offset(0)
         }
         
         cameraButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-157)
+            make.top.equalTo(homeMapViewController.view.snp.bottom).offset(54)
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

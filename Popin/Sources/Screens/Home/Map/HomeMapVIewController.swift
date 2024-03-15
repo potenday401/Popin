@@ -161,7 +161,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             make.leading.trailing.equalToSuperview()
             make.width.equalTo(450)
             make.height.equalTo(359)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
         }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
