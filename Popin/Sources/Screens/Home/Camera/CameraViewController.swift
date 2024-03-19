@@ -11,6 +11,7 @@ import Alamofire
 import SnapKit
 
 final class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
     private let albumAuthButton = UIButton(type: .system)
@@ -58,7 +59,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
     // MARK: - Setup
     
     override func setUpUI() {
-        self.navigationItem.hidesBackButton = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
         let imageViewMargin: CGFloat = 20
         //todo: 사진에서 날짜 가져올 수 있는지 확인
         dateLabel.text = "날짜.."
@@ -129,6 +130,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
     
     @objc
     func backDidTap() {
+        delegate?.requestCameraViewControllerBackDidTap(self)
     }
     
     @objc
@@ -327,4 +329,8 @@ private extension CameraViewController {
     enum Text {
         static let edit = "수정"
     }
+}
+
+protocol CameraViewControllerDelegate: AnyObject {
+    func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
 }
