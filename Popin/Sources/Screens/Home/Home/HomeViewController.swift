@@ -17,7 +17,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         albumViewController.annotations = annotations
         navigationController?.pushViewController(albumViewController, animated: true)
     }
-    private var router: HomeRouter?
+    var router: HomeRouter?
     private let homeMapViewController = HomeMapViewController()
     private let locationManager = CLLocationManager()
     
@@ -84,7 +84,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     @objc private func cameraUploadButtonTapped() {
-        router?.routeToCameraView()
+//        router?.routeToCameraView()
     }
     
     private lazy var cameraButton: UIButton = {
@@ -215,6 +215,21 @@ extension HomeViewController: ProfileViewControllerDelegate {
 }
 
 extension HomeViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            picker.dismiss(animated: true, completion: nil)
+            
+            guard let image = info[.originalImage] as? UIImage else {
+                print("Failed to pick an image")
+                return
+            }
+            print(image, "image check")
+            router?.routeToCameraView(with: image)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true, completion: nil)
+            print("취소")
+        }
 }
 
 extension HomeViewController: UINavigationControllerDelegate {

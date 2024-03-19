@@ -8,9 +8,9 @@ import UIKit
 import AVFoundation
 import Photos
 import Alamofire
+import SnapKit
 
-class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    
+final class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     let imagePicker = UIImagePickerController()
     let cameraAuthButton = UIButton(type: .system)
     let albumAuthButton = UIButton(type: .system)
@@ -20,12 +20,14 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
     let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 150))
     var initialLocation: CLLocation?
+    private let pickedImage:UIImage
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         self.imagePicker.delegate = self
-        setupButtons()
+        view.addSubview(imageView)
+//        setupButtons()
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.topItem?.title = "뒤로 가기"
     }
@@ -53,40 +55,65 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         return stack
     }()
     
-    private func setupButtons() {
-        sendButton.setTitle("내 추억 '핀하기'", for: .normal)
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        sendButton.setTitleColor(.white, for: .normal)
+//    private func setupButtons() {
+//        sendButton.setTitle("내 추억 '핀하기'", for: .normal)
+//        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+//        sendButton.setTitleColor(.white, for: .normal)
+//
+//        albumAuthButton.setTitle("내 추억 불러오기", for: .normal)
+//        albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
+//        albumAuthButton.setTitleColor(.white, for: .normal)
+//
+//        cameraAuthButton.setTitle("추억 찍기", for: .normal)
+//        cameraAuthButton.setTitleColor(.white, for: .normal)
+//        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+//        headerStackView.addArrangedSubview(sendButton)
+//        headerStackView.addArrangedSubview(albumAuthButton)
+//        headerStackView.translatesAutoresizingMaskIntoConstraints = false
+//        bodyStackView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(headerStackView)
+//        view.addSubview(bodyStackView)
+//        
+//        NSLayoutConstraint.activate([
+//                headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//                headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//                headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//                headerStackView.heightAnchor.constraint(equalToConstant: 50),
+//                bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//                bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//                bodyStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
+//                bodyStackView.heightAnchor.constraint(equalToConstant: 250),
+//            ])
+//        
+//    }
+    
+    private let dependency: Dependency
 
-        albumAuthButton.setTitle("내 추억 불러오기", for: .normal)
-        albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
-        albumAuthButton.setTitleColor(.white, for: .normal)
-
-        cameraAuthButton.setTitle("추억 찍기", for: .normal)
-        cameraAuthButton.setTitleColor(.white, for: .normal)
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        headerStackView.addArrangedSubview(sendButton)
-        headerStackView.addArrangedSubview(albumAuthButton)
-        headerStackView.translatesAutoresizingMaskIntoConstraints = false
-        bodyStackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(headerStackView)
-        view.addSubview(bodyStackView)
-        
-        NSLayoutConstraint.activate([
-                headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                headerStackView.heightAnchor.constraint(equalToConstant: 50),
-                bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                bodyStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
-                bodyStackView.heightAnchor.constraint(equalToConstant: 250),
-            ])
-        
+    // MARK: - Initializer
+    
+    struct Dependency {
+        let image: UIImage
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+        self.pickedImage = dependency.image
+        super.init()
+        configureImageView(with: pickedImage)
     }
    
-    private func setupImageView() {
-            guard let image = selectedPhoto ?? capturedPhoto else {
+    func configureImageView(with image: UIImage?) {
+      guard let image = image else { return }
+        print(image, "image!?!?!")
+        imageView.image = image
+      // ... existing code for setting up image view with image
+    }
+    
+    private func setupImageView(with image: UIImage?) {
+//        guard let image = selectedPhoto ?? capturedPhoto ?? self.pickedImage else {
+//                return
+//            }
+        guard let image = image else {
                 return
             }
 
@@ -149,29 +176,18 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         }
     }
 
-
-
-
-
-    // 카메라 권한 확인 버튼 액션
     @objc private func cameraAuthButtonTapped() {
         cameraAuth()
     }
     
-    // 앨범 권한 확인 버튼 액션
     @objc private func albumAuthButtonTapped() {
         albumAuth()
     }
     
-    // 전송 버튼 액션
     @objc private func sendButtonTapped() {
-        print("tab?")
         sendAction()
     }
     
-    /**
-     카메라 접근 권한 판별하는 함수
-     */
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -184,9 +200,6 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    /**
-     앨범 접근 권한 판별하는 함수
-     */
     func albumAuth() {
         switch PHPhotoLibrary.authorizationStatus() {
         case .denied:
@@ -251,13 +264,6 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         }
     }
 
-
-
-    /**
-     권한을 거부했을 때 띄어주는 Alert 함수
-     - Parameters:
-     - type: 권한 종류
-     */
     func showAlertAuth(
         _ type: String
     ) {
@@ -281,9 +287,6 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    /**
-     아이폰에서 앨범에 접근하는 함수
-     */
     func openAlbum() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -291,7 +294,6 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         present(imagePickerController, animated: true, completion: nil)
     }
 
-    // "카메라" 버튼을 눌렀을 때의 처리
     func openCamera() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
@@ -301,10 +303,6 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
         }
     }
 
-    
-    /**
-     UIImagePickerControllerDelegate에 정의된 메소드 - 선택한 미디어의 정보를 알 수 있음
-     */
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         
@@ -315,7 +313,7 @@ class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,
                 capturedPhoto = image
             }
             
-            setupImageView()
+//            setupImageView()
         }
     }
 
@@ -347,6 +345,3 @@ extension UIImage {
         return imageData.base64EncodedString()
     }
 }
-
-
-
