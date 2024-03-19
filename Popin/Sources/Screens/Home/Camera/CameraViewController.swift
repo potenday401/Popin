@@ -54,6 +54,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         let navigationBar = PDSNavigationBar()
         return navigationBar
     }()
+    private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(sendAction))
     
     
     // MARK: - Setup
@@ -75,11 +76,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             target: self,
             action: #selector(backDidTap)
         )
-        navigationBar.rightItem = .init(
-            image: UIImage(resource: .profileButton),
-            target: self,
-            action: #selector(sendAction)
-        )
+        navigationBar.rightItem = rightButtonItem
         
         view.backgroundColor = .black
         self.imagePicker.delegate = self
@@ -328,6 +325,7 @@ extension UIImage {
 private extension CameraViewController {
     enum Text {
         static let edit = "수정"
+        static let save = "저장"
     }
 }
 
