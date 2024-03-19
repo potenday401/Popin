@@ -62,8 +62,11 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         let imageViewMargin: CGFloat = 20
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM.dd"
+        let currentDateString = dateFormatter.string(from: Date())
         //todo: 사진에서 날짜 가져올 수 있는지 확인
-        dateLabel.text = "날짜.."
+        dateLabel.text = currentDateString
         locationLabel.text = locationString
         navigationBar.title = locationString
         view.addSubview(navigationBar)
@@ -83,14 +86,14 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         containerView.addSubview(imageView)
         containerView.addSubview(editButton)
         view.addSubview(containerView)
-
+        
         containerView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
             make.centerX.equalToSuperview()
             make.width.equalTo(375)
             make.height.equalTo(150)
         }
-
+        
         imageView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
             make.centerX.equalToSuperview()
@@ -103,7 +106,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             make.height.equalTo(33)
         }
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-
+        
         view.addSubview(bodyStackView)
         bodyStackView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(imageViewMargin)
@@ -148,9 +151,9 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         super.init()
         configureImageView(with: pickedImage)
     }
-   
+    
     func configureImageView(with image: UIImage?) {
-      guard let image = image else { return }
+        guard let image = image else { return }
         imageView.image = image
     }
     
@@ -224,13 +227,13 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         AF.session.configuration.timeoutIntervalForRequest = 60
         AF.request(baseUrl+"photo-pins", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: ["Content-Type":"application/json", "Accept":"application/json"]).responseData() { response in
             debugPrint(response)
-
+            
             switch response.result {
             case .success:
                 if let data = response.data, let jsonString = String(data: data, encoding: .utf8) {
                     print("Response Data: \(jsonString)")
                 }
-
+                
                 if let jsonObject = try? response.result.get() as? [String: Any] {
                     print("Object: \(jsonObject)")
                     let result = jsonObject["result"] as? String
@@ -241,7 +244,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             }
         }
     }
-
+    
     func showAlertAuth(
         _ type: String
     ) {
@@ -271,7 +274,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         imagePickerController.sourceType = .photoLibrary
         present(imagePickerController, animated: true, completion: nil)
     }
-
+    
     func openCamera() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
@@ -280,7 +283,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             self.present(imagePickerController, animated: true, completion: nil)
         }
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         
@@ -292,7 +295,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             }
         }
     }
-
+    
     
     func savePhotoToLibrary(image: UIImage) {
         PHPhotoLibrary.requestAuthorization { (status) in
