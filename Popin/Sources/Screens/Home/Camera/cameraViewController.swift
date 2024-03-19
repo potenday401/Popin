@@ -11,171 +11,150 @@ import Alamofire
 import SnapKit
 
 final class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    let imagePicker = UIImagePickerController()
-    let cameraAuthButton = UIButton(type: .system)
-    let albumAuthButton = UIButton(type: .system)
-    let sendButton = UIButton(type: .system)
-    var selectedPhoto: UIImage?
-    var capturedPhoto: UIImage?
-    let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 150))
-    var initialLocation: CLLocation?
+    private let imagePicker = UIImagePickerController()
+    private let cameraAuthButton = UIButton(type: .system)
+    private let albumAuthButton = UIButton(type: .system)
+    private let sendButton = UIButton(type: .system)
+    private var selectedPhoto: UIImage?
+    private var capturedPhoto: UIImage?
+    private let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
+    private let imageView = UIImageView()
+    private let bodyStackView:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
+    private let containerView = UIView()
+    private var initialLocation: CLLocation?
     private let pickedImage:UIImage
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .black
-        self.imagePicker.delegate = self
-        view.addSubview(imageView)
-//        setupButtons()
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.topItem?.title = "뒤로 가기"
-    }
-    let locationLabel: UILabel = {
-        let label = UILabel()
+    private var locationString:String = ""
+    private let dateLabel:UILabel = {
+        let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
+        label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .white
-        label.numberOfLines = 0
-        label.text = "Default Location"
         return label
     }()
-   
-    let headerStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.spacing = 0
-        return stack
+    private let editButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(Text.edit, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 12
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        return button
+    }()
+    private let locationLabel:UILabel = {
+        let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .white
+        return label
+    }()
+    private let navigationBar: PDSNavigationBar = {
+        let navigationBar = PDSNavigationBar()
+        return navigationBar
     }()
     
-    let bodyStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.spacing = 0
-        return stack
-    }()
     
-//    private func setupButtons() {
-//        sendButton.setTitle("내 추억 '핀하기'", for: .normal)
-//        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-//        sendButton.setTitleColor(.white, for: .normal)
-//
-//        albumAuthButton.setTitle("내 추억 불러오기", for: .normal)
-//        albumAuthButton.addTarget(self, action: #selector(albumAuthButtonTapped), for: .touchUpInside)
-//        albumAuthButton.setTitleColor(.white, for: .normal)
-//
-//        cameraAuthButton.setTitle("추억 찍기", for: .normal)
-//        cameraAuthButton.setTitleColor(.white, for: .normal)
-//        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-//        headerStackView.addArrangedSubview(sendButton)
-//        headerStackView.addArrangedSubview(albumAuthButton)
-//        headerStackView.translatesAutoresizingMaskIntoConstraints = false
-//        bodyStackView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(headerStackView)
-//        view.addSubview(bodyStackView)
-//        
-//        NSLayoutConstraint.activate([
-//                headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//                headerStackView.heightAnchor.constraint(equalToConstant: 50),
-//                bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                bodyStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
-//                bodyStackView.heightAnchor.constraint(equalToConstant: 250),
-//            ])
-//        
-//    }
+    // MARK: - Setup
+    
+    override func setUpUI() {
+        self.navigationItem.hidesBackButton = true
+        let imageViewMargin: CGFloat = 20
+        //todo: 사진에서 날짜 가져올 수 있는지 확인
+        dateLabel.text = "날짜.."
+        locationLabel.text = locationString
+        navigationBar.title = locationString
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+        }
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backDidTap)
+        )
+        navigationBar.rightItem = .init(
+            image: UIImage(resource: .profileButton),
+            target: self,
+            action: #selector(sendAction)
+        )
+        
+        view.backgroundColor = .black
+        self.imagePicker.delegate = self
+        containerView.addSubview(imageView)
+        containerView.addSubview(editButton)
+        view.addSubview(containerView)
+
+        containerView.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(375)
+            make.height.equalTo(150)
+        }
+
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(375)
+            make.height.equalTo(150)
+        }
+        editButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview().inset(10)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
+        }
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+
+        view.addSubview(bodyStackView)
+        bodyStackView.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(imageViewMargin)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(375)
+            make.height.equalTo(60)
+        }
+        bodyStackView.addArrangedSubview(dateLabel)
+        bodyStackView.addArrangedSubview(locationLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(bodyStackView.snp.bottom).offset(imageViewMargin)
+            make.height.equalTo(17)
+        }
+        locationLabel.snp.makeConstraints { make in
+            make.height.equalTo(17)
+            make.top.equalTo(dateLabel.snp.bottom).offset(imageViewMargin)
+        }
+    }
     
     private let dependency: Dependency
-
+    
+    @objc
+    func backDidTap() {
+    }
+    
+    @objc
+    func editButtonTapped() {
+    }
+    
     // MARK: - Initializer
     
     struct Dependency {
         let image: UIImage
+        let locationString: String
     }
     
     init(dependency: Dependency) {
         self.dependency = dependency
         self.pickedImage = dependency.image
+        self.locationString = dependency.locationString
         super.init()
         configureImageView(with: pickedImage)
     }
    
     func configureImageView(with image: UIImage?) {
       guard let image = image else { return }
-        print(image, "image!?!?!")
         imageView.image = image
-      // ... existing code for setting up image view with image
     }
     
-    private func setupImageView(with image: UIImage?) {
-//        guard let image = selectedPhoto ?? capturedPhoto ?? self.pickedImage else {
-//                return
-//            }
-        guard let image = image else {
-                return
-            }
-
-        imageView.contentMode = .scaleAspectFit
-            imageView.image = image
-            imageView.clipsToBounds = true
-            bodyStackView.addSubview(imageView)
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-
-            NSLayoutConstraint.activate([
-                imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                imageView.heightAnchor.constraint(equalToConstant: 150),
-                imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-                imageView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor),
-            ])
-
-            setupLocationLabel()
-        }
-
-
-    private func setupLocationLabel() {
-            locationLabel.textColor = .white
-            locationLabel.textAlignment = .center
-            locationLabel.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(locationLabel)
-
-        NSLayoutConstraint.activate([
-            locationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            locationLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            locationLabel.heightAnchor.constraint(equalToConstant: 150),
-            locationLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
-        ])
-    }
-    
-    func updateLocationLabel(with annotation: CLLocation) {
-        let location = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
-
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if let placemark = placemarks?.first {
-                var locationString = ""
-
-                if let locality = placemark.locality {
-                    locationString += locality
-                }
-
-                if let sublocality = placemark.subLocality {
-                    if !locationString.isEmpty {
-                        locationString += ", "
-                    }
-                    locationString += sublocality
-                }
-
-                self.locationLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
-            } else {
-                self.locationLabel.text = "Unknown Location"
-            }
-        }
-    }
-
     @objc private func cameraAuthButtonTapped() {
         cameraAuth()
     }
@@ -222,7 +201,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
     
-    func sendAction() {
+    @objc func sendAction() {
         guard let base64String = selectedPhoto?.toBase64() ?? capturedPhoto?.toBase64() else {
             print("Image is nil.")
             return
@@ -312,8 +291,6 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
             } else {
                 capturedPhoto = image
             }
-            
-//            setupImageView()
         }
     }
 
@@ -343,5 +320,11 @@ extension UIImage {
             return nil
         }
         return imageData.base64EncodedString()
+    }
+}
+
+private extension CameraViewController {
+    enum Text {
+        static let edit = "수정"
     }
 }

@@ -20,7 +20,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     var router: HomeRouter?
     private let homeMapViewController = HomeMapViewController()
     private let locationManager = CLLocationManager()
-    
+    private var locationString:String = ""
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -189,6 +189,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
                 }
                 
                 self.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
+                self.locationString = locationString.isEmpty ? "Unknown Location" : locationString
             } else {
                 self.recentPinLabel.text = "Unknown Location"
             }
@@ -223,7 +224,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
                 return
             }
             print(image, "image check")
-            router?.routeToCameraView(with: image)
+            router?.routeToCameraView(with: image, locationString: locationString)
         }
         
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
