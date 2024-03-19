@@ -1,4 +1,3 @@
-//
 //  HomeViewController.swift
 //  fourpin
 //
@@ -11,10 +10,11 @@ import Pageboy
 import SnapKit
 import Photos
 import CoreLocation
+import AVFoundation
 
 //Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
 //class HomeViewController: TabmanViewController {
-class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
+class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
@@ -90,6 +90,7 @@ class HomeViewController: BaseViewController, UIImagePickerControllerDelegate & 
     }
     
     @objc private func cameraUploadButtonTapped() {
+        
         router?.routeToCameraView()
     }
     
@@ -265,6 +266,16 @@ extension HomeViewController: ProfileViewControllerDelegate {
         router?.dismissFromProfileScreen()
     }
 }
+
+extension HomeViewController: UIImagePickerControllerDelegate {
+}
+
+extension HomeViewController: UINavigationControllerDelegate {
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+}
+
 
 //protocol HomeMapViewControllerDelegate: AnyObject {
 //    func didSelectLocation()

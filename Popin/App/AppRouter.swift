@@ -19,7 +19,8 @@ final class AppRouterImp: AppRouter {
     weak var window: UIWindow?
     
     func launch() {
-        window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
+//        window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
+        window?.rootViewController = homeViewController 
     }
     
     func createHomeRouter() -> HomeRouter {
