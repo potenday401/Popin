@@ -11,19 +11,14 @@ import SnapKit
 import Photos
 import CoreLocation
 
-//Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
-//class HomeViewController: TabmanViewController {
-class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
+final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
         navigationController?.pushViewController(albumViewController, animated: true)
     }
-    
-    var router: HomeRouter?
-    
+    private var router: HomeRouter?
     private let homeMapViewController = HomeMapViewController()
-    //    private var viewControllers: [UIViewController] = []
     private let locationManager = CLLocationManager()
     
     func cameraAuth() {
@@ -89,7 +84,6 @@ class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     }
     
     @objc private func cameraUploadButtonTapped() {
-        
         router?.routeToCameraView()
     }
     
@@ -130,27 +124,6 @@ class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
             target: self,
             action: #selector(moveToProfileScreen)
         )
-        
-        //        let dateViewController = DateViewController(viewModel: nil)
-        
-        //        let navigationController = UINavigationController(rootViewController: homeMapViewController)
-        //        viewControllers.append(navigationController)
-        ////        viewControllers.append(homeMapViewController)
-        //        viewControllers.append(dateViewController)
-        //
-        //        let bar = TMBar.ButtonBar()
-        //
-        //        addBar(bar, dataSource: self, at: .top)
-        //        bar.layout.transitionStyle = .snap
-        //        bar.layout.contentMode = .fit
-        //        bar.backgroundView.style = .clear
-        //        bar.backgroundColor = .black
-        //        bar.buttons.customize { (button) in
-        //            button.tintColor = .gray
-        //            button.selectedTintColor = .white
-        //        }
-        //        bar.indicator.tintColor = .clear
-        //        dataSource = self
         
         view.addSubview(cameraButton)
         view.addSubview(navigationBar)
@@ -227,31 +200,6 @@ class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     }
 }
 
-//extension HomeViewController: PageboyViewControllerDataSource {
-//
-//    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-//        return viewControllers.count
-//    }
-//
-//    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-//        return viewControllers[index]
-//    }
-//
-//    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-//        return nil
-//    }
-//}
-
-// MARK: - TMBarDataSource
-
-extension HomeViewController: TMBarDataSource {
-    
-    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        let title = index == 0 ? "지도뷰" : "날짜뷰"
-        return TMBarItem(title: title)
-    }
-}
-
 private extension HomeViewController {
     
     enum Text {
@@ -274,11 +222,6 @@ extension HomeViewController: UINavigationControllerDelegate {
 
 extension HomeViewController: CLLocationManagerDelegate {
 }
-
-
-//protocol HomeMapViewControllerDelegate: AnyObject {
-//    func didSelectLocation()
-//}
 
 protocol HomeMapViewControllerDelegate: AnyObject {
     func didSelectLocation(annotations: [CustomImageAnnotation])
