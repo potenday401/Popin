@@ -10,7 +10,6 @@ import Pageboy
 import SnapKit
 import Photos
 import CoreLocation
-import AVFoundation
 
 //Mark - todo: 태그, 날짜뷰 추가시 탭 네비게이션 사용
 //class HomeViewController: TabmanViewController {
