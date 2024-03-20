@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct EmailPasswordValidator {
+protocol EmailPasswordValidatorType {
+    func isValidEmail(_ email: String) -> Bool
+    func isValidPassword(_ password: String) -> Bool
+}
+
+struct EmailPasswordValidator: EmailPasswordValidatorType {
     
     // MARK: - Interface
     

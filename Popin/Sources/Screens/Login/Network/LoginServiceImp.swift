@@ -44,11 +44,11 @@ final class LoginServiceImp: LoginService {
     // MARK: - Property
     
     private let network: Network
-    private let validator: EmailPasswordValidator
+    private let validator: EmailPasswordValidatorType
     
     // MARK: - Initializer
     
-    init(network: Network, validator: EmailPasswordValidator) {
+    init(network: Network, validator: EmailPasswordValidatorType) {
         self.network = network
         self.validator = validator
     }
