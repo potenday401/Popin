@@ -10,10 +10,24 @@ import SnapKit
 
 fileprivate final class PDSInputFieldPreviewViewController: UIViewController {
     
+    let emptyInputField: PDSInputField = {
+        let inputField = PDSInputField()
+        inputField.placeholder = "사용자 이메일"
+        return inputField
+    }()
+    
     let emailInputField: PDSInputField = {
         let inputField = PDSInputField()
         inputField.placeholder = "사용자 이메일"
         inputField.text = "daisy_com@khu.ac.kr"
+        return inputField
+    }()
+    
+    let errorEmailInputField: PDSInputField = {
+        let inputField = PDSInputField()
+        inputField.placeholder = "사용자 이메일"
+        inputField.text = "daisy_com@khu.ac.kr"
+        inputField.isFailure = true
         return inputField
     }()
     
@@ -25,32 +39,28 @@ fileprivate final class PDSInputFieldPreviewViewController: UIViewController {
         return inputField
     }()
     
-    lazy var successButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Success", for: .normal)
-        button.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
-        return button
+    let errorPasswordInputField: PDSInputField = {
+        let inputField = PDSInputField()
+        inputField.placeholder = "비밀번호"
+        inputField.text = "12345678"
+        inputField.isSecureTextEntry = true
+        inputField.isFailure = true
+        return inputField
     }()
     
-    lazy var failureButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Failure", for: .normal)
-        button.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
-        return button
+    let fixedInputField: PDSInputField = {
+        let inputField = PDSInputField()
+        inputField.isFixed = true
+        inputField.placeholder = "사용자 이메일"
+        inputField.text = "daisy_com@khu.ac.kr"
+        inputField.isFailure = true // fixed 상태에선 다른 상태로 변환되지 않아야 합니다.
+        return inputField
     }()
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.spacing = 16
-        return stackView
-    }()
-    
-    let buttonStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .center
         stackView.distribution = .fillEqually
         stackView.spacing = 16
         return stackView
@@ -67,25 +77,18 @@ fileprivate final class PDSInputFieldPreviewViewController: UIViewController {
             make.width.equalTo(300)
         }
         
-        view.addSubview(buttonStackView)
-        buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(16)
-            make.centerX.equalToSuperview()
-        }
-        
-        [emailInputField, passwordInputField].forEach(stackView.addArrangedSubview(_:))
-        [successButton, failureButton].forEach(buttonStackView.addArrangedSubview(_:))
+        [emptyInputField,
+         emailInputField,
+         errorEmailInputField,
+         passwordInputField,
+         errorPasswordInputField,
+         fixedInputField
+        ].forEach(stackView.addArrangedSubview(_:))
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         view.endEditing(true)
-    }
-    
-    @objc
-    private func buttonDidTap(_ button: UIButton) {
-        view.endEditing(true)
-        emailInputField.isFailure = button == failureButton
     }
 }
 
