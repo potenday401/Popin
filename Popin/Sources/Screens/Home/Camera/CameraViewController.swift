@@ -56,7 +56,6 @@ final class CameraViewController: BaseViewController {
     }()
     private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(sendAction))
     
-    
     // MARK: - Setup
     
     override func setUpUI() {
@@ -152,23 +151,10 @@ final class CameraViewController: BaseViewController {
         configureImageView(with: pickedImage)
     }
 
-
     private func configureImageView(with image: UIImage?) {
         guard let image = image else { return }
         //다중 선택되면 Ui요구 사항에 따라 (슬라이드 방식?) 변경
         imageView.image = image
-    }
-    
-    @objc private func cameraAuthButtonTapped() {
-        cameraAuth()
-    }
-    
-    @objc private func albumAuthButtonTapped() {
-        albumAuth()
-    }
-    
-    @objc private func sendButtonTapped() {
-        sendAction()
     }
     
     private func cameraAuth() {
@@ -206,45 +192,7 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func sendAction() {
-        guard let base64String = selectedPhoto?.toBase64() ?? capturedPhoto?.toBase64() else {
-            print("Image is nil.")
-            return
-        }
-        let parameters: Parameters = [
-            "latLng": [
-                "latitude": initialLocation?.coordinate.latitude,
-                "longitude": initialLocation?.coordinate.longitude
-            ],
-            "memberId": "1245",
-            "locality": "316",
-            "subLocality": "136171",
-            "photoDateTime": 0,
-            "photoFileBase64Payload": base64String,
-            "photoFileExt": "jpg",
-            "photoPinId": "1246",
-            "tagIds": [
-                "1234646"
-            ]
-        ]
-        AF.session.configuration.timeoutIntervalForRequest = 60
-        AF.request(baseUrl+"photo-pins", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: ["Content-Type":"application/json", "Accept":"application/json"]).responseData() { response in
-            debugPrint(response)
-            
-            switch response.result {
-            case .success:
-                if let data = response.data, let jsonString = String(data: data, encoding: .utf8) {
-                    print("Response Data: \(jsonString)")
-                }
-                
-                if let jsonObject = try? response.result.get() as? [String: Any] {
-                    print("Object: \(jsonObject)")
-                    let result = jsonObject["result"] as? String
-                    print("요청결과: \(result!)")
-                }
-            case .failure(let error):
-                print("Error: \(error)")
-            }
-        }
+        CameraService.shared.sendAction(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation, baseUrl: baseUrl)
     }
     
     private func showAlertAuth(
@@ -320,9 +268,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
 }
 
 extension CameraViewController: UINavigationControllerDelegate {
-    
 }
-
 
 extension UIImage {
     func toBase64() -> String? {
