@@ -9,6 +9,7 @@ import Tabman
 import Pageboy
 import SnapKit
 import Photos
+import PhotosUI
 import CoreLocation
 
 final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
@@ -33,27 +34,14 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     func albumAuth() {
-        switch PHPhotoLibrary.authorizationStatus() {
-        case .denied:
-            print("거부")
-            self.showAlertAuth("앨범")
-        case .authorized:
-            print("허용")
-            self.openAlbum()
-        case .notDetermined, .restricted:
-            print("아직 결정하지 않은 상태")
-            PHPhotoLibrary.requestAuthorization { state in
-                if state == .authorized {
-                    self.openAlbum()
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        default:
-            break
-        }
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 5
+
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
-    
+
     func openAlbum() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
@@ -284,7 +272,6 @@ extension HomeViewController: UIImagePickerControllerDelegate {
                 print("Failed to pick an image")
                 return
             }
-            //todo: 다수의 이미지 선택 가능한지 확인
             router?.routeToCameraView(with: image, locationString: locationString)
         }
         
@@ -293,6 +280,40 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             print("취소")
         }
 }
+
+extension HomeViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true)
+
+        var selectedImages: [UIImage] = []
+        let dispatchGroup = DispatchGroup()
+
+        for result in results {
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                dispatchGroup.enter()
+                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                    if let image = image as? UIImage {
+                        selectedImages.append(image)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            self.handleSelectedImages(selectedImages)
+        }
+    }
+
+
+    func handleSelectedImages(_ images: [UIImage]) {
+        guard let singleImage = images.first else {
+            print("No image selected")
+            return
+        }
+        router?.routeToCameraView(with: singleImage, locationString: locationString)
+    }
+}
+
 
 extension HomeViewController: UINavigationControllerDelegate {
 }

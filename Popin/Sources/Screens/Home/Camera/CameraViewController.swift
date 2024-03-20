@@ -10,7 +10,7 @@ import Photos
 import Alamofire
 import SnapKit
 
-final class CameraViewController: BaseViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+final class CameraViewController: BaseViewController {
     weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
@@ -65,7 +65,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"
         let currentDateString = dateFormatter.string(from: Date())
-        //todo: 사진에서 날짜 가져올 수 있는지 확인
+        //todo: 사진 metadata에서 날짜 가져올 수 있는지 확인
         dateLabel.text = currentDateString
         locationLabel.text = locationString
         navigationBar.title = locationString
@@ -129,12 +129,12 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
     private let dependency: Dependency
     
     @objc
-    func backDidTap() {
+    private func backDidTap() {
         delegate?.requestCameraViewControllerBackDidTap(self)
     }
     
     @objc
-    func editButtonTapped() {
+    private func editButtonTapped() {
     }
     
     // MARK: - Initializer
@@ -151,9 +151,11 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         super.init()
         configureImageView(with: pickedImage)
     }
-    
-    func configureImageView(with image: UIImage?) {
+
+
+    private func configureImageView(with image: UIImage?) {
         guard let image = image else { return }
+        //다중 선택되면 Ui요구 사항에 따라 (슬라이드 방식?) 변경
         imageView.image = image
     }
     
@@ -169,7 +171,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         sendAction()
     }
     
-    func cameraAuth() {
+    private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 print("권한 허용")
@@ -181,7 +183,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
     
-    func albumAuth() {
+    private func albumAuth() {
         switch PHPhotoLibrary.authorizationStatus() {
         case .denied:
             print("거부")
@@ -245,7 +247,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
     
-    func showAlertAuth(
+    private func showAlertAuth(
         _ type: String
     ) {
         if let appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String {
@@ -268,14 +270,14 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
     
-    func openAlbum() {
+    private func openAlbum() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func openCamera() {
+    private func openCamera() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self
@@ -284,20 +286,7 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            if picker.sourceType == .photoLibrary {
-                selectedPhoto = image
-            } else {
-                capturedPhoto = image
-            }
-        }
-    }
-    
-    
-    func savePhotoToLibrary(image: UIImage) {
+    private func savePhotoToLibrary(image: UIImage) {
         PHPhotoLibrary.requestAuthorization { (status) in
             if status == .authorized {
                 PHPhotoLibrary.shared().performChanges({
@@ -315,6 +304,25 @@ final class CameraViewController: BaseViewController, UIImagePickerControllerDel
         }
     }
 }
+
+extension CameraViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            if picker.sourceType == .photoLibrary {
+                selectedPhoto = image
+            } else {
+                capturedPhoto = image
+            }
+        }
+    }
+}
+
+extension CameraViewController: UINavigationControllerDelegate {
+    
+}
+
 
 extension UIImage {
     func toBase64() -> String? {
