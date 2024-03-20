@@ -36,14 +36,16 @@ final class PDSInputField: UIView {
     var isFailure: Bool {
         get { state == .error }
         set {
-            guard newValue else {
-                let state: State = textField.isFirstResponder ? .focused : .normal
-                updateColors(for: state)
+            guard state != .fixed else {
                 return
             }
-            
-            updateColors(for: .error)
+            state = newValue ? .error : .normal
         }
+    }
+    
+    var isFixed: Bool {
+        get { state == .fixed }
+        set { state = .fixed }
     }
     
     // MARK: - Property
@@ -51,6 +53,7 @@ final class PDSInputField: UIView {
     private var state: State = .normal {
         didSet {
             updateColors(for: state)
+            isUserInteractionEnabled = state != .fixed
         }
     }
     
@@ -167,9 +170,9 @@ final class PDSInputField: UIView {
     private func updateColors(for state: State) {
         backgroundColor = state.backgroundColor
         layer.borderWidth = state == .normal ? 0 : 1
-        layer.borderColor = state.primaryColor.cgColor
-        textField.textColor = state.primaryColor
-        placeholderLabel.textColor = state.secondaryColor
+        layer.borderColor = state.borderColor
+        textField.textColor = state.textColor
+        placeholderLabel.textColor = state.placeholderColor
     }
     
     // MARK: - Intrinsic Content Size
@@ -203,7 +206,6 @@ private extension PDSInputField {
 extension PDSInputField: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        state = .focused
         updatePlaceholderLabel(hasText: true)
         return true
     }
@@ -213,8 +215,6 @@ extension PDSInputField: UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        state = .normal
-        
         guard textField.text?.isEmpty == true else {
             return true
         }
@@ -231,30 +231,38 @@ extension PDSInputField {
     
     enum State {
         case normal
-        case focused
         case error
+        case fixed
         
-        var primaryColor: UIColor {
+        var textColor: UIColor {
             switch self {
             case .normal:   .white
-            case .focused:  .indigo100
             case .error:    .pink200
+            case .fixed:    .gray200
             }
         }
         
-        var secondaryColor: UIColor {
+        var placeholderColor: UIColor {
             switch self {
             case .normal:   .white
-            case .focused:  .gray300
             case .error:    .white
+            case .fixed:    .gray100
             }
         }
         
         var backgroundColor: UIColor {
             switch self {
             case .normal:   .gray300
-            case .focused:  .gray500
             case .error:    .gray300
+            case .fixed:    .gray500
+            }
+        }
+        
+        var borderColor: CGColor {
+            switch self {
+            case .normal:   UIColor.clear.cgColor
+            case .error:    UIColor.pink200.cgColor
+            case .fixed:    UIColor.gray400.cgColor
             }
         }
     }
