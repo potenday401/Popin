@@ -17,9 +17,6 @@ final class ProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let profileRouter = ProfileRouterImp()
-        profileRouter.viewController = self
-        
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
     }
