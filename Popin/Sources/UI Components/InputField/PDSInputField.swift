@@ -117,7 +117,8 @@ final class PDSInputField: UIView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(Metric.inset)
+            make.leading.equalToSuperview().inset(Metric.normalLeftInset)
+            make.trailing.equalToSuperview().inset(Metric.inset)
             make.centerY.equalToSuperview()
         }
         
@@ -156,6 +157,14 @@ final class PDSInputField: UIView {
             } else {
                 make.centerY.equalToSuperview()
             }
+        }
+        
+        updateStackViewLayout(leftInset: hasText ? Metric.inset.left : Metric.normalLeftInset)
+    }
+    
+    private func updateStackViewLayout(leftInset: CGFloat) {
+        stackView.snp.updateConstraints { make in
+            make.leading.equalToSuperview().inset(leftInset)
         }
     }
     
@@ -275,6 +284,7 @@ private extension PDSInputField {
     enum Metric {
         static let height: CGFloat = 64
         static let inset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        static let normalLeftInset: CGFloat = 26
         static let spacing: CGFloat = 4
         static let imageSize: CGFloat = 24
     }
