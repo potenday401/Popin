@@ -28,7 +28,10 @@ final class AppRouterImp: AppRouter {
     }
     
     private var loginViewController: UIViewController {
-        let loginService = LoginServiceImp(network: dependency.network)
+        let loginService = LoginServiceImp(
+            network: dependency.network,
+            validator: EmailPasswordValidator()
+        )
         let loginDependency = LoginViewController.Dependency(
             loginService: loginService,
             tokenRepository: dependency.tokenRepository

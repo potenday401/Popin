@@ -16,6 +16,16 @@ final class LoginServiceImp: LoginService {
         password: String,
         completion: @escaping (Result<LoginResponse, Error>) -> Void
     ) {
+        guard validator.isValidEmail(email) else {
+            completion(.failure(LoginError.invalidEmail))
+            return
+        }
+        
+        guard validator.isValidPassword(password) else {
+            completion(.failure(LoginError.invalidPassword))
+            return
+        }
+        
         let request = LoginRequest(email: email, password: password)
         network.send(request) { result in
             switch result {
@@ -34,10 +44,12 @@ final class LoginServiceImp: LoginService {
     // MARK: - Property
     
     private let network: Network
+    private let validator: EmailPasswordValidator
     
     // MARK: - Initializer
     
-    init(network: Network) {
+    init(network: Network, validator: EmailPasswordValidator) {
         self.network = network
+        self.validator = validator
     }
 }
