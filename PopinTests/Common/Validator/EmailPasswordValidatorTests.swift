@@ -36,25 +36,25 @@ final class EmailPasswordValidatorTests: XCTestCase {
     
     func testValidEmail() {
         let validator = EmailPasswordValidator()
-        let results = validEmailTestCases.map(validator.isValidEmail(_:))
+        let results = validEmailTestCases.map(validator.validateEmail(_:))
         XCTAssertTrue(results.allSatisfy({ $0 }))
     }
     
     func testInvalidEmail() {
         let validator = EmailPasswordValidator()
-        let results = invalidEmailTestCases.map(validator.isValidEmail(_:))
+        let results = invalidEmailTestCases.map(validator.validateEmail(_:))
         XCTAssertFalse(results.allSatisfy({ $0 }))
     }
     
     func testValidPassword() {
         let validator = EmailPasswordValidator()
-        let results = validPasswordTestCase.map(validator.isValidPassword(_:))
+        let results = validPasswordTestCase.map(validator.validatePassword(_:))
         XCTAssertTrue(results.allSatisfy({ $0 }))
     }
     
     func testInvalidPassword() {
         let validator = EmailPasswordValidator()
-        let results = invalidPasswordTestCase.map(validator.isValidPassword(_:))
+        let results = invalidPasswordTestCase.map(validator.validatePassword(_:))
         XCTAssertFalse(results.allSatisfy({ $0 }))
     }
 }

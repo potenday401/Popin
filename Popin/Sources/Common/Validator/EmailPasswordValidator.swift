@@ -8,19 +8,19 @@
 import Foundation
 
 protocol EmailPasswordValidatorType {
-    func isValidEmail(_ email: String) -> Bool
-    func isValidPassword(_ password: String) -> Bool
+    func validateEmail(_ email: String) -> Bool
+    func validatePassword(_ password: String) -> Bool
 }
 
 struct EmailPasswordValidator: EmailPasswordValidatorType {
     
     // MARK: - Interface
     
-    func isValidEmail(_ email: String) -> Bool {
+    func validateEmail(_ email: String) -> Bool {
         email.wholeMatch(of: emailRegex) != nil
     }
     
-    func isValidPassword(_ password: String) -> Bool {
+    func validatePassword(_ password: String) -> Bool {
         password.wholeMatch(of: passwordRegex) != nil
     }
     

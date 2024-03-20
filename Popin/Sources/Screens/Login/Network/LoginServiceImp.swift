@@ -16,12 +16,12 @@ final class LoginServiceImp: LoginService {
         password: String,
         completion: @escaping (Result<LoginResponse, Error>) -> Void
     ) {
-        guard validator.isValidEmail(email) else {
+        guard validator.validateEmail(email) else {
             completion(.failure(LoginError.invalidEmail))
             return
         }
         
-        guard validator.isValidPassword(password) else {
+        guard validator.validatePassword(password) else {
             completion(.failure(LoginError.invalidPassword))
             return
         }
