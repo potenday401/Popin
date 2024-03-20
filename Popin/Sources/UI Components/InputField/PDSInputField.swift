@@ -8,9 +8,17 @@
 import UIKit
 import SnapKit
 
+@objc
+protocol PDSInputFieldDelegate: AnyObject {
+    @objc optional func inputFieldShouldBeginEditing(_ textField: PDSInputField)
+    @objc optional func inputFieldShouldEndEditing(_ textField: PDSInputField)
+}
+
 final class PDSInputField: UIView {
     
     // MARK: - Interface
+    
+    weak var delegate: PDSInputFieldDelegate?
     
     var placeholder: String? {
         get { placeholderLabel.text }
@@ -215,6 +223,7 @@ private extension PDSInputField {
 extension PDSInputField: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        defer { delegate?.inputFieldShouldBeginEditing?(self) }
         updatePlaceholderLabel(hasText: true)
         return true
     }
@@ -224,6 +233,7 @@ extension PDSInputField: UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        defer { delegate?.inputFieldShouldEndEditing?(self) }
         guard textField.text?.isEmpty == true else {
             return true
         }
