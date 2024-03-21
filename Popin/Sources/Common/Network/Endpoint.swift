@@ -10,7 +10,6 @@ import Foundation
 struct Endpoint {
     
     static let baseURL = URL(string: "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/")!
-    
     enum Auth {
         case login
         
@@ -41,5 +40,12 @@ struct Endpoint {
         static let memberId: String = "memberId="
         static let year: String = "&year="
         static let month: String = "&month="
+    }
+    
+    enum Pin {
+        case uploadPin
+        var url:URL {
+            Endpoint.baseURL.appending(path: "photo-pin")
+        }
     }
 }
