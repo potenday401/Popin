@@ -55,7 +55,7 @@ final class CameraViewController: BaseViewController {
         return navigationBar
     }()
     private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
-
+    private let cameraService = CameraService(network: AlamofireNetwork(configuration: sessionConfiguration))
     // MARK: - Setup
     
     override func setUpUI() {
@@ -192,7 +192,7 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func uploadPin() {
-        CameraService.shared.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
+        cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
@@ -201,6 +201,7 @@ final class CameraViewController: BaseViewController {
             }
         }
     }
+
 
     
     private func showAlertAuth(
@@ -296,4 +297,15 @@ private extension CameraViewController {
 
 protocol CameraViewControllerDelegate: AnyObject {
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
+}
+
+private var sessionConfiguration: URLSessionConfiguration {
+#if DEBUG
+    let configuration = URLSessionConfiguration.ephemeral
+    configuration.protocolClasses = [PopinURLProtocolMock.self]
+    PopinTestSupport.setUpURLProtocol()
+#else
+    let configuration = URLSessionConfiguration.default
+#endif
+    return configuration
 }

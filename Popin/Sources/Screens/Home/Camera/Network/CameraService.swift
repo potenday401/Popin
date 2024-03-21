@@ -11,14 +11,10 @@ import CoreLocation
 import CoreData
 
 final class CameraService: CameraServiceProtocol {
-    static let shared = CameraService(network: AlamofireNetwork(configuration: sessionConfiguration))
-    
-    private let network: Network
-    
-    private init(network: Network) {
+    let network: Network
+    init(network: Network) {
         self.network = network
     }
-    
     func uploadPin(selectedPhoto: UIImage?, capturedPhoto: UIImage?, initialLocation: CLLocation?, completion: @escaping (Result<String, Error>) -> Void) {
         let requestDTO = UploadRequestDTO(
             query: [:],
