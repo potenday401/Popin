@@ -12,46 +12,46 @@ import CoreData
 
 final class CameraService: CameraServiceProtocol {
     static let shared = CameraService(network: AlamofireNetwork(configuration: sessionConfiguration))
-
-  private let network: Network
-
-  private init(network: Network) {
-    self.network = network
-  }
-
-  func uploadPin(selectedPhoto: UIImage?, capturedPhoto: UIImage?, initialLocation: CLLocation?, completion: @escaping (Result<String, Error>) -> Void) {
-    let requestDTO = UploadRequestDTO(
-      query: [:],
-      initialLocation: initialLocation,
-      selectedPhoto: selectedPhoto,
-      capturedPhoto: capturedPhoto,
-      memberId: "1245",
-      locality: "316",
-      subLocality: "136171",
-      photoDateTime: 0,
-      photoPinId: "1246",
-      tagIds: ["1234646"]
-    )
-
-    network.send(requestDTO) { (result: Result<Response<UploadPinResponse>, Error>)  in
-      switch result {
-      case .success(let response):
-        completion(.success(response.output.result))
-      case .failure(let error):
-        completion(.failure(error))
-      }
+    
+    private let network: Network
+    
+    private init(network: Network) {
+        self.network = network
     }
-  }
+    
+    func uploadPin(selectedPhoto: UIImage?, capturedPhoto: UIImage?, initialLocation: CLLocation?, completion: @escaping (Result<String, Error>) -> Void) {
+        let requestDTO = UploadRequestDTO(
+            query: [:],
+            initialLocation: initialLocation,
+            selectedPhoto: selectedPhoto,
+            capturedPhoto: capturedPhoto,
+            memberId: "1245",
+            locality: "316",
+            subLocality: "136171",
+            photoDateTime: 0,
+            photoPinId: "1246",
+            tagIds: ["1234646"]
+        )
+        
+        network.send(requestDTO) { (result: Result<Response<UploadPinResponse>, Error>)  in
+            switch result {
+            case .success(let response):
+                completion(.success(response.output.result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 private var sessionConfiguration: URLSessionConfiguration {
-    #if DEBUG
+#if DEBUG
     let configuration = URLSessionConfiguration.ephemeral
     configuration.protocolClasses = [PopinURLProtocolMock.self]
     PopinTestSupport.setUpURLProtocol()
-    #else
+#else
     let configuration = URLSessionConfiguration.default
-    #endif
+#endif
     return configuration
 }
 
