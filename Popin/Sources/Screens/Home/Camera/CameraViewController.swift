@@ -54,8 +54,8 @@ final class CameraViewController: BaseViewController {
         let navigationBar = PDSNavigationBar()
         return navigationBar
     }()
-    private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(sendAction))
-    
+    private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
+
     // MARK: - Setup
     
     override func setUpUI() {
@@ -191,9 +191,17 @@ final class CameraViewController: BaseViewController {
         }
     }
     
-    @objc func sendAction() {
-        CameraService.shared.sendAction(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation, baseUrl: baseUrl)
+    @objc func uploadPin() {
+        CameraService.shared.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
+            switch result {
+            case .success(let response):
+                print("업로드 성공: \(response)")
+            case .failure(let error):
+                print("업로드 실패: \(CameraError.failUpload)")
+            }
+        }
     }
+
     
     private func showAlertAuth(
         _ type: String
