@@ -45,6 +45,8 @@ final class AlamofireNetwork: Network {
     // MARK: - Initializer
     
     init(configuration: URLSessionConfiguration) {
+        configuration.timeoutIntervalForRequest = 60
+        configuration.timeoutIntervalForResource = 60
         self.session = Session(configuration: configuration)
     }
 }
