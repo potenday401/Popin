@@ -7,14 +7,19 @@
 
 import Foundation
 
-typealias QueryItems = [String: AnyHashable]
 typealias HTTPHeader = [String: String]
 
 protocol Request {
     associatedtype Output
+    associatedtype Query: Encodable
     
     var endpoint: URL { get }
     var method: HTTPMethod { get }
-    var query: QueryItems { get }
+    var query: Query? { get }
     var header: HTTPHeader { get }
+}
+
+enum RequestQueryType {
+    case json
+    case codable
 }

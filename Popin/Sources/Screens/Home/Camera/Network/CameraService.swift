@@ -16,11 +16,8 @@ final class CameraService: CameraServiceProtocol {
         self.network = network
     }
     func uploadPin(selectedPhoto: UIImage?, capturedPhoto: UIImage?, initialLocation: CLLocation?, completion: @escaping (Result<String, Error>) -> Void) {
-        let requestDTO = UploadRequestDTO(
-            query: [:],
+        let pinDTO = PinDTO(
             initialLocation: initialLocation,
-            selectedPhoto: selectedPhoto,
-            capturedPhoto: capturedPhoto,
             memberId: "1245",
             locality: "316",
             subLocality: "136171",
@@ -28,8 +25,20 @@ final class CameraService: CameraServiceProtocol {
             photoPinId: "1246",
             tagIds: ["1234646"]
         )
-        
-        network.send(requestDTO) { (result: Result<Response<UploadPinResponse>, Error>)  in
+        guard let initialLocation = pinDTO.initialLocation else {
+          return
+        }
+
+        let uploadRequest = UploadRequest(
+            initialLocation: initialLocation,
+            memberID: pinDTO.memberId,
+            locality: pinDTO.locality,
+            subLocality: pinDTO.subLocality,
+            photoDateTime: pinDTO.photoDateTime,
+            photoPinId: pinDTO.photoPinId,
+            tagIds: pinDTO.tagIds
+        )
+        network.send(uploadRequest) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.output.result))
@@ -38,17 +47,6 @@ final class CameraService: CameraServiceProtocol {
             }
         }
     }
-}
-
-private var sessionConfiguration: URLSessionConfiguration {
-#if DEBUG
-    let configuration = URLSessionConfiguration.ephemeral
-    configuration.protocolClasses = [PopinURLProtocolMock.self]
-    PopinTestSupport.setUpURLProtocol()
-#else
-    let configuration = URLSessionConfiguration.default
-#endif
-    return configuration
 }
 
 protocol CameraServiceProtocol {

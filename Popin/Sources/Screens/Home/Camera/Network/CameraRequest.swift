@@ -8,13 +8,33 @@
 import CoreLocation
 import UIKit
 
-struct UploadRequestDTO: Encodable, Request {
-    typealias Output = UploadPinResponse
-    var endpoint = Endpoint.Pin.uploadPin.url
-    var method: HTTPMethod = .post
-    var query: QueryItems
-    var header: HTTPHeader = [:]
+struct UploadRequest: Request {
+    var query: PinDTO?
     
+    typealias Query = PinDTO
+    typealias Output = UploadPinResponse
+    var endpoint: URL = Endpoint.Pin.uploadPin.url
+    var method: HTTPMethod = .post
+    var header: HTTPHeader = [:]
+    init(initialLocation: CLLocation, memberID: String, locality: String, subLocality: String, photoDateTime: Int, photoPinId: String, tagIds: [String]) {
+      let pinDTO = PinDTO(
+        initialLocation: initialLocation,
+        memberId: memberID,
+        locality: locality,
+        subLocality: subLocality,
+        photoDateTime: photoDateTime,
+        photoPinId: photoPinId,
+        tagIds: tagIds
+      )
+      query = pinDTO
+    }
+}
+
+struct UploadPinResponse: Decodable {
+    let result: String
+}
+
+struct PinDTO: Encodable {
     var initialLocation: CLLocation?
     var selectedPhoto: UIImage?
     var capturedPhoto: UIImage?
@@ -24,7 +44,7 @@ struct UploadRequestDTO: Encodable, Request {
     var photoDateTime: Int
     var photoPinId: String
     var tagIds: [String]
-
+    
     enum CodingKeys: String, CodingKey {
         case initialLocation
         case selectedPhoto
@@ -36,7 +56,7 @@ struct UploadRequestDTO: Encodable, Request {
         case photoPinId
         case tagIds
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -62,9 +82,4 @@ struct UploadRequestDTO: Encodable, Request {
         try container.encode(photoPinId, forKey: .photoPinId)
         try container.encode(tagIds, forKey: .tagIds)
     }
-}
-
-
-struct UploadPinResponse: Decodable {
-    let result: String
 }

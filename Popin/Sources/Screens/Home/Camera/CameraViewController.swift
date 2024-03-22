@@ -55,7 +55,6 @@ final class CameraViewController: BaseViewController {
         return navigationBar
     }()
     private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
-    private let cameraService = CameraService(network: AlamofireNetwork(configuration: sessionConfiguration))
     // MARK: - Setup
     
     override func setUpUI() {
@@ -141,6 +140,7 @@ final class CameraViewController: BaseViewController {
     struct Dependency {
         let image: UIImage
         let locationString: String
+        let cameraService: CameraServiceProtocol
     }
     
     init(dependency: Dependency) {
@@ -192,7 +192,7 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func uploadPin() {
-        cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
+        dependency.cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
