@@ -221,6 +221,8 @@ extension LoginViewController: PDSInputFieldDelegate {
     
     func inputFieldShouldBeginEditing(_ textField: PDSInputField) {
         alertLabel.isHidden = true
+        emailInputField.isFailure = false
+        passwordInputField.isFailure = false
     }
 }
 
