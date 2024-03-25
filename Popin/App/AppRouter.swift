@@ -23,14 +23,18 @@ final class AppRouterImp: AppRouter {
     private var loginViewController: UIViewController {
         let loginService = LoginServiceImp(
             network: dependency.network,
-            validator: EmailPasswordValidator()
+            validator: dependency.validator
         )
         let loginDependency = LoginViewController.Dependency(
             loginService: loginService,
             tokenRepository: dependency.tokenRepository
         )
-    
-        let loginRouter = LoginRouterImp(dependency: .init(network: dependency.network))
+        let loginRouter = LoginRouterImp(
+            dependency: .init(
+                network: dependency.network,
+                validator: dependency.validator
+            )
+        )
         loginRouter.window = window
         
         let loginViewController = LoginViewController(dependency: loginDependency)
@@ -59,6 +63,7 @@ final class AppRouterImp: AppRouter {
     struct Dependency {
         let network: Network
         let tokenRepository: TokenRepository
+        let validator: EmailPasswordValidatorType
     }
     
     init(dependency: Dependency) {
