@@ -11,6 +11,7 @@ protocol PasswordService {
     func requestUpdatePassword(
         email: String,
         password: String,
+        confirmedPassword: String,
         completion: @escaping (
             Result<Void, Error>
         ) -> Void

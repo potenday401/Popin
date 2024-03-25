@@ -14,8 +14,19 @@ final class PasswordServiceImp: PasswordService {
     func requestUpdatePassword(
         email: String,
         password: String,
+        confirmedPassword: String,
         completion: @escaping (Result<Void, any Error>) -> Void
     ) {
+        guard validator.validatePassword(password) else {
+            completion(.failure(PasswordError.invalidPassword))
+            return
+        }
+        
+        guard validator.validatePassword(confirmedPassword), password == confirmedPassword else {
+            completion(.failure(PasswordError.confirmingError))
+            return
+        }
+        
         let request = PasswordRequest(query: [
             "email": email,
             "password": password,
@@ -24,10 +35,10 @@ final class PasswordServiceImp: PasswordService {
         ])
         network.send(request) { result in
             switch result {
-            case .success(let response):
+            case .success:
                 completion(.success(()))
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure:
+                completion(.failure(PasswordError.serverError))
             }
         }
     }
@@ -35,10 +46,12 @@ final class PasswordServiceImp: PasswordService {
     // MARK: - Property
     
     private let network: Network
+    private let validator: EmailPasswordValidatorType
     
     // MARK: - Initializer
     
-    init(network: Network) {
+    init(network: Network, validator: EmailPasswordValidatorType) {
         self.network = network
+        self.validator = validator
     }
 }
