@@ -16,27 +16,18 @@ final class CameraService: CameraServiceProtocol {
         self.network = network
     }
     func uploadPin(selectedPhoto: UIImage?, capturedPhoto: UIImage?, initialLocation: CLLocation?, completion: @escaping (Result<String, Error>) -> Void) {
-        let pinDTO = PinDTO(
-            initialLocation: initialLocation,
-            memberId: "1245",
-            locality: "316",
-            subLocality: "136171",
-            photoDateTime: 0,
-            photoPinId: "1246",
-            tagIds: ["1234646"]
-        )
-        guard let initialLocation = pinDTO.initialLocation else {
+        guard let initialLocation = initialLocation else {
           return
         }
 
         let uploadRequest = UploadRequest(
             initialLocation: initialLocation,
-            memberID: pinDTO.memberId,
-            locality: pinDTO.locality,
-            subLocality: pinDTO.subLocality,
-            photoDateTime: pinDTO.photoDateTime,
-            photoPinId: pinDTO.photoPinId,
-            tagIds: pinDTO.tagIds
+            memberID: "1245",
+            locality: "316",
+            subLocality: "136171",
+            photoDateTime: 0,
+            photoPinId: "1246",
+            tagIds: ["1234646"]
         )
         network.send(uploadRequest) { result in
             switch result {
