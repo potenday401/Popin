@@ -35,7 +35,10 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
 
     func routeToCameraView(with image: UIImage, locationString: String) {
         DispatchQueue.main.async {
-            let dependency = CameraViewController.Dependency(image: image, locationString: locationString)
+            //network injection appdelegate로 옮겨야함
+            let network = AlamofireNetwork(configuration: sessionConfiguration)
+            let cameraService = CameraService(network: network)
+            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: cameraService)
             let cameraViewController = CameraViewController(dependency: dependency)
             cameraViewController.delegate = self
             self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
@@ -58,4 +61,17 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
         DispatchQueue.main.async {
             self.viewController?.navigationController?.popViewController(animated: true)        }
     }
+}
+
+private var sessionConfiguration: URLSessionConfiguration {
+    #if DEBUG
+    let configuration = URLSessionConfiguration.ephemeral
+    configuration.protocolClasses = [PopinURLProtocolMock.self]
+    PopinTestSupport.setUpURLProtocol()
+    #else
+    let configuration = URLSessionConfiguration.default
+    #endif
+    
+    
+    return configuration
 }

@@ -8,10 +8,12 @@
 import Foundation
 
 struct PasswordRequest: Request {
+    typealias Query = [String: String]
+    
     typealias Output = PasswordResponse
     let endpoint: URL = Endpoint.Member.requestVerificationCode.url
     let method: HTTPMethod = .post
-    let query: QueryItems
+    let query: Query?
     let header: HTTPHeader = [:]
     
     init(

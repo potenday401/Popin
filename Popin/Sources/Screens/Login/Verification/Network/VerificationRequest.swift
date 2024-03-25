@@ -8,10 +8,12 @@
 import Foundation
 
 struct VerificationRequest: Request {
+    typealias Query = [String: String]
+    
     typealias Output = VerificationResponse
     let endpoint: URL = Endpoint.Member.requestVerification.url
     let method: HTTPMethod = .post
-    let query: QueryItems
+    let query: Query?
     let header: HTTPHeader = [:]
     
     init(email: String, verificationCode: String) {
