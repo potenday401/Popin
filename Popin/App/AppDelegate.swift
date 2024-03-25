@@ -13,13 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var appRouter: AppRouter?
+    var cameraService: CameraService?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
         let network = AlamofireNetwork(configuration: sessionConfiguration)
+        self.cameraService = CameraService(network: network)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
         appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository))
