@@ -188,6 +188,18 @@ private extension LoginViewController {
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false
+                    
+                    switch error {
+                    case LoginError.invalidEmail:
+                        self?.emailInputField.isFailure = true
+                    case LoginError.invalidPassword:
+                        self?.passwordInputField.isFailure = true
+                    case LoginError.invalidAccount:
+                        self?.emailInputField.isFailure = true
+                        self?.passwordInputField.isFailure = true
+                    default:
+                        return
+                    }
                 }
             }
     }

@@ -30,13 +30,18 @@ final class LoginServiceImp: LoginService {
         network.send(request) { result in
             switch result {
             case .success(let response):
+                guard response.statusCode == 200 else {
+                    completion(.failure(LoginError.invalidAccount))
+                    return
+                }
+                
                 let loginResponse = LoginResponse(
                     accessToken: response.output.accessToken,
                     refreshToken: response.output.refreshToken
                 )
                 completion(.success(loginResponse))
             case .failure(let error):
-                completion(.failure(error))
+                completion(.failure(LoginError.error))
             }
         }
     }
