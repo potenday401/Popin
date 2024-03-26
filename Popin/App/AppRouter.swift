@@ -10,21 +10,14 @@ import UIKit
 protocol AppRouter {
     var window: UIWindow? { get set }
     func launch()
-    func createHomeRouter() -> HomeRouter
 }
 
 final class AppRouterImp: AppRouter {
-    
     // MARK: - Interface
     weak var window: UIWindow?
     
     func launch() {
         window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
-    }
-    
-    func createHomeRouter() -> HomeRouter {
-        let homeRouter = HomeRouterImp()
-        return homeRouter
     }
     
     private var loginViewController: UIViewController {
@@ -33,7 +26,7 @@ final class AppRouterImp: AppRouter {
             loginService: loginService,
             tokenRepository: dependency.tokenRepository
         )
-        
+    
         let loginRouter = LoginRouterImp(dependency: .init(network: dependency.network))
         loginRouter.window = window
         
@@ -46,12 +39,12 @@ final class AppRouterImp: AppRouter {
     
     private var homeViewController: UIViewController {
         let homeViewController = HomeViewController()
-        let router = HomeRouterImp()
+        let cameraService = CameraService(network: dependency.network)
+        let router = HomeRouterImp(cameraService: cameraService)
         homeViewController.router = router
         router.viewController = homeViewController
         return UINavigationController(rootViewController: homeViewController)
     }
-    
     
     // MARK: - Property
     

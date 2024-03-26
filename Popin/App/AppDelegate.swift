@@ -10,18 +10,16 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     var appRouter: AppRouter?
-    var cameraService: CameraService?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
         let network = AlamofireNetwork(configuration: sessionConfiguration)
-        self.cameraService = CameraService(network: network)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
         appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository))
@@ -32,13 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private var sessionConfiguration: URLSessionConfiguration {
-        #if DEBUG
+#if DEBUG
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [PopinURLProtocolMock.self]
         PopinTestSupport.setUpURLProtocol()
-        #else
+#else
         let configuration = URLSessionConfiguration.default
-        #endif
+#endif
         
         
         return configuration

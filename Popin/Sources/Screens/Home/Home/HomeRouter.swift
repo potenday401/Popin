@@ -14,6 +14,12 @@ protocol HomeRouter {
 }
 
 final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraViewControllerDelegate {
+
+    private let cameraService: CameraService
+
+        init(cameraService: CameraService) {
+            self.cameraService = cameraService
+        }
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
         self.dismissFromCameraScreen()
     }
@@ -33,18 +39,27 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
         }
     }
 
+//    func routeToCameraView(with image: UIImage, locationString: String) {
+//        DispatchQueue.main.async {
+//            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//                  let cameraService = appDelegate.cameraService else {
+//                return
+//            }
+//            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: cameraService)
+//            let cameraViewController = CameraViewController(dependency: dependency)
+//            cameraViewController.delegate = self
+//            self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
+//        }
+//    }
     func routeToCameraView(with image: UIImage, locationString: String) {
         DispatchQueue.main.async {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                  let cameraService = appDelegate.cameraService else {
-                return
-            }
-            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: cameraService)
+            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: self.cameraService)
             let cameraViewController = CameraViewController(dependency: dependency)
             cameraViewController.delegate = self
             self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
         }
     }
+
     
     func routeToEditProfile() {
         DispatchQueue.main.async {
