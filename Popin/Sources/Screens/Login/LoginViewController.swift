@@ -24,15 +24,17 @@ final class LoginViewController: BaseViewController {
     
     private let appIconImageView = UIImageView(image: UIImage(resource: .appIcon))
     
-    private let emailInputField: PDSInputField = {
+    private lazy var emailInputField: PDSInputField = {
         let inputField = PDSInputField()
+        inputField.delegate = self
         inputField.placeholder = Text.emailPlaceholder
         inputField.accessibilityIdentifier = "loginviewcontroller_email_inputfield"
         return inputField
     }()
     
-    private let passwordInputField: PDSInputField = {
+    private lazy var passwordInputField: PDSInputField = {
         let inputField = PDSInputField()
+        inputField.delegate = self
         inputField.placeholder = Text.passwordPlaceholder
         inputField.isSecureTextEntry = true
         inputField.accessibilityIdentifier = "loginviewcontroller_password_inputfield"
@@ -186,6 +188,18 @@ private extension LoginViewController {
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false
+                    
+                    switch error {
+                    case LoginError.invalidEmail:
+                        self?.emailInputField.isFailure = true
+                    case LoginError.invalidPassword:
+                        self?.passwordInputField.isFailure = true
+                    case LoginError.invalidAccount:
+                        self?.emailInputField.isFailure = true
+                        self?.passwordInputField.isFailure = true
+                    default:
+                        return
+                    }
                 }
             }
     }
@@ -198,6 +212,17 @@ private extension LoginViewController {
     @objc
     func signUpDidTap() {
         router?.routeToSignUp()
+    }
+}
+
+// MARK: - PDSInputFieldDelegate
+
+extension LoginViewController: PDSInputFieldDelegate {
+    
+    func inputFieldShouldBeginEditing(_ textField: PDSInputField) {
+        alertLabel.isHidden = true
+        emailInputField.isFailure = false
+        passwordInputField.isFailure = false
     }
 }
 
