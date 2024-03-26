@@ -36,29 +36,31 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     var initialLocation: CLLocation?
     var annotationImage: String?
     var currentLocationRecord: CLLocation?
-    
     var locationManager: CLLocationManager!
     private var mapView = MKMapView()
-    
     var annotations: [CustomImageAnnotation] = []
+    var locationString:String = ""
     
-    
-    func backButtonTapped() {
+    @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    func plusButtonTapped() {
+    @objc func plusButtonTapped() {
         //        let cameraViewController = CameraViewController()
         //        cameraViewController.initialLocation = initialLocation
         //        navigationController?.pushViewController(cameraViewController, animated: true)
     }
     
+    private lazy var navigationBar: PDSNavigationBar = {
+        let navigationBar = PDSNavigationBar()
+        navigationBar.title = self.locationString
+        return navigationBar
+    }()
+    
     func setupStatusBarView() {
         let statusBarView = UIView()
         
         view.addSubview(statusBarView)
-        
-        // todo: topNavigator
         
         let infoView = AlbumInfoView()
         statusBarView.addSubview(infoView)
@@ -98,9 +100,24 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for annotation in annotations {
-            print(annotation.coordinate, "checkAnnotation", annotation.imageUrl)
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
         }
+        
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        
+        navigationBar.rightItem = .init(
+            image: UIImage(resource: .plus),
+            target: self,
+            action: #selector(plusButtonTapped)
+        )
+
         setupLocationManager()
         setupMapView()
         setupStatusBarView()
@@ -111,7 +128,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
 
     @objc private func selectButtonTapped() {
         isSelectionEnabled.toggle()
-//        updateButtonAppearance()
         guard let containerView = self.containerView else {
             return
         }
@@ -130,9 +146,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         for iconView in selectedIconViews {
             removeCheckmarkFromView(iconView)
         }
-        
         selectedIconViews.removeAll()
-        
     }
     
     @objc private func deleteButtonTapped() {
@@ -148,10 +162,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     @objc private func iconViewTapped(_ gesture: UITapGestureRecognizer) {
         guard isSelectionEnabled,
-              let iconView = gesture.view as? UIView else {
+              let iconView = gesture.view else {
             return
         }
-        
         let checkmarkTag = 100
         
         if selectedIconViews.contains(iconView) {
@@ -163,7 +176,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             checkmarkImageView.tintColor = .blue
             checkmarkImageView.contentMode = .scaleAspectFit
             checkmarkImageView.tag = checkmarkTag
-            
             iconView.addSubview(checkmarkImageView)
             checkmarkImageView.snp.makeConstraints { make in
                 make.trailing.bottom.equalToSuperview().inset(15)
@@ -274,7 +286,7 @@ extension AlbumViewController: CLLocationManagerDelegate {
             setupAnnotation(location: location, imageUrl: annotation.imageUrl)
         }
         
-        if let currentLocation = locations.last {
+        if locations.last != nil {
             locationManager.stopUpdatingLocation()
         } else {
             print("No valid location found in the update.")

@@ -16,6 +16,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
+        albumViewController.locationString = self.locationString
         navigationController?.pushViewController(albumViewController, animated: true)
     }
     var router: HomeRouter?
@@ -87,7 +88,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             }
         }
     }
-    
     
     private let navigationBar: PDSNavigationBar = {
         let navigationBar = PDSNavigationBar()
