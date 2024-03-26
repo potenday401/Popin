@@ -11,7 +11,6 @@ import Alamofire
 final class AlamofireNetwork: Network {
     
     // MARK: - Interface
-    
     func send<T>(
         _ request: T,
         completion: @escaping (Result<Response<T.Output>, Error>) -> Void
@@ -21,7 +20,7 @@ final class AlamofireNetwork: Network {
                 request.endpoint,
                 method: convert(from: request.method),
                 parameters: request.query,
-                encoding: JSONEncoding.default
+                encoder: JSONParameterEncoder.default
             )
             .validate(statusCode: 200..<500)
             .responseDecodable(of: T.Output.self) { dataResponse in
@@ -45,6 +44,8 @@ final class AlamofireNetwork: Network {
     // MARK: - Initializer
     
     init(configuration: URLSessionConfiguration) {
+        configuration.timeoutIntervalForRequest = 60
+        configuration.timeoutIntervalForResource = 60
         self.session = Session(configuration: configuration)
     }
 }

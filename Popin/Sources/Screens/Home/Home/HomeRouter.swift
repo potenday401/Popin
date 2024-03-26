@@ -7,19 +7,30 @@ import UIKit
 
 protocol HomeRouter {
     func routeToHomeMapView()
-    func routeToCameraView()
+    func routeToCameraView(with image: UIImage, locationString: String)
     func routeToEditProfile()
     func dismissFromProfileScreen()
+    func dismissFromCameraScreen()
 }
 
-final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate {
+final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraViewControllerDelegate {
+    
+    private let cameraService: CameraService
+    
+    init(cameraService: CameraService) {
+        self.cameraService = cameraService
+    }
+    func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
+        self.dismissFromCameraScreen()
+    }
+    
     func requestProfileViewControllerBackDidTap(_ viewController: ProfileViewController) {
         self.dismissFromProfileScreen()
     }
     
     
     weak var viewController: UIViewController?
-
+    
     func routeToHomeMapView() {
         DispatchQueue.main.async {
             let homeMapViewController = HomeMapViewController()
@@ -28,9 +39,11 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate {
         }
     }
     
-    func routeToCameraView() {
+    func routeToCameraView(with image: UIImage, locationString: String) {
         DispatchQueue.main.async {
-            let cameraViewController = CameraViewController()
+            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: self.cameraService)
+            let cameraViewController = CameraViewController(dependency: dependency)
+            cameraViewController.delegate = self
             self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
         }
     }
@@ -47,4 +60,9 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate {
         DispatchQueue.main.async {
             self.viewController?.navigationController?.popViewController(animated: true)        }
     }
+    func dismissFromCameraScreen() {
+        DispatchQueue.main.async {
+            self.viewController?.navigationController?.popViewController(animated: true)        }
+    }
 }
+
