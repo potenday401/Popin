@@ -16,12 +16,12 @@ final class PasswordServiceImp: PasswordService {
         password: String,
         completion: @escaping (Result<Void, any Error>) -> Void
     ) {
-        let request = PasswordRequest(
-            email: email,
-            password: password,
-            confirmPassword: password,
-            verifiedToken: ""
-        )
+        let request = PasswordRequest(query: [
+            "email": email,
+            "password": password,
+            "confirmPassword": password,
+            "verifiedToken": ""
+        ])
         network.send(request) { result in
             switch result {
             case .success(let response):

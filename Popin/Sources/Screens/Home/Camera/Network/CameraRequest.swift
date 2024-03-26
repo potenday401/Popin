@@ -11,16 +11,14 @@ import UIKit
 struct UploadRequest: Request {
     typealias Query = PinDTO
     typealias Output = UploadPinResponse
+    
     var endpoint: URL = Endpoint.Pin.uploadPin.url
     var method: HTTPMethod = .post
     var header: HTTPHeader = [:]
     var query: Query?
 
     init(query: Query?) {
-        self.endpoint = Endpoint.Pin.uploadPin.url
-        self.method = .post
         self.query = query
-        self.header = [:]
     }
 }
 
