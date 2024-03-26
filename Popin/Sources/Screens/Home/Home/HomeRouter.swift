@@ -14,12 +14,12 @@ protocol HomeRouter {
 }
 
 final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraViewControllerDelegate {
-
+    
     private let cameraService: CameraService
-
-        init(cameraService: CameraService) {
-            self.cameraService = cameraService
-        }
+    
+    init(cameraService: CameraService) {
+        self.cameraService = cameraService
+    }
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
         self.dismissFromCameraScreen()
     }
@@ -30,7 +30,7 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
     
     
     weak var viewController: UIViewController?
-
+    
     func routeToHomeMapView() {
         DispatchQueue.main.async {
             let homeMapViewController = HomeMapViewController()
@@ -38,19 +38,7 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
             self.viewController?.navigationController?.pushViewController(homeMapViewController, animated: true)
         }
     }
-
-//    func routeToCameraView(with image: UIImage, locationString: String) {
-//        DispatchQueue.main.async {
-//            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-//                  let cameraService = appDelegate.cameraService else {
-//                return
-//            }
-//            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: cameraService)
-//            let cameraViewController = CameraViewController(dependency: dependency)
-//            cameraViewController.delegate = self
-//            self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
-//        }
-//    }
+    
     func routeToCameraView(with image: UIImage, locationString: String) {
         DispatchQueue.main.async {
             let dependency = CameraViewController.Dependency(image: image, locationString: locationString, cameraService: self.cameraService)
@@ -59,7 +47,6 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
             self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)
         }
     }
-
     
     func routeToEditProfile() {
         DispatchQueue.main.async {
