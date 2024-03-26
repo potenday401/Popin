@@ -9,7 +9,6 @@ import Foundation
 
 struct VerificationCodeRequest: Request {
     typealias Query = [String: String]
-    
     typealias Output = VerificationCodeResponse
     let endpoint: URL = Endpoint.Member.requestVerificationCode.url
     let method: HTTPMethod = .post
@@ -18,6 +17,9 @@ struct VerificationCodeRequest: Request {
     
     init(email: String) {
         query = ["email": email]
+    }
+    init(query: [String : String]?) {
+        self.query = query
     }
 }
 

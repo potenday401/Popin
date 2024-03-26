@@ -17,6 +17,8 @@ protocol Request {
     var method: HTTPMethod { get }
     var query: Query? { get }
     var header: HTTPHeader { get }
+    
+    init(query: Query?)
 }
 
 enum RequestQueryType {

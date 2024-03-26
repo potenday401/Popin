@@ -8,6 +8,7 @@
 import Foundation
 
 struct LoginRequest: Request {
+    
     typealias Query = [String: String]
     typealias Output = LoginResponse
     let endpoint = Endpoint.Auth.login.url
@@ -20,6 +21,9 @@ struct LoginRequest: Request {
             "email": email,
             "password": password
         ]
+    }
+    init(query: [String : String]?) {
+        self.query = query
     }
 }
 

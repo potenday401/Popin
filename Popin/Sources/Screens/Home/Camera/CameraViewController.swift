@@ -298,14 +298,3 @@ private extension CameraViewController {
 protocol CameraViewControllerDelegate: AnyObject {
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
 }
-
-private var sessionConfiguration: URLSessionConfiguration {
-#if DEBUG
-    let configuration = URLSessionConfiguration.ephemeral
-    configuration.protocolClasses = [PopinURLProtocolMock.self]
-    PopinTestSupport.setUpURLProtocol()
-#else
-    let configuration = URLSessionConfiguration.default
-#endif
-    return configuration
-}

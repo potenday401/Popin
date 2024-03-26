@@ -9,24 +9,18 @@ import CoreLocation
 import UIKit
 
 struct UploadRequest: Request {
-    var query: PinDTO?
-    
     typealias Query = PinDTO
     typealias Output = UploadPinResponse
     var endpoint: URL = Endpoint.Pin.uploadPin.url
     var method: HTTPMethod = .post
     var header: HTTPHeader = [:]
-    init(initialLocation: CLLocation, memberID: String, locality: String, subLocality: String, photoDateTime: Int, photoPinId: String, tagIds: [String]) {
-      let pinDTO = PinDTO(
-        initialLocation: initialLocation,
-        memberId: memberID,
-        locality: locality,
-        subLocality: subLocality,
-        photoDateTime: photoDateTime,
-        photoPinId: photoPinId,
-        tagIds: tagIds
-      )
-      query = pinDTO
+    var query: Query?
+
+    init(query: Query?) {
+        self.endpoint = Endpoint.Pin.uploadPin.url
+        self.method = .post
+        self.query = query
+        self.header = [:]
     }
 }
 

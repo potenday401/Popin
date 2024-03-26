@@ -19,6 +19,9 @@ struct VerificationRequest: Request {
     init(email: String, verificationCode: String) {
         query = ["email": email, "authCode": verificationCode]
     }
+    init(query: [String : String]?) {
+        self.query = query
+    }
 }
 
 struct VerificationResponse: Decodable {
