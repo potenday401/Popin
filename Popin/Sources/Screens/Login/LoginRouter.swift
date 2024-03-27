@@ -30,7 +30,7 @@ final class LoginRouterImp: LoginRouter {
             let signUpRouter = SignUpRouterImp(
                 dependency: .init(
                     verificationService: VerificationServiceImp(network: self.dependency.network),
-                    passwordService: PasswordServiceImp(network: self.dependency.network)
+                    passwordService: PasswordServiceImp(network: self.dependency.network, validator: self.dependency.validator)
                 )
             )
             let signUpViewController = SignUpViewController()
@@ -49,6 +49,7 @@ final class LoginRouterImp: LoginRouter {
     
     struct Dependency {
         let network: Network
+        let validator: EmailPasswordValidatorType
     }
     
     init(dependency: Dependency) {

@@ -26,7 +26,7 @@ final class LoginServiceImp: LoginService {
             return
         }
         
-        let request = LoginRequest(email: email, password: password)
+        let request = LoginRequest(query: ["email": email, "password": password])
         network.send(request) { result in
             switch result {
             case .success(let response):
