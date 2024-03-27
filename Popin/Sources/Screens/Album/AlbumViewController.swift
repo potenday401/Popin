@@ -8,6 +8,7 @@ import CoreLocation
 import MapKit
 import SnapKit
 import Kingfisher
+import Photos
 
 class CustomImageAnnotation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
@@ -254,10 +255,18 @@ class AlbumViewController: BaseViewController, CLLocationManagerDelegate, AlbumH
         navigationController?.popViewController(animated: true)
     }
     
+    private func cameraAuth() {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                print("권한 허용")
+            } else {
+                print("권한 거부")
+            }
+        }
+    }
+    
     func plusButtonTapped() {
-//        let cameraViewController = CameraViewController()
-//        cameraViewController.initialLocation = initialLocation
-//        navigationController?.pushViewController(cameraViewController, animated: true)
+        cameraAuth()
     }
     
     func setupStatusBarView() {
