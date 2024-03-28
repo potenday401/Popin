@@ -22,7 +22,6 @@ final class CustomImageAnnotation: NSObject, MKAnnotation {
 }
 
 final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
-    private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"
     private let imageUrl = "https://placekitten.com/200/300"
@@ -40,7 +39,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var mapView = MKMapView()
     var annotations: [CustomImageAnnotation] = []
     var locationString:String = ""
-    
+    let cardListView = CardListView()
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -71,7 +70,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
         
         infoView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-38)
+            make.bottom.equalToSuperview().offset(-10)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0)
         }
@@ -81,11 +80,11 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         mapView = MKMapView()
         mapView.delegate = self
         view.addSubview(mapView)
-        
+        mapView.backgroundColor = .red
         mapView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.width.height.equalTo(450)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
+            make.width.height.equalTo(359)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(130)
         }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -117,15 +116,16 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             target: self,
             action: #selector(plusButtonTapped)
         )
-
         setupLocationManager()
         setupMapView()
+        // check scroll
+        view.addSubview(cardListView)
+        cardListView.updateAnnotations(annotations)
         setupStatusBarView()
         isSelectionEnabled = true
         navigationItem.hidesBackButton = true
     }
-        
-
+    
     @objc private func selectButtonTapped() {
         isSelectionEnabled.toggle()
         guard let containerView = self.containerView else {
