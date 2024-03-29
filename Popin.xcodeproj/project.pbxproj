@@ -48,6 +48,7 @@
 		652C0E9D2B946C7200A87458 /* LoginServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E9C2B946C7200A87458 /* LoginServiceMock.swift */; };
 		652C0EA12B94831600A87458 /* LoginServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0EA02B94831600A87458 /* LoginServiceImp.swift */; };
 		652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0EA22B9483A100A87458 /* TokenRepositoryImp.swift */; };
+		655DBA292BB6E708003F0E62 /* ScalingCarousel in Frameworks */ = {isa = PBXBuildFile; productRef = 655DBA282BB6E708003F0E62 /* ScalingCarousel */; };
 		6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E79D2B8F606B000D932C /* LoginViewController.swift */; };
 		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
 		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
@@ -237,6 +238,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				655DBA292BB6E708003F0E62 /* ScalingCarousel in Frameworks */,
 				9FC267F32B847237000BD089 /* Kingfisher in Frameworks */,
 				9FC267F62B847261000BD089 /* SnapKit in Frameworks */,
 				9FC267F92B847282000BD089 /* FSCalendar in Frameworks */,
@@ -908,6 +910,7 @@
 				9FC267F52B847261000BD089 /* SnapKit */,
 				9FC267F82B847282000BD089 /* FSCalendar */,
 				9FC267FB2B8472B3000BD089 /* Tabman */,
+				655DBA282BB6E708003F0E62 /* ScalingCarousel */,
 			);
 			productName = fourpin;
 			productReference = 9F0BA2AB2B68A0D600677403 /* Popin.app */;
@@ -967,6 +970,7 @@
 				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */,
+				655DBA242BB6E696003F0E62 /* XCRemoteSwiftPackageReference "ScalingCarousel" */,
 			);
 			productRefGroup = 9F0BA2AC2B68A0D600677403 /* Products */;
 			projectDirPath = "";
@@ -1390,6 +1394,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		655DBA242BB6E696003F0E62 /* XCRemoteSwiftPackageReference "ScalingCarousel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superpeteblaze/ScalingCarousel.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1433,6 +1445,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		655DBA282BB6E708003F0E62 /* ScalingCarousel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 655DBA242BB6E696003F0E62 /* XCRemoteSwiftPackageReference "ScalingCarousel" */;
+			productName = ScalingCarousel;
+		};
 		9FC267EF2B8471E1000BD089 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */;
