@@ -23,15 +23,15 @@ class CardListView: UIView {
     }
     
     func setupCardListView() {
-//        let containerView = UIStackView()
-//        containerView.translatesAutoresizingMaskIntoConstraints = false
-//        addSubview(containerView)
-//        containerView.snp.makeConstraints { make in
-//            make.leading.equalToSuperview()
-//            make.top.equalToSuperview().offset(620)
-//            make.width.equalTo(400)
-//            make.height.equalTo(230)
-//        }
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.top.equalToSuperview().offset(620)
+            make.width.equalTo(400)
+            make.height.equalTo(230)
+        }
         selectButton = UIButton()
         selectButton.setTitle("선택", for: .normal)
         selectButton.setTitleColor(.white, for: .normal)
@@ -40,7 +40,7 @@ class CardListView: UIView {
         selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
         selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
-        self.addSubview(selectButton)
+        addSubview(selectButton)
         
         selectButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(560)
@@ -56,7 +56,7 @@ class CardListView: UIView {
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
-        self.addSubview(cancelButton)
+        addSubview(cancelButton)
         
         cancelButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(560)
@@ -76,11 +76,11 @@ class CardListView: UIView {
             return button
         }()
         
-        self.addSubview(deleteButton)
+        containerView.addSubview(deleteButton)
         
         deleteButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(560)
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
         }
         
         let scrollView = UIScrollView()
@@ -88,8 +88,8 @@ class CardListView: UIView {
         scrollView.backgroundColor = .black
         scrollView.showsHorizontalScrollIndicator = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(scrollView)
-        self.isUserInteractionEnabled = true
+        containerView.addSubview(scrollView)
+        containerView.isUserInteractionEnabled = true
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -130,23 +130,25 @@ class CardListView: UIView {
                 }
                 imageView.layer.cornerRadius = 12
                 imageView.layer.masksToBounds = true
-                imageView.backgroundColor = .blue
+                
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
                 iconView.addGestureRecognizer(tapGestureRecognizer)
                 iconView.isUserInteractionEnabled = true
+                
                 rowView.addArrangedSubview(iconView)
             }
             stackView.addArrangedSubview(rowView)
+            
         }
         var totalHeight = 0
           for rowView in stackView.arrangedSubviews {
             totalHeight += Int(rowView.frame.height)
           }
 
-        self.addSubview(selectButton)
+        containerView.addSubview(selectButton)
         selectButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(containerView.snp.top).offset(8)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
         }
         
         scrollView.snp.makeConstraints { make in
