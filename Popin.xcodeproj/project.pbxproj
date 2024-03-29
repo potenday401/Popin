@@ -115,6 +115,7 @@
 		9FC267F62B847261000BD089 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267F52B847261000BD089 /* SnapKit */; };
 		9FC267F92B847282000BD089 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267F82B847282000BD089 /* FSCalendar */; };
 		9FC267FC2B8472B3000BD089 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267FB2B8472B3000BD089 /* Tabman */; };
+		9FF759EA2BB3E7B00061B112 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF759E92BB3E7B00061B112 /* CardListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,6 +235,7 @@
 		9FC025E12BA9235600D9130F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		9FC025E32BA9238600D9130F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9FC025E82BA923DD00D9130F /* ProfileVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIewController.swift; sourceTree = "<group>"; };
+		9FF759E92BB3E7B00061B112 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +332,7 @@
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				9FF759E42BB3E7350061B112 /* CardView */,
 				65779EB72B957DE000D8C98E /* AlertLabel */,
 				65BC1F3E2B8E02F500CB2F15 /* InputField */,
 				65D2D1962B8CC8870015CD0D /* VerificationCodeInput */,
@@ -900,6 +903,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		9FF759E42BB3E7350061B112 /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				9FF759E92BB3E7B00061B112 /* CardListView.swift */,
+			);
+			path = CardView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1104,6 +1115,7 @@
 				6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
 				9F5206732B6EA3BF005D634D /* HomeMapVIewController.swift in Sources */,
+				9FF759EA2BB3E7B00061B112 /* CardListView.swift in Sources */,
 				6525D48C2B88BB100063BD16 /* UIColor+PDS.swift in Sources */,
 				9F0BA2B92B68A0D600677403 /* Popin.xcdatamodeld in Sources */,
 				9E4684632B6E7A7000AD005A /* DateViewModel.swift in Sources */,

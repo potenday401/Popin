@@ -30,6 +30,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     var isSelectionEnabled = false
     private var cancelButton: UIButton!
     private var selectButton: UIButton!
+    private var imageView: UIImageView?
     private var selectedIconViews: Set<UIView> = []
     var currentLocation: CustomLocation?
     var initialLocation: CLLocation?
@@ -39,7 +40,16 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var mapView = MKMapView()
     var annotations: [CustomImageAnnotation] = []
     var locationString:String = ""
-    let cardListView = CardListView()
+    
+    let deleteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .trash), for: .normal)
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
+    //    let cardListView = CardListView()
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -97,6 +107,129 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         mapView.isUserInteractionEnabled = true
     }
     
+    private func setupCardListView() {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(containerView)
+        
+        containerView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(480)
+            make.width.equalTo(400)
+            make.height.equalTo(200)
+        }
+        
+        selectButton = UIButton()
+        selectButton.setTitle("선택", for: .normal)
+        selectButton.setTitleColor(.white, for: .normal)
+        selectButton.backgroundColor = .gray
+        selectButton.layer.cornerRadius = 18
+        selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
+        selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        
+        view.addSubview(selectButton)
+        
+        selectButton.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.top).offset(20)
+            make.trailing.equalTo(view.snp.trailing).offset(-326)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
+        }
+        
+        cancelButton = UIButton()
+        cancelButton.setTitle("취소", for: .normal)
+        cancelButton.setTitleColor(.white, for: .normal)
+        cancelButton.backgroundColor = .gray
+        cancelButton.layer.cornerRadius = 18
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        
+        view.addSubview(cancelButton)
+        cancelButton.isHidden = true
+        cancelButton.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.top).offset(20)
+            make.trailing.equalTo(view.snp.trailing).offset(-326)
+            make.width.equalTo(50)
+            make.height.equalTo(33)
+        }
+        containerView.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+        }
+        
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = .black
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(scrollView)
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        scrollView.addSubview(stackView)
+        
+        let numberOfColumns = 8
+        let numberOfRows = 2
+        
+        for _ in 0..<numberOfRows {
+            let rowView = UIStackView()
+            rowView.axis = .horizontal
+            rowView.distribution = .fillEqually
+            rowView.spacing = 0
+            
+            for columnIndex in 0..<numberOfColumns {
+                let iconView = UIView()
+                var imageUrl:URL?
+                //                    let imageIndex = columnIndex + 1
+                for annotation in annotations {
+                    imageUrl = URL(string: annotation.imageUrl)!
+                }
+                
+                var imageView: UIImageView = {
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.kf.setImage(with: imageUrl)
+                    return imageView
+                }()
+                
+                iconView.addSubview(imageView)
+                imageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                    make.width.equalTo(86)
+                    make.height.equalTo(86)
+                }
+                imageView.layer.cornerRadius = 12
+                imageView.layer.masksToBounds = true
+                
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+                iconView.addGestureRecognizer(tapGestureRecognizer)
+                iconView.isUserInteractionEnabled = true
+                
+                rowView.addArrangedSubview(iconView)
+            }
+            
+            stackView.addArrangedSubview(rowView)
+        }
+        
+        containerView.addSubview(selectButton)
+        selectButton.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.top).offset(8)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+        }
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(selectButton.snp.bottom).offset(8)
+        }
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
+        scrollView.contentSize = CGSize(width: stackView.frame.size.width, height: stackView.frame.size.height)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(navigationBar)
@@ -118,9 +251,11 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         )
         setupLocationManager()
         setupMapView()
+        setupCardListView()
         // check scroll
-        view.addSubview(cardListView)
-        cardListView.updateAnnotations(annotations)
+        //        view.addSubview(cardListView)
+        //        cardListView.setupCardListView()
+        //        cardListView.updateAnnotations(annotations)
         setupStatusBarView()
         isSelectionEnabled = true
         navigationItem.hidesBackButton = true
@@ -131,7 +266,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         guard let containerView = self.containerView else {
             return
         }
-        
         if isSelectionEnabled {
             containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = true
             containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = false
@@ -142,6 +276,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     @objc private func cancelButtonTapped() {
+        selectButton.isHidden = false
+        cancelButton.isHidden = true
+        deleteButton.isHidden = true
         isSelectionEnabled = false
         for iconView in selectedIconViews {
             removeCheckmarkFromView(iconView)
@@ -165,11 +302,17 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
               let iconView = gesture.view else {
             return
         }
+        selectButton.isHidden = true
+        deleteButton.isHidden = false
+        cancelButton.isHidden = false
         let checkmarkTag = 100
         
         if selectedIconViews.contains(iconView) {
             selectedIconViews.remove(iconView)
             removeCheckmarkFromView(iconView)
+            deleteButton.isHidden = true
+            selectButton.isHidden = false
+            cancelButton.isHidden = true
         } else {
             selectedIconViews.insert(iconView)
             let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))
@@ -181,10 +324,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 make.trailing.bottom.equalToSuperview().inset(15)
                 make.width.height.equalTo(24)
             }
+            deleteButton.isHidden = false
+            selectButton.isHidden = true
+            cancelButton.isHidden = false
         }
     }
 }
-
 
 extension MKMapView {
     func centerToLocation(
@@ -230,7 +375,6 @@ extension AlbumViewController: MKMapViewDelegate {
         } else {
             view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         }
-        
         return view
     }
     
