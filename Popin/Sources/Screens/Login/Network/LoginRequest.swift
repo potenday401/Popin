@@ -8,21 +8,15 @@
 import Foundation
 
 struct LoginRequest: Request {
-    
     typealias Query = [String: String]
     typealias Output = LoginResponse
+    
     let endpoint = Endpoint.Auth.login.url
     let method: HTTPMethod = .post
     let query: Query?
     let header: HTTPHeader = [:]
     
-    init(email: String, password: String) {
-        query = [
-            "email": email,
-            "password": password
-        ]
-    }
-    init(query: [String : String]?) {
+    init(query: Query?) {
         self.query = query
     }
 }

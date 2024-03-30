@@ -21,14 +21,17 @@ final class PasswordViewController: LoginDetailBaseViewController {
     
     // MARK: - UI
     
-    private let emailInputField: PDSInputField = {
+    private lazy var passwordInputField: PDSInputField = {
         let inputField = PDSInputField()
-        inputField.placeholder = Text.emailInputFieldPlaceholder
+        inputField.delegate = self
+        inputField.placeholder = Text.passwordInputFieldPlaceholder
+        inputField.isSecureTextEntry = true
         return inputField
     }()
-    private let passwordInputField: PDSInputField = {
+    private lazy var confirmedPasswordInputField: PDSInputField = {
         let inputField = PDSInputField()
-        inputField.placeholder = Text.passwordInputFieldPlaceholder
+        inputField.delegate = self
+        inputField.placeholder = Text.confirmedPasswordInputFieldPlaceholder
         inputField.isSecureTextEntry = true
         return inputField
     }()
@@ -58,7 +61,6 @@ final class PasswordViewController: LoginDetailBaseViewController {
     init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
         self.dependency = dependency
         super.init(title: title, numberOfStep: numberOfStep, step: step)
-        emailInputField.text = dependency.email
     }
     
     // MARK: - Setup
@@ -73,21 +75,21 @@ final class PasswordViewController: LoginDetailBaseViewController {
             action: #selector(backDidTap)
         )
         
-        contentView.addSubview(emailInputField)
-        emailInputField.snp.makeConstraints { make in
+        contentView.addSubview(passwordInputField)
+        passwordInputField.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(25)
             make.leading.trailing.equalToSuperview()
         }
         
-        contentView.addSubview(passwordInputField)
-        passwordInputField.snp.makeConstraints { make in
-            make.top.equalTo(emailInputField.snp.bottom).offset(16)
+        contentView.addSubview(confirmedPasswordInputField)
+        confirmedPasswordInputField.snp.makeConstraints { make in
+            make.top.equalTo(passwordInputField.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview()
         }
         
         contentView.addSubview(alertLabel)
         alertLabel.snp.makeConstraints { make in
-            make.top.equalTo(passwordInputField.snp.bottom).offset(16)
+            make.top.equalTo(confirmedPasswordInputField.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
         }
         
@@ -110,11 +112,17 @@ private extension PasswordViewController {
     
     @objc
     func confirmDidTap() {
-        guard let password = passwordInputField.text else {
+        guard let password = passwordInputField.text,
+              let confirmedPassword = confirmedPasswordInputField.text
+        else {
             return
         }
         
-        dependency.passwordService.requestUpdatePassword(email: dependency.email, password: password) { [weak self] result in
+        dependency.passwordService.requestUpdatePassword(
+            email: dependency.email,
+            password: password,
+            confirmedPassword: confirmedPassword
+        ) { [weak self] result in
             guard let self else {
                 return
             }
@@ -123,9 +131,39 @@ private extension PasswordViewController {
                 try result.get()
                 delegate?.passwordViewControllerDidSuccessRequest(self)
             } catch {
-                // TODO: Error handling
+                resetFailureState()
+                updateAlertMessage(text: error.localizedDescription, state: .error)
+                
+                switch error {
+                case PasswordError.invalidPassword:
+                    passwordInputField.isFailure = true
+                case PasswordError.confirmingError:
+                    confirmedPasswordInputField.isFailure = true
+                default:
+                    return
+                }
             }
         }
+    }
+    
+    private func resetFailureState() {
+        passwordInputField.isFailure = false
+        confirmedPasswordInputField.isFailure = false
+    }
+    
+    private func updateAlertMessage(text: String, state: PDSAlertLabel.State) {
+        alertLabel.state = state
+        alertLabel.text = text
+    }
+}
+
+// MARK: - PDSInputFieldDelegate
+
+extension PasswordViewController: PDSInputFieldDelegate {
+    
+    func inputFieldShouldBeginEditing(_ textField: PDSInputField) {
+        resetFailureState()
+        updateAlertMessage(text: Text.alertMessage, state: .normal)
     }
 }
 
@@ -134,8 +172,8 @@ private extension PasswordViewController {
 extension PasswordViewController {
     
     enum Text {
-        static let emailInputFieldPlaceholder = "사용자 이메일"
         static let passwordInputFieldPlaceholder = "사용자 비밀번호"
+        static let confirmedPasswordInputFieldPlaceholder = "비밀번호 확인"
         static let alertMessage = "영문,숫자를 조합한 8~20자 이내의 비밀번호"
         static let confirmButtonTitle = "확인"
     }

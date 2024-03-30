@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let network = AlamofireNetwork(configuration: sessionConfiguration)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
-        appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository))
+        let validator = EmailPasswordValidator()
+        appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository, validator: validator))
         appRouter?.window = window
         appRouter?.launch()
         

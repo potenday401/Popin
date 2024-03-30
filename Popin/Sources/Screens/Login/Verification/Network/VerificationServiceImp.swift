@@ -10,7 +10,7 @@ import Foundation
 final class VerificationServiceImp: VerificationService {
     
     func requestVerificationCode(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let request = VerificationCodeRequest(email: email)
+        let request = VerificationCodeRequest(query: ["email": email])
         network.send(request) { result in
             switch result {
             case .success(let response):
@@ -31,7 +31,7 @@ final class VerificationServiceImp: VerificationService {
     }
     
     func requestVerification(email: String, verificationCode: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let request = VerificationRequest(email: email, verificationCode: verificationCode)
+        let request = VerificationRequest(query: ["email": email, "verificationCode": verificationCode])
         network.send(request) { result in
             switch result {
             case .success(let response):

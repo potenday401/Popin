@@ -65,7 +65,8 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
     }
     
-    @objc func plusButtonTapped() {
+    @objc 
+    func plusButtonTapped() {
         cameraAuth()
     }
     

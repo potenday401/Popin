@@ -9,17 +9,14 @@ import Foundation
 
 struct VerificationRequest: Request {
     typealias Query = [String: String]
-    
     typealias Output = VerificationResponse
+    
     let endpoint: URL = Endpoint.Member.requestVerification.url
     let method: HTTPMethod = .post
     let query: Query?
     let header: HTTPHeader = [:]
     
-    init(email: String, verificationCode: String) {
-        query = ["email": email, "authCode": verificationCode]
-    }
-    init(query: [String : String]?) {
+    init(query: Query?) {
         self.query = query
     }
 }
