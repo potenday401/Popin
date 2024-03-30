@@ -56,14 +56,14 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func cameraAuth() {
-          AVCaptureDevice.requestAccess(for: .video) { granted in
-              if granted {
-                  print("권한 허용")
-              } else {
-                  print("권한 거부")
-              }
-          }
-      }
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                print("권한 허용")
+            } else {
+                print("권한 거부")
+            }
+        }
+    }
     
     @objc func plusButtonTapped() {
         cameraAuth()
@@ -439,7 +439,7 @@ extension AlbumViewController: CLLocationManagerDelegate {
             setupAnnotation(location: location, imageUrl: annotation.imageUrl)
         }
         
-        if locations.last != nil {
+        if locations.isEmpty {
             locationManager.stopUpdatingLocation()
         } else {
             print("No valid location found in the update.")

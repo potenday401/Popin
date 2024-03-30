@@ -24,7 +24,6 @@ class CardListView: UIView {
     
     func setupCardListView() {
         let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
@@ -110,7 +109,7 @@ class CardListView: UIView {
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
                 var imageUrl:URL?
-//                let imageIndex = columnIndex + 1
+                //                let imageIndex = columnIndex + 1
                 for annotation in annotations {
                     imageUrl = URL(string: annotation.imageUrl)!
                 }
@@ -141,10 +140,10 @@ class CardListView: UIView {
             
         }
         var totalHeight = 0
-          for rowView in stackView.arrangedSubviews {
+        for rowView in stackView.arrangedSubviews {
             totalHeight += Int(rowView.frame.height)
-          }
-
+        }
+        
         containerView.addSubview(selectButton)
         selectButton.snp.makeConstraints { make in
             make.top.equalTo(containerView.snp.top).offset(8)
@@ -169,51 +168,51 @@ class CardListView: UIView {
     }
     
     @objc private func selectButtonTapped() {
-//        isSelectionEnabled.toggle()
-//        guard let containerView = self.containerView else {
-//            return
-//        }
-//        
-//        if isSelectionEnabled {
-//            containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = true
-//            containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = false
-//        } else {
-//            containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = false
-//            containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = true
-//        }
+        //        isSelectionEnabled.toggle()
+        //        guard let containerView = self.containerView else {
+        //            return
+        //        }
+        //
+        //        if isSelectionEnabled {
+        //            containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = true
+        //            containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = false
+        //        } else {
+        //            containerView.subviews.compactMap { $0 as? UIButton }.first?.isHidden = false
+        //            containerView.subviews.compactMap { $0 as? UIButton }.last?.isHidden = true
+        //        }
     }
     @objc private func cancelButtonTapped() {
-//        isSelectionEnabled = false
-//        for iconView in selectedIconViews {
-//            removeCheckmarkFromView(iconView)
-//        }
-//        selectedIconViews.removeAll()
+        //        isSelectionEnabled = false
+        //        for iconView in selectedIconViews {
+        //            removeCheckmarkFromView(iconView)
+        //        }
+        //        selectedIconViews.removeAll()
     }
     @objc private func deleteButtonTapped() {
-//        selectedIconViews.removeAll()
-//        isSelectionEnabled = false
+        //        selectedIconViews.removeAll()
+        //        isSelectionEnabled = false
     }
     @objc private func iconViewTapped(_ gesture: UITapGestureRecognizer) {
-//        guard isSelectionEnabled,
-//              let iconView = gesture.view else {
-//            return
-//        }
-//        let checkmarkTag = 100
-//        
-//        if selectedIconViews.contains(iconView) {
-//            selectedIconViews.remove(iconView)
-//            removeCheckmarkFromView(iconView)
-//        } else {
-//            selectedIconViews.insert(iconView)
-//            let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))
-//            checkmarkImageView.tintColor = .blue
-//            checkmarkImageView.contentMode = .scaleAspectFit
-//            checkmarkImageView.tag = checkmarkTag
-//            iconView.addSubview(checkmarkImageView)
-//            checkmarkImageView.snp.makeConstraints { make in
-//                make.trailing.bottom.equalToSuperview().inset(15)
-//                make.width.height.equalTo(24)
-//            }
-//        }
+        //        guard isSelectionEnabled,
+        //              let iconView = gesture.view else {
+        //            return
+        //        }
+        //        let checkmarkTag = 100
+        //
+        //        if selectedIconViews.contains(iconView) {
+        //            selectedIconViews.remove(iconView)
+        //            removeCheckmarkFromView(iconView)
+        //        } else {
+        //            selectedIconViews.insert(iconView)
+        //            let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))
+        //            checkmarkImageView.tintColor = .blue
+        //            checkmarkImageView.contentMode = .scaleAspectFit
+        //            checkmarkImageView.tag = checkmarkTag
+        //            iconView.addSubview(checkmarkImageView)
+        //            checkmarkImageView.snp.makeConstraints { make in
+        //                make.trailing.bottom.equalToSuperview().inset(15)
+        //                make.width.height.equalTo(24)
+        //            }
+        //        }
     }
 }
