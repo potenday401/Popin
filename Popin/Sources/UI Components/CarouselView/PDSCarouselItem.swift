@@ -31,13 +31,9 @@ class PDSCarouselItem: ScalingCarouselCell {
     private func setUpMainView() {
         mainView = UIView(frame: contentView.bounds)
         contentView.addSubview(mainView)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        mainView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
