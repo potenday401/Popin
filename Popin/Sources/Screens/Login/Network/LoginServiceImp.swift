@@ -41,7 +41,7 @@ final class LoginServiceImp: LoginService {
                 )
                 completion(.success(loginResponse))
             case .failure(let error):
-                completion(.failure(LoginError.error))
+                completion(.failure(LoginError.error(error)))
             }
         }
     }

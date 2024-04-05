@@ -11,7 +11,7 @@ enum LoginError: LocalizedError {
     case invalidEmail
     case invalidPassword
     case invalidAccount
-    case error
+    case error(Error)
     
     var errorDescription: String? {
         switch self {
