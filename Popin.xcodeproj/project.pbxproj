@@ -48,6 +48,10 @@
 		652C0E9D2B946C7200A87458 /* LoginServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0E9C2B946C7200A87458 /* LoginServiceMock.swift */; };
 		652C0EA12B94831600A87458 /* LoginServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0EA02B94831600A87458 /* LoginServiceImp.swift */; };
 		652C0EA32B9483A100A87458 /* TokenRepositoryImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652C0EA22B9483A100A87458 /* TokenRepositoryImp.swift */; };
+		6540822C2BC016FE00F5143A /* PDSCarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654082282BC016FE00F5143A /* PDSCarouselItem.swift */; };
+		6540822D2BC016FE00F5143A /* PDSCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654082292BC016FE00F5143A /* PDSCarouselView.swift */; };
+		6540822E2BC016FE00F5143A /* PDSCarouselView+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6540822A2BC016FE00F5143A /* PDSCarouselView+Preview.swift */; };
+		654082312BC017A600F5143A /* ScalingCarousel in Frameworks */ = {isa = PBXBuildFile; productRef = 654082302BC017A600F5143A /* ScalingCarousel */; };
 		6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E79D2B8F606B000D932C /* LoginViewController.swift */; };
 		6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7AF2B92E170000D932C /* TokenStorage.swift */; };
 		6567E7B32B92E1A8000D932C /* TokenKeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */; };
@@ -170,6 +174,9 @@
 		652C0E9C2B946C7200A87458 /* LoginServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceMock.swift; sourceTree = "<group>"; };
 		652C0EA02B94831600A87458 /* LoginServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceImp.swift; sourceTree = "<group>"; };
 		652C0EA22B9483A100A87458 /* TokenRepositoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepositoryImp.swift; sourceTree = "<group>"; };
+		654082282BC016FE00F5143A /* PDSCarouselItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDSCarouselItem.swift; sourceTree = "<group>"; };
+		654082292BC016FE00F5143A /* PDSCarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDSCarouselView.swift; sourceTree = "<group>"; };
+		6540822A2BC016FE00F5143A /* PDSCarouselView+Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PDSCarouselView+Preview.swift"; sourceTree = "<group>"; };
 		6567E79D2B8F606B000D932C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6567E7AF2B92E170000D932C /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenKeychainStorage.swift; sourceTree = "<group>"; };
@@ -243,6 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				654082312BC017A600F5143A /* ScalingCarousel in Frameworks */,
 				9FC267F32B847237000BD089 /* Kingfisher in Frameworks */,
 				9FC267F62B847261000BD089 /* SnapKit in Frameworks */,
 				9FC267F92B847282000BD089 /* FSCalendar in Frameworks */,
@@ -332,6 +340,7 @@
 		6525D4892B88BADC0063BD16 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				6540822B2BC016FE00F5143A /* CarouselView */,
 				9FF759E42BB3E7350061B112 /* CardView */,
 				65779EB72B957DE000D8C98E /* AlertLabel */,
 				65BC1F3E2B8E02F500CB2F15 /* InputField */,
@@ -550,6 +559,16 @@
 				9E8EBFF32B6E5DA000255D0D /* ReusableProtocol.swift */,
 			);
 			path = Reusable;
+			sourceTree = "<group>";
+		};
+		6540822B2BC016FE00F5143A /* CarouselView */ = {
+			isa = PBXGroup;
+			children = (
+				654082282BC016FE00F5143A /* PDSCarouselItem.swift */,
+				654082292BC016FE00F5143A /* PDSCarouselView.swift */,
+				6540822A2BC016FE00F5143A /* PDSCarouselView+Preview.swift */,
+			);
+			path = CarouselView;
 			sourceTree = "<group>";
 		};
 		6567E79C2B8F6062000D932C /* Login */ = {
@@ -933,6 +952,7 @@
 				9FC267F52B847261000BD089 /* SnapKit */,
 				9FC267F82B847282000BD089 /* FSCalendar */,
 				9FC267FB2B8472B3000BD089 /* Tabman */,
+				654082302BC017A600F5143A /* ScalingCarousel */,
 			);
 			productName = fourpin;
 			productReference = 9F0BA2AB2B68A0D600677403 /* Popin.app */;
@@ -992,6 +1012,7 @@
 				9FC267F42B847261000BD089 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */,
+				6540822F2BC017A600F5143A /* XCRemoteSwiftPackageReference "ScalingCarousel" */,
 			);
 			productRefGroup = 9F0BA2AC2B68A0D600677403 /* Products */;
 			projectDirPath = "";
@@ -1103,14 +1124,17 @@
 				6513C3F52B9AEB3E00E14C0F /* VerificationService.swift in Sources */,
 				65D2D19C2B8CCEA20015CD0D /* PDSVerificationCodeInputField+Preview.swift in Sources */,
 				652C0E742B94546800A87458 /* Network.swift in Sources */,
+				6540822D2BC016FE00F5143A /* PDSCarouselView.swift in Sources */,
 				6513C3F32B9AEB2F00E14C0F /* VerificationError.swift in Sources */,
 				65D2D18C2B8CAB7F0015CD0D /* PDSCheckbox+Preview.swift in Sources */,
 				9F0BA31A2B68F59B00677403 /* AlbumViewController.swift in Sources */,
+				6540822C2BC016FE00F5143A /* PDSCarouselItem.swift in Sources */,
 				658471222B98246700875FEE /* NotificationCenter+Utils.swift in Sources */,
 				9F5E3CC02B6D5D2200FBD1AB /* CarouselLayout.swift in Sources */,
 				9E8EBFF22B6E5D7900255D0D /* DateCell.swift in Sources */,
 				6513C46F2BA01C9500E14C0F /* AgreementViewController.swift in Sources */,
 				658471252B982E4000875FEE /* SignUpProgressView.swift in Sources */,
+				6540822E2BC016FE00F5143A /* PDSCarouselView+Preview.swift in Sources */,
 				6567E79E2B8F606B000D932C /* LoginViewController.swift in Sources */,
 				6513C3F72B9AEB4D00E14C0F /* VerificationServiceImp.swift in Sources */,
 				9F0BA3142B68F56A00677403 /* DateView.swift in Sources */,
@@ -1418,6 +1442,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6540822F2BC017A600F5143A /* XCRemoteSwiftPackageReference "ScalingCarousel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superpeteblaze/ScalingCarousel.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1461,6 +1493,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		654082302BC017A600F5143A /* ScalingCarousel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6540822F2BC017A600F5143A /* XCRemoteSwiftPackageReference "ScalingCarousel" */;
+			productName = ScalingCarousel;
+		};
 		9FC267EF2B8471E1000BD089 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9FC267EE2B8471E1000BD089 /* XCRemoteSwiftPackageReference "Alamofire" */;
