@@ -35,14 +35,12 @@ final class CameraViewController: BaseViewController {
         label.textColor = .white
         return label
     }()
-    private let editButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(Text.edit, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        return button
+    private let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .leading
+        stackView.distribution = .fillEqually
+        stackView.spacing = 16
+        return stackView
     }()
     private let locationLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -57,6 +55,51 @@ final class CameraViewController: BaseViewController {
     private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
     // MARK: - Setup
     
+    private lazy var dateButton: UIButton = {
+        let button = makeButton(title: "날짜 시간 정보", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(dateButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var placeButton: UIButton = {
+        let button = makeButton(title: "장소", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(placeButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var uploadButton: UIButton = {
+        let button = makeButton(title: "사진 등록하기", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private func makeButton(title: String, backgroundColor: UIColor, titleColor:UIColor) -> UIButton {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.backgroundColor = backgroundColor
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(titleColor, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        button.layer.cornerRadius = 8
+        return button
+    }
+    
+    @objc
+    func dateButtonDidTap() {
+        
+    }
+    
+    @objc
+    func placeButtonDidTap() {
+        
+    }
+    
+    @objc
+    func uploadButtonDidTap() {
+        
+    }
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         let imageViewMargin: CGFloat = 20
@@ -82,29 +125,21 @@ final class CameraViewController: BaseViewController {
         view.backgroundColor = .black
         self.imagePicker.delegate = self
         containerView.addSubview(imageView)
-        containerView.addSubview(editButton)
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
             make.centerX.equalToSuperview()
             make.width.equalTo(375)
-            make.height.equalTo(150)
+            make.height.equalTo(118)
         }
         
         imageView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
             make.centerX.equalToSuperview()
-            make.width.equalTo(375)
-            make.height.equalTo(150)
+            make.width.equalTo(117)
+            make.height.equalTo(118)
         }
-        editButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(10)
-            make.width.equalTo(50)
-            make.height.equalTo(33)
-        }
-        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        
         view.addSubview(bodyStackView)
         bodyStackView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(imageViewMargin)
@@ -112,16 +147,34 @@ final class CameraViewController: BaseViewController {
             make.width.equalTo(375)
             make.height.equalTo(60)
         }
-        bodyStackView.addArrangedSubview(dateLabel)
-        bodyStackView.addArrangedSubview(locationLabel)
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(bodyStackView.snp.bottom).offset(imageViewMargin)
-            make.height.equalTo(17)
+        view.addSubview(buttonStackView)
+        buttonStackView.snp.makeConstraints { make in
+            make.top.equalTo(bodyStackView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
-        locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(17)
-            make.top.equalTo(dateLabel.snp.bottom).offset(imageViewMargin)
+        
+        dateButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
         }
+        
+        placeButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
+        }
+        
+        uploadButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
+        }
+        
+        buttonStackView.axis = .vertical
+        buttonStackView.addArrangedSubview(dateButton)
+        buttonStackView.addArrangedSubview(placeButton)
+        buttonStackView.addArrangedSubview(uploadButton)
+        buttonStackView.setCustomSpacing(290, after: placeButton)
+        [dateButton, placeButton, uploadButton].forEach(buttonStackView.addArrangedSubview(_:))
+
     }
     
     private let dependency: Dependency
@@ -150,7 +203,7 @@ final class CameraViewController: BaseViewController {
         super.init()
         configureImageView(with: pickedImage)
     }
-
+    
     private func configureImageView(with image: UIImage?) {
         guard let image = image else { return }
         //다중 선택되면 Ui요구 사항에 따라 (슬라이드 방식?) 변경
@@ -201,8 +254,6 @@ final class CameraViewController: BaseViewController {
             }
         }
     }
-
-
     
     private func showAlertAuth(
         _ type: String
@@ -298,3 +349,4 @@ private extension CameraViewController {
 protocol CameraViewControllerDelegate: AnyObject {
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
 }
+

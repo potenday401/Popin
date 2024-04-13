@@ -11,6 +11,7 @@ import SnapKit
 import Photos
 import PhotosUI
 import CoreLocation
+import MapKit
 
 final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
@@ -155,7 +156,23 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+          if let response = response {
+              let boundingRegion = response.boundingRegion
+              let centerCoordinate = boundingRegion.center
+              
+              print("Latitude:", centerCoordinate.latitude)
+              print("Longitude:", centerCoordinate.longitude)
+            print(response, "search result check!!")
+          } else {
+            // Handle errors
+            print("Error performing search: \(error?.localizedDescription ?? "")")
+          }
+        }
         
+
         navigationBar.leftItem = .init(
             image: UIImage(resource: .cameraButton),
             target: self,
@@ -272,8 +289,10 @@ extension HomeViewController: UIImagePickerControllerDelegate {
                 print("Failed to pick an image")
                 return
             }
+
             router?.routeToCameraView(with: image, locationString: locationString)
         }
+    
         
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true, completion: nil)
@@ -282,12 +301,29 @@ extension HomeViewController: UIImagePickerControllerDelegate {
 }
 
 extension HomeViewController: PHPickerViewControllerDelegate {
+    func presentPhotoPicker() {
+            var config = PHPickerConfiguration()
+            config.selectionLimit = 1
+            config.filter = .images
+            
+            let picker = PHPickerViewController(configuration: config)
+            picker.delegate = self
+            present(picker, animated: true)
+        }
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
 
         var selectedImages: [UIImage] = []
         let dispatchGroup = DispatchGroup()
 
+        let identifiers = results.compactMap(\.assetIdentifier)
+        print("assets?")
+        let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+        assets.enumerateObjects { (asset, _, _) in
+            print("Latitude: \(asset.location?.coordinate.latitude ?? 0), Longitude: \(asset.location?.coordinate.longitude ?? 0)")
+        }
+        
         for result in results {
             if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
                 dispatchGroup.enter()
@@ -295,6 +331,7 @@ extension HomeViewController: PHPickerViewControllerDelegate {
                     if let image = image as? UIImage {
                         selectedImages.append(image)
                     }
+                    
                     dispatchGroup.leave()
                 }
             }

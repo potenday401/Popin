@@ -83,7 +83,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         if locations.last != nil {
             locationManager.stopUpdatingLocation()
         } else {
-            print("No valid location found in the update.")
+            print("No valid location found in the update1.")
         }
     }
     

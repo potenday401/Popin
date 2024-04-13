@@ -74,7 +74,6 @@ final class ProfileViewController: BaseViewController {
         return button
     }
     
-
     private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
