@@ -20,11 +20,6 @@ final class CameraViewController: BaseViewController {
     private var capturedPhoto: UIImage?
     private let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     private let imageView = UIImageView()
-    private let bodyStackView:UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        return stackView
-    }()
     private let containerView = UIView()
     private var initialLocation: CLLocation?
     private let pickedImage:UIImage
@@ -52,7 +47,6 @@ final class CameraViewController: BaseViewController {
         let navigationBar = PDSNavigationBar()
         return navigationBar
     }()
-    private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
     // MARK: - Setup
     
     private lazy var dateButton: UIButton = {
@@ -98,7 +92,7 @@ final class CameraViewController: BaseViewController {
     
     @objc
     func uploadButtonDidTap() {
-        
+        uploadPin()
     }
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -109,7 +103,6 @@ final class CameraViewController: BaseViewController {
         //todo: 사진 metadata에서 날짜 가져올 수 있는지 확인
         dateLabel.text = currentDateString
         locationLabel.text = locationString
-        navigationBar.title = locationString
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -120,7 +113,6 @@ final class CameraViewController: BaseViewController {
             target: self,
             action: #selector(backDidTap)
         )
-        navigationBar.rightItem = rightButtonItem
         
         view.backgroundColor = .black
         self.imagePicker.delegate = self
@@ -133,33 +125,82 @@ final class CameraViewController: BaseViewController {
             make.width.equalTo(375)
             make.height.equalTo(118)
         }
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = .black
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(scrollView)
         
-        imageView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(117)
-            make.height.equalTo(118)
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        scrollView.addSubview(stackView)
+        
+        // 실제 이미지 데이터로 변경 필요함
+        let numberOfColumns = 10
+        let numberOfRows = 1
+        
+        for _ in 0..<numberOfRows {
+            let rowView = UIStackView()
+            rowView.axis = .horizontal
+            rowView.distribution = .fillEqually
+            rowView.spacing = 0
+            
+            for columnIndex in 0..<numberOfColumns {
+                let iconView = UIView()
+                var imageUrl:URL?
+                
+                    imageUrl = URL(string: "https://picsum.photos/200/200")!
+                var imageView: UIImageView = {
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.kf.setImage(with: imageUrl)
+                    return imageView
+                }()
+                
+                iconView.addSubview(imageView)
+                imageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                    make.width.equalTo(118)
+                    make.height.equalTo(118)
+                }
+                imageView.layer.cornerRadius = 12
+                imageView.layer.masksToBounds = true
+                
+//                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+//                iconView.addGestureRecognizer(tapGestureRecognizer)
+                iconView.isUserInteractionEnabled = true
+                
+                rowView.addArrangedSubview(iconView)
+            }
+            
+            stackView.addArrangedSubview(rowView)
         }
-        view.addSubview(bodyStackView)
-        bodyStackView.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(imageViewMargin)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(375)
-            make.height.equalTo(60)
+        
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(navigationBar.snp.bottom).offset(8)
         }
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
+        scrollView.contentSize = CGSize(width: stackView.frame.size.width, height: stackView.frame.size.height)
         view.addSubview(buttonStackView)
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(bodyStackView.snp.bottom).offset(10)
+            make.top.equalTo(scrollView.snp.bottom).offset(36)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
         dateButton.snp.makeConstraints { make in
-            make.height.equalTo(56)
+            make.height.equalTo(62)
             make.width.equalTo(343)
         }
         
         placeButton.snp.makeConstraints { make in
-            make.height.equalTo(56)
+            make.height.equalTo(62)
             make.width.equalTo(343)
         }
         
@@ -172,7 +213,7 @@ final class CameraViewController: BaseViewController {
         buttonStackView.addArrangedSubview(dateButton)
         buttonStackView.addArrangedSubview(placeButton)
         buttonStackView.addArrangedSubview(uploadButton)
-        buttonStackView.setCustomSpacing(290, after: placeButton)
+        buttonStackView.setCustomSpacing(291, after: placeButton)
         [dateButton, placeButton, uploadButton].forEach(buttonStackView.addArrangedSubview(_:))
 
     }

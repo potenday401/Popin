@@ -341,7 +341,6 @@ extension HomeViewController: PHPickerViewControllerDelegate {
         }
     }
 
-
     func handleSelectedImages(_ images: [UIImage]) {
         guard let singleImage = images.first else {
             print("No image selected")
