@@ -154,6 +154,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         homeMapViewController.delegate = self
         super.viewDidLoad()
         locationManager.delegate = self
+        navigationItem.hidesBackButton = true
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")

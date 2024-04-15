@@ -9,6 +9,7 @@ import AVFoundation
 import Photos
 import Alamofire
 import SnapKit
+import MapKit
 
 final class CameraViewController: BaseViewController {
     weak var delegate: CameraViewControllerDelegate?
@@ -24,6 +25,7 @@ final class CameraViewController: BaseViewController {
     private var initialLocation: CLLocation?
     private let pickedImage:[UIImage]
     private var locationString:String = ""
+    private let searchCompleter = MKLocalSearchCompleter()
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
         label.font = .systemFont(ofSize: 14, weight: .medium)
@@ -87,7 +89,8 @@ final class CameraViewController: BaseViewController {
     
     @objc
     func placeButtonDidTap() {
-        
+        let locationSearchController = LocationSearchController()
+        self.navigationController?.pushViewController(locationSearchController, animated: true)
     }
     
     @objc
@@ -96,6 +99,7 @@ final class CameraViewController: BaseViewController {
     }
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationItem.hidesBackButton = true
         let imageViewMargin: CGFloat = 20
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"
@@ -153,7 +157,7 @@ final class CameraViewController: BaseViewController {
                 let iconView = UIView()
                 var imageUrl:URL?
                 
-                    imageUrl = URL(string: "https://picsum.photos/200/200")!
+                imageUrl = URL(string: "https://picsum.photos/200/200")!
                 var imageView: UIImageView = {
                     let imageView = UIImageView()
                     imageView.contentMode = .scaleAspectFit
@@ -170,8 +174,8 @@ final class CameraViewController: BaseViewController {
                 imageView.layer.cornerRadius = 12
                 imageView.layer.masksToBounds = true
                 
-//                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
-//                iconView.addGestureRecognizer(tapGestureRecognizer)
+                //                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+                //                iconView.addGestureRecognizer(tapGestureRecognizer)
                 iconView.isUserInteractionEnabled = true
                 
                 rowView.addArrangedSubview(iconView)
@@ -215,7 +219,7 @@ final class CameraViewController: BaseViewController {
         buttonStackView.addArrangedSubview(uploadButton)
         buttonStackView.setCustomSpacing(291, after: placeButton)
         [dateButton, placeButton, uploadButton].forEach(buttonStackView.addArrangedSubview(_:))
-
+        
     }
     
     private let dependency: Dependency
@@ -247,22 +251,22 @@ final class CameraViewController: BaseViewController {
     
     private func configureImageView(with images: [UIImage]?) {
         guard let images = images else { return }
-
+        
         let scrollView = UIScrollView()
         scrollView.frame = imageView.bounds
         scrollView.isPagingEnabled = true
-
+        
         for (index, image) in images.enumerated() {
             let imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFit
             imageView.frame = CGRect(x: scrollView.frame.width * CGFloat(index), y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
             scrollView.addSubview(imageView)
         }
-
+        
         scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(images.count), height: scrollView.frame.height)
         self.view.addSubview(scrollView)
     }
-
+    
     
     private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
