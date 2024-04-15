@@ -22,7 +22,7 @@ final class CameraViewController: BaseViewController {
     private let imageView = UIImageView()
     private let containerView = UIView()
     private var initialLocation: CLLocation?
-    private let pickedImage:UIImage
+    private let pickedImage:[UIImage]
     private var locationString:String = ""
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -232,7 +232,7 @@ final class CameraViewController: BaseViewController {
     // MARK: - Initializer
     
     struct Dependency {
-        let image: UIImage
+        let image: [UIImage]
         let locationString: String
         let cameraService: CameraServiceProtocol
     }
@@ -245,11 +245,24 @@ final class CameraViewController: BaseViewController {
         configureImageView(with: pickedImage)
     }
     
-    private func configureImageView(with image: UIImage?) {
-        guard let image = image else { return }
-        //다중 선택되면 Ui요구 사항에 따라 (슬라이드 방식?) 변경
-        imageView.image = image
+    private func configureImageView(with images: [UIImage]?) {
+        guard let images = images else { return }
+
+        let scrollView = UIScrollView()
+        scrollView.frame = imageView.bounds
+        scrollView.isPagingEnabled = true
+
+        for (index, image) in images.enumerated() {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame = CGRect(x: scrollView.frame.width * CGFloat(index), y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+            scrollView.addSubview(imageView)
+        }
+
+        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(images.count), height: scrollView.frame.height)
+        self.view.addSubview(scrollView)
     }
+
     
     private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in

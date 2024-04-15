@@ -38,12 +38,12 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     func albumAuth() {
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 5
-
+        
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true)
     }
-
+    
     func openAlbum() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
@@ -159,20 +159,20 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")
         let search = MKLocalSearch(request: searchRequest)
         search.start { response, error in
-          if let response = response {
-              let boundingRegion = response.boundingRegion
-              let centerCoordinate = boundingRegion.center
-              
-              print("Latitude:", centerCoordinate.latitude)
-              print("Longitude:", centerCoordinate.longitude)
-            print(response, "search result check!!")
-          } else {
-            // Handle errors
-            print("Error performing search: \(error?.localizedDescription ?? "")")
-          }
+            if let response = response {
+                let boundingRegion = response.boundingRegion
+                let centerCoordinate = boundingRegion.center
+                
+                print("Latitude:", centerCoordinate.latitude)
+                print("Longitude:", centerCoordinate.longitude)
+                print(response, "search result check!!")
+            } else {
+                // Handle errors
+                print("Error performing search: \(error?.localizedDescription ?? "")")
+            }
         }
         
-
+        
         navigationBar.leftItem = .init(
             image: UIImage(resource: .cameraButton),
             target: self,
@@ -283,56 +283,49 @@ extension HomeViewController: CameraViewControllerDelegate {
 
 extension HomeViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            picker.dismiss(animated: true, completion: nil)
-            
-            guard let image = info[.originalImage] as? UIImage else {
-                print("Failed to pick an image")
-                return
-            }
-
-            router?.routeToCameraView(with: image, locationString: locationString)
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[.originalImage] as? UIImage else {
+            print("이미지 선택에 실패했습니다.")
+            return
         }
+        router?.routeToCameraView(with: [image], locationString: locationString)
+    }
     
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            picker.dismiss(animated: true, completion: nil)
-            print("취소")
-        }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        print("취소")
+    }
 }
+
 
 extension HomeViewController: PHPickerViewControllerDelegate {
     func presentPhotoPicker() {
-            var config = PHPickerConfiguration()
-            config.selectionLimit = 1
-            config.filter = .images
-            
-            let picker = PHPickerViewController(configuration: config)
-            picker.delegate = self
-            present(picker, animated: true)
-        }
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .images
+        
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
-
+        
         var selectedImages: [UIImage] = []
         let dispatchGroup = DispatchGroup()
-
-        let identifiers = results.compactMap(\.assetIdentifier)
-        print("assets?")
-        let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
-        assets.enumerateObjects { (asset, _, _) in
-            print("Latitude: \(asset.location?.coordinate.latitude ?? 0), Longitude: \(asset.location?.coordinate.longitude ?? 0)")
-        }
         
         for result in results {
             if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
                 dispatchGroup.enter()
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                    defer { dispatchGroup.leave() }
+                    
                     if let image = image as? UIImage {
                         selectedImages.append(image)
+                    } else if let error = error {
+                        print("Error loading image: \(error.localizedDescription)")
                     }
-                    
-                    dispatchGroup.leave()
                 }
             }
         }
@@ -340,13 +333,9 @@ extension HomeViewController: PHPickerViewControllerDelegate {
             self.handleSelectedImages(selectedImages)
         }
     }
-
+    
     func handleSelectedImages(_ images: [UIImage]) {
-        guard let singleImage = images.first else {
-            print("No image selected")
-            return
-        }
-        router?.routeToCameraView(with: singleImage, locationString: locationString)
+        router?.routeToCameraView(with: images, locationString: locationString)
     }
 }
 
