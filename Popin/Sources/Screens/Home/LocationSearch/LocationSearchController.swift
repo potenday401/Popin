@@ -7,18 +7,19 @@
 
 import UIKit
 import MapKit
-
+ 
 class LocationSearchController: UIViewController {
     private let searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
     private let searchBar = UISearchBar()
-    private let containerView = UIView() // Container view for search results
+    private let containerView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchBar()
         searchCompleter.delegate = self
         searchCompleter.filterType = .locationsOnly
+        setupResultMap()
         navigationItem.hidesBackButton = true
     }
     
@@ -34,13 +35,15 @@ class LocationSearchController: UIViewController {
             make.trailing.equalTo(view.snp.trailing)
             make.height.equalTo(50)
         }
-        
+    }
+    
+    private func setupResultMap() {
         view.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.leading.equalTo(view.snp.leading)
-            make.trailing.equalTo(view.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(375)
+            make.height.equalTo(50)
         }
     }
 }
@@ -65,10 +68,6 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = Array(completer.results.prefix(3))
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        
         for result in searchResults {
             let label = UILabel()
             label.text = result.title
@@ -78,14 +77,19 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
             label.textAlignment = .center
             stackView.addArrangedSubview(label)
         }
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
         
         containerView.subviews.forEach { $0.removeFromSuperview() }
         containerView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.snp.makeConstraints { make in
             make.top.equalTo(containerView.snp.top).offset(10)
             make.leading.equalTo(containerView.snp.leading).offset(10)
             make.trailing.equalTo(containerView.snp.trailing).offset(-10)
             make.bottom.equalTo(containerView.snp.bottom).offset(-10)
+            make.height.equalTo(20)
         }
     }
     
