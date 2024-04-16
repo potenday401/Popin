@@ -13,12 +13,12 @@ class LocationSearchController: UIViewController {
     private var searchResults = [MKLocalSearchCompletion]()
     private let searchBar = UISearchBar()
     private let containerView = UIView()
-    
+    private let mapView = MKMapView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchBar()
         searchCompleter.delegate = self
-        searchCompleter.filterType = .locationsOnly
         setupResultMap()
         navigationItem.hidesBackButton = true
     }
@@ -45,7 +45,35 @@ class LocationSearchController: UIViewController {
             make.width.equalTo(375)
             make.height.equalTo(50)
         }
+        view.addSubview(mapView)
+          mapView.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(375)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+          }
     }
+    
+    private func geocodeSearchText(_ searchText: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(searchText) { placemarks, error in
+          if let error = error {
+            print(error.localizedDescription)
+            return
+          }
+          
+          guard let placemark = placemarks?.first else {
+            return
+          }
+          
+          let annotation = MKPointAnnotation()
+          annotation.coordinate = placemark.location!.coordinate
+          annotation.title = searchText
+          self.mapView.addAnnotation(annotation)
+          self.mapView.showAnnotations([annotation], animated: true)
+        }
+      }
+
 }
 
 extension LocationSearchController: UISearchBarDelegate {
@@ -76,6 +104,7 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
             label.clipsToBounds = true
             label.textAlignment = .center
             stackView.addArrangedSubview(label)
+            geocodeSearchText(result.title)
         }
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
