@@ -443,7 +443,7 @@ extension AlbumViewController: CLLocationManagerDelegate {
         if locations.isEmpty {
             locationManager.stopUpdatingLocation()
         } else {
-            print("No valid location found in the update.")
+            print("No valid location found in the update2.")
         }
     }
     

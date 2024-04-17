@@ -9,6 +9,7 @@ import AVFoundation
 import Photos
 import Alamofire
 import SnapKit
+import MapKit
 
 final class CameraViewController: BaseViewController {
     weak var delegate: CameraViewControllerDelegate?
@@ -20,29 +21,23 @@ final class CameraViewController: BaseViewController {
     private var capturedPhoto: UIImage?
     private let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     private let imageView = UIImageView()
-    private let bodyStackView:UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        return stackView
-    }()
     private let containerView = UIView()
     private var initialLocation: CLLocation?
-    private let pickedImage:UIImage
+    private let pickedImage:[UIImage]
     private var locationString:String = ""
+    private let searchCompleter = MKLocalSearchCompleter()
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .white
         return label
     }()
-    private let editButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(Text.edit, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        return button
+    private let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .leading
+        stackView.distribution = .fillEqually
+        stackView.spacing = 16
+        return stackView
     }()
     private let locationLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -54,11 +49,57 @@ final class CameraViewController: BaseViewController {
         let navigationBar = PDSNavigationBar()
         return navigationBar
     }()
-    private let rightButtonItem = PDSNavigationBarButtonItem(title: Text.save, target: self, action: #selector(uploadPin))
     // MARK: - Setup
     
+    private lazy var dateButton: UIButton = {
+        let button = makeButton(title: "날짜 시간 정보", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(dateButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var placeButton: UIButton = {
+        let button = makeButton(title: "장소", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(placeButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var uploadButton: UIButton = {
+        let button = makeButton(title: "사진 등록하기", backgroundColor: .gray500, titleColor: .gray100)
+        button.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private func makeButton(title: String, backgroundColor: UIColor, titleColor:UIColor) -> UIButton {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.backgroundColor = backgroundColor
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(titleColor, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        button.layer.cornerRadius = 8
+        return button
+    }
+    
+    @objc
+    func dateButtonDidTap() {
+        
+    }
+    
+    @objc
+    func placeButtonDidTap() {
+        let locationSearchController = LocationSearchController()
+        self.navigationController?.pushViewController(locationSearchController, animated: true)
+    }
+    
+    @objc
+    func uploadButtonDidTap() {
+        uploadPin()
+    }
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationItem.hidesBackButton = true
         let imageViewMargin: CGFloat = 20
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"
@@ -66,7 +107,6 @@ final class CameraViewController: BaseViewController {
         //todo: 사진 metadata에서 날짜 가져올 수 있는지 확인
         dateLabel.text = currentDateString
         locationLabel.text = locationString
-        navigationBar.title = locationString
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -77,51 +117,109 @@ final class CameraViewController: BaseViewController {
             target: self,
             action: #selector(backDidTap)
         )
-        navigationBar.rightItem = rightButtonItem
         
         view.backgroundColor = .black
         self.imagePicker.delegate = self
         containerView.addSubview(imageView)
-        containerView.addSubview(editButton)
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
             make.centerX.equalToSuperview()
             make.width.equalTo(375)
-            make.height.equalTo(150)
+            make.height.equalTo(118)
+        }
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = .black
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(scrollView)
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        
+        scrollView.addSubview(stackView)
+        
+        // 실제 이미지 데이터로 변경 필요함
+        let numberOfColumns = 10
+        let numberOfRows = 1
+        
+        for _ in 0..<numberOfRows {
+            let rowView = UIStackView()
+            rowView.axis = .horizontal
+            rowView.distribution = .fillEqually
+            rowView.spacing = 0
+            
+            for columnIndex in 0..<numberOfColumns {
+                let iconView = UIView()
+                var imageUrl:URL?
+                
+                imageUrl = URL(string: "https://picsum.photos/200/200")!
+                var imageView: UIImageView = {
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.kf.setImage(with: imageUrl)
+                    return imageView
+                }()
+                
+                iconView.addSubview(imageView)
+                imageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                    make.width.equalTo(118)
+                    make.height.equalTo(118)
+                }
+                imageView.layer.cornerRadius = 12
+                imageView.layer.masksToBounds = true
+                
+                //                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+                //                iconView.addGestureRecognizer(tapGestureRecognizer)
+                iconView.isUserInteractionEnabled = true
+                
+                rowView.addArrangedSubview(iconView)
+            }
+            
+            stackView.addArrangedSubview(rowView)
         }
         
-        imageView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).offset(imageViewMargin)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(375)
-            make.height.equalTo(150)
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(navigationBar.snp.bottom).offset(8)
         }
-        editButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(10)
-            make.width.equalTo(50)
-            make.height.equalTo(33)
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
         }
-        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        scrollView.contentSize = CGSize(width: stackView.frame.size.width, height: stackView.frame.size.height)
+        view.addSubview(buttonStackView)
+        buttonStackView.snp.makeConstraints { make in
+            make.top.equalTo(scrollView.snp.bottom).offset(36)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
         
-        view.addSubview(bodyStackView)
-        bodyStackView.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(imageViewMargin)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(375)
-            make.height.equalTo(60)
+        dateButton.snp.makeConstraints { make in
+            make.height.equalTo(62)
+            make.width.equalTo(343)
         }
-        bodyStackView.addArrangedSubview(dateLabel)
-        bodyStackView.addArrangedSubview(locationLabel)
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(bodyStackView.snp.bottom).offset(imageViewMargin)
-            make.height.equalTo(17)
+        
+        placeButton.snp.makeConstraints { make in
+            make.height.equalTo(62)
+            make.width.equalTo(343)
         }
-        locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(17)
-            make.top.equalTo(dateLabel.snp.bottom).offset(imageViewMargin)
+        
+        uploadButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
         }
+        
+        buttonStackView.axis = .vertical
+        buttonStackView.addArrangedSubview(dateButton)
+        buttonStackView.addArrangedSubview(placeButton)
+        buttonStackView.addArrangedSubview(uploadButton)
+        buttonStackView.setCustomSpacing(291, after: placeButton)
+        [dateButton, placeButton, uploadButton].forEach(buttonStackView.addArrangedSubview(_:))
+        
     }
     
     private let dependency: Dependency
@@ -138,7 +236,7 @@ final class CameraViewController: BaseViewController {
     // MARK: - Initializer
     
     struct Dependency {
-        let image: UIImage
+        let image: [UIImage]
         let locationString: String
         let cameraService: CameraServiceProtocol
     }
@@ -150,12 +248,25 @@ final class CameraViewController: BaseViewController {
         super.init()
         configureImageView(with: pickedImage)
     }
-
-    private func configureImageView(with image: UIImage?) {
-        guard let image = image else { return }
-        //다중 선택되면 Ui요구 사항에 따라 (슬라이드 방식?) 변경
-        imageView.image = image
+    
+    private func configureImageView(with images: [UIImage]?) {
+        guard let images = images else { return }
+        
+        let scrollView = UIScrollView()
+        scrollView.frame = imageView.bounds
+        scrollView.isPagingEnabled = true
+        
+        for (index, image) in images.enumerated() {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame = CGRect(x: scrollView.frame.width * CGFloat(index), y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
+            scrollView.addSubview(imageView)
+        }
+        
+        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(images.count), height: scrollView.frame.height)
+        self.view.addSubview(scrollView)
     }
+    
     
     private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -201,8 +312,6 @@ final class CameraViewController: BaseViewController {
             }
         }
     }
-
-
     
     private func showAlertAuth(
         _ type: String
@@ -298,3 +407,4 @@ private extension CameraViewController {
 protocol CameraViewControllerDelegate: AnyObject {
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
 }
+
