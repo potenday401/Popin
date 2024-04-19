@@ -10,7 +10,7 @@ import CoreLocation
 
 class AlbumDetailViewController: BaseViewController {
     var annotations: [CustomImageAnnotation] = []
-    
+
     lazy var carousel: PDSCarouselView<UIView> = {
         let urls = annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
         let views: [UIView] = urls.map { url in
@@ -20,7 +20,7 @@ class AlbumDetailViewController: BaseViewController {
             imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
             return imageView
         }
-        let carousel = PDSCarouselView(items: views)
+        let carousel = PDSCarouselView(items: views, navigationController: navigationController)
         return carousel
     }()
     
@@ -39,41 +39,9 @@ class AlbumDetailViewController: BaseViewController {
         return label
     }()
     
-    func updateLocationLabel(with annotation: CustomImageAnnotation) {
-        let location = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
-        
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let self = self else { return }
-            if let placemark = placemarks?.first {
-                var locationString = ""
-                
-                if let locality = placemark.locality {
-                    locationString += locality
-                }
-                
-                if let sublocality = placemark.subLocality {
-                    if !locationString.isEmpty {
-                        locationString += ", "
-                    }
-                    locationString += sublocality
-                }
-                
-                self.locationLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
-            } else {
-                self.locationLabel.text = "Unknown Location"
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHierarchy()
-        if let firstAnnotation = annotations.first {
-            updateLocationLabel(with: firstAnnotation)
-        }
-        setupComponents()
-        setupConstraints()
         navigationItem.hidesBackButton = true
     }
     
@@ -83,10 +51,16 @@ class AlbumDetailViewController: BaseViewController {
         self.view = view
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupComponents()
+        setupConstraints()
+    }
+    
     func setupHierarchy() {
-        self.view.addSubview(carousel)
-        self.view.addSubview(locationLabel)
-        self.view.addSubview(dateLabel)
+        view.addSubview(carousel)
+        view.addSubview(locationLabel)
+        view.addSubview(dateLabel)
     }
     
     func setupComponents() {
@@ -125,6 +99,33 @@ extension AlbumDetailViewController: UICollectionViewDelegate {
             formatter.dateFormat = "yyyy-MM-dd"
             let currentDate = formatter.string(from: Date())
             dateLabel.text = currentDate
+        }
+    }
+    
+    private func updateLocationLabel(with annotation: CustomImageAnnotation) {
+        let location = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let self = self else { return }
+            if let placemark = placemarks?.first {
+                var locationString = ""
+                
+                if let locality = placemark.locality {
+                    locationString += locality
+                }
+                
+                if let sublocality = placemark.subLocality {
+                    if !locationString.isEmpty {
+                        locationString += ", "
+                    }
+                    locationString += sublocality
+                }
+                
+                self.locationLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
+            } else {
+                self.locationLabel.text = "Unknown Location"
+            }
         }
     }
 }

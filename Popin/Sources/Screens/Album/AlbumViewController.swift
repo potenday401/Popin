@@ -389,10 +389,6 @@ extension AlbumViewController: MKMapViewDelegate {
     }
     
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
-        // 일단 이동... todo: 모든 annotation 이동 가능하게
-        let albumDetailViewController = AlbumDetailViewController()
-        albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
-        navigationController?.pushViewController(albumDetailViewController, animated: true)
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         currentLocation = CustomLocation(currentLatitude: coordinates.latitude, currentLongitude: coordinates.longitude)
@@ -408,6 +404,10 @@ extension AlbumViewController: MKMapViewDelegate {
                 albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumDetailViewController, animated: true)
             }
+        } else {
+            let albumDetailViewController = AlbumDetailViewController()
+            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+            navigationController?.pushViewController(albumDetailViewController, animated: true)
         }
     }
     

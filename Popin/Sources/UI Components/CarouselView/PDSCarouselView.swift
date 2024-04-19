@@ -22,6 +22,12 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         return view
     }()
     
+    private let navigationBar: PDSNavigationBar = {
+        let navigationBar = PDSNavigationBar()
+        navigationBar.isUserInteractionEnabled = false
+        return navigationBar
+    }()
+    
     // MARK: - Properties
     
     private let cellReuseIdentifier = "item"
@@ -30,27 +36,48 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     
     // MARK: - Initializer
     
-    init(items: [Item]) {
+    init(items: [Item], navigationController: UINavigationController?) {
         self.items = items
+        self.navigationController = navigationController
         super.init(frame: .zero)
         setUpUI()
     }
+
+    private let navigationController: UINavigationController?
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setUpUI() {
-        carouselView.backgroundColor = .clear
+        addSubview(navigationBar)
+        navigationBar.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
+        }
+        
+        navigationBar.leftItem = .init(
+            image: UIImage(resource: .chevronLeft),
+            target: self,
+            action: #selector(backDidTap)
+        )
         
         addSubview(carouselView)
         carouselView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(navigationBar.snp.bottom).offset(60)
+            make.left.right.bottom.equalToSuperview()
             make.height.equalTo(0)
         }
     }
+
     
     // MARK: - Lifecycle
+    
+    @objc
+    private func backDidTap() {
+        navigationController?.popViewController(animated: true)
+        print("back.. please")
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
