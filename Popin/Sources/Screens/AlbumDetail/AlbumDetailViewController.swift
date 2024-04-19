@@ -5,15 +5,22 @@
 //  Created by Jihaha kim on 2024/01/30.
 //
 import UIKit
+import Kingfisher
 import CoreLocation
 
 class AlbumDetailViewController: BaseViewController {
     var annotations: [CustomImageAnnotation] = []
     
-    lazy var carousel: Carousel = {
+    lazy var carousel: PDSCarouselView<UIView> = {
         let urls = annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
-        let carousel = Carousel(frame: .zero, urls: urls, annotations: annotations)
-        carousel.delegate = self
+        let views: [UIView] = urls.map { url in
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
+            return imageView
+        }
+        let carousel = PDSCarouselView(items: views)
         return carousel
     }()
     
@@ -25,11 +32,19 @@ class AlbumDetailViewController: BaseViewController {
         return label
     }()
     
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "Default Date"
+        return label
+    }()
+    
     func updateLocationLabel(with annotation: CustomImageAnnotation) {
         let location = CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
         
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let self = self else { return }
             if let placemark = placemarks?.first {
                 var locationString = ""
                 
@@ -70,18 +85,30 @@ class AlbumDetailViewController: BaseViewController {
     
     func setupHierarchy() {
         self.view.addSubview(carousel)
+        self.view.addSubview(locationLabel)
+        self.view.addSubview(dateLabel)
     }
     
     func setupComponents() {
         carousel.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             carousel.topAnchor.constraint(equalTo: view.topAnchor),
-            carousel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             carousel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             carousel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            carousel.heightAnchor.constraint(equalTo: carousel.widthAnchor, multiplier: 1.5),
+            
+            locationLabel.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 8),
+            locationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            dateLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
+            dateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
 }
@@ -93,7 +120,11 @@ extension AlbumDetailViewController: UICollectionViewDelegate {
         if currentIndex >= 0 && currentIndex < annotations.count {
             let currentAnnotation = annotations[currentIndex]
             updateLocationLabel(with: currentAnnotation)
+            // 임의의 날짜 데이터 추가
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let currentDate = formatter.string(from: Date())
+            dateLabel.text = currentDate
         }
     }
 }
-
