@@ -41,17 +41,17 @@ fileprivate final class PDSCarouselViewPreviewView: UIViewController {
         PhotoView(),
     ]
     
-    private lazy var carouselView = PDSCarouselView(items: itemViews)
+//    private lazy var carouselView = PDSCarouselView(items: itemViews)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
         
-        view.addSubview(carouselView)
-        carouselView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+//        view.addSubview(carouselView)
+//        carouselView.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+//        }
     }
 }
 
