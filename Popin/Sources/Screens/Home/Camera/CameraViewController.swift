@@ -25,6 +25,7 @@ final class CameraViewController: BaseViewController {
     private var initialLocation: CLLocation?
     private let pickedImage:[UIImage]
     private var locationString:String = ""
+    private let imageData:[ImageData]
     private let searchCompleter = MKLocalSearchCompleter()
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -104,7 +105,6 @@ final class CameraViewController: BaseViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yy.MM.dd"
         let currentDateString = dateFormatter.string(from: Date())
-        //todo: 사진 metadata에서 날짜 가져올 수 있는지 확인
         dateLabel.text = currentDateString
         locationLabel.text = locationString
         view.addSubview(navigationBar)
@@ -238,12 +238,14 @@ final class CameraViewController: BaseViewController {
     struct Dependency {
         let image: [UIImage]
         let locationString: String
+        let ImageData: [ImageData]
         let cameraService: CameraServiceProtocol
     }
     
     init(dependency: Dependency) {
         self.dependency = dependency
         self.pickedImage = dependency.image
+        self.imageData = dependency.ImageData
         self.locationString = dependency.locationString
         super.init()
         configureImageView(with: pickedImage)
