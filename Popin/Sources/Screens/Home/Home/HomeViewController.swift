@@ -12,6 +12,7 @@ import Photos
 import PhotosUI
 import CoreLocation
 import MapKit
+import CoreLocation
 
 final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
@@ -21,6 +22,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         navigationController?.pushViewController(albumViewController, animated: true)
     }
     var router: HomeRouter?
+    var imageData: [ImageData] = []
     private let homeMapViewController = HomeMapViewController()
     private let locationManager = CLLocationManager()
     private var locationString:String = ""
@@ -36,7 +38,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     func albumAuth() {
-        var configuration = PHPickerConfiguration()
+        var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
         configuration.selectionLimit = 5
         
         let picker = PHPickerViewController(configuration: configuration)
@@ -47,7 +49,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     func openAlbum() {
         DispatchQueue.main.async {
             let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
             imagePickerController.sourceType = .photoLibrary
             self.present(imagePickerController, animated: true, completion: nil)
         }
@@ -81,7 +82,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         DispatchQueue.main.async {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 let imagePickerController = UIImagePickerController()
-                imagePickerController.delegate = self
                 imagePickerController.sourceType = .camera
                 self.present(imagePickerController, animated: true, completion: nil)
             } else {
@@ -153,7 +153,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     override func viewDidLoad() {
         homeMapViewController.delegate = self
         super.viewDidLoad()
-        locationManager.delegate = self
         navigationItem.hidesBackButton = true
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -163,10 +162,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             if let response = response {
                 let boundingRegion = response.boundingRegion
                 let centerCoordinate = boundingRegion.center
-                
-                print("Latitude:", centerCoordinate.latitude)
-                print("Longitude:", centerCoordinate.longitude)
-                print(response, "search result check!!")
             } else {
                 // Handle errors
                 print("Error performing search: \(error?.localizedDescription ?? "")")
@@ -289,7 +284,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             print("이미지 선택에 실패했습니다.")
             return
         }
-        router?.routeToCameraView(with: [image], locationString: locationString)
+        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -301,7 +296,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
 
 extension HomeViewController: PHPickerViewControllerDelegate {
     func presentPhotoPicker() {
-        var config = PHPickerConfiguration()
+        var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
         config.selectionLimit = 1
         config.filter = .images
         
@@ -317,6 +312,11 @@ extension HomeViewController: PHPickerViewControllerDelegate {
         let dispatchGroup = DispatchGroup()
         
         for result in results {
+            if let assetId = result.assetIdentifier,
+               let asset = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil).firstObject
+            {
+                imageData.append(ImageData(location: asset.location, creationDate: asset.creationDate))
+            }
             if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
                 dispatchGroup.enter()
                 result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -324,6 +324,7 @@ extension HomeViewController: PHPickerViewControllerDelegate {
                     
                     if let image = image as? UIImage {
                         selectedImages.append(image)
+                        
                     } else if let error = error {
                         print("Error loading image: \(error.localizedDescription)")
                     }
@@ -336,15 +337,18 @@ extension HomeViewController: PHPickerViewControllerDelegate {
     }
     
     func handleSelectedImages(_ images: [UIImage]) {
-        router?.routeToCameraView(with: images, locationString: locationString)
+        router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString)
     }
 }
 
-
-extension HomeViewController: UINavigationControllerDelegate {
-}
-
-extension HomeViewController: CLLocationManagerDelegate {
+struct ImageData {
+    let location: CLLocation?
+    let creationDate: Date?
+    
+    init(location: CLLocation?, creationDate: Date? = nil) {
+        self.location = location
+        self.creationDate = creationDate
+    }
 }
 
 protocol HomeMapViewControllerDelegate: AnyObject {
