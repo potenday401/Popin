@@ -19,11 +19,30 @@ final class LoginRouterImp: LoginRouter {
     weak var window: UIWindow?
     weak var viewController: UIViewController?
     
+    struct Dependency {
+        let network: Network
+        let validator: EmailPasswordValidatorType
+    }
+    
+    init(dependency: Dependency) {
+        self.dependency = dependency
+    }
+    
     func routeToHome() {
         DispatchQueue.main.async {
-            self.window?.rootViewController = HomeViewController()
+            let homeViewController = HomeViewController()
+            let cameraService = CameraService(network: self.dependency.network)
+            let router = HomeRouterImp(cameraService: cameraService)
+            homeViewController.router = router
+            router.viewController = homeViewController
+            
+            if let window = self.window {
+                window.rootViewController = UINavigationController(rootViewController: homeViewController)
+                window.makeKeyAndVisible()
+            }
         }
     }
+    
     
     func routeToSignUp() {
         DispatchQueue.main.async {
@@ -44,15 +63,4 @@ final class LoginRouterImp: LoginRouter {
     // MARK: - Property
     
     private let dependency: Dependency
-    
-    // MARK: - Initializer
-    
-    struct Dependency {
-        let network: Network
-        let validator: EmailPasswordValidatorType
-    }
-    
-    init(dependency: Dependency) {
-        self.dependency = dependency
-    }
 }

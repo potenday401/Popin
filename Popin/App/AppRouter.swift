@@ -56,7 +56,7 @@ final class AppRouterImp: AppRouter {
     // MARK: - Property
     
     private let dependency: Dependency
-    private var isLoggedIn = true
+    private var isLoggedIn = false
     
     // MARK: - Initializer
     
