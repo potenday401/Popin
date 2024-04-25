@@ -346,13 +346,15 @@ extension HomeViewController: PHPickerViewControllerDelegate {
 }
 
 struct ImageData {
-    let location: CLLocation?
-    let creationDate: Date?
-    
-    init(location: CLLocation?, creationDate: Date? = nil) {
-        self.location = location
-        self.creationDate = creationDate
-    }
+  let location: CLLocation?
+  let creationDate: Date?
+  let imageData: Data?
+
+  init(location: CLLocation?, creationDate: Date? = nil, imageData: Data? = nil) {
+    self.location = location
+    self.creationDate = creationDate
+    self.imageData = imageData
+  }
 }
 
 protocol HomeMapViewControllerDelegate: AnyObject {
