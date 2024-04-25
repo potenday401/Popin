@@ -9,18 +9,37 @@ import CoreLocation
 import UIKit
 
 struct UploadRequest: Request {
-    typealias Query = PinDTO
-    typealias Output = UploadPinResponse
-    
-    var endpoint: URL = Endpoint.Pin.uploadPin.url
-    var method: HTTPMethod = .post
-    var header: HTTPHeader = [:]
-    var query: Query?
+  typealias Query = PinDTO
+  typealias Output = UploadPinResponse
 
-    init(query: Query?) {
-        self.query = query
+  var endpoint: URL = Endpoint.Pin.uploadPin.url
+  var method: HTTPMethod = .post
+  var header: HTTPHeader = [:]
+
+  var query: Query?
+
+  init(query: Query?) {
+    self.query = query
+  }
+
+  var urlRequest: URLRequest {
+    var urlRequest = URLRequest(url: endpoint)
+    urlRequest.httpMethod = method.rawValue
+
+    if let accessToken = query?.accessToken {
+      urlRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
     }
+
+    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    if let queryData = try? JSONEncoder().encode(query) {
+      urlRequest.httpBody = queryData
+    }
+
+    return urlRequest
+  }
 }
+
 
 struct UploadPinResponse: Decodable {
     let result: String
@@ -36,6 +55,7 @@ struct PinDTO: Encodable {
     var photoDateTime: Int
     var photoPinId: String
     var tagIds: [String]
+    var accessToken: String
     
     enum CodingKeys: String, CodingKey {
         case initialLocation
@@ -47,6 +67,7 @@ struct PinDTO: Encodable {
         case photoDateTime
         case photoPinId
         case tagIds
+        case accessToken
     }
     
     func encode(to encoder: Encoder) throws {
@@ -73,5 +94,6 @@ struct PinDTO: Encodable {
         try container.encode(photoDateTime, forKey: .photoDateTime)
         try container.encode(photoPinId, forKey: .photoPinId)
         try container.encode(tagIds, forKey: .tagIds)
+        try container.encode(accessToken, forKey: .accessToken)
     }
 }

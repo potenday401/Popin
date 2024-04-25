@@ -10,11 +10,13 @@ import Foundation
 struct Endpoint {
     
     static let baseURL = URL(string: "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/")!
+//    static let baseURL = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/")!
     enum Auth {
         case login
         
         var url: URL {
             Endpoint.baseURL.appending(path: "auth/login")
+//            Endpoint.baseURL.appending(path: "users/login")
         }
     }
     
@@ -28,9 +30,11 @@ struct Endpoint {
             case .requestVerificationCode:
                 Endpoint.baseURL.appending(path: "member/pre-signup")
             case .requestVerification:
-                Endpoint.baseURL.appending(path: "member/email-verification")
+//                Endpoint.baseURL.appending(path: "member/email-verification")
+                Endpoint.baseURL.appending(path: "users/send/email/confirm-code")
             case .signUp:
-                Endpoint.baseURL.appending(path: "member/signup")
+//                Endpoint.baseURL.appending(path: "member/signup")
+                Endpoint.baseURL.appending(path: "users/sign-up")
             }
         }
     }

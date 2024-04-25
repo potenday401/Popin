@@ -26,6 +26,7 @@ final class CameraViewController: BaseViewController {
     private let pickedImage:[UIImage]
     private var locationString:String = ""
     private let imageData:[ImageData]
+    private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -99,6 +100,7 @@ final class CameraViewController: BaseViewController {
         uploadPin()
     }
     override func setUpUI() {
+        print(accessToken, "accessToken")
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
         let imageViewMargin: CGFloat = 20
@@ -239,6 +241,7 @@ final class CameraViewController: BaseViewController {
         let image: [UIImage]
         let locationString: String
         let ImageData: [ImageData]
+        let accessToken: String
         let cameraService: CameraServiceProtocol
     }
     
@@ -246,6 +249,7 @@ final class CameraViewController: BaseViewController {
         self.dependency = dependency
         self.pickedImage = dependency.image
         self.imageData = dependency.ImageData
+        self.accessToken = dependency.accessToken
         self.locationString = dependency.locationString
         super.init()
         configureImageView(with: pickedImage)
@@ -305,7 +309,8 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func uploadPin() {
-        dependency.cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
+        dependency.cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation, accessToken: accessToken) { result in
+            print(self.accessToken, "accessToken~!!!!!!")
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
