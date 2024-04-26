@@ -10,7 +10,7 @@ import Foundation
 struct Endpoint {
     
     static let baseURL = URL(string: "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/")!
-//    static let baseURL = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/")!
+    static let baseURL2 = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/")!
     enum Auth {
         case login
         
@@ -49,7 +49,8 @@ struct Endpoint {
     enum Pin {
         case uploadPin
         var url:URL {
-            Endpoint.baseURL.appending(path: "photo-pin")
+//            Endpoint.baseURL.appending(path: "photo-pin")
+            Endpoint.baseURL2.appending(path: "photos")
         }
     }
 }

@@ -9,6 +9,19 @@ import Foundation
 import Alamofire
 
 final class AlamofireNetwork: Network {
+    func upload(multipartFormData: @escaping (Alamofire.MultipartFormData) -> Void, to url: URL, method: HTTPMethod, headers: [String : String], encodingCompletion: @escaping (Result<Any, Error>) -> Void) {
+        AF.upload(multipartFormData: multipartFormData, to: url, method: Alamofire.HTTPMethod(rawValue: method.rawValue), headers: HTTPHeaders(headers))
+            .validate()
+            .responseData { response in
+                switch response.result {
+                case .success(let responseData):
+                    encodingCompletion(.success(responseData))
+                case .failure(let error):
+                    encodingCompletion(.failure(error))
+                }
+            }
+    }
+    
     
     // MARK: - Interface
     func send<T>(
@@ -36,7 +49,7 @@ final class AlamofireNetwork: Network {
                 }
             }
     }
-    
+
     // MARK: - Property
     
     private let session: Session

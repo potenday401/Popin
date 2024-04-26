@@ -97,6 +97,7 @@ final class CameraViewController: BaseViewController {
     
     @objc
     func uploadButtonDidTap() {
+        print("tap")
         uploadPin()
     }
     override func setUpUI() {
@@ -274,8 +275,6 @@ final class CameraViewController: BaseViewController {
         self.view.addSubview(scrollView)
     }
     
-    
-    
     private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -311,7 +310,8 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func uploadPin() {
-        dependency.cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation, accessToken: accessToken) { result in
+        dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: initialLocation, accessToken: accessToken) { result in
+            print(result, "result!!!!!!!!!!!!")
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
