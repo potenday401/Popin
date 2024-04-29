@@ -10,6 +10,7 @@ import Photos
 import Alamofire
 import SnapKit
 import MapKit
+import Kingfisher
 
 final class CameraViewController: BaseViewController {
     weak var delegate: CameraViewControllerDelegate?
@@ -19,13 +20,13 @@ final class CameraViewController: BaseViewController {
     private let sendButton = UIButton(type: .system)
     private var selectedPhoto: UIImage?
     private var capturedPhoto: UIImage?
-    private let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
     private let imageView = UIImageView()
     private let containerView = UIView()
     private var initialLocation: CLLocation?
     private let pickedImage:[UIImage]
     private var locationString:String = ""
     private let imageData:[ImageData]
+    private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
@@ -129,6 +130,7 @@ final class CameraViewController: BaseViewController {
             make.width.equalTo(375)
             make.height.equalTo(118)
         }
+        
         let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
         scrollView.backgroundColor = .black
@@ -143,46 +145,45 @@ final class CameraViewController: BaseViewController {
         
         scrollView.addSubview(stackView)
         
-        // 실제 이미지 데이터로 변경 필요함
-        let numberOfColumns = 10
         let numberOfRows = 1
+        let numberOfColumns = Int(ceil(Double(dependency.image.count) / Double(numberOfRows)))
         
         for _ in 0..<numberOfRows {
-            let rowView = UIStackView()
-            rowView.axis = .horizontal
-            rowView.distribution = .fillEqually
-            rowView.spacing = 0
-            
-            for columnIndex in 0..<numberOfColumns {
-                let iconView = UIView()
-                var imageUrl:URL?
-                
-                imageUrl = URL(string: "https://picsum.photos/200/200")!
-                var imageView: UIImageView = {
-                    let imageView = UIImageView()
-                    imageView.contentMode = .scaleAspectFit
-                    imageView.kf.setImage(with: imageUrl)
-                    return imageView
-                }()
-                
-                iconView.addSubview(imageView)
-                imageView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-                    make.width.equalTo(118)
-                    make.height.equalTo(118)
-                }
-                imageView.layer.cornerRadius = 12
-                imageView.layer.masksToBounds = true
-                
-                //                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
-                //                iconView.addGestureRecognizer(tapGestureRecognizer)
-                iconView.isUserInteractionEnabled = true
-                
-                rowView.addArrangedSubview(iconView)
+          let rowView = UIStackView()
+          rowView.axis = .horizontal
+          rowView.distribution = .fillEqually
+          rowView.spacing = 0
+
+          for columnIndex in 0..<numberOfColumns {
+            let iconView = UIView()
+
+            guard columnIndex < dependency.image.count else { continue }
+            let image = dependency.image[columnIndex]
+
+            var imageView: UIImageView = {
+              let imageView = UIImageView()
+              imageView.contentMode = .scaleAspectFit
+              return imageView
+            }()
+
+            imageView.image = image
+
+            iconView.addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+              make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+              make.width.equalTo(100)
+              make.height.equalTo(100)
             }
-            
-            stackView.addArrangedSubview(rowView)
+            imageView.layer.cornerRadius = 24
+            imageView.layer.masksToBounds = true
+
+            iconView.isUserInteractionEnabled = true
+            rowView.addArrangedSubview(iconView)
+          }
+
+          stackView.addArrangedSubview(rowView)
         }
+
         
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -239,6 +240,7 @@ final class CameraViewController: BaseViewController {
         let image: [UIImage]
         let locationString: String
         let ImageData: [ImageData]
+        let accessToken: String
         let cameraService: CameraServiceProtocol
     }
     
@@ -246,29 +248,31 @@ final class CameraViewController: BaseViewController {
         self.dependency = dependency
         self.pickedImage = dependency.image
         self.imageData = dependency.ImageData
+        self.accessToken = dependency.accessToken
         self.locationString = dependency.locationString
         super.init()
         configureImageView(with: pickedImage)
     }
     
-    private func configureImageView(with images: [UIImage]?) {
-        guard let images = images else { return }
+    private func configureImageView(with images: [UIImage]) {
+        guard !images.isEmpty else { return }
         
         let scrollView = UIScrollView()
         scrollView.frame = imageView.bounds
         scrollView.isPagingEnabled = true
         
-        for (index, image) in images.enumerated() {
-            let imageView = UIImageView(image: image)
+        for (index, data) in images.enumerated() {
+            let imageView = UIImageView(image: data)
             imageView.contentMode = .scaleAspectFit
+            
+            
             imageView.frame = CGRect(x: scrollView.frame.width * CGFloat(index), y: 0, width: scrollView.frame.width, height: scrollView.frame.height)
             scrollView.addSubview(imageView)
         }
         
-        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(images.count), height: scrollView.frame.height)
+        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(imageData.count), height: scrollView.frame.height)
         self.view.addSubview(scrollView)
     }
-    
     
     private func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -305,7 +309,7 @@ final class CameraViewController: BaseViewController {
     }
     
     @objc func uploadPin() {
-        dependency.cameraService.uploadPin(selectedPhoto: selectedPhoto, capturedPhoto: capturedPhoto, initialLocation: initialLocation) { result in
+        dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: initialLocation, accessToken: accessToken) { result in
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")

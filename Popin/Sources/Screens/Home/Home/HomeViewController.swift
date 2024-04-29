@@ -26,6 +26,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     private let homeMapViewController = HomeMapViewController()
     private let locationManager = CLLocationManager()
     private var locationString:String = ""
+    private var accessToken: String? = "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJzdWIiOiJraW1qaWhhMTJAbmF2ZXIuY29tIiwiaWF0IjoxNzE0MDI0MzUzLCJleHAiOjE3MTQwMzE1NTN9.B73i57RZEWw3-_kKB7hWoBkagXj7kWDf9mEWMN7JbDw"
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -36,7 +37,11 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             }
         }
     }
-    
+    init(accessToken: String? = nil) {
+        self.accessToken = accessToken
+        super.init()
+      }
+
     func albumAuth() {
         var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
         configuration.selectionLimit = 5
@@ -53,7 +58,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             self.present(imagePickerController, animated: true, completion: nil)
         }
     }
-    
     
     func showAlertAuth(
         _ type: String
@@ -284,7 +288,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             print("이미지 선택에 실패했습니다.")
             return
         }
-        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString)
+        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString, accessToken: accessToken!)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -337,18 +341,20 @@ extension HomeViewController: PHPickerViewControllerDelegate {
     }
     
     func handleSelectedImages(_ images: [UIImage]) {
-        router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString)
+        router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString, accessToken: accessToken!)
     }
 }
 
 struct ImageData {
-    let location: CLLocation?
-    let creationDate: Date?
-    
-    init(location: CLLocation?, creationDate: Date? = nil) {
-        self.location = location
-        self.creationDate = creationDate
-    }
+  let location: CLLocation?
+  let creationDate: Date?
+  let imageData: Data?
+
+  init(location: CLLocation?, creationDate: Date? = nil, imageData: Data? = nil) {
+    self.location = location
+    self.creationDate = creationDate
+    self.imageData = imageData
+  }
 }
 
 protocol HomeMapViewControllerDelegate: AnyObject {

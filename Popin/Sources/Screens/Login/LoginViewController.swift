@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 final class LoginViewController: BaseViewController {
     
@@ -171,24 +172,92 @@ private extension LoginViewController {
         else {
             return
         }
+        guard let url = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/users/login") else {
+            print("Invalid URL")
+            return
+        }
         
-        login(email: email, password: password)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let parameters: [String: Any] = [
+            "email": "kimjiha12@naver.com",
+            "password": "soda1223!!"
+        ]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            print("Error serializing JSON: \(error)")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid HTTP response")
+                return
+            }
+            
+            if 200..<300 ~= httpResponse.statusCode {
+                if let data = data {
+                    do {
+                        guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                            print("유효한 JSON 형식이 아닙니다.")
+                            return
+                        }
+                        if let responseData = json["responseData"] as? [String: Any] {
+                            if let accessToken = responseData["accessToken"] as? String,
+                               let refreshToken = responseData["refreshToken"] as? String {
+                                self.dependency.tokenRepository.storeToken(
+                                    accessToken: accessToken,
+                                    refreshToken: refreshToken
+                                )
+                                self.router?.routeToHome(accessToken: accessToken)
+                               
+                            } else {
+                                print("accessToken 또는 refreshToken을 찾을 수 없습니다.")
+                            }
+                        } else {
+                            print("responseData가 유효하지 않습니다.")
+                        }
+                        let responseData = json["responseData"]
+                    } catch {
+                        print("Error parsing JSON: \(error)")
+                    }
+                } else {
+                    print("No data received")
+                }
+            } else {
+                print("HTTP status code: \(httpResponse.statusCode)")
+            }
+        }
+        
+        task.resume()
+        //        login(email: email, password: password)
     }
     
     func login(email: String, password: String) {
         dependency.loginService
             .login(email: email, password: password) { [weak self] result in
+                print(email, password, result, "result?")
                 do {
                     let response = try result.get()
+                    print(response ,"check response~!")
                     self?.dependency.tokenRepository.storeToken(
                         accessToken: response.accessToken,
                         refreshToken: response.refreshToken
                     )
-                    self?.router?.routeToHome()
+                    self?.router?.routeToHome(accessToken: response.accessToken)
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false
-                    
+                    print("catch?")
                     switch error {
                     case LoginError.invalidEmail:
                         self?.emailInputField.isFailure = true

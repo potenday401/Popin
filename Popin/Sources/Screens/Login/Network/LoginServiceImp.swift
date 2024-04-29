@@ -16,17 +16,17 @@ final class LoginServiceImp: LoginService {
         password: String,
         completion: @escaping (Result<LoginResponse, Error>) -> Void
     ) {
-        guard validator.validateEmail(email) else {
-            completion(.failure(LoginError.invalidEmail))
-            return
-        }
-        
-        guard validator.validatePassword(password) else {
-            completion(.failure(LoginError.invalidPassword))
-            return
-        }
-        
+//        guard validator.validateEmail(email) else {
+//            completion(.failure(LoginError.invalidEmail))
+//            return
+//        }
+//        guard validator.validatePassword(password) else {
+//            completion(.failure(LoginError.invalidPassword))
+//            return
+//        }
+        print(email, password, "e p")
         let request = LoginRequest(query: ["email": email, "password": password])
+        print(request, "request")
         network.send(request) { result in
             switch result {
             case .success(let response):
