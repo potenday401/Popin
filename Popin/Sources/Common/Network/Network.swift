@@ -23,6 +23,18 @@ protocol Network {
           headers: [String: String],
           encodingCompletion: @escaping (Result<Any, Error>) -> Void
       )
+//    func uploads(
+//          multipartFormData: @escaping (MultipartFormData) -> Void,
+//          title: String,
+//          address: String,
+//          latitude: Double,
+//          longitude: Double,
+//          memorizedAt: String,
+//          to url: URL,
+//          method: HTTPMethod,
+//          headers: [String: String],
+//          encodingCompletion: @escaping (Result<Any, Error>) -> Void
+//      )
 }
 
 extension Network {
@@ -58,7 +70,9 @@ extension Network {
         headers: [String: String],
         completion: @escaping (Result<Response<T>, Error>) -> Void
       ) {
-        upload(multipartFormData: multipartFormData, to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
+          upload(
+            multipartFormData: multipartFormData,
+                 to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
           switch result {
           case .success(let urlRequest):
               AF.request(urlRequest as! URLRequestConvertible)
@@ -75,4 +89,28 @@ extension Network {
           }
         }
       }
+//    func uploads<T: Decodable>(
+//        multipartFormData: @escaping (MultipartFormData) -> Void,
+//        to url: URL,
+//        method: HTTPMethod,
+//        headers: [String: String],
+//        completion: @escaping (Result<Response<T>, Error>) -> Void
+//      ) {
+//        upload(multipartFormData: multipartFormData, to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
+//          switch result {
+//          case .success(let urlRequest):
+//              AF.request(urlRequest as! URLRequestConvertible)
+//              .responseDecodable(of: T.self) { response in
+//                switch response.result {
+//                case .success(let decodedResponse):
+//                    completion(.success(Response(output: decodedResponse, statusCode: response.response?.statusCode ?? 500)))
+//                case .failure(let error):
+//                  completion(.failure(error))
+//                }
+//              }
+//          case .failure(let error):
+//            completion(.failure(error))
+//          }
+//        }
+//      }
 }

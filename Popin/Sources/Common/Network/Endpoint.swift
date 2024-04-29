@@ -15,8 +15,8 @@ struct Endpoint {
         case login
         
         var url: URL {
-            Endpoint.baseURL.appending(path: "auth/login")
-//            Endpoint.baseURL.appending(path: "users/login")
+//            Endpoint.baseURL.appending(path: "auth/login")
+            Endpoint.baseURL2.appending(path: "users/login")
         }
     }
     
@@ -51,6 +51,7 @@ struct Endpoint {
         var url:URL {
 //            Endpoint.baseURL.appending(path: "photo-pin")
             Endpoint.baseURL2.appending(path: "photos")
+//            Endpoint.baseURL2.appending(path: "contents/with")
         }
     }
 }
