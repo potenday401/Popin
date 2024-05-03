@@ -127,13 +127,16 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = Array(completer.results.prefix(3))
         let stackView = UIStackView()
-        for result in searchResults {
+        for (index, result) in searchResults.enumerated() {
             let label = UILabel()
             label.text = result.title
-            label.textColor = .gray
+            label.textColor = index == 0 ? .purple100 : .gray
             label.layer.cornerRadius = 5
             label.clipsToBounds = true
             label.textAlignment = .center
+            label.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+            label.addGestureRecognizer(tapGesture)
             stackView.addArrangedSubview(label)
             geocodeSearchText(result.title)
         }
@@ -153,7 +156,15 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
         }
     }
     
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // Handle errors if needed
+    @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
+        guard let tappedLabel = gesture.view as? UILabel else { return }
+        let selectedText = tappedLabel.text ?? ""
+        handleSelectedText(selectedText)
+    }
+    
+    private func handleSelectedText(_ text: String) {
+            print(text, "area check")
     }
 }
+
+
