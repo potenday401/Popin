@@ -100,10 +100,8 @@ final class CameraViewController: BaseViewController {
         let bodyData: [String: Any] = [
              "title": "string",
              "address": "string",
-//             "latitude": 37.785834,
-//             "longitude": -122.406417,
-             "latitude": 1,
-             "longitude": 1,
+             "latitude": 37.785834,
+             "longitude": -122.406417,
              "memorizedAt": "2024-05-02T08:33:15.127Z"
          ]
         guard let jsonData = try? JSONSerialization.data(withJSONObject: bodyData) else {

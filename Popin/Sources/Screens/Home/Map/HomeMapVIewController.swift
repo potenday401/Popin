@@ -87,9 +87,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //todo: location을 cameraviewController에서 사용 가능하게 해서 uploadPin할때 initialLocation대신에 쓸 수 있게한다.
-//        location = locations.first!
-//        print(locations.first, "locationsFirst!!")
-//        print(location.coordinate.latitude,location.coordinate.longitude, "location check!!!!")
+        location = locations.first!
         mapView.centerToLocation(location)
         getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
         if locations.last != nil {
@@ -98,20 +96,18 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             print("No valid location found in the update1.")
         }
     }
-
+    
     func getPin(latitude: Double, longitude: Double) {
-//        let polygon = 
-//        "POLYGON((\(latitude - 0.1) \(longitude - 0.1),\(latitude + 0.1) \(longitude - 0.1),\(latitude + 0.1) \(longitude + 0.1),\(latitude - 0.1) \(longitude + 0.1),\(latitude - 0.1) \(longitude - 0.1)))"
-//        print(polygon, "polygon check")
-        let polygon = "POLYGON((0 0,10 10,20 20,30 30,0 0))"
+        let polygon =
+        "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
         let urlString = baseUrl + "contents?area=\(polygon)"
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return
         }
-        print(accessToken, "access")
         var request = URLRequest(url: url)
+        
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
@@ -137,17 +133,15 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                 return
             }
             guard let jsonData = try? JSONSerialization.jsonObject(with: responseData) else {
-                   print("Failed to convert JSON data")
-                   return
-               }
-            print(jsonData, "response Data")
+                print("Failed to convert JSON data")
+                return
+            }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData, options: [])
                 if let jsonDict = json as? [String: Any],
                    let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
                     var photoPinContainer = [PhotoPin]()
-                    print(jsonArray, "jsonArray")
                     let dateFormatter: DateFormatter = {
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -155,7 +149,6 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                     }()
                     
                     for pinDict in jsonArray {
-                        print(pinDict, "pinDict")
                         guard let contentId = pinDict["contentId"] as? Int,
                               let title = pinDict["title"] as? String,
                               let latitude = pinDict["latitude"] as? Double,
@@ -172,9 +165,9 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                                 firstPhotoUrl = url
                             }
                         }
-
-                        let photoPin = PhotoPin(contentId: contentId, title: title, latitude: latitude, longitude: longitude, photoUrl: "https://placekitten.com/200/300", userId: userId, memorizedAt: memorizedAtString)
-
+                        
+                        let photoPin = PhotoPin(contentId: contentId, title: title, latitude: latitude, longitude: longitude, photoUrl: firstPhotoUrl ?? "https://placekitten.com/200/300", userId: userId, memorizedAt: memorizedAtString)
+                        
                         photoPinContainer.append(photoPin)
                     }
                     
@@ -194,9 +187,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
-        print(photoPinContainer, "handlePin")
         for pin in photoPinContainer {
-            print(pin, "pin")
             let latitude = pin.latitude
             let longitude = pin.longitude
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -212,18 +203,20 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount)
             self.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-            
             let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount)
-            self.mapView.addAnnotation(imageAnnotation)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(imageAnnotation)
+            }
             annotations.append(imageAnnotation)
         }
     }
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount)
-        mapView.addAnnotation(imageAnnotation)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(imageAnnotation)
+        }
     }
-    
     
     func setupLocationManager() {
         locationManager = CLLocationManager()
@@ -257,37 +250,37 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
 }
 
 extension HomeMapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        guard let annotation = annotation as? CustomImageAnnotation else { return nil }
-        
-        if let cluster = annotation as? MKClusterAnnotation {
-            let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
-            clusterView?.titleVisibility = .visible
-            clusterView?.subtitleVisibility = .visible
-            
-            // Add animation
-            UIView.animate(withDuration: 0.3, animations: {
-                clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-            }) { _ in
-                UIView.animate(withDuration: 0.5) {
-                    clusterView?.transform = CGAffineTransform.identity
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    
+            guard let annotation = annotation as? CustomImageAnnotation else { return nil }
+    
+            if let cluster = annotation as? MKClusterAnnotation {
+                let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
+                clusterView?.titleVisibility = .visible
+                clusterView?.subtitleVisibility = .visible
+    
+                // Add animation
+                UIView.animate(withDuration: 0.3, animations: {
+                    clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+                }) { _ in
+                    UIView.animate(withDuration: 0.5) {
+                        clusterView?.transform = CGAffineTransform.identity
+                    }
                 }
-            }
-            return clusterView
-        } else {
-            let identifier = "customImageAnnotation"
-            var view: CustomImageAnnotationView
-            
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
-                dequeuedView.annotation = annotation
-                view = dequeuedView
+                return clusterView
             } else {
-                view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                let identifier = "customImageAnnotation"
+                var view: CustomImageAnnotationView
+    
+                if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
+                    dequeuedView.annotation = annotation
+                    view = dequeuedView
+                } else {
+                    view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                }
+                return view
             }
-            return view
         }
-    }
 }
 
 extension HomeMapViewController: UIGestureRecognizerDelegate {

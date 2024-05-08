@@ -3,6 +3,7 @@
 //  fourpin
 //
 //  Created by Jihaha kim on 2024/01/30.
+
 import UIKit
 import CoreLocation
 import MapKit
@@ -413,6 +414,7 @@ extension AlbumViewController: MKMapViewDelegate {
     
     func setupAnnotation(location: CLLocation, imageUrl: String) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: 2)
+        print(imageAnnotation, "imageAnnotation22222")
         mapView.addAnnotation(imageAnnotation)
     }
 }
