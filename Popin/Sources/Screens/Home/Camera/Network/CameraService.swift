@@ -11,6 +11,10 @@ import CoreLocation
 import CoreData
 import Foundation
 
+struct ImageDataa: Codable {
+    let imageData: Data
+}
+
 final class CameraService: CameraServiceProtocol {
     let network: Network
     
@@ -27,7 +31,12 @@ final class CameraService: CameraServiceProtocol {
             // Handle date parsing error
             return
         }
-        
+        if let imageData = selectedPhoto.first?.jpegData(compressionQuality: 0.1) {
+            let imageDataStruct = ImageDataa(imageData: imageData)
+            let jsonData = try? JSONEncoder().encode(imageDataStruct)
+            print(String(data: jsonData ?? Data(), encoding: .utf8) ?? "")
+        }
+
         guard let selectedImage = selectedPhoto.first,
               let imageData = selectedImage.jpegData(compressionQuality: 0.1) else {
             // Handle the case where image conversion fails
