@@ -218,6 +218,7 @@ private extension LoginViewController {
                                     accessToken: accessToken,
                                     refreshToken: refreshToken
                                 )
+                                print(accessToken, "accessToken")
                                 self.router?.routeToHome(accessToken: accessToken)
                                
                             } else {

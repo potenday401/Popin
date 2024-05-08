@@ -28,11 +28,25 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         return navigationBar
     }()
     
+    private lazy var floatingButton: UIButton = {
+        let button = UIButton(type: .system)
+        if let chevronImage = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate) {
+            button.setImage(chevronImage, for: .normal)
+            button.tintColor = .white
+        }
+        button.backgroundColor = UIColor.gray500
+        button.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    
     // MARK: - Properties
     
     private let cellReuseIdentifier = "item"
     private let items: [Item]
     private let horizontalInset: CGFloat = 40
+    private var floatingView: UIView?
     
     // MARK: - Initializer
     
@@ -42,9 +56,8 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         super.init(frame: .zero)
         setUpUI()
     }
-
+    
     private let navigationController: UINavigationController?
-
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -65,29 +78,109 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         addSubview(carouselView)
         carouselView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom).offset(60)
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(0)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        addSubview(floatingButton)
+        floatingButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-16)
+            make.width.equalTo(42)
+            make.height.equalTo(42)
+        }
+        floatingButton.layer.cornerRadius = 21
+        floatingButton.layer.masksToBounds = true
+        
+        floatingView = createFloatingView()
+        if let floatingView = floatingView {
+            addSubview(floatingView)
+            floatingView.isHidden = true
+            
+            floatingView.snp.makeConstraints { make in
+                make.bottom.equalTo(floatingButton.snp.top).offset(-20)
+                make.trailing.equalToSuperview().offset(-16)
+                make.width.equalTo(156)
+                make.height.equalTo(90)
+            }
         }
     }
-
+    
+    private func createFloatingView() -> UIView? {
+        let view = UIView()
+        view.backgroundColor = UIColor.gray500
+        view.layer.cornerRadius = 8
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let shareImage = UIImage(named: "Share")?.withRenderingMode(.alwaysTemplate)
+        let shareButton = UIButton(type: .system)
+        shareButton.setTitle("공유하기", for: .normal)
+        shareButton.setTitleColor(UIColor.white, for: .normal)
+        shareButton.setImage(shareImage, for: .normal)
+        shareButton.tintColor = .white
+        shareButton.imageView?.contentMode = .scaleAspectFit
+        shareButton.contentHorizontalAlignment = .left
+        shareButton.semanticContentAttribute = .forceRightToLeft
+        shareButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        
+        view.addSubview(shareButton)
+        
+        shareButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(10)
+        }
+        
+        let deleteImage = UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate)
+        let deleteButton = UIButton(type: .system)
+        deleteButton.setTitle("삭제하기", for: .normal)
+        deleteButton.setTitleColor(UIColor.red, for: .normal)
+        deleteButton.setImage(deleteImage, for: .normal)
+        deleteButton.tintColor = .red
+        deleteButton.imageView?.contentMode = .scaleAspectFit
+        deleteButton.contentHorizontalAlignment = .left
+        deleteButton.semanticContentAttribute = .forceRightToLeft
+        deleteButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
+        view.addSubview(deleteButton)
+        
+        deleteButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        return view
+    }
     
     // MARK: - Lifecycle
     
     @objc
     private func backDidTap() {
         navigationController?.popViewController(animated: true)
-        print("back.. please")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    @objc
+    private func shareButtonTapped() {
+    }
+    
+    @objc
+    private func deleteButtonTapped() {
+    }
+    
+    @objc private func floatingButtonTapped() {
+        guard let currentImageName = floatingButton.image(for: .normal)?.accessibilityIdentifier else {
+            return
+        }
         
-        let cellWidth = frame.width - horizontalInset * 2
-        carouselView.snp.updateConstraints { make in
-            make.height.equalTo(cellWidth * 1.5)
+        let newImageName = currentImageName == "chevron.down" ? "chevron.up" : "chevron.down"
+        let newImage = UIImage(systemName: newImageName)
+        floatingButton.setImage(newImage, for: .normal)
+        if let floatingView = floatingView {
+            floatingView.isHidden.toggle()
+            if !floatingView.isHidden {
+                UIView.transition(with: floatingButton, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            }
         }
     }
-
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

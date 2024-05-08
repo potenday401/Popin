@@ -26,7 +26,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     private let homeMapViewController = HomeMapViewController()
     private let locationManager = CLLocationManager()
     private var locationString:String = ""
-    private var accessToken: String? = "eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJzdWIiOiJraW1qaWhhMTJAbmF2ZXIuY29tIiwiaWF0IjoxNzE0MDI0MzUzLCJleHAiOjE3MTQwMzE1NTN9.B73i57RZEWw3-_kKB7hWoBkagXj7kWDf9mEWMN7JbDw"
+    private var accessToken: String?
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {

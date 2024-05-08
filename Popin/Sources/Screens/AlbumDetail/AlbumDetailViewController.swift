@@ -75,11 +75,9 @@ class AlbumDetailViewController: BaseViewController {
             carousel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             carousel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             carousel.heightAnchor.constraint(equalTo: carousel.widthAnchor, multiplier: 1.5),
-            
             locationLabel.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 8),
             locationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
             dateLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
             dateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
