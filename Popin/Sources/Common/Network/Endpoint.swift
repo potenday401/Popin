@@ -49,9 +49,11 @@ struct Endpoint {
     enum Pin {
         case uploadPin
         var url:URL {
-//            Endpoint.baseURL.appending(path: "photo-pin")
             Endpoint.baseURL2.appending(path: "photos")
-//            Endpoint.baseURL2.appending(path: "contents/with")
+        }
+        case uploadContent
+        var contentUrl:URL {
+            Endpoint.baseURL2.appending(path: "contents")
         }
     }
 }

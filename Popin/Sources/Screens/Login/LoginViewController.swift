@@ -176,7 +176,6 @@ private extension LoginViewController {
             print("Invalid URL")
             return
         }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -220,7 +219,7 @@ private extension LoginViewController {
                                 )
                                 print(accessToken, "accessToken")
                                 self.router?.routeToHome(accessToken: accessToken)
-                               
+                                
                             } else {
                                 print("accessToken 또는 refreshToken을 찾을 수 없습니다.")
                             }

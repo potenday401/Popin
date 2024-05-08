@@ -10,23 +10,22 @@ import MapKit
 import CoreLocation
 import Alamofire
 
-struct PhotoPin: Decodable {
-    struct LatLng: Decodable {
-        let latitude: Double
-        let longitude: Double
-    }
-
-    let latLng: LatLng
+struct PhotoPin: Codable {
+    let contentId: Int
+    let title: String
+    let latitude: Double
+    let longitude: Double
     let photoUrl: String
+    let userId: String
+    let memorizedAt: String
 }
-
 
 class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?
     func userDidSelectLocation() {
-            delegate?.didSelectLocation(annotations: self.annotations)
-        }
-
+        delegate?.didSelectLocation(annotations: self.annotations)
+    }
+    
     var parentNavigationController: UINavigationController?
     private var mapView = MKMapView()
     private var cardListView: UITableView!
@@ -42,33 +41,41 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     var currentLocation: CustomLocation?
     var currentLocationRecord: CLLocation?
     var initialLocation: CLLocation?
-    let baseUrl = "http://ec2-44-201-161-53.compute-1.amazonaws.com:8080/"
+    var location = CLLocation(latitude: 0, longitude: 0)
+    let baseUrl = "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/"
     var locationManager = CLLocationManager()
     var annotations: [CustomImageAnnotation] = []
     var pinCountByCoordinate: [String: Int] = [:]
     var selectedLocation: CLLocation?
+    
+    private let accessToken: String
+    
+    init(accessToken: String) {
+        self.accessToken = accessToken
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMapView()
-        setupMapView()
         setupLocationManager()
-        getPin()
     }
-    var getPinParameter = [
-        "memberId": "member1"
-    ]
     
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         currentLocation = CustomLocation(currentLatitude: coordinates.latitude, currentLongitude: coordinates.longitude)
-
+        
         if let currentLocationRecord = currentLocationRecord {
             let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
             let distance = touchLocation.distance(from: currentLocationRecord)
-
+            
             let thresholdDistance: CLLocationDistance = 100.0
-
+            
             if distance <= thresholdDistance {
                 delegate?.didSelectLocation(annotations: self.annotations)
                 let albumViewController = AlbumViewController()
@@ -77,49 +84,123 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             }
         }
     }
-
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //todo: location을 cameraviewController에서 사용 가능하게 해서 uploadPin할때 initialLocation대신에 쓸 수 있게한다.
+//        location = locations.first!
+//        print(locations.first, "locationsFirst!!")
+//        print(location.coordinate.latitude,location.coordinate.longitude, "location check!!!!")
+        mapView.centerToLocation(location)
+        getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
         if locations.last != nil {
             locationManager.stopUpdatingLocation()
         } else {
             print("No valid location found in the update1.")
         }
     }
-    
-    func getPin() {
-        let url = baseUrl + "photo-pins"
 
-        AF.request(url,
-                   method: .get,
-                   parameters: getPinParameter,
-                   encoding: URLEncoding.default,
-                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
-        .validate(statusCode: 200..<300)
-        .responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
-                   let photoPinContainer = try? JSONDecoder().decode([PhotoPin].self, from: jsonData) {
-                    self.handlePhotoPins(photoPinContainer)
-                } else {
-                    print("Decoding failed.")
-                    if let jsonString = String(data: value as! Data, encoding: .utf8) {
-                        print("JSON String: \(jsonString)")
-                    }
-                }
-            case .failure(let error):
+    func getPin(latitude: Double, longitude: Double) {
+//        let polygon = 
+//        "POLYGON((\(latitude - 0.1) \(longitude - 0.1),\(latitude + 0.1) \(longitude - 0.1),\(latitude + 0.1) \(longitude + 0.1),\(latitude - 0.1) \(longitude + 0.1),\(latitude - 0.1) \(longitude - 0.1)))"
+//        print(polygon, "polygon check")
+        let polygon = "POLYGON((0 0,10 10,20 20,30 30,0 0))"
+        let urlString = baseUrl + "contents?area=\(polygon)"
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        print(accessToken, "access")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
                 print("Network request failed with error: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+            
+            guard 200..<300 ~= httpResponse.statusCode else {
+                print("Invalid status code: \(httpResponse.statusCode)")
+                return
+            }
+            
+            guard let responseData = data else {
+                print("No data received")
+                return
+            }
+            guard let jsonData = try? JSONSerialization.jsonObject(with: responseData) else {
+                   print("Failed to convert JSON data")
+                   return
+               }
+            print(jsonData, "response Data")
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData, options: [])
+                if let jsonDict = json as? [String: Any],
+                   let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
+                    var photoPinContainer = [PhotoPin]()
+                    print(jsonArray, "jsonArray")
+                    let dateFormatter: DateFormatter = {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+                        return formatter
+                    }()
+                    
+                    for pinDict in jsonArray {
+                        print(pinDict, "pinDict")
+                        guard let contentId = pinDict["contentId"] as? Int,
+                              let title = pinDict["title"] as? String,
+                              let latitude = pinDict["latitude"] as? Double,
+                              let longitude = pinDict["longitude"] as? Double,
+                              let userId = pinDict["userId"] as? String,
+                              let memorizedAtString = pinDict["memorizedAt"] as? String else {
+                            print("Failed to decode photo pin: \(pinDict)")
+                            continue
+                        }
+                        
+                        var firstPhotoUrl: String?
+                        if let photos = pinDict["photos"] as? [[String: Any]], !photos.isEmpty {
+                            if let firstPhoto = photos.first, let url = firstPhoto["url"] as? String {
+                                firstPhotoUrl = url
+                            }
+                        }
+
+                        let photoPin = PhotoPin(contentId: contentId, title: title, latitude: latitude, longitude: longitude, photoUrl: "https://placekitten.com/200/300", userId: userId, memorizedAt: memorizedAtString)
+
+                        photoPinContainer.append(photoPin)
+                    }
+                    
+                    if !photoPinContainer.isEmpty {
+                        self.handlePhotoPins(photoPinContainer)
+                    } else {
+                        print("No photo pins found in the response")
+                    }
+                } else {
+                    print("Unexpected response format: Not an array of dictionaries")
+                }
+            } catch {
+                print("Error decoding JSON: \(error)")
             }
         }
+        task.resume()
     }
-
+    
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
+        print(photoPinContainer, "handlePin")
         for pin in photoPinContainer {
-            let latitude = Double(pin.latLng.latitude) ?? 0.0
-            let longitude = Double(pin.latLng.longitude) ?? 0.0
+            print(pin, "pin")
+            let latitude = pin.latitude
+            let longitude = pin.longitude
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let coordinateKey = "\(pin.latLng.latitude)-\(pin.latLng.longitude)"
+            let coordinateKey = "\(latitude)-\(longitude)"
             
             if let count = self.pinCountByCoordinate[coordinateKey] {
                 self.pinCountByCoordinate[coordinateKey] = count + 1
@@ -137,13 +218,13 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             annotations.append(imageAnnotation)
         }
     }
-
+    
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount)
         mapView.addAnnotation(imageAnnotation)
     }
-
-
+    
+    
     func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -169,8 +250,6 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        mapView.centerToLocation(initialLocation ?? CLLocation(latitude: 37.517496, longitude: 126.959118)
-        )
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
         tapGesture.delegate = self
         mapView.addGestureRecognizer(tapGesture)
@@ -179,14 +258,14 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
 
 extension HomeMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
+        
         guard let annotation = annotation as? CustomImageAnnotation else { return nil }
         
         if let cluster = annotation as? MKClusterAnnotation {
             let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
             clusterView?.titleVisibility = .visible
             clusterView?.subtitleVisibility = .visible
-
+            
             // Add animation
             UIView.animate(withDuration: 0.3, animations: {
                 clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
@@ -195,7 +274,6 @@ extension HomeMapViewController: MKMapViewDelegate {
                     clusterView?.transform = CGAffineTransform.identity
                 }
             }
-
             return clusterView
         } else {
             let identifier = "customImageAnnotation"
@@ -207,7 +285,6 @@ extension HomeMapViewController: MKMapViewDelegate {
             } else {
                 view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
-            
             return view
         }
     }

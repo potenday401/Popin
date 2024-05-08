@@ -97,8 +97,24 @@ final class CameraViewController: BaseViewController {
     
     @objc
     func uploadButtonDidTap() {
+        let bodyData: [String: Any] = [
+             "title": "string",
+             "address": "string",
+//             "latitude": 37.785834,
+//             "longitude": -122.406417,
+             "latitude": 1,
+             "longitude": 1,
+             "memorizedAt": "2024-05-02T08:33:15.127Z"
+         ]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: bodyData) else {
+               print("Failed to convert JSON data")
+               return
+           }
+        
+//        uploadContent(body: jsonData, accessToken: accessToken)
         uploadPin()
     }
+    
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
@@ -183,7 +199,6 @@ final class CameraViewController: BaseViewController {
 
           stackView.addArrangedSubview(rowView)
         }
-
         
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -306,6 +321,54 @@ final class CameraViewController: BaseViewController {
         default:
             break
         }
+    }
+    
+    @objc func uploadContent(body: Data, accessToken: String) {
+        print(body, "body check")
+        // API Endpoint 설정
+        let url = Endpoint.Pin.uploadContent.contentUrl
+        
+        // URLRequest 생성
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        // Body 설정
+        request.httpBody = body
+        
+        // URLSession을 이용한 POST 요청
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // 에러 처리
+            if let error = error {
+                print("Network request failed with error: \(error)")
+                return
+            }
+            
+            // 응답 코드 확인
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+            
+            // 성공적인 응답 코드인지 확인
+            guard 200..<300 ~= httpResponse.statusCode else {
+                print("Invalid status code: \(httpResponse.statusCode)")
+                return
+            }
+            
+            // 응답 데이터 처리
+            if let data = data {
+                // 응답 데이터를 원하는 형식으로 파싱하여 처리
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print("Response JSON: \(json)")
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }
+        }
+        task.resume()
     }
     
     @objc func uploadPin() {

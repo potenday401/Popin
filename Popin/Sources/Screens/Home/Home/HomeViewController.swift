@@ -23,10 +23,11 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     var router: HomeRouter?
     var imageData: [ImageData] = []
-    private let homeMapViewController = HomeMapViewController()
+
     private let locationManager = CLLocationManager()
     private var locationString:String = ""
     private var accessToken: String?
+    private let homeMapViewController: HomeMapViewController
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -39,6 +40,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     init(accessToken: String? = nil) {
         self.accessToken = accessToken
+        self.homeMapViewController = HomeMapViewController(accessToken: accessToken ?? "")
         super.init()
       }
 
@@ -221,6 +223,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             make.top.equalTo(homeMapViewController.view.snp.bottom).offset(54)
         }
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
@@ -256,8 +259,8 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         }
     }
     
-    func didSelectLocation() {
-        router?.routeToHomeMapView()
+    func didSelectLocation(accessToken: String) {
+        router?.routeToHomeMapView(accessToken: accessToken)
     }
 }
 
