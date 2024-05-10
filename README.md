@@ -3,22 +3,6 @@
 # 한줄 소개
 사진 한 장으로 하루를 임팩트있게 기억해요! 지도 기반 sns 서비스 Popin 📌
 
-### 앱스토어 링크: [Appstore](-)
-
-//![1](-)
-//![2](-)
-
-<br>
-
-
-![3](-)
-![4](-)
-![5](-)
-![6](-)
-
-<br>
-<br>
-
 ## Development Environment and Using Library
 - Development Environment
 <p align="left">
@@ -131,12 +115,16 @@
    
    
  <br>
-
  </div>
  </details>
+ <details>
+ <summary> 📓 Project Foldering </summary>
+ <div markdown="1">       
 
-
- <br>
+ ---
+   <aside> 
+<img width="286" alt="스크린샷 2024-05-10 오후 3 38 07" src="https://github.com/potenday401/Popin/assets/66008143/5f5fce1d-e6b8-463f-8c09-da611c065a31">
+</aside>
 
  </div>
  </details>
