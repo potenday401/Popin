@@ -12,7 +12,7 @@ import SnapKit
 import MapKit
 import Kingfisher
 
-final class CameraViewController: BaseViewController {
+final class CameraViewController: BaseViewController, LocationSearchControllerDelegate {
     weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
@@ -28,6 +28,7 @@ final class CameraViewController: BaseViewController {
     private let imageData:[ImageData]
     private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
+    private var selectedLocation = ""
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
         label.font = .systemFont(ofSize: 14, weight: .medium)
@@ -92,9 +93,24 @@ final class CameraViewController: BaseViewController {
     @objc
     func placeButtonDidTap() {
         let locationSearchController = LocationSearchController()
+        locationSearchController.delegate = self
+        selectedLocation = ""
         self.navigationController?.pushViewController(locationSearchController, animated: true)
     }
     
+    func didSelectLocation(_ location: String) {
+        selectedLocation = location
+        updatePlaceButtonTitle()
+    }
+    
+    private func updatePlaceButtonTitle() {
+        if selectedLocation.isEmpty {
+            placeButton.setTitle("장소", for: .normal)
+        } else {
+            placeButton.setTitle(selectedLocation, for: .normal)
+        }
+    }
+
     @objc
     func uploadButtonDidTap() {
         print()
