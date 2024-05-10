@@ -140,7 +140,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         view.addSubview(selectButton)
         
         selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(20)
+            make.top.equalTo(containerView.snp.top).offset(25)
             make.trailing.equalTo(view.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
@@ -157,7 +157,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         view.addSubview(cancelButton)
         cancelButton.isHidden = true
         cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(20)
+            make.top.equalTo(containerView.snp.top).offset(25)
             make.trailing.equalTo(view.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
