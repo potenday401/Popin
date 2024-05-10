@@ -46,7 +46,7 @@ final class CustomImageAnnotationView: MKAnnotationView {
         
         guard let url = URL(string: customAnnotation.imageUrl) else {
             imageView.image = UIImage(named: "defaultImage")
-            countLabel.frame = CGRect(x: imageView.frame.maxX + 5, y: imageView.frame.origin.y, width: 33, height: 33)
+            countLabel.frame = CGRect(x: imageView.frame.maxX + 5, y: imageView.frame.origin.y + 7.5, width: 33, height: 33)
             self.addSubview(imageView)
             self.addSubview(countLabel)
             return
@@ -58,8 +58,6 @@ final class CustomImageAnnotationView: MKAnnotationView {
                     imageView.image = image
                 }
             }
-            
-            countLabel.frame = CGRect(x: imageView.frame.maxX + 5, y: imageView.frame.origin.y, width: 33, height: 33)
         }.resume()
         DispatchQueue.main.async {
             self.addSubview(imageView)
