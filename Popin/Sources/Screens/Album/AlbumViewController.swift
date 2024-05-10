@@ -26,7 +26,7 @@ final class CustomImageAnnotation: NSObject, MKAnnotation {
 final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"
-    private let imageUrl = "https://placekitten.com/200/300"
+    private let imageUrl = ""
     var selectedImages: Set<UIImageView> = []
     private var containerView: UIView!
     var isSelectionEnabled = false
@@ -101,7 +101,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         mapView = MKMapView()
         mapView.delegate = self
         view.addSubview(mapView)
-        mapView.backgroundColor = .red
         mapView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.width.height.equalTo(359)
@@ -195,9 +194,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
                 var imageUrl:URL?
-                //                    let imageIndex = columnIndex + 1
                 for annotation in annotations {
-                    imageUrl = URL(string: annotation.imageUrl)!
+                    if let url = URL(string: annotation.imageUrl) {
+                        imageUrl = url
+                    } else {
+                        print("image nil")
+                    }
                 }
                 
                 var imageView: UIImageView = {
@@ -222,7 +224,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 
                 rowView.addArrangedSubview(iconView)
             }
-            
             stackView.addArrangedSubview(rowView)
         }
         
@@ -412,9 +413,8 @@ extension AlbumViewController: MKMapViewDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: 2)
-        print(imageAnnotation, "imageAnnotation22222")
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount)
         mapView.addAnnotation(imageAnnotation)
     }
 }
@@ -439,7 +439,7 @@ extension AlbumViewController: CLLocationManagerDelegate {
             let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             mapView.centerToLocation(location)
             currentLocationRecord = location
-            setupAnnotation(location: location, imageUrl: annotation.imageUrl)
+            setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count)
         }
         
         if locations.isEmpty {

@@ -31,7 +31,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     private var cardListView: UITableView!
     private var cardCollectionView: UICollectionView!
     private let cellReuseIdentifier = "CustomCell"
-    private let imageUrl = "https://placekitten.com/200/300"
+    private let imageUrl = ""
     var selectedImages: Set<UIImageView> = []
     private var containerView: UIView!
     var isSelectionEnabled = false
@@ -165,9 +165,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                                 firstPhotoUrl = url
                             }
                         }
-                        
-                        let photoPin = PhotoPin(contentId: contentId, title: title, latitude: latitude, longitude: longitude, photoUrl: firstPhotoUrl ?? "https://placekitten.com/200/300", userId: userId, memorizedAt: memorizedAtString)
-                        
+                        let photoPin = PhotoPin(contentId: contentId, title: title, latitude: latitude, longitude: longitude, photoUrl: firstPhotoUrl ?? "", userId: userId, memorizedAt: memorizedAtString)
                         photoPinContainer.append(photoPin)
                     }
                     
@@ -250,37 +248,36 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
 }
 
 extension HomeMapViewController: MKMapViewDelegate {
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-    
-            guard let annotation = annotation as? CustomImageAnnotation else { return nil }
-    
-            if let cluster = annotation as? MKClusterAnnotation {
-                let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
-                clusterView?.titleVisibility = .visible
-                clusterView?.subtitleVisibility = .visible
-    
-                // Add animation
-                UIView.animate(withDuration: 0.3, animations: {
-                    clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-                }) { _ in
-                    UIView.animate(withDuration: 0.5) {
-                        clusterView?.transform = CGAffineTransform.identity
-                    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard let annotation = annotation as? CustomImageAnnotation else { return nil }
+        
+        if let cluster = annotation as? MKClusterAnnotation {
+            let clusterView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier, for: cluster) as? MKMarkerAnnotationView
+            clusterView?.titleVisibility = .visible
+            clusterView?.subtitleVisibility = .visible
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                clusterView?.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+            }) { _ in
+                UIView.animate(withDuration: 0.5) {
+                    clusterView?.transform = CGAffineTransform.identity
                 }
-                return clusterView
-            } else {
-                let identifier = "customImageAnnotation"
-                var view: CustomImageAnnotationView
-    
-                if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
-                    dequeuedView.annotation = annotation
-                    view = dequeuedView
-                } else {
-                    view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                }
-                return view
             }
+            return clusterView
+        } else {
+            let identifier = "customImageAnnotation"
+            var view: CustomImageAnnotationView
+            
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
+                dequeuedView.annotation = annotation
+                view = dequeuedView
+            } else {
+                view = CustomImageAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
+            return view
         }
+    }
 }
 
 extension HomeMapViewController: UIGestureRecognizerDelegate {

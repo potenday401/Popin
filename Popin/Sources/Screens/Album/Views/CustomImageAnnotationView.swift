@@ -44,8 +44,15 @@ final class CustomImageAnnotationView: MKAnnotationView {
         countLabel.layer.cornerRadius = 15
         countLabel.clipsToBounds = true
         
-        let url = URL(string: customAnnotation.imageUrl)
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        guard let url = URL(string: customAnnotation.imageUrl) else {
+            imageView.image = UIImage(named: "defaultImage")
+            countLabel.frame = CGRect(x: imageView.frame.maxX + 5, y: imageView.frame.origin.y, width: 33, height: 33)
+            self.addSubview(imageView)
+            self.addSubview(countLabel)
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     imageView.image = image

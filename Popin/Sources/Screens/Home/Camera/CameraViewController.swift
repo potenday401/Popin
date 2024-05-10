@@ -97,6 +97,7 @@ final class CameraViewController: BaseViewController {
     
     @objc
     func uploadButtonDidTap() {
+        print()
         let bodyData: [String: Any] = [
              "title": "string",
              "address": "string",
