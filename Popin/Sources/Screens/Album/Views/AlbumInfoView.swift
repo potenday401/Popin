@@ -10,15 +10,23 @@ import UIKit
 class AlbumInfoView: UIView {
     var dateLabel: UILabel!
     var photoCountLabel: UILabel!
+    var pinCount: Int!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(pinCount: Int) {
+        super.init(frame: .zero)
+        self.pinCount = pinCount
         setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViews()
+    }
+    
+    private func currentDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM.dd"
+        return dateFormatter.string(from: Date())
     }
     
     private func setupViews() {
@@ -36,12 +44,16 @@ class AlbumInfoView: UIView {
         }()
         
         dateLabel = UILabel()
-        dateLabel.text = "23.12.08"
+        dateLabel.text = currentDate()
         dateLabel.textColor = .white
         dateLabel.numberOfLines = 0
         
         photoCountLabel = UILabel()
-        photoCountLabel.text = "56장의 기록 | 5곳의 장소"
+        if let pinCount = pinCount {
+            photoCountLabel.text = "\(pinCount)장의 기록 | \(pinCount)곳의 장소"
+        } else {
+            photoCountLabel.text = "장의 기록 | 곳의 장소"
+        }
         photoCountLabel.textColor = .white
         photoCountLabel.numberOfLines = 0
         

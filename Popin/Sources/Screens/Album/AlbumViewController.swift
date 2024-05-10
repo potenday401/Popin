@@ -82,7 +82,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         
         view.addSubview(statusBarView)
         
-        let infoView = AlbumInfoView()
+        let infoView = AlbumInfoView(pinCount: annotations.count)
         statusBarView.addSubview(infoView)
         
         statusBarView.snp.makeConstraints { make in
