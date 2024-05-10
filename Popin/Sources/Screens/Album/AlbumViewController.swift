@@ -182,7 +182,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         
         scrollView.addSubview(stackView)
         
-        let numberOfColumns = 8
+        let numberOfColumns = annotations.count/2
         let numberOfRows = 2
         
         for _ in 0..<numberOfRows {
