@@ -14,7 +14,7 @@ import CoreLocation
 import MapKit
 import CoreLocation
 
-final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate {
+final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController()
         albumViewController.annotations = annotations
@@ -23,10 +23,12 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     var router: HomeRouter?
     var imageData: [ImageData] = []
-    private let homeMapViewController = HomeMapViewController()
-    private let locationManager = CLLocationManager()
+    var location: CLLocation?
+
+    private var locationManager = CLLocationManager()
     private var locationString:String = ""
     private var accessToken: String?
+    private let homeMapViewController: HomeMapViewController
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
@@ -37,8 +39,10 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             }
         }
     }
-    init(accessToken: String? = nil) {
+    init(accessToken: String? = nil, location: CLLocation? = nil) {
         self.accessToken = accessToken
+        self.location = location
+        self.homeMapViewController = HomeMapViewController(accessToken: accessToken ?? "")
         super.init()
       }
 
@@ -154,10 +158,18 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         return button
     }
     
+    func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
     override func viewDidLoad() {
         homeMapViewController.delegate = self
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
+        setupLocationManager()
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")
@@ -167,11 +179,9 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
                 let boundingRegion = response.boundingRegion
                 let centerCoordinate = boundingRegion.center
             } else {
-                // Handle errors
                 print("Error performing search: \(error?.localizedDescription ?? "")")
             }
         }
-        
         
         navigationBar.leftItem = .init(
             image: UIImage(resource: .cameraButton),
@@ -221,9 +231,10 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             make.top.equalTo(homeMapViewController.view.snp.bottom).offset(54)
         }
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        
+        self.location = location
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         updateLocationLabel(latitude, longitude)
@@ -256,8 +267,8 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         }
     }
     
-    func didSelectLocation() {
-        router?.routeToHomeMapView()
+    func didSelectLocation(accessToken: String) {
+        router?.routeToHomeMapView(accessToken: accessToken)
     }
 }
 
@@ -288,7 +299,7 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             print("이미지 선택에 실패했습니다.")
             return
         }
-        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString, accessToken: accessToken!)
+        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString, accessToken: accessToken!, location: location!)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -341,7 +352,11 @@ extension HomeViewController: PHPickerViewControllerDelegate {
     }
     
     func handleSelectedImages(_ images: [UIImage]) {
-        router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString, accessToken: accessToken!)
+        if let accessToken = accessToken, let location = location {
+            router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString, accessToken: accessToken, location: location)
+        } else {
+            print(accessToken, location)
+        }
     }
 }
 
@@ -360,8 +375,3 @@ struct ImageData {
 protocol HomeMapViewControllerDelegate: AnyObject {
     func didSelectLocation(annotations: [CustomImageAnnotation])
 }
-
-
-//#Preview {
-//     HomeViewController()
-//}

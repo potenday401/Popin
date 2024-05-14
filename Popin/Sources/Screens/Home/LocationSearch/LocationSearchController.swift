@@ -8,7 +8,12 @@
 import UIKit
 import MapKit
 
+protocol LocationSearchControllerDelegate: AnyObject {
+    func didSelectLocation(_ location: String)
+}
+
 class LocationSearchController: UIViewController {
+    weak var delegate: LocationSearchControllerDelegate?
     private let searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
     private let searchBar = UISearchBar()
@@ -43,6 +48,11 @@ class LocationSearchController: UIViewController {
         navigationItem.hidesBackButton = true
     }
     
+    private func handleSelectedText(_ text: String) {
+        delegate?.didSelectLocation(text)
+        navigationController?.popViewController(animated: true)
+    }
+
     private func setupSearchBar() {
         searchBar.placeholder = "장소 검색 (ex. 강남역)"
         searchBar.delegate = self
@@ -160,10 +170,6 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
         guard let tappedLabel = gesture.view as? UILabel else { return }
         let selectedText = tappedLabel.text ?? ""
         handleSelectedText(selectedText)
-    }
-    
-    private func handleSelectedText(_ text: String) {
-            print(text, "area check")
     }
 }
 

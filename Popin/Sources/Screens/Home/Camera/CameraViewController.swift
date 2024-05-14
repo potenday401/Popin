@@ -12,7 +12,7 @@ import SnapKit
 import MapKit
 import Kingfisher
 
-final class CameraViewController: BaseViewController {
+final class CameraViewController: BaseViewController, LocationSearchControllerDelegate {
     weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
@@ -25,9 +25,12 @@ final class CameraViewController: BaseViewController {
     private var initialLocation: CLLocation?
     private let pickedImage:[UIImage]
     private var locationString:String = ""
+    private var location:CLLocation?
     private let imageData:[ImageData]
     private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
+    private var selectedLocation = ""
+    private var contentId:Int = 0
     private let dateLabel:UILabel = {
         let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
         label.font = .systemFont(ofSize: 14, weight: .medium)
@@ -92,13 +95,54 @@ final class CameraViewController: BaseViewController {
     @objc
     func placeButtonDidTap() {
         let locationSearchController = LocationSearchController()
+        locationSearchController.delegate = self
+        selectedLocation = ""
         self.navigationController?.pushViewController(locationSearchController, animated: true)
+    }
+    
+    func didSelectLocation(_ location: String) {
+        selectedLocation = location
+        updatePlaceButtonTitle()
+    }
+    
+    private func updatePlaceButtonTitle() {
+        if selectedLocation.isEmpty {
+            placeButton.setTitle("장소", for: .normal)
+        } else {
+            placeButton.setTitle(selectedLocation, for: .normal)
+        }
     }
     
     @objc
     func uploadButtonDidTap() {
-        uploadPin()
+        let currentDateString = currentDate()
+        let bodyData: [String: Any] = [
+            "title": "string",
+            "address": "\(selectedLocation)",
+            "latitude": location?.coordinate.latitude,
+            "longitude": location?.coordinate.longitude,
+            "memorizedAt": currentDateString
+        ]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: bodyData) else {
+            print("Failed to convert JSON data")
+            return
+        }
+        uploadContent(body: jsonData, accessToken: accessToken) { result in
+            switch result {
+            case .success(let contentId):
+                self.uploadPin(contentId: contentId, currentDateString: currentDateString)
+            case .failure(let error):
+                print("Failed to upload content: \(error)")
+            }
+        }
     }
+    
+    private func currentDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        return dateFormatter.string(from: Date())
+    }
+    
     override func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
@@ -149,41 +193,40 @@ final class CameraViewController: BaseViewController {
         let numberOfColumns = Int(ceil(Double(dependency.image.count) / Double(numberOfRows)))
         
         for _ in 0..<numberOfRows {
-          let rowView = UIStackView()
-          rowView.axis = .horizontal
-          rowView.distribution = .fillEqually
-          rowView.spacing = 0
-
-          for columnIndex in 0..<numberOfColumns {
-            let iconView = UIView()
-
-            guard columnIndex < dependency.image.count else { continue }
-            let image = dependency.image[columnIndex]
-
-            var imageView: UIImageView = {
-              let imageView = UIImageView()
-              imageView.contentMode = .scaleAspectFit
-              return imageView
-            }()
-
-            imageView.image = image
-
-            iconView.addSubview(imageView)
-            imageView.snp.makeConstraints { make in
-              make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-              make.width.equalTo(100)
-              make.height.equalTo(100)
+            let rowView = UIStackView()
+            rowView.axis = .horizontal
+            rowView.distribution = .fillEqually
+            rowView.spacing = 0
+            
+            for columnIndex in 0..<numberOfColumns {
+                let iconView = UIView()
+                
+                guard columnIndex < dependency.image.count else { continue }
+                let image = dependency.image[columnIndex]
+                
+                var imageView: UIImageView = {
+                    let imageView = UIImageView()
+                    imageView.contentMode = .scaleAspectFit
+                    return imageView
+                }()
+                
+                imageView.image = image
+                
+                iconView.addSubview(imageView)
+                imageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                    make.width.equalTo(100)
+                    make.height.equalTo(100)
+                }
+                imageView.layer.cornerRadius = 24
+                imageView.layer.masksToBounds = true
+                
+                iconView.isUserInteractionEnabled = true
+                rowView.addArrangedSubview(iconView)
             }
-            imageView.layer.cornerRadius = 24
-            imageView.layer.masksToBounds = true
-
-            iconView.isUserInteractionEnabled = true
-            rowView.addArrangedSubview(iconView)
-          }
-
-          stackView.addArrangedSubview(rowView)
+            
+            stackView.addArrangedSubview(rowView)
         }
-
         
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -242,6 +285,7 @@ final class CameraViewController: BaseViewController {
         let ImageData: [ImageData]
         let accessToken: String
         let cameraService: CameraServiceProtocol
+        let location: CLLocation
     }
     
     init(dependency: Dependency) {
@@ -250,6 +294,7 @@ final class CameraViewController: BaseViewController {
         self.imageData = dependency.ImageData
         self.accessToken = dependency.accessToken
         self.locationString = dependency.locationString
+        self.location = dependency.location
         super.init()
         configureImageView(with: pickedImage)
     }
@@ -308,12 +353,58 @@ final class CameraViewController: BaseViewController {
         }
     }
     
-    @objc func uploadPin() {
-        dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: initialLocation, accessToken: accessToken) { result in
+    func uploadContent(body: Data, accessToken: String, completion: @escaping (Result<Int, Error>) -> Void) {
+        let url = Endpoint.Pin.uploadContent.contentUrl
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpBody = body
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                //                completion(.failure(CameraError.invalidResponse))
+                return
+            }
+            
+            guard 200..<300 ~= httpResponse.statusCode else {
+                print(httpResponse.statusCode, "code check")
+                //                completion(.failure(CameraError.invalidStatusCode(httpResponse.statusCode)))
+                return
+            }
+            
+            if let data = data {
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                       let responseData = json["responseData"] as? [String: Any],
+                       let contentId = responseData["contentId"] as? Int {
+                        print(contentId, "id check")
+                        completion(.success(contentId))
+                    } else {
+                        //                        completion(.failure(CameraError.contentIdNotFound))
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    @objc func uploadPin(contentId: Int, currentDateString: String) {
+        print(currentDateString, "date 1")
+        dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: location, accessToken: accessToken, contentId: contentId, currentDateString: currentDateString) { result in
+            print(result, "result")
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
             case .failure(let error):
+                print(error, "errorcheck")
                 print("업로드 실패: \(CameraError.failUpload)")
             }
         }
