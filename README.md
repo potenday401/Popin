@@ -3,6 +3,8 @@
 # 한줄 소개
 사진 한 장으로 하루를 임팩트있게 기억해요! 지도 기반 sns 서비스 Popin 📌
 
+### 앱스토어 링크: [Appstore](https://testflight.apple.com/join/Xa6vMVX2)
+
 ## Development Environment and Using Library
 - Development Environment
 <p align="left">
