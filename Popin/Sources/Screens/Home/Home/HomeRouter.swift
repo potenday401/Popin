@@ -4,10 +4,11 @@
 //  Created by Jihaha kim on 2024/03/13.
 //
 import UIKit
+import CoreLocation
 
 protocol HomeRouter {
     func routeToHomeMapView(accessToken: String)
-    func routeToCameraView(with image: [UIImage], ImageData: [ImageData], locationString: String, accessToken: String)
+    func routeToCameraView(with image: [UIImage], ImageData: [ImageData], locationString: String, accessToken: String, location: CLLocation)
     func routeToEditProfile()
     func dismissFromProfileScreen()
     func dismissFromCameraScreen()
@@ -38,9 +39,9 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
         }
     }
     
-    func routeToCameraView(with image: [UIImage], ImageData: [ImageData], locationString: String, accessToken: String) {
+    func routeToCameraView(with image: [UIImage], ImageData: [ImageData], locationString: String, accessToken: String, location: CLLocation) {
         DispatchQueue.main.async {
-            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, ImageData: ImageData, accessToken: accessToken, cameraService: self.cameraService)
+            let dependency = CameraViewController.Dependency(image: image, locationString: locationString, ImageData: ImageData, accessToken: accessToken, cameraService: self.cameraService, location: location)
             let cameraViewController = CameraViewController(dependency: dependency)
             cameraViewController.delegate = self
             self.viewController?.navigationController?.pushViewController(cameraViewController, animated: true)

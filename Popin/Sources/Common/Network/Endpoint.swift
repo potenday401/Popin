@@ -8,7 +8,6 @@
 import Foundation
 
 struct Endpoint {
-    
     static let baseURL = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/")!
     enum Auth {
         case login

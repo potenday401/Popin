@@ -22,20 +22,14 @@ final class CameraService: CameraServiceProtocol {
         self.network = network
     }
     
-    func uploadPin(selectedPhoto: [UIImage], capturedPhoto: [UIImage], initialLocation: CLLocation?, accessToken: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let dateString = "2024-04-27T06:39:07.793"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-        
-        guard let date = dateFormatter.date(from: dateString) else {
-            return
-        }
+    func uploadPin(selectedPhoto: [UIImage], capturedPhoto: [UIImage], initialLocation: CLLocation?, accessToken: String, contentId: Int, currentDateString: String, completion: @escaping (Result<String, Error>) -> Void) {
+        print(currentDateString, "date string")
         if let imageData = selectedPhoto.first?.jpegData(compressionQuality: 0.1) {
             let imageDataStruct = ImageDataa(imageData: imageData)
             let jsonData = try? JSONEncoder().encode(imageDataStruct)
-            print(String(data: jsonData ?? Data(), encoding: .utf8) ?? "")
+            //            print(String(data: jsonData ?? Data(), encoding: .utf8) ?? "")
         }
-
+        
         guard let selectedImage = selectedPhoto.first,
               let imageData = selectedImage.jpegData(compressionQuality: 0.1) else {
             return
@@ -53,10 +47,11 @@ final class CameraService: CameraServiceProtocol {
         
         body.append(Data("--\(boundary)\r\n".utf8))
         body.append(Data("Content-Disposition: form-data; name=\"contentId\"\r\n\r\n".utf8))
-        body.append(Data("17\r\n".utf8))
+        body.append(Data("\(contentId)\r\n".utf8))
+        
         body.append(Data("--\(boundary)\r\n".utf8))
         body.append(Data("Content-Disposition: form-data; name=\"memorizedAt\"\r\n\r\n".utf8))
-        body.append(dateString.data(using: .utf8)!)
+        body.append(currentDateString.data(using: .utf8)!)
         body.append(Data("\r\n".utf8))
         
         body.append(Data("--\(boundary)\r\n".utf8))
@@ -67,7 +62,6 @@ final class CameraService: CameraServiceProtocol {
         body.append(Data("--\(boundary)--\r\n".utf8))
         
         urlRequest.httpBody = body as Data
-        
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -79,6 +73,7 @@ final class CameraService: CameraServiceProtocol {
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
+                print(httpResponse.statusCode, "check")
                 return
             }
             
@@ -91,8 +86,6 @@ final class CameraService: CameraServiceProtocol {
     }
 }
 
-
-
 protocol CameraServiceProtocol {
-    func uploadPin(selectedPhoto: [UIImage], capturedPhoto: [UIImage], initialLocation: CLLocation?, accessToken: String, completion: @escaping (Result<String, Error>) -> Void)
+    func uploadPin(selectedPhoto: [UIImage], capturedPhoto: [UIImage], initialLocation: CLLocation?, accessToken: String, contentId: Int, currentDateString: String, completion: @escaping (Result<String, Error>) -> Void)
 }
