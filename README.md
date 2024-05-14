@@ -5,6 +5,10 @@
 
 ### 앱스토어 링크: [Appstore](https://testflight.apple.com/join/Xa6vMVX2)
 
+<img src="https://github.com/potenday401/Popin/assets/66008143/9fa44f1b-f3c7-4773-94a7-0b8f58f66c98.png" width="200" height="400"/>
+<img src="https://github.com/potenday401/Popin/assets/66008143/8d4257d9-d841-410d-9e40-099a362a1f92" width="200" height="400"/>
+
+
 ## Development Environment and Using Library
 - Development Environment
 <p align="left">
