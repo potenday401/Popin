@@ -15,11 +15,13 @@ final class CustomImageAnnotation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let imageUrl: String
     var pinCount: Int = 0
+    var photoId:Int
     
-    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int) {
+    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int, photoId:Int) {
         self.coordinate = coordinate
         self.imageUrl = imageUrl
         self.pinCount = pinCount
+        self.photoId = photoId
     }
 }
 
@@ -42,6 +44,16 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var mapView = MKMapView()
     var annotations: [CustomImageAnnotation] = []
     var locationString:String = ""
+    private let accessToken: String
+    
+    init(accessToken: String) {
+        self.accessToken = accessToken
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     let deleteButton: UIButton = {
         let button = UIButton()
@@ -51,7 +63,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         return button
     }()
     
-    //    let cardListView = CardListView()
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -66,7 +77,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
     }
     
-    @objc 
+    @objc
     func plusButtonTapped() {
         cameraAuth()
     }
@@ -193,13 +204,19 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
-                var imageUrl:URL?
+                var imageUrl: URL?
+                var photoId: Int
+                
                 for annotation in annotations {
                     if let url = URL(string: annotation.imageUrl) {
                         imageUrl = url
+                        //                        print("image not nil")
                     } else {
-                        print("image nil")
+                        //                        print("image nil")
                     }
+                    
+                    photoId = annotation.photoId
+                    iconView.tag = photoId
                 }
                 
                 var imageView: UIImageView = {
@@ -264,10 +281,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         setupLocationManager()
         setupMapView()
         setupCardListView()
-        // check scroll
-        //        view.addSubview(cardListView)
-        //        cardListView.setupCardListView()
-        //        cardListView.updateAnnotations(annotations)
         setupStatusBarView()
         isSelectionEnabled = true
         navigationItem.hidesBackButton = true
@@ -299,8 +312,34 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     @objc private func deleteButtonTapped() {
+        for iconView in selectedIconViews {
+            let photoId = iconView.tag
+            deletePhoto(with: photoId)
+        }
         selectedIconViews.removeAll()
         isSelectionEnabled = false
+    }
+    
+    private func deletePhoto(with photoId: Int) {
+        guard let url = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error deleting photo: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("Successfully deleted photo with id \(photoId)")
+            } else {
+                print(response, "Failed to delete photo with id \(photoId)")
+            }
+        }
+        task.resume()
     }
     
     private func removeCheckmarkFromView(_ iconView: UIView) {
@@ -413,8 +452,8 @@ extension AlbumViewController: MKMapViewDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount)
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId)
         mapView.addAnnotation(imageAnnotation)
     }
 }
@@ -439,7 +478,7 @@ extension AlbumViewController: CLLocationManagerDelegate {
             let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             mapView.centerToLocation(location)
             currentLocationRecord = location
-            setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count)
+            setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count, photoId: annotation.photoId)
         }
         
         if locations.isEmpty {

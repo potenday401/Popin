@@ -50,6 +50,6 @@ extension DateViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        viewModel?.goToAlbumView(currentVC: self, pushVC: AlbumViewController())
+//        viewModel?.goToAlbumView(currentVC: self, pushVC: AlbumViewController())
     }
 }

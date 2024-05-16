@@ -16,7 +16,7 @@ import CoreLocation
 
 final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
-        let albumViewController = AlbumViewController()
+        let albumViewController = AlbumViewController(accessToken: accessToken ?? "")
         albumViewController.annotations = annotations
         albumViewController.locationString = self.locationString
         navigationController?.pushViewController(albumViewController, animated: true)
