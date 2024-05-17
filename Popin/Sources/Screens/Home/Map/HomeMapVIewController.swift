@@ -101,6 +101,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     func getPin(latitude: Double, longitude: Double) {
         let polygon =
         "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
+        print(polygon, "polygon")
         let urlString = baseUrl + "contents?area=\(polygon)"
         
         guard let url = URL(string: urlString) else {
@@ -200,6 +201,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             let latitude = pin.latitude
             let longitude = pin.longitude
             let photoId = pin.photoId
+            let contentId = pin.contentId
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let coordinateKey = "\(latitude)-\(longitude)"
             
@@ -211,9 +213,9 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             
             let pinCount = self.pinCountByCoordinate[coordinateKey, default: 0]
             currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount)
+            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount, photoId: pin.photoId, contentId: pin.contentId)
             self.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount, photoId: photoId)
+            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount, photoId: photoId, contentId: pin.contentId)
             DispatchQueue.main.async {
                 self.mapView.addAnnotation(imageAnnotation)
             }
@@ -221,8 +223,8 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: pinCount)
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId)
         DispatchQueue.main.async {
             self.mapView.addAnnotation(imageAnnotation)
         }

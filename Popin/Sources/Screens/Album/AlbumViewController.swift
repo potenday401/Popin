@@ -16,12 +16,14 @@ final class CustomImageAnnotation: NSObject, MKAnnotation {
     let imageUrl: String
     var pinCount: Int = 0
     var photoId:Int
+    var contentId:Int
     
-    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int, photoId:Int) {
+    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int, photoId:Int, contentId:Int) {
         self.coordinate = coordinate
         self.imageUrl = imageUrl
         self.pinCount = pinCount
         self.photoId = photoId
+        self.contentId = contentId
     }
 }
 
@@ -129,7 +131,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func setupCardListView() {
+        containerView?.removeFromSuperview()
         let containerView = UIView()
+        self.containerView = containerView
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         
@@ -205,7 +209,8 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
                 var imageUrl: URL?
-                var photoId: Int
+                var photoId: Int?
+                var contentId: Int?
                 
                 for annotation in annotations {
                     if let url = URL(string: annotation.imageUrl) {
@@ -216,7 +221,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                     }
                     
                     photoId = annotation.photoId
-                    iconView.tag = photoId
+                    contentId = annotation.contentId
+                    print(photoId, contentId, "contentId check")
+                    if let photoId = photoId, let contentId = contentId {
+                        let combinedTag = (photoId << 16) | contentId
+                        iconView.tag = combinedTag
+                    }
                 }
                 
                 var imageView: UIImageView = {
@@ -312,12 +322,26 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     @objc private func deleteButtonTapped() {
+        //        for iconView in selectedIconViews {
+        //            let photoId = iconView.tag
+        //            deletePhoto(with: photoId)
+        //        }
         for iconView in selectedIconViews {
-            let photoId = iconView.tag
-            deletePhoto(with: photoId)
+            // Extracting photoId and contentId from the tag
+            guard let tag = iconView.tag as? Int else { continue }
+            let photoId = tag >> 16 // Extracting the photoId from the higher 16 bits
+            let contentId = tag & 0xFFFF // Extracting the contentId from the lower 16 bits
+            
+            //            deletePhoto(with: photoId)
+            //            deleteContent(with: contentId)
+            deleteResource(with: photoId, and: contentId)
         }
         selectedIconViews.removeAll()
-        isSelectionEnabled = false
+        //        isSelectionEnabled = false
+        cancelButton.isHidden = true
+        deleteButton.isHidden = true
+        selectButton.isHidden = false
+        
     }
     
     private func deletePhoto(with photoId: Int) {
@@ -334,12 +358,123 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             }
             
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                DispatchQueue.main.async {
+                    if let index = self.annotations.firstIndex(where: { $0.photoId == photoId }) {
+                        self.removeAnnotation(with: photoId)
+                        self.refreshAnnotations()
+                        self.setupCardListView()
+                    }
+                }
                 print("Successfully deleted photo with id \(photoId)")
             } else {
                 print(response, "Failed to delete photo with id \(photoId)")
             }
         }
         task.resume()
+    }
+    
+    private func deleteContent(with contentId: Int) {
+        guard let url = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error deleting photo: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                DispatchQueue.main.async {
+                    if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
+                        self.removeAnnotation(with: contentId)
+                        self.refreshAnnotations()
+                        self.setupCardListView()
+                    }
+                }
+                print("Successfully deleted photo with id \(contentId)")
+            } else {
+                print(response, "Failed to delete photo with id \(contentId)")
+            }
+        }
+        task.resume()
+    }
+    
+    private func deleteResource(with photoId: Int, and contentId: Int) {
+        print(photoId, contentId, "check")
+        guard let photoUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
+        guard let contentUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
+        
+        var photoRequest = URLRequest(url: photoUrl)
+        photoRequest.httpMethod = "DELETE"
+        photoRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        photoRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        var contentRequest = URLRequest(url: contentUrl)
+        contentRequest.httpMethod = "DELETE"
+        contentRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        contentRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let photoTask = URLSession.shared.dataTask(with: photoRequest) { data, response, error in
+            if let error = error {
+                print("Error deleting photo: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                DispatchQueue.main.async {
+                    if let index = self.annotations.firstIndex(where: { $0.photoId == photoId }) {
+                        self.removeAnnotation(with: photoId)
+                        self.refreshAnnotations()
+                        self.setupCardListView()
+                    }
+                }
+                print("Successfully deleted photo with id \(photoId)")
+            } else {
+                print(response, "Failed to delete photo with id \(photoId)")
+            }
+        }
+        
+        let contentTask = URLSession.shared.dataTask(with: contentRequest) { data, response, error in
+            if let error = error {
+                print("Error deleting content: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                DispatchQueue.main.async {
+                    if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
+                        self.removeAnnotation(with: contentId)
+                        self.refreshAnnotations()
+                        self.setupCardListView()
+                    }
+                }
+                print("Successfully deleted content with id \(contentId)")
+            } else {
+                print(response, "Failed to delete content with id \(contentId)")
+            }
+        }
+        
+        photoTask.resume()
+        contentTask.resume()
+    }
+    
+    
+    private func removeAnnotation(with photoId: Int) {
+        if let index = annotations.firstIndex(where: { $0.photoId == photoId }) {
+            let annotation = annotations.remove(at: index)
+            mapView.removeAnnotation(annotation)
+        }
+    }
+    
+    private func refreshAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        for annotation in annotations {
+            setupAnnotation(location: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), imageUrl: annotation.imageUrl, pinCount: annotation.pinCount, photoId: annotation.photoId, contentId: annotation.contentId)
+        }
     }
     
     private func removeCheckmarkFromView(_ iconView: UIView) {
@@ -452,8 +587,8 @@ extension AlbumViewController: MKMapViewDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId)
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId)
         mapView.addAnnotation(imageAnnotation)
     }
 }
@@ -478,13 +613,13 @@ extension AlbumViewController: CLLocationManagerDelegate {
             let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             mapView.centerToLocation(location)
             currentLocationRecord = location
-            setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count, photoId: annotation.photoId)
+            setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count, photoId: annotation.photoId, contentId: annotation.contentId)
         }
         
         if locations.isEmpty {
             locationManager.stopUpdatingLocation()
         } else {
-            print(locations, "locations")
+            //            print(locations, "locations")
         }
     }
     
