@@ -144,6 +144,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                    let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
                     var photoPinContainer = [PhotoPin]()
                     var photoIds:Int = 0
+                    var photoImageUrl:String = ""
                     let dateFormatter: DateFormatter = {
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -152,6 +153,11 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                     
                     for pinDict in jsonArray {
                         if let photosData = pinDict["photos"] as? [String: Any] {
+                            if let photoUrl = photosData["url"] as? String {
+                                photoImageUrl = photoUrl
+                            } else {
+                                print("url not found or not an String")
+                            }
                             if let photoId = photosData["id"] as? Int {
                                 photoIds = photoId
                             } else {
@@ -170,13 +176,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                             continue
                         }
                         
-                        var firstPhotoUrl: String?
-                        if let photos = pinDict["photos"] as? [[String: Any]], !photos.isEmpty {
-                            if let firstPhoto = photos.first, let url = firstPhoto["url"] as? String {
-                                firstPhotoUrl = url
-                            }
-                        }
-                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: firstPhotoUrl ?? "", userId: userId, memorizedAt: memorizedAtString)
+                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: photoImageUrl, userId: userId, memorizedAt: memorizedAtString)
                         photoPinContainer.append(photoPin)
                     }
                     

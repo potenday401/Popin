@@ -92,7 +92,6 @@ extension AlbumDetailViewController: UICollectionViewDelegate {
         if currentIndex >= 0 && currentIndex < annotations.count {
             let currentAnnotation = annotations[currentIndex]
             updateLocationLabel(with: currentAnnotation)
-            // 임의의 날짜 데이터 추가
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
             let currentDate = formatter.string(from: Date())
