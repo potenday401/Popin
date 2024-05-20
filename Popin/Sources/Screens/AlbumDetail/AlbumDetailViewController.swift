@@ -35,7 +35,7 @@ class AlbumDetailViewController: BaseViewController {
     
     let dateIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "date")
+        imageView.image = UIImage(named: "pin")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -150,7 +150,6 @@ extension AlbumDetailViewController: UICollectionViewDelegate {
                     }
                     locationString += sublocality
                 }
-                
                 self.locationLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
             } else {
                 self.locationLabel.text = "Unknown Location"

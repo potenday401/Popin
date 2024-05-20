@@ -47,6 +47,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     var annotations: [CustomImageAnnotation] = []
     var locationString:String = ""
     private let accessToken: String
+    weak var viewController: UIViewController?
     
     init(accessToken: String) {
         self.accessToken = accessToken
@@ -66,7 +67,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }()
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     private func cameraAuth() {
@@ -86,6 +89,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     private lazy var navigationBar: PDSNavigationBar = {
         let navigationBar = PDSNavigationBar()
+        navigationBar.isUserInteractionEnabled = true
         navigationBar.title = self.locationString
         return navigationBar
     }()

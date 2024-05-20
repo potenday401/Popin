@@ -24,14 +24,14 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     
     private let navigationBar: PDSNavigationBar = {
         let navigationBar = PDSNavigationBar()
-        navigationBar.isUserInteractionEnabled = false
+        navigationBar.isUserInteractionEnabled = true
         return navigationBar
     }()
     
     private lazy var floatingButton: UIButton = {
         let button = UIButton(type: .system)
         if let chevronImage = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate) {
-            chevronImage.accessibilityIdentifier = "chevron.down"  // Set accessibilityIdentifier here
+            chevronImage.accessibilityIdentifier = "chevron.down"
             button.setImage(chevronImage, for: .normal)
         }
         button.tintColor = .white
