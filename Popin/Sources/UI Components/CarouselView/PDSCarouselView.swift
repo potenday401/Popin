@@ -31,15 +31,15 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     private lazy var floatingButton: UIButton = {
         let button = UIButton(type: .system)
         if let chevronImage = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate) {
+            chevronImage.accessibilityIdentifier = "chevron.down"  // Set accessibilityIdentifier here
             button.setImage(chevronImage, for: .normal)
-            button.tintColor = .white
         }
+        button.tintColor = .white
         button.backgroundColor = UIColor.gray500
         button.addTarget(self, action: #selector(floatingButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     
     // MARK: - Properties
     
@@ -167,13 +167,10 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     }
     
     @objc private func floatingButtonTapped() {
-        guard let currentImageName = floatingButton.image(for: .normal)?.accessibilityIdentifier else {
-            return
-        }
-        
-        let newImageName = currentImageName == "chevron.down" ? "chevron.up" : "chevron.down"
-        let newImage = UIImage(systemName: newImageName)
+        let imageName = (floatingButton.image(for: .normal)?.accessibilityIdentifier == "chevron.down") ? "chevron.up" : "chevron.down"
+        let newImage = UIImage(systemName: imageName)!
         floatingButton.setImage(newImage, for: .normal)
+
         if let floatingView = floatingView {
             floatingView.isHidden.toggle()
             if !floatingView.isHidden {
@@ -181,6 +178,7 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
             }
         }
     }
+
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

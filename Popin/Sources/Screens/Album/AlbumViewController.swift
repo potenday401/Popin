@@ -222,7 +222,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                     
                     photoId = annotation.photoId
                     contentId = annotation.contentId
-                    print(photoId, contentId, "contentId check")
                     if let photoId = photoId, let contentId = contentId {
                         let combinedTag = (photoId << 16) | contentId
                         iconView.tag = combinedTag
@@ -322,18 +321,10 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     @objc private func deleteButtonTapped() {
-        //        for iconView in selectedIconViews {
-        //            let photoId = iconView.tag
-        //            deletePhoto(with: photoId)
-        //        }
         for iconView in selectedIconViews {
-            // Extracting photoId and contentId from the tag
             guard let tag = iconView.tag as? Int else { continue }
-            let photoId = tag >> 16 // Extracting the photoId from the higher 16 bits
-            let contentId = tag & 0xFFFF // Extracting the contentId from the lower 16 bits
-            
-            //            deletePhoto(with: photoId)
-            //            deleteContent(with: contentId)
+            let photoId = tag >> 16
+            let contentId = tag & 0xFFFF
             deleteResource(with: photoId, and: contentId)
         }
         selectedIconViews.removeAll()
@@ -342,64 +333,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         deleteButton.isHidden = true
         selectButton.isHidden = false
         
-    }
-    
-    private func deletePhoto(with photoId: Int) {
-        guard let url = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error deleting photo: \(error)")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                DispatchQueue.main.async {
-                    if let index = self.annotations.firstIndex(where: { $0.photoId == photoId }) {
-                        self.removeAnnotation(with: photoId)
-                        self.refreshAnnotations()
-                        self.setupCardListView()
-                    }
-                }
-                print("Successfully deleted photo with id \(photoId)")
-            } else {
-                print(response, "Failed to delete photo with id \(photoId)")
-            }
-        }
-        task.resume()
-    }
-    
-    private func deleteContent(with contentId: Int) {
-        guard let url = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error deleting photo: \(error)")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                DispatchQueue.main.async {
-                    if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
-                        self.removeAnnotation(with: contentId)
-                        self.refreshAnnotations()
-                        self.setupCardListView()
-                    }
-                }
-                print("Successfully deleted photo with id \(contentId)")
-            } else {
-                print(response, "Failed to delete photo with id \(contentId)")
-            }
-        }
-        task.resume()
     }
     
     private func deleteResource(with photoId: Int, and contentId: Int) {
@@ -426,8 +359,13 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.photoId == photoId }) {
-                        self.removeAnnotation(with: photoId)
-                        self.refreshAnnotations()
+//                        let removedAnnotation = self.annotations.remove(at: index)
+//                        self.mapView.removeAnnotation(removedAnnotation)
+//                        self.removeAnnotation(with: photoId)
+//                        self.refreshAnnotations()
+//                        self.setupCardListView()
+                        let removedAnnotation = self.annotations.remove(at: index)
+                        self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
                 }
@@ -446,8 +384,14 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
-                        self.removeAnnotation(with: contentId)
-                        self.refreshAnnotations()
+//                        let removedAnnotation = self.annotations.remove(at: index)
+//                        self.mapView.removeAnnotation(removedAnnotation)
+//                        self.removeAnnotation(with: contentId)
+//                        self.refreshAnnotations()
+//                        self.setupCardListView()
+                        let removedAnnotation = self.annotations.remove(at: index)
+                        print(removedAnnotation, "check removed Annotation")
+                        self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
                 }
@@ -456,9 +400,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 print(response, "Failed to delete content with id \(contentId)")
             }
         }
-        
         photoTask.resume()
         contentTask.resume()
+        
     }
     
     
@@ -499,6 +443,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             deleteButton.isHidden = true
             selectButton.isHidden = false
             cancelButton.isHidden = true
+            
         } else {
             selectedIconViews.insert(iconView)
             let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))

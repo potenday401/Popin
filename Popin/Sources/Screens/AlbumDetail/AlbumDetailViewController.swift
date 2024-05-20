@@ -9,10 +9,12 @@ import Kingfisher
 import CoreLocation
 
 class AlbumDetailViewController: BaseViewController {
+    
     var annotations: [CustomImageAnnotation] = []
-
+    
     lazy var carousel: PDSCarouselView<UIView> = {
         let urls = annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
+        
         let views: [UIView] = urls.map { url in
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
@@ -24,18 +26,33 @@ class AlbumDetailViewController: BaseViewController {
         return carousel
     }()
     
+    let locationIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "date")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    let dateIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "date")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    // todo: default Location, default Date실데이터로 변경
     let locationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.numberOfLines = 2
-        label.text = "Default Location"
+        label.text = "수원시 동작구"
         return label
     }()
     
     let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Default Date"
+        label.text = "23.12.08"
         return label
     }()
     
@@ -44,7 +61,7 @@ class AlbumDetailViewController: BaseViewController {
         setupHierarchy()
         navigationItem.hidesBackButton = true
     }
-    
+
     override func loadView() {
         let view = UIView()
         view.backgroundColor = .black
@@ -59,12 +76,16 @@ class AlbumDetailViewController: BaseViewController {
     
     func setupHierarchy() {
         view.addSubview(carousel)
+        view.addSubview(locationIcon)
         view.addSubview(locationLabel)
+        view.addSubview(dateIcon)
         view.addSubview(dateLabel)
     }
     
     func setupComponents() {
         carousel.translatesAutoresizingMaskIntoConstraints = false
+        locationIcon.translatesAutoresizingMaskIntoConstraints = false
+        dateIcon.translatesAutoresizingMaskIntoConstraints = false
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -75,11 +96,22 @@ class AlbumDetailViewController: BaseViewController {
             carousel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             carousel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             carousel.heightAnchor.constraint(equalTo: carousel.widthAnchor, multiplier: 1.5),
-            locationLabel.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 8),
-            locationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            locationIcon.topAnchor.constraint(equalTo: carousel.bottomAnchor, constant: 8),
+            locationIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            locationIcon.widthAnchor.constraint(equalToConstant: 24),
+            locationIcon.heightAnchor.constraint(equalToConstant: 24),
+            
+            locationLabel.centerYAnchor.constraint(equalTo: locationIcon.centerYAnchor),
+            locationLabel.leadingAnchor.constraint(equalTo: locationIcon.trailingAnchor, constant: 8),
             locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            dateLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
-            dateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+
+            dateIcon.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
+            dateIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            dateIcon.widthAnchor.constraint(equalToConstant: 24),
+            dateIcon.heightAnchor.constraint(equalToConstant: 24),
+            
+            dateLabel.centerYAnchor.constraint(equalTo: dateIcon.centerYAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: dateIcon.trailingAnchor, constant: 8),
             dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }

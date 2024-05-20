@@ -225,9 +225,9 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId)
-        DispatchQueue.main.async {
-            self.mapView.addAnnotation(imageAnnotation)
-        }
+//        DispatchQueue.main.async {
+//            self.mapView.addAnnotation(imageAnnotation)
+//        }
     }
     
     func setupLocationManager() {
