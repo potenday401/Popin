@@ -116,7 +116,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     func setupMapView() {
         mapView = MKMapView()
-        mapView.delegate = self
+//        mapView.delegate = self
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -274,6 +274,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -525,15 +526,63 @@ extension AlbumViewController: MKMapViewDelegate {
             let thresholdDistance: CLLocationDistance = 100.0
             
             if distance <= thresholdDistance {
-                let albumDetailViewController = AlbumDetailViewController()
-                albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
-                navigationController?.pushViewController(albumDetailViewController, animated: true)
+                //                delegate?.didSelectLocation(annotations: self.annotations)
+                let albumViewController = AlbumViewController(accessToken: accessToken)
+                albumViewController.annotations = self.mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+                mapView.removeAnnotations(mapView.annotations.filter { $0 is CustomImageAnnotation })
+                return
             }
-        } else {
-            let albumDetailViewController = AlbumDetailViewController()
-            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
-            navigationController?.pushViewController(albumDetailViewController, animated: true)
         }
+        
+        // Remove existing image annotations
+        mapView.removeAnnotations(mapView.annotations.filter { $0 is CustomImageAnnotation })
+        
+        let maxAdditionalAnnotations = 6
+        var addedAnnotationsCount = 0
+        var index = 0
+        let mapCenter = mapView.centerCoordinate
+        
+        while addedAnnotationsCount < maxAdditionalAnnotations && index < annotations.count {
+            let annotation = annotations[index]
+            let coordinate = annotation.coordinate
+            let photoUrl = annotation.imageUrl
+            let pinCount = annotation.pinCount
+            let photoId = annotation.photoId
+            let contentId = annotation.contentId
+            
+            let angle = Double(addedAnnotationsCount) * (2.0 * Double.pi / Double(maxAdditionalAnnotations))
+            let offsetLatitude = mapCenter.latitude + 0.0020 * cos(angle)
+            let offsetLongitude = mapCenter.longitude + 0.0020 * sin(angle)
+            
+            let newAnnotation = CustomImageAnnotation(
+                coordinate: CLLocationCoordinate2D(latitude: offsetLatitude, longitude: offsetLongitude),
+                imageUrl: photoUrl,
+                pinCount: pinCount,
+                photoId: photoId,
+                contentId: contentId
+            )
+            mapView.addAnnotation(newAnnotation)
+            
+            addedAnnotationsCount += 1
+            index += 1
+        }
+        
+        while index < annotations.count {
+            let annotationToRemove = annotations[index]
+            mapView.removeAnnotation(annotationToRemove)
+            index += 1
+        }
+    }
+    
+    private func setupAnnotationWithoutPinCount(location: CLLocation, imageUrl: String, photoId: Int, contentId: Int) {
+        let newAnnotation = CustomImageAnnotation(
+            coordinate: location.coordinate,
+            imageUrl: imageUrl,
+            pinCount: 0,
+            photoId: photoId,
+            contentId: contentId
+        )
+        mapView.addAnnotation(newAnnotation)
     }
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
