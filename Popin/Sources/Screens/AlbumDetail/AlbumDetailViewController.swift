@@ -13,6 +13,9 @@ class AlbumDetailViewController: BaseViewController {
     var annotations: [CustomImageAnnotation] = []
     
     lazy var carousel: PDSCarouselView<UIView> = {
+        print(annotations, "annotations")
+        print(annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
+              , "urls")
         let urls = annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
         
         let views: [UIView] = urls.map { url in
@@ -39,7 +42,7 @@ class AlbumDetailViewController: BaseViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-
+    
     // todo: default Location, default Date실데이터로 변경
     let locationLabel: UILabel = {
         let label = UILabel()
@@ -61,7 +64,7 @@ class AlbumDetailViewController: BaseViewController {
         setupHierarchy()
         navigationItem.hidesBackButton = true
     }
-
+    
     override func loadView() {
         let view = UIView()
         view.backgroundColor = .black
@@ -104,7 +107,7 @@ class AlbumDetailViewController: BaseViewController {
             locationLabel.centerYAnchor.constraint(equalTo: locationIcon.centerYAnchor),
             locationLabel.leadingAnchor.constraint(equalTo: locationIcon.trailingAnchor, constant: 8),
             locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-
+            
             dateIcon.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 8),
             dateIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             dateIcon.widthAnchor.constraint(equalToConstant: 24),

@@ -342,7 +342,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func deleteResource(with photoId: Int, and contentId: Int) {
-        print(photoId, contentId, "check")
         guard let photoUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
         guard let contentUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
         
@@ -396,7 +395,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                         //                        self.refreshAnnotations()
                         //                        self.setupCardListView()
                         let removedAnnotation = self.annotations.remove(at: index)
-                        print(removedAnnotation, "check removed Annotation")
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
@@ -533,32 +531,19 @@ extension AlbumViewController: MKMapViewDelegate {
             let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
             let distance = touchLocation.distance(from: currentLocationRecord)
             
-            let thresholdDistance: CLLocationDistance = 10.0
+            let thresholdDistance: CLLocationDistance = 100.0
             
             if distance <= thresholdDistance {
                 let albumDetailViewController = AlbumDetailViewController()
                 albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumDetailViewController, animated: true)
-                return
             }
         } else {
             let albumDetailViewController = AlbumDetailViewController()
             albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
             navigationController?.pushViewController(albumDetailViewController, animated: true)
-            return
-        }
-        
-        if annotationsAlreadyAdded {
-            let albumDetailViewController = AlbumDetailViewController()
-            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
-            navigationController?.pushViewController(albumDetailViewController, animated: true)
-        } else {
-            mapView.removeAnnotations(mapView.annotations.filter { $0 is CustomImageAnnotation })
-            annotationsAlreadyAdded = true
-            addImageAnnotationsAround(centerCoordinate: coordinates)
         }
     }
-    
     
     private func addImageAnnotationsAround(centerCoordinate: CLLocationCoordinate2D) {
         let maxAdditionalAnnotations = 6
@@ -658,4 +643,3 @@ extension AlbumViewController: CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
 }
-
