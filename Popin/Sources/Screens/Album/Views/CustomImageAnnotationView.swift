@@ -65,6 +65,7 @@ final class CustomImageAnnotationView: MKAnnotationView {
         }
     }
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-                print("dkdkdkdkd")
-            }
+        print("dkdkdkdkd")
+    }
+    
     }

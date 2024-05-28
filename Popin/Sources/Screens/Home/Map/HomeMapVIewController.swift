@@ -101,6 +101,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     func getPin(latitude: Double, longitude: Double) {
         let polygon =
         "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
+        print(polygon, "polygon")
         let urlString = baseUrl + "contents?area=\(polygon)"
         
         guard let url = URL(string: urlString) else {
@@ -144,6 +145,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                    let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
                     var photoPinContainer = [PhotoPin]()
                     var photoIds:Int = 0
+                    var photoImageUrl:String = ""
                     let dateFormatter: DateFormatter = {
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -152,6 +154,11 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                     
                     for pinDict in jsonArray {
                         if let photosData = pinDict["photos"] as? [String: Any] {
+                            if let photoUrl = photosData["url"] as? String {
+                                photoImageUrl = photoUrl
+                            } else {
+                                print("url not found or not an String")
+                            }
                             if let photoId = photosData["id"] as? Int {
                                 photoIds = photoId
                             } else {
@@ -170,13 +177,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                             continue
                         }
                         
-                        var firstPhotoUrl: String?
-                        if let photos = pinDict["photos"] as? [[String: Any]], !photos.isEmpty {
-                            if let firstPhoto = photos.first, let url = firstPhoto["url"] as? String {
-                                firstPhotoUrl = url
-                            }
-                        }
-                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: firstPhotoUrl ?? "", userId: userId, memorizedAt: memorizedAtString)
+                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: photoImageUrl, userId: userId, memorizedAt: memorizedAtString)
                         photoPinContainer.append(photoPin)
                     }
                     
@@ -200,6 +201,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             let latitude = pin.latitude
             let longitude = pin.longitude
             let photoId = pin.photoId
+            let contentId = pin.contentId
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let coordinateKey = "\(latitude)-\(longitude)"
             
@@ -211,9 +213,9 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             
             let pinCount = self.pinCountByCoordinate[coordinateKey, default: 0]
             currentLocationRecord = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount)
+            self.setupAnnotation(location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), imageUrl: pin.photoUrl, pinCount: pinCount, photoId: pin.photoId, contentId: pin.contentId)
             self.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount, photoId: photoId)
+            let imageAnnotation = CustomImageAnnotation(coordinate: coordinate, imageUrl: pin.photoUrl, pinCount: pinCount, photoId: photoId, contentId: pin.contentId, hidePinCountLabel: false)
             DispatchQueue.main.async {
                 self.mapView.addAnnotation(imageAnnotation)
             }
@@ -221,8 +223,8 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: pinCount)
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false)
         DispatchQueue.main.async {
             self.mapView.addAnnotation(imageAnnotation)
         }

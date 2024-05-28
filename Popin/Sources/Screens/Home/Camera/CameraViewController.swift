@@ -13,6 +13,11 @@ import MapKit
 import Kingfisher
 
 final class CameraViewController: BaseViewController, LocationSearchControllerDelegate {
+    var imageDataHandler: (([ImageData]) -> Void)?
+    private func sendImageDataToAlbumDetailViewController() {
+        guard let imageDataHandler = imageDataHandler else { return }
+        imageDataHandler(imageData)
+    }
     weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
@@ -26,7 +31,8 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     private let pickedImage:[UIImage]
     private var locationString:String = ""
     private var location:CLLocation?
-    private let imageData:[ImageData]
+//    private var imageData:[ImageData]
+    private var imageData: [ImageData] = []
     private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
     private var selectedLocation = ""
@@ -67,7 +73,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         button.addTarget(self, action: #selector(placeButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+    // 사진 등록 후 homemapviewController로 이동, 지도에도 게시물 보이게 반영 필요함
     private lazy var uploadButton: UIButton = {
         let button = makeButton(title: "사진 등록하기", backgroundColor: .gray500, titleColor: .gray100)
         button.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
@@ -112,7 +118,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             placeButton.setTitle(selectedLocation, for: .normal)
         }
     }
-    
+
     @objc
     func uploadButtonDidTap() {
         let currentDateString = currentDate()
@@ -157,6 +163,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
+        // todo: 뒤로가지 않는 화면 파악 후 적용
         navigationBar.leftItem = .init(
             image: UIImage(resource: .chevronLeft),
             target: self,
@@ -296,8 +303,15 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         self.locationString = dependency.locationString
         self.location = dependency.location
         super.init()
+        print(imageData, "data check")
         configureImageView(with: pickedImage)
     }
+       
+//    private func sendImageDataToAlbumDetailViewControllers() {
+//        guard let imageData = imageDataHandler else { return }
+//        let albumDetailViewController = AlbumDetailViewController(imageData: imageData)
+//        present(albumDetailViewController, animated: true)
+//      }
     
     private func configureImageView(with images: [UIImage]) {
         guard !images.isEmpty else { return }
@@ -317,6 +331,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         
         scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(imageData.count), height: scrollView.frame.height)
         self.view.addSubview(scrollView)
+        sendImageDataToAlbumDetailViewController()
     }
     
     private func cameraAuth() {
@@ -395,11 +410,10 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         }
         task.resume()
     }
-    
+
     @objc func uploadPin(contentId: Int, currentDateString: String) {
-        print(currentDateString, "date 1")
+
         dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: location, accessToken: accessToken, contentId: contentId, currentDateString: currentDateString) { result in
-            print(result, "result")
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
@@ -485,15 +499,6 @@ extension CameraViewController: UIImagePickerControllerDelegate {
 extension CameraViewController: UINavigationControllerDelegate {
 }
 
-extension UIImage {
-    func toBase64() -> String? {
-        guard let imageData = self.jpegData(compressionQuality: 0.1) else {
-            return nil
-        }
-        return imageData.base64EncodedString()
-    }
-}
-
 private extension CameraViewController {
     enum Text {
         static let edit = "수정"
@@ -504,4 +509,3 @@ private extension CameraViewController {
 protocol CameraViewControllerDelegate: AnyObject {
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController)
 }
-

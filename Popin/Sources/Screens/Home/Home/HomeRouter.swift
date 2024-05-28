@@ -29,7 +29,6 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
         self.dismissFromProfileScreen()
     }
     
-    
     weak var viewController: UIViewController?
     
     func routeToHomeMapView(accessToken: String) {
