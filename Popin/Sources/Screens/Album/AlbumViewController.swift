@@ -18,11 +18,12 @@ class CustomImageAnnotation: MKPointAnnotation {
     var contentId:Int
     var hidePinCountLabel: Bool = false
     
-    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
+    init(coordinate: CLLocationCoordinate2D, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, hidePinCountLabel:Bool) {
         self.imageUrl = imageUrl
         self.pinCount = pinCount
         self.photoId = photoId
         self.contentId = contentId
+        self.hidePinCountLabel = hidePinCountLabel
         super.init()
         self.coordinate = coordinate
     }
@@ -50,6 +51,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private let accessToken: String
     weak var viewController: UIViewController?
     private var annotationsAlreadyAdded = false
+    var existingAnnotations: [CustomImageAnnotation] = []
     
     init(accessToken: String) {
         self.accessToken = accessToken
@@ -342,6 +344,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func deleteResource(with photoId: Int, and contentId: Int) {
+        print(photoId, contentId, "check")
         guard let photoUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
         guard let contentUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
         
@@ -395,6 +398,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                         //                        self.refreshAnnotations()
                         //                        self.setupCardListView()
                         let removedAnnotation = self.annotations.remove(at: index)
+                        print(removedAnnotation, "check removed Annotation")
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
@@ -503,7 +507,6 @@ extension AlbumViewController: MKMapViewDelegate {
         guard let annotation = annotation as? CustomImageAnnotation else { return nil }
         let identifier = "customImageAnnotation"
         var view: CustomImageAnnotationView
-        
         if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomImageAnnotationView {
             dequeuedView.annotation = annotation
             view = dequeuedView
@@ -513,13 +516,10 @@ extension AlbumViewController: MKMapViewDelegate {
         return view
     }
     
-    
-    func annotationsAlreadyRemoved() -> Bool {
-        return UserDefaults.standard.bool(forKey: "annotationsAlreadyRemoved")
-    }
-    
-    func setAnnotationsAlreadyRemoved() {
-        UserDefaults.standard.set(true, forKey: "annotationsAlreadyRemoved")
+    private func showAlbumDetailViewController() {
+        let albumDetailViewController = AlbumDetailViewController()
+        albumDetailViewController.annotations = existingAnnotations
+        navigationController?.pushViewController(albumDetailViewController, animated: true)
     }
     
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
@@ -531,17 +531,29 @@ extension AlbumViewController: MKMapViewDelegate {
             let touchLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
             let distance = touchLocation.distance(from: currentLocationRecord)
             
-            let thresholdDistance: CLLocationDistance = 100.0
+            let thresholdDistance: CLLocationDistance = 10.0
             
             if distance <= thresholdDistance {
                 let albumDetailViewController = AlbumDetailViewController()
                 albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumDetailViewController, animated: true)
+                return
             }
         } else {
             let albumDetailViewController = AlbumDetailViewController()
             albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
             navigationController?.pushViewController(albumDetailViewController, animated: true)
+            return
+        }
+        
+        if annotationsAlreadyAdded {
+            let albumDetailViewController = AlbumDetailViewController()
+            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+            navigationController?.pushViewController(albumDetailViewController, animated: true)
+        } else {
+            mapView.removeAnnotations(mapView.annotations.filter { $0 is CustomImageAnnotation })
+            annotationsAlreadyAdded = true
+            addImageAnnotationsAround(centerCoordinate: coordinates)
         }
     }
     
@@ -567,7 +579,8 @@ extension AlbumViewController: MKMapViewDelegate {
                 imageUrl: photoUrl,
                 pinCount: pinCount,
                 photoId: photoId,
-                contentId: contentId
+                contentId: contentId,
+                hidePinCountLabel: true
             )
             newAnnotation.hidePinCountLabel = true
             mapView.addAnnotation(newAnnotation)
@@ -595,13 +608,14 @@ extension AlbumViewController: MKMapViewDelegate {
             imageUrl: imageUrl,
             pinCount: 0,
             photoId: photoId,
-            contentId: contentId
+            contentId: contentId,
+            hidePinCountLabel: true
         )
         mapView.addAnnotation(newAnnotation)
     }
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId)
+        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false)
         mapView.addAnnotation(imageAnnotation)
     }
 }
