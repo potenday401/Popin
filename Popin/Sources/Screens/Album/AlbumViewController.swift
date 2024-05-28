@@ -71,6 +71,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }()
     
     @objc func backButtonTapped() {
+        print("tap?")
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
         }
@@ -107,8 +108,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         statusBarView.addSubview(infoView)
         
         statusBarView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(163)
+            make.top.trailing.equalToSuperview().offset(125)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(33)
         }
         
         infoView.snp.makeConstraints { make in
