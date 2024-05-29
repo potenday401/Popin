@@ -181,8 +181,8 @@ private extension LoginViewController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parameters: [String: Any] = [
-            "email": "kimjiha12@naver.com",
-            "password": "soda1223!!"
+            "email": email,
+            "password": password
         ]
         
         do {
