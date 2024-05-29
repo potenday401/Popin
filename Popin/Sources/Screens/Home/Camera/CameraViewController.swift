@@ -4,6 +4,7 @@
 //
 //  Created by Jihaha kim on 2024/01/30.
 //
+
 import UIKit
 import AVFoundation
 import Photos
@@ -163,7 +164,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
-        // todo: 뒤로가지 않는 화면 파악 후 적용
         navigationBar.leftItem = .init(
             image: UIImage(resource: .chevronLeft),
             target: self,
@@ -306,12 +306,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         print(imageData, "data check")
         configureImageView(with: pickedImage)
     }
-       
-//    private func sendImageDataToAlbumDetailViewControllers() {
-//        guard let imageData = imageDataHandler else { return }
-//        let albumDetailViewController = AlbumDetailViewController(imageData: imageData)
-//        present(albumDetailViewController, animated: true)
-//      }
     
     private func configureImageView(with images: [UIImage]) {
         guard !images.isEmpty else { return }
