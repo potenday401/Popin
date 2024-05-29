@@ -13,11 +13,8 @@ class AlbumDetailViewController: BaseViewController {
     var annotations: [CustomImageAnnotation] = []
     
     lazy var carousel: PDSCarouselView<UIView> = {
-        print(annotations, "annotations")
-        print(annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
-              , "urls")
         let urls = annotations.map { URL(string: $0.imageUrl) }.compactMap { $0 }
-        
+        print(annotations[0].imageUrl)
         let views: [UIView] = urls.map { url in
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill

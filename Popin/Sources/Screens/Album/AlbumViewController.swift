@@ -338,7 +338,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             deleteResource(with: photoId, and: contentId)
         }
         selectedIconViews.removeAll()
-        //        isSelectionEnabled = false
         cancelButton.isHidden = true
         deleteButton.isHidden = true
         selectButton.isHidden = false
@@ -346,7 +345,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func deleteResource(with photoId: Int, and contentId: Int) {
-        print(photoId, contentId, "check")
         guard let photoUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/photos/\(photoId)") else { return }
         guard let contentUrl = URL(string: "http://dev-api-popin.ap-northeast-2.elasticbeanstalk.com/contents/\(contentId)") else { return }
         
@@ -369,11 +367,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.photoId == photoId }) {
-                        //                        let removedAnnotation = self.annotations.remove(at: index)
-                        //                        self.mapView.removeAnnotation(removedAnnotation)
-                        //                        self.removeAnnotation(with: photoId)
-                        //                        self.refreshAnnotations()
-                        //                        self.setupCardListView()
                         let removedAnnotation = self.annotations.remove(at: index)
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
@@ -394,11 +387,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
-                        //                        let removedAnnotation = self.annotations.remove(at: index)
-                        //                        self.mapView.removeAnnotation(removedAnnotation)
-                        //                        self.removeAnnotation(with: contentId)
-                        //                        self.refreshAnnotations()
-                        //                        self.setupCardListView()
                         let removedAnnotation = self.annotations.remove(at: index)
                         print(removedAnnotation, "check removed Annotation")
                         self.mapView.removeAnnotation(removedAnnotation)
@@ -537,20 +525,20 @@ extension AlbumViewController: MKMapViewDelegate {
             
             if distance <= thresholdDistance {
                 let albumDetailViewController = AlbumDetailViewController()
-                albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+                albumDetailViewController.annotations = annotations.compactMap { $0 as? CustomImageAnnotation }
                 navigationController?.pushViewController(albumDetailViewController, animated: true)
                 return
             }
         } else {
             let albumDetailViewController = AlbumDetailViewController()
-            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+            albumDetailViewController.annotations = annotations.compactMap { $0 as? CustomImageAnnotation }
             navigationController?.pushViewController(albumDetailViewController, animated: true)
             return
         }
         
         if annotationsAlreadyAdded {
             let albumDetailViewController = AlbumDetailViewController()
-            albumDetailViewController.annotations = mapView.annotations.compactMap { $0 as? CustomImageAnnotation }
+            albumDetailViewController.annotations = annotations.compactMap { $0 as? CustomImageAnnotation }
             navigationController?.pushViewController(albumDetailViewController, animated: true)
         } else {
             mapView.removeAnnotations(mapView.annotations.filter { $0 is CustomImageAnnotation })
@@ -602,18 +590,6 @@ extension AlbumViewController: MKMapViewDelegate {
             }
             index += 1
         }
-    }
-    
-    private func setupAnnotationWithoutPinCount(location: CLLocation, imageUrl: String, photoId: Int, contentId: Int) {
-        let newAnnotation = CustomImageAnnotation(
-            coordinate: location.coordinate,
-            imageUrl: imageUrl,
-            pinCount: 0,
-            photoId: photoId,
-            contentId: contentId,
-            hidePinCountLabel: true
-        )
-        mapView.addAnnotation(newAnnotation)
     }
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int) {
