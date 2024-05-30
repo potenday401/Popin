@@ -18,7 +18,10 @@ final class AlbumDetailViewController: BaseViewController {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
-            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
+            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"),options: [
+                .cacheOriginalImage,
+                .transition(.fade(0.2))
+            ])
             return imageView
         }
         let carousel = PDSCarouselView(items: views, navigationController: navigationController)
@@ -52,6 +55,52 @@ final class AlbumDetailViewController: BaseViewController {
         return label
     }()
     
+//    private func setupLocationLabel() {
+//        guard let firstAnnotation = annotations.first else {
+//            return
+//        }
+//        
+//        let location = CLLocation(latitude: firstAnnotation.coordinate.latitude, longitude: firstAnnotation.coordinate.longitude)
+//        
+//        let geocoder = CLGeocoder()
+//        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+//            guard let self = self else { return }
+//            
+//            if let error = error {
+//                print("Reverse geocoding error: \(error.localizedDescription)")
+//                return
+//            }
+//            
+//            var addressString = ""
+//            
+//            if let placemark = placemarks?.first {
+//                if let city = placemark.locality {
+//                    addressString += city
+//                }
+//                
+//                if let subLocality = placemark.subLocality {
+//                    addressString += addressString.isEmpty ? subLocality : ", \(subLocality)"
+//                }
+//            }
+//            
+//            DispatchQueue.main.async {
+//                self.locationLabel.text = addressString.isEmpty ? "Unknown Location" : addressString
+//            }
+//        }
+//    }
+//    
+//    private func setupDateLabel() {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+//        
+//        if let firstAnnotationDate = annotations.first?.date {
+//            if let date = dateFormatter.date(from: firstAnnotationDate) {
+//                dateFormatter.dateFormat = "yy.MM.dd"
+//                let formattedDate = dateFormatter.string(from: date)
+//                dateLabel.text = formattedDate
+//            }
+//        }
+//    }
     private func setupLocationLabel() {
         guard let firstAnnotation = annotations.first else {
             return
@@ -98,6 +147,7 @@ final class AlbumDetailViewController: BaseViewController {
             }
         }
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

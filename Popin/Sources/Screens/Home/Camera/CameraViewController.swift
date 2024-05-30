@@ -127,7 +127,9 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         uploadContent(body: jsonData, accessToken: accessToken) { result in
             switch result {
             case .success(let contentId):
-                self.uploadPin(contentId: contentId, currentDateString: currentDateString)
+                DispatchQueue.main.async {
+                    self.uploadPin(contentId: contentId, currentDateString: currentDateString)
+                }
             case .failure(let error):
                 print("Failed to upload content: \(error)")
             }

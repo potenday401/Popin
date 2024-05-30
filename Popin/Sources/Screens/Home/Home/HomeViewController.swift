@@ -24,16 +24,17 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     var router: HomeRouter?
     var imageData: [ImageData] = []
     var location: CLLocation?
-
+    
     private var locationManager = CLLocationManager()
     private var locationString:String = ""
     private var accessToken: String?
     private let homeMapViewController: HomeMapViewController
     func cameraAuth() {
-        AVCaptureDevice.requestAccess(for: .video) { granted in
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             if granted {
-                print("권한 허용")
-                self.openCamera()
+                DispatchQueue.main.async {
+                    self?.openCamera()
+                }
             } else {
                 print("권한 거부")
             }
@@ -44,8 +45,8 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         self.location = location
         self.homeMapViewController = HomeMapViewController(accessToken: accessToken ?? "")
         super.init()
-      }
-
+    }
+    
     func albumAuth() {
         var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
         configuration.selectionLimit = 5
@@ -244,7 +245,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         let location = CLLocation(latitude: latitude, longitude: longitude)
         
         let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
             if let placemark = placemarks?.first {
                 var locationString = ""
                 
@@ -258,11 +259,14 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
                     }
                     locationString += sublocality
                 }
-                
-                self.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
-                self.locationString = locationString.isEmpty ? "Unknown Location" : locationString
+                DispatchQueue.main.async {
+                    self?.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
+                    self?.locationString = locationString.isEmpty ? "Unknown Location" : locationString
+                }
             } else {
-                self.recentPinLabel.text = "Unknown Location"
+                DispatchQueue.main.async {
+                    self?.recentPinLabel.text = "Unknown Location"
+                }
             }
         }
     }
@@ -273,7 +277,6 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
 }
 
 private extension HomeViewController {
-    
     enum Text {
         static let recentMemoryTitle = "최근 업로드 된 추억"
         static let uploadPhotoTitle = "사진등록하기"
@@ -338,8 +341,9 @@ extension HomeViewController: PHPickerViewControllerDelegate {
                     defer { dispatchGroup.leave() }
                     
                     if let image = image as? UIImage {
-                        selectedImages.append(image)
-                        
+                        DispatchQueue.main.async {
+                            selectedImages.append(image)
+                        }
                     } else if let error = error {
                         print("Error loading image: \(error.localizedDescription)")
                     }
@@ -366,15 +370,15 @@ extension HomeViewController: PHPickerViewControllerDelegate {
 }
 
 struct ImageData {
-  let location: CLLocation?
-  let creationDate: Date?
-  let imageData: Data?
-
-  init(location: CLLocation?, creationDate: Date? = nil, imageData: Data? = nil) {
-    self.location = location
-    self.creationDate = creationDate
-    self.imageData = imageData
-  }
+    let location: CLLocation?
+    let creationDate: Date?
+    let imageData: Data?
+    
+    init(location: CLLocation?, creationDate: Date? = nil, imageData: Data? = nil) {
+        self.location = location
+        self.creationDate = creationDate
+        self.imageData = imageData
+    }
 }
 
 protocol HomeMapViewControllerDelegate: AnyObject {
