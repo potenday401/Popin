@@ -136,7 +136,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     
     private func currentDate() -> String {
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "dd.MM.yy · HH시mm분"
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         return dateFormatter.string(from: Date())
     }
@@ -193,7 +192,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             
             for columnIndex in 0..<numberOfColumns {
                 let iconView = UIView()
-                
                 guard columnIndex < dependency.image.count else { continue }
                 let image = dependency.image[columnIndex]
                 
@@ -217,7 +215,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
                 iconView.isUserInteractionEnabled = true
                 rowView.addArrangedSubview(iconView)
             }
-            
             stackView.addArrangedSubview(rowView)
         }
         
@@ -234,8 +231,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             make.top.equalTo(scrollView.snp.bottom).offset(36)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        
-        updateLabels()
         
         dateButton.snp.makeConstraints { make in
             make.height.equalTo(62)
@@ -273,7 +268,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         if let creationDate = firstImageData.creationDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yy.MM.dd"
-//            dateButton.setTitle(dateFormatter.string(from: firstImageData.creationDate ?? Date()), for: .normal)
+            dateButton.setTitle(dateFormatter.string(from: firstImageData.creationDate ?? Date()), for: .normal)
         }
         
         if let location = firstImageData.location {
@@ -301,6 +296,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         self.location = dependency.location
         super.init()
         configureImageView(with: pickedImage)
+        updateLabels()
     }
     
     private func configureImageView(with images: [UIImage]) {
