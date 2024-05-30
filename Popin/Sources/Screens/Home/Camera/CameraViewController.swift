@@ -391,7 +391,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                        let responseData = json["responseData"] as? [String: Any],
                        let contentId = responseData["contentId"] as? Int {
-                        print(contentId, "id check")
                         completion(.success(contentId))
                     } else {
                         //                        completion(.failure(CameraError.contentIdNotFound))
@@ -410,6 +409,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             switch result {
             case .success(let response):
                 print("업로드 성공: \(response)")
+                self.delegate?.requestCameraViewControllerBackDidTap(self)
             case .failure(let error):
                 print(error, "errorcheck")
                 print("업로드 실패: \(CameraError.failUpload)")
