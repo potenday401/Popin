@@ -18,7 +18,10 @@ final class AlbumDetailViewController: BaseViewController {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
-            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"))
+            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"),options: [
+                .cacheOriginalImage,
+                .transition(.fade(0.2))
+            ])
             return imageView
         }
         let carousel = PDSCarouselView(items: views, navigationController: navigationController)
@@ -98,6 +101,7 @@ final class AlbumDetailViewController: BaseViewController {
             }
         }
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

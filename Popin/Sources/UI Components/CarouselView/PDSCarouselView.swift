@@ -8,6 +8,7 @@
 import UIKit
 import ScalingCarousel
 import SnapKit
+import Kingfisher
 
 final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     
@@ -47,6 +48,7 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     private let items: [Item]
     private let horizontalInset: CGFloat = 40
     private var floatingView: UIView?
+    private weak var navigationController: UINavigationController?
     
     // MARK: - Initializer
     
@@ -56,8 +58,6 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         super.init(frame: .zero)
         setUpUI()
     }
-    
-    private let navigationController: UINavigationController?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -170,15 +170,15 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
         let imageName = (floatingButton.image(for: .normal)?.accessibilityIdentifier == "chevron.down") ? "chevron.up" : "chevron.down"
         let newImage = UIImage(systemName: imageName)!
         floatingButton.setImage(newImage, for: .normal)
-
+        
         if let floatingView = floatingView {
             floatingView.isHidden.toggle()
-            if !floatingView.isHidden {
+            if (!floatingView.isHidden) {
                 UIView.transition(with: floatingButton, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
             }
         }
     }
-
+    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
