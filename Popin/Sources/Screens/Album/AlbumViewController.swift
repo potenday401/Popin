@@ -110,7 +110,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         statusBarView.addSubview(infoView)
         
         statusBarView.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().offset(125)
+            make.top.trailing.equalToSuperview().offset(120)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(33)
         }
