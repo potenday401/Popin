@@ -28,34 +28,20 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     private var capturedPhoto: UIImage?
     private let imageView = UIImageView()
     private let containerView = UIView()
-    private var initialLocation: CLLocation?
     private let pickedImage:[UIImage]
     private var locationString:String = ""
     private var location:CLLocation?
-//    private var imageData:[ImageData]
     private var imageData: [ImageData] = []
     private let accessToken:String
     private let searchCompleter = MKLocalSearchCompleter()
     private var selectedLocation = ""
     private var contentId:Int = 0
-    private let dateLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .white
-        return label
-    }()
     private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .leading
         stackView.distribution = .fillEqually
         stackView.spacing = 16
         return stackView
-    }()
-    private let locationLabel:UILabel = {
-        let label = UILabel(frame: CGRect(x: 16, y: 17, width: 112, height: 17))
-        label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .white
-        return label
     }()
     private let navigationBar: PDSNavigationBar = {
         let navigationBar = PDSNavigationBar()
@@ -74,7 +60,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         button.addTarget(self, action: #selector(placeButtonDidTap), for: .touchUpInside)
         return button
     }()
-    // 사진 등록 후 homemapviewController로 이동, 지도에도 게시물 보이게 반영 필요함
+    // todo: 지도에도 게시물 보이게 반영 필요함
     private lazy var uploadButton: UIButton = {
         let button = makeButton(title: "사진 등록하기", backgroundColor: .gray500, titleColor: .gray100)
         button.addTarget(self, action: #selector(uploadButtonDidTap), for: .touchUpInside)
@@ -96,7 +82,11 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     
     @objc
     func dateButtonDidTap() {
-        
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yy · HH시mm분"
+        let formattedDate = dateFormatter.string(from: currentDate)
+        dateButton.setTitle(formattedDate, for: .normal)
     }
     
     @objc
@@ -119,7 +109,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             placeButton.setTitle(selectedLocation, for: .normal)
         }
     }
-
+    
     @objc
     func uploadButtonDidTap() {
         let currentDateString = currentDate()
@@ -146,6 +136,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     
     private func currentDate() -> String {
         let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "dd.MM.yy · HH시mm분"
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         return dateFormatter.string(from: Date())
     }
@@ -154,11 +145,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
         let imageViewMargin: CGFloat = 20
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
-        let currentDateString = dateFormatter.string(from: Date())
-        dateLabel.text = currentDateString
-        locationLabel.text = locationString
         view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -249,6 +235,8 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
+        updateLabels()
+        
         dateButton.snp.makeConstraints { make in
             make.height.equalTo(62)
             make.width.equalTo(343)
@@ -280,8 +268,17 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         delegate?.requestCameraViewControllerBackDidTap(self)
     }
     
-    @objc
-    private func editButtonTapped() {
+    private func updateLabels() {
+        guard let firstImageData = imageData.first else { return }
+        if let creationDate = firstImageData.creationDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yy.MM.dd"
+//            dateButton.setTitle(dateFormatter.string(from: firstImageData.creationDate ?? Date()), for: .normal)
+        }
+        
+        if let location = firstImageData.location {
+            placeButton.setTitle(selectedLocation.isEmpty ? "장소" : selectedLocation, for: .normal)
+        }
     }
     
     // MARK: - Initializer
@@ -402,9 +399,8 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         }
         task.resume()
     }
-
+    
     @objc func uploadPin(contentId: Int, currentDateString: String) {
-
         dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: location, accessToken: accessToken, contentId: contentId, currentDateString: currentDateString) { result in
             switch result {
             case .success(let response):
