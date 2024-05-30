@@ -234,11 +234,16 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        self.location = location
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
-        updateLocationLabel(latitude, longitude)
+        guard let newLocation = locations.last else { return }
+        
+        location = newLocation
+        
+        let latitude = newLocation.coordinate.latitude
+        let longitude = newLocation.coordinate.longitude
+        
+        DispatchQueue.main.async {
+            self.updateLocationLabel(latitude, longitude)
+        }
     }
     
     func updateLocationLabel(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees) {

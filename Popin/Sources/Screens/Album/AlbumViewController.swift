@@ -243,7 +243,10 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 var imageView: UIImageView = {
                     let imageView = UIImageView()
                     imageView.contentMode = .scaleAspectFit
-                    imageView.kf.setImage(with: imageUrl)
+                    imageView.kf.setImage(with: imageUrl,options: [
+                        .cacheOriginalImage,
+                        .transition(.fade(0.2))
+                    ])
                     return imageView
                 }()
                 
