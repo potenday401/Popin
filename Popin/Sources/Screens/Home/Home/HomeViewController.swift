@@ -299,15 +299,15 @@ extension HomeViewController: UIImagePickerControllerDelegate {
             print("이미지 선택에 실패했습니다.")
             return
         }
-        router?.routeToCameraView(with: [image], ImageData: imageData, locationString: locationString, accessToken: accessToken!, location: location!)
+        picker.dismiss(animated: true) {
+            self.router?.routeToCameraView(with: [image], ImageData: self.imageData, locationString: self.locationString, accessToken: self.accessToken!, location: self.location!)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
-        print("취소")
     }
 }
-
 
 extension HomeViewController: PHPickerViewControllerDelegate {
     func presentPhotoPicker() {
@@ -351,7 +351,12 @@ extension HomeViewController: PHPickerViewControllerDelegate {
         }
     }
     
-    func handleSelectedImages(_ images: [UIImage]) {
+    func handleSelectedImages(_ images: [UIImage]?) {
+        guard let images = images, !images.isEmpty else {
+            print("이미지 선택이 취소되었습니다.")
+            return
+        }
+        
         if let accessToken = accessToken, let location = location {
             router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString, accessToken: accessToken, location: location)
         } else {

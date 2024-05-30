@@ -303,7 +303,6 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         self.locationString = dependency.locationString
         self.location = dependency.location
         super.init()
-        print(imageData, "data check")
         configureImageView(with: pickedImage)
     }
     
