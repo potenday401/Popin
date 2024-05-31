@@ -155,9 +155,15 @@ final class PDSCarouselView<Item: UIView>: UIView, UICollectionViewDataSource {
     
     @objc
     private func backDidTap() {
-        navigationController?.popViewController(animated: true)
+        releaseResources()
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
+    private func releaseResources() {
+        // Clear other resources
+    }
     @objc
     private func shareButtonTapped() {
     }

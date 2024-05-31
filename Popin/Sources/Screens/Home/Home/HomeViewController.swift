@@ -175,14 +175,14 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         locationManager.startUpdatingLocation()
         let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")
         let search = MKLocalSearch(request: searchRequest)
-        search.start { response, error in
-            if let response = response {
-                let boundingRegion = response.boundingRegion
-                let centerCoordinate = boundingRegion.center
-            } else {
-                print("Error performing search: \(error?.localizedDescription ?? "")")
-            }
-        }
+//        search.start { response, error in
+//            if let response = response {
+//                let boundingRegion = response.boundingRegion
+//                let centerCoordinate = boundingRegion.center
+//            } else {
+//                print("Error performing search: \(error?.localizedDescription ?? "")")
+//            }
+//        }
         
         navigationBar.leftItem = .init(
             image: UIImage(resource: .cameraButton),
@@ -234,25 +234,25 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        self.location = location
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
-        updateLocationLabel(latitude, longitude)
+        guard let newLocation = locations.last else { return }
+        location = newLocation
+        let latitude = newLocation.coordinate.latitude
+        let longitude = newLocation.coordinate.longitude
+        DispatchQueue.main.async {
+            self.updateLocationLabel(latitude, longitude)
+        }
     }
     
     func updateLocationLabel(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees) {
         let location = CLLocation(latitude: latitude, longitude: longitude)
-        
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let self = self else { return }
             if let placemark = placemarks?.first {
                 var locationString = ""
-                
                 if let locality = placemark.locality {
                     locationString += locality
                 }
-                
                 if let sublocality = placemark.subLocality {
                     if !locationString.isEmpty {
                         locationString += ", "
@@ -260,12 +260,12 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
                     locationString += sublocality
                 }
                 DispatchQueue.main.async {
-                    self?.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
-                    self?.locationString = locationString.isEmpty ? "Unknown Location" : locationString
+                    self.recentPinLabel.text = locationString.isEmpty ? "Unknown Location" : locationString
+                    self.locationString = locationString.isEmpty ? "Unknown Location" : locationString
                 }
             } else {
                 DispatchQueue.main.async {
-                    self?.recentPinLabel.text = "Unknown Location"
+                    self.recentPinLabel.text = "Unknown Location"
                 }
             }
         }
