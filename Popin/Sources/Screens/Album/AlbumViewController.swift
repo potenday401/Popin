@@ -73,7 +73,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }()
     
     @objc func backButtonTapped() {
-        print("tap?")
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
         }
@@ -475,7 +474,9 @@ extension MKMapView {
             latitudinalMeters: regionRadius,
             longitudinalMeters: regionRadius
         )
-        setRegion(coordinateRegion, animated: true)
+        DispatchQueue.main.async {
+            self.setRegion(coordinateRegion, animated: true)
+        }
     }
 }
 
@@ -623,7 +624,9 @@ extension AlbumViewController: CLLocationManagerDelegate {
         for annotation in annotations {
             let coordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
             let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            mapView.centerToLocation(location)
+            DispatchQueue.main.async {
+                self.mapView.centerToLocation(location)
+            }
             currentLocationRecord = location
             setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count, photoId: annotation.photoId, contentId: annotation.contentId, date: annotation.date)
         }

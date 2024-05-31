@@ -4,6 +4,7 @@
 //
 //  Created by Jihaha kim on 2024/01/30.
 //
+
 import UIKit
 import Kingfisher
 import CoreLocation
@@ -20,12 +21,12 @@ final class AlbumDetailViewController: BaseViewController {
             imageView.clipsToBounds = true
             imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"),options: [
                 .cacheOriginalImage,
-                .transition(.fade(0.2))
+                .transition(.fade(0.2)),
+                .memoryCacheExpiration(.seconds(300))
             ])
             return imageView
         }
-        let carousel = PDSCarouselView(items: views, navigationController: navigationController)
-        return carousel
+        return PDSCarouselView(items: views, navigationController: navigationController)
     }()
     
     let locationIcon: UIImageView = {
@@ -101,7 +102,7 @@ final class AlbumDetailViewController: BaseViewController {
             }
         }
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
