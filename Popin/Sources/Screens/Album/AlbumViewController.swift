@@ -143,15 +143,14 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     private func setupCardListView() {
         containerView?.removeFromSuperview()
-        let containerView = UIView()
-        self.containerView = containerView
+        containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(480)
-            make.width.equalTo(400)
             make.height.equalTo(200)
         }
         
@@ -163,11 +162,10 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
         selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
-        view.addSubview(selectButton)
-        
+        containerView.addSubview(selectButton)
         selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(25)
-            make.trailing.equalTo(view.snp.trailing).offset(-326)
+            make.top.equalTo(containerView.snp.top).offset(8)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
@@ -179,19 +177,20 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         cancelButton.layer.cornerRadius = 18
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        
-        view.addSubview(cancelButton)
         cancelButton.isHidden = true
+        
+        containerView.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(25)
-            make.trailing.equalTo(view.snp.trailing).offset(-326)
+            make.top.equalTo(containerView.snp.top).offset(8)
+            make.trailing.equalTo(selectButton.snp.leading).offset(-8)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
+        
         containerView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(25)
-            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+            make.top.equalTo(containerView.snp.top).offset(8)
+            make.trailing.equalTo(cancelButton.snp.leading).offset(-8)
         }
         
         let scrollView = UIScrollView()
@@ -199,7 +198,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         scrollView.backgroundColor = .black
         scrollView.showsHorizontalScrollIndicator = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
         containerView.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(selectButton.snp.bottom).offset(8)
+        }
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -207,11 +211,14 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         stackView.spacing = 0
         
         scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView.frameLayoutGuide)
+        }
         
         let totalImages = annotations.count
         let firstRowCount = (totalImages + 1) / 2
         let secondRowCount = totalImages - firstRowCount
-        
         let rowCounts = [firstRowCount, secondRowCount]
         
         for rowIndex in 0..<rowCounts.count {
@@ -236,8 +243,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 
                 if let imageUrl = URL(string: annotation.imageUrl) {
                     imageView.kf.setImage(with: imageUrl)
-                } else {
-                    // handle case where imageUrl is nil
                 }
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
@@ -248,8 +253,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 iconView.addSubview(imageView)
                 imageView.snp.makeConstraints { make in
                     make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-                    make.width.equalTo(86)
-                    make.height.equalTo(86)
+                    make.width.height.equalTo(86)
                 }
                 
                 rowView.addArrangedSubview(iconView)
@@ -257,20 +261,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             
             stackView.addArrangedSubview(rowView)
         }
-        
-        containerView.addSubview(selectButton)
-        selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
-        }
-        scrollView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(selectButton.snp.bottom).offset(8)
-        }
-        stackView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
-        }
-        scrollView.contentSize = CGSize(width: stackView.frame.size.width, height: stackView.frame.size.height)
     }
 
     override func viewDidLoad() {
