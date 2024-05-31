@@ -208,62 +208,53 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         
         scrollView.addSubview(stackView)
         
-        let numberOfColumns = annotations.count/2
-        let numberOfRows = 2
+        let totalImages = annotations.count
+        let firstRowCount = (totalImages + 1) / 2
+        let secondRowCount = totalImages - firstRowCount
         
-        for _ in 0..<numberOfRows {
+        let rowCounts = [firstRowCount, secondRowCount]
+        
+        for rowIndex in 0..<rowCounts.count {
             let rowView = UIStackView()
             rowView.axis = .horizontal
             rowView.distribution = .fillEqually
             rowView.spacing = 0
             
-            for columnIndex in 0..<numberOfColumns {
-                let iconView = UIView()
-                var imageUrl: URL?
-                var photoId: Int?
-                var contentId: Int?
-                
-                for annotation in annotations {
-                    if let url = URL(string: annotation.imageUrl) {
-                        imageUrl = url
-                        //                        print("image not nil")
-                    } else {
-                        //                        print("image nil")
-                    }
-                    
-                    photoId = annotation.photoId
-                    contentId = annotation.contentId
-                    if let photoId = photoId, let contentId = contentId {
-                        let combinedTag = (photoId << 16) | contentId
-                        iconView.tag = combinedTag
-                    }
+            let startIndex = rowIndex * firstRowCount
+            let endIndex = startIndex + rowCounts[rowIndex]
+            
+            for index in startIndex..<endIndex {
+                if index >= totalImages {
+                    break
                 }
                 
-                var imageView: UIImageView = {
-                    let imageView = UIImageView()
-                    imageView.contentMode = .scaleAspectFit
-                    imageView.kf.setImage(with: imageUrl,options: [
-                        .cacheOriginalImage,
-                        .transition(.fade(0.2))
-                    ])
-                    return imageView
-                }()
+                let annotation = annotations[index]
+                let imageView = UIImageView()
+                imageView.contentMode = .scaleAspectFit
+                imageView.layer.cornerRadius = 12
+                imageView.layer.masksToBounds = true
                 
+                if let imageUrl = URL(string: annotation.imageUrl) {
+                    imageView.kf.setImage(with: imageUrl)
+                } else {
+                    // handle case where imageUrl is nil
+                }
+                
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+                imageView.addGestureRecognizer(tapGestureRecognizer)
+                imageView.isUserInteractionEnabled = true
+                
+                let iconView = UIView()
                 iconView.addSubview(imageView)
                 imageView.snp.makeConstraints { make in
                     make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
                     make.width.equalTo(86)
                     make.height.equalTo(86)
                 }
-                imageView.layer.cornerRadius = 12
-                imageView.layer.masksToBounds = true
-                
-                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
-                iconView.addGestureRecognizer(tapGestureRecognizer)
-                iconView.isUserInteractionEnabled = true
                 
                 rowView.addArrangedSubview(iconView)
             }
+            
             stackView.addArrangedSubview(rowView)
         }
         
@@ -281,7 +272,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
         scrollView.contentSize = CGSize(width: stackView.frame.size.width, height: stackView.frame.size.height)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(navigationBar)
@@ -345,7 +336,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         cancelButton.isHidden = true
         deleteButton.isHidden = true
         selectButton.isHidden = false
-        
     }
     
     private func deleteResource(with photoId: Int, and contentId: Int) {
@@ -406,7 +396,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         contentTask.resume()
         
     }
-    
     
     private func removeAnnotation(with photoId: Int) {
         if let index = annotations.firstIndex(where: { $0.photoId == photoId }) {
