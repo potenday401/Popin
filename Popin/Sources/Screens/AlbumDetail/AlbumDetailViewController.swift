@@ -102,6 +102,7 @@ final class AlbumDetailViewController: BaseViewController {
             }
         }
     }
+
     
     
     override func viewDidLoad() {
