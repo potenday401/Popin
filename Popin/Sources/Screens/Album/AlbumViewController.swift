@@ -161,11 +161,10 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         selectButton.layer.cornerRadius = 18
         selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
         selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        
-        containerView.addSubview(selectButton)
+        view.addSubview(selectButton)
         selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(view.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
@@ -179,18 +178,19 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         cancelButton.isHidden = true
         
-        containerView.addSubview(cancelButton)
+        view.addSubview(cancelButton)
+        cancelButton.isHidden = true
         cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(selectButton.snp.leading).offset(-8)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(view.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
         
         containerView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(cancelButton.snp.leading).offset(-8)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
         }
         
         let scrollView = UIScrollView()
@@ -255,14 +255,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                     make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
                     make.width.height.equalTo(86)
                 }
-                
                 rowView.addArrangedSubview(iconView)
             }
-            
             stackView.addArrangedSubview(rowView)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(navigationBar)
