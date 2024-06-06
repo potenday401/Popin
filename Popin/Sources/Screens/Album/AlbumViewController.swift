@@ -11,6 +11,21 @@ import SnapKit
 import Kingfisher
 import Photos
 
+class IconView: UIView {
+    var photoId: Int
+    var contentId: Int
+    
+    init(photoId: Int, contentId: Int) {
+        self.photoId = photoId
+        self.contentId = contentId
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class CustomImageAnnotation: MKPointAnnotation {
     var imageUrl: String
     var pinCount: Int
@@ -54,6 +69,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     weak var viewController: UIViewController?
     private var annotationsAlreadyAdded = false
     var existingAnnotations: [CustomImageAnnotation] = []
+    private var isMapCentered = false
     
     init(accessToken: String) {
         self.accessToken = accessToken
@@ -142,15 +158,14 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     }
     
     private func setupCardListView() {
-        containerView?.removeFromSuperview()
-        containerView = UIView()
+        let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).offset(480)
+            make.width.equalTo(400)
             make.height.equalTo(200)
         }
         
@@ -163,9 +178,10 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
         containerView.addSubview(selectButton)
+        
         selectButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
@@ -177,20 +193,20 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         cancelButton.layer.cornerRadius = 18
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        cancelButton.isHidden = true
         
         containerView.addSubview(cancelButton)
+        cancelButton.isHidden = true
         cancelButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(selectButton.snp.leading).offset(-8)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-326)
             make.width.equalTo(50)
             make.height.equalTo(33)
         }
         
         containerView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(8)
-            make.trailing.equalTo(cancelButton.snp.leading).offset(-8)
+            make.top.equalTo(containerView.snp.top).offset(25)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-16)
         }
         
         let scrollView = UIScrollView()
@@ -198,71 +214,63 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         scrollView.backgroundColor = .black
         scrollView.showsHorizontalScrollIndicator = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         containerView.addSubview(scrollView)
+        
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        
+        scrollView.addSubview(stackView)
+        
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(selectButton.snp.bottom).offset(8)
         }
-        
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        
-        scrollView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.leading.trailing.top.bottom.equalToSuperview()
         }
         
-        let totalImages = annotations.count
-        let firstRowCount = (totalImages + 1) / 2
-        let secondRowCount = totalImages - firstRowCount
-        let rowCounts = [firstRowCount, secondRowCount]
+        let maxImagesPerColumn = 2
+        var currentRowStackView: UIStackView?
         
-        for rowIndex in 0..<rowCounts.count {
-            let rowView = UIStackView()
-            rowView.axis = .horizontal
-            rowView.distribution = .fillEqually
-            rowView.spacing = 0
-            
-            let startIndex = rowIndex * firstRowCount
-            let endIndex = startIndex + rowCounts[rowIndex]
-            
-            for index in startIndex..<endIndex {
-                if index >= totalImages {
-                    break
-                }
-                
-                let annotation = annotations[index]
-                let imageView = UIImageView()
-                imageView.contentMode = .scaleAspectFit
-                imageView.layer.cornerRadius = 12
-                imageView.layer.masksToBounds = true
-                
-                if let imageUrl = URL(string: annotation.imageUrl) {
-                    imageView.kf.setImage(with: imageUrl)
-                }
-                
-                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
-                imageView.addGestureRecognizer(tapGestureRecognizer)
-                imageView.isUserInteractionEnabled = true
-                
-                let iconView = UIView()
-                iconView.addSubview(imageView)
-                imageView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-                    make.width.height.equalTo(86)
-                }
-                
-                rowView.addArrangedSubview(iconView)
+        for (index, annotation) in annotations.enumerated() {
+            if index % maxImagesPerColumn == 0 {
+                currentRowStackView = UIStackView()
+                currentRowStackView?.axis = .vertical
+                currentRowStackView?.distribution = .fillEqually
+                currentRowStackView?.spacing = 8
+                stackView.addArrangedSubview(currentRowStackView!)
             }
             
-            stackView.addArrangedSubview(rowView)
+            let iconView = IconView(photoId: annotation.photoId, contentId: annotation.contentId)
+            
+            let imageView: UIImageView = {
+                let imageView = UIImageView()
+                imageView.contentMode = .scaleAspectFit
+                if let url = URL(string: annotation.imageUrl) {
+                    imageView.kf.setImage(with: url)
+                }
+                return imageView
+            }()
+            
+            iconView.addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                make.width.equalTo(86)
+                make.height.equalTo(86)
+            }
+            imageView.layer.cornerRadius = 12
+            imageView.layer.masksToBounds = true
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconViewTapped(_:)))
+            iconView.addGestureRecognizer(tapGestureRecognizer)
+            iconView.isUserInteractionEnabled = true
+            
+            currentRowStackView?.addArrangedSubview(iconView)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(navigationBar)
@@ -317,9 +325,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     @objc private func deleteButtonTapped() {
         for iconView in selectedIconViews {
-            guard let tag = iconView.tag as? Int else { continue }
-            let photoId = tag >> 16
-            let contentId = tag & 0xFFFF
+            guard let iconView = iconView as? IconView else { continue }
+            let photoId = iconView.photoId
+            let contentId = iconView.contentId
             deleteResource(with: photoId, and: contentId)
         }
         selectedIconViews.removeAll()
@@ -384,7 +392,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
         photoTask.resume()
         contentTask.resume()
-        
     }
     
     private func removeAnnotation(with photoId: Int) {
@@ -410,21 +417,20 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     @objc private func iconViewTapped(_ gesture: UITapGestureRecognizer) {
         guard isSelectionEnabled,
-              let iconView = gesture.view else {
+              let iconView = gesture.view as? IconView else {
             return
         }
-        selectButton.isHidden = true
-        deleteButton.isHidden = false
-        cancelButton.isHidden = false
+        
         let checkmarkTag = 100
         
         if selectedIconViews.contains(iconView) {
             selectedIconViews.remove(iconView)
             removeCheckmarkFromView(iconView)
-            deleteButton.isHidden = true
-            selectButton.isHidden = false
-            cancelButton.isHidden = true
-            
+            if selectedIconViews.isEmpty {
+                deleteButton.isHidden = true
+                selectButton.isHidden = false
+                cancelButton.isHidden = true
+            }
         } else {
             selectedIconViews.insert(iconView)
             let checkmarkImageView = UIImageView(image: UIImage(named: "checkbox"))
@@ -441,6 +447,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             cancelButton.isHidden = false
         }
     }
+    
 }
 
 extension MKMapView {
@@ -608,6 +615,16 @@ extension AlbumViewController: CLLocationManagerDelegate {
             }
             currentLocationRecord = location
             setupAnnotation(location: location, imageUrl: annotation.imageUrl, pinCount: annotations.count, photoId: annotation.photoId, contentId: annotation.contentId, date: annotation.date)
+        }
+        
+        guard let location = locations.first else { return }
+        
+        if !isMapCentered {
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: center, span: span)
+            mapView.setRegion(region, animated: true)
+            isMapCentered = true
         }
         
         if locations.isEmpty {
