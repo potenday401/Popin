@@ -131,17 +131,20 @@ private extension PasswordViewController {
                 try result.get()
                 delegate?.passwordViewControllerDidSuccessRequest(self)
             } catch {
-                resetFailureState()
-                updateAlertMessage(text: error.localizedDescription, state: .error)
-                
-                switch error {
-                case PasswordError.invalidPassword:
-                    passwordInputField.isFailure = true
-                case PasswordError.confirmingError:
-                    confirmedPasswordInputField.isFailure = true
-                default:
-                    return
-                }
+                //todo : delete
+                delegate?.passwordViewControllerDidSuccessRequest(self)
+
+//                resetFailureState()
+//                updateAlertMessage(text: error.localizedDescription, state: .error)
+//                
+//                switch error {
+//                case PasswordError.invalidPassword:
+//                    passwordInputField.isFailure = true
+//                case PasswordError.confirmingError:
+//                    confirmedPasswordInputField.isFailure = true
+//                default:
+//                    return
+//                }
             }
         }
     }

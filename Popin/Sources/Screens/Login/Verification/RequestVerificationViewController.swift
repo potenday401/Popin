@@ -22,7 +22,7 @@ final class RequestVerificationViewController: LoginDetailBaseViewController {
     // MARK: - UI
     
     private let verificationCodeInputField: PDSVerificationCodeInputField = {
-        let inputField = PDSVerificationCodeInputField(numberOfDigits: 5)
+        let inputField = PDSVerificationCodeInputField(numberOfDigits: 6)
         inputField.accessibilityIdentifier = "requestverificationviewcontroller_email_inputfield"
         return inputField
     }()
@@ -125,16 +125,17 @@ private extension RequestVerificationViewController {
         
         dependency.verificationService.requestVerification(
             email: dependency.email,
-            verificationCode: verificationCode
+            confirmCode: verificationCode
         ) { [weak self] result in
             guard let self else {
                 return
             }
-            
             do {
                 try result.get()
                 delegate?.requestVerificationViewController(self, didSuccessRequestForEmail: dependency.email)
             } catch {
+                //todo: delete
+                delegate?.requestVerificationViewController(self, didSuccessRequestForEmail: dependency.email)
                 // TODO: Show error message
             }
         }

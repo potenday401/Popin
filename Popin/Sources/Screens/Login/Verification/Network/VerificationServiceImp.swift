@@ -8,17 +8,19 @@
 import Foundation
 
 final class VerificationServiceImp: VerificationService {
-    
     func requestVerificationCode(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let request = VerificationCodeRequest(query: ["email": email])
         network.send(request) { result in
             switch result {
             case .success(let response):
+                print(response, "response")
                 switch response.statusCode {
                 case 200..<300:
                     completion(.success(()))
                 case 400:
                     completion(.failure(VerificationError.invalidEmailFormat))
+                case 401:
+                    completion(.failure(VerificationError.serverError))
                 case 409:
                     completion(.failure(VerificationError.userAlreadyExists))
                 default:
@@ -30,8 +32,9 @@ final class VerificationServiceImp: VerificationService {
         }
     }
     
-    func requestVerification(email: String, verificationCode: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let request = VerificationRequest(query: ["email": email, "verificationCode": verificationCode])
+    
+    func requestVerification(email: String, confirmCode: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let request = VerificationRequest(query: ["email": email, "confirmCode": confirmCode])
         network.send(request) { result in
             switch result {
             case .success(let response):

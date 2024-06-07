@@ -164,7 +164,6 @@ final class LoginViewController: BaseViewController {
 // MARK: - Action
 
 private extension LoginViewController {
-    
     @objc
     func signInDidTap() {
         guard let email = emailInputField.text,
@@ -181,8 +180,8 @@ private extension LoginViewController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parameters: [String: Any] = [
-            "email": "kimjiha12@naver.com",
-            "password": "soda1223!!"
+            "email": email,
+            "password": password
         ]
         
         do {
@@ -235,7 +234,6 @@ private extension LoginViewController {
                 print("HTTP status code: \(httpResponse.statusCode)")
             }
         }
-        
         task.resume()
         //        login(email: email, password: password)
     }
@@ -243,10 +241,8 @@ private extension LoginViewController {
     func login(email: String, password: String) {
         dependency.loginService
             .login(email: email, password: password) { [weak self] result in
-                print(email, password, result, "result?")
                 do {
                     let response = try result.get()
-                    print(response ,"check response~!")
                     self?.dependency.tokenRepository.storeToken(
                         accessToken: response.accessToken,
                         refreshToken: response.refreshToken
@@ -255,7 +251,6 @@ private extension LoginViewController {
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false
-                    print("catch?")
                     switch error {
                     case LoginError.invalidEmail:
                         self?.emailInputField.isFailure = true

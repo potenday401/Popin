@@ -10,6 +10,7 @@ import SnapKit
 
 final class AgreementViewController: LoginDetailBaseViewController {
     
+    var router: LoginRouter?
     // MARK: - UI
     
     private let agreementItemListView: UIStackView = {
@@ -82,7 +83,9 @@ private extension AgreementViewController {
     
     @objc
     func submitDidTap() {
-        // TODO: To Home?
+        // TODO: get accessToken?
+        let homeViewController = HomeViewController(accessToken: "accessToken")
+        navigationController?.pushViewController(homeViewController, animated: true)
     }
 }
 
