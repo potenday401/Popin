@@ -13,7 +13,6 @@ final class VerificationServiceImp: VerificationService {
         network.send(request) { result in
             switch result {
             case .success(let response):
-                print(response, "response")
                 switch response.statusCode {
                 case 200..<300:
                     completion(.success(()))

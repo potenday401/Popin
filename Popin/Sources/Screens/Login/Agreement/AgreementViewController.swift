@@ -11,6 +11,9 @@ import SnapKit
 final class AgreementViewController: LoginDetailBaseViewController {
     
     var router: LoginRouter?
+    private var accessToken:String?
+    private var refreshToken: String?
+
     // MARK: - UI
     
     private let agreementItemListView: UIStackView = {
@@ -75,6 +78,9 @@ final class AgreementViewController: LoginDetailBaseViewController {
             make.trailing.bottom.equalToSuperview()
         }
     }
+    func configure(withAccessToken accessToken: String) {
+           self.accessToken = accessToken
+       }
 }
 
 // MARK: - Action
@@ -83,8 +89,11 @@ private extension AgreementViewController {
     
     @objc
     func submitDidTap() {
-        // TODO: get accessToken?
-        let homeViewController = HomeViewController(accessToken: "accessToken")
+        guard let accessToken = accessToken else {
+            fatalError("Access token is not set")
+        }
+        //todo: apply router
+        let homeViewController = HomeViewController(accessToken: accessToken)
         navigationController?.pushViewController(homeViewController, animated: true)
     }
 }

@@ -47,7 +47,7 @@ final class RequestVerificationViewController: LoginDetailBaseViewController {
     
     init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
         self.dependency = dependency
-        super.init(title: title, numberOfStep: numberOfStep, step: step)
+        super.init(title: title, numberOfStep: numberOfStep, step: step, accessToken: "")
     }
     
     // MARK: - Setup
@@ -134,8 +134,6 @@ private extension RequestVerificationViewController {
                 try result.get()
                 delegate?.requestVerificationViewController(self, didSuccessRequestForEmail: dependency.email)
             } catch {
-                //todo: delete
-                delegate?.requestVerificationViewController(self, didSuccessRequestForEmail: dependency.email)
                 // TODO: Show error message
             }
         }

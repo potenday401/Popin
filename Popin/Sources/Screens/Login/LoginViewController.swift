@@ -209,6 +209,7 @@ private extension LoginViewController {
                             print("유효한 JSON 형식이 아닙니다.")
                             return
                         }
+                        print(json, "token check")
                         if let responseData = json["responseData"] as? [String: Any] {
                             if let accessToken = responseData["accessToken"] as? String,
                                let refreshToken = responseData["refreshToken"] as? String {

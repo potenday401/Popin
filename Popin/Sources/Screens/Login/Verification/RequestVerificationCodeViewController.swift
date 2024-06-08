@@ -47,7 +47,7 @@ final class RequestVerificationCodeViewController: LoginDetailBaseViewController
     
     init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
         self.dependency = dependency
-        super.init(title: title, numberOfStep: numberOfStep, step: step)
+        super.init(title: title, numberOfStep: numberOfStep, step: step, accessToken: "")
     }
     
     // MARK: - Setup

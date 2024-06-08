@@ -48,7 +48,7 @@ class LoginDetailBaseViewController: BaseViewController {
     
     // MARK: - Initializer
     
-    init(title: String, numberOfStep: Int, step: Int) {
+    init(title: String, numberOfStep: Int, step: Int, accessToken:String) {
         let label = UILabel()
         label.text = title
         label.textColor = .white

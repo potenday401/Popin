@@ -11,7 +11,7 @@ struct PasswordRequest: Request {
     typealias Query = [String: String]
     typealias Output = PasswordResponse
     
-    let endpoint: URL = Endpoint.Member.requestVerificationCode.url
+    let endpoint: URL = Endpoint.Member.signUp.url
     let method: HTTPMethod = .post
     let query: Query?
     let header: HTTPHeader = [:]
@@ -21,4 +21,24 @@ struct PasswordRequest: Request {
     }
 }
 
-struct PasswordResponse: Decodable {}
+struct PasswordResponse: Decodable {
+    let accessToken: String
+    let refreshToken: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case responseData
+    }
+    
+    private enum ResponseDataKeys: String, CodingKey {
+        case accessToken
+        case refreshToken
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let responseDataContainer = try container.nestedContainer(keyedBy: ResponseDataKeys.self, forKey: .responseData)
+        accessToken = try responseDataContainer.decode(String.self, forKey: .accessToken)
+        refreshToken = try responseDataContainer.decode(String.self, forKey: .refreshToken)
+    }
+}
+
