@@ -10,6 +10,25 @@ import SnapKit
 
 final class AgreementViewController: LoginDetailBaseViewController {
     
+    private var accessToken:String?
+    private var refreshToken: String?
+    
+    struct Dependency {
+        let network: Network
+    }
+    
+    private let dependency: Dependency
+    
+    init(dependency: Dependency, title: String, numberOfStep: Int, step: Int, accessToken: String) {
+        self.dependency = dependency
+        self.accessToken = accessToken
+        super.init(title: title, numberOfStep: numberOfStep, step: step, accessToken: accessToken)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - UI
     
     private let agreementItemListView: UIStackView = {
@@ -74,18 +93,27 @@ final class AgreementViewController: LoginDetailBaseViewController {
             make.trailing.bottom.equalToSuperview()
         }
     }
+    func configure(withAccessToken accessToken: String) {
+           self.accessToken = accessToken
+       }
 }
 
 // MARK: - Action
 
 private extension AgreementViewController {
-    
     @objc
     func submitDidTap() {
-        // TODO: To Home?
+        guard let accessToken = accessToken else {
+            fatalError("Access token is not set")
+        }
+        let cameraService = CameraService(network: dependency.network)
+        let router = HomeRouterImp(cameraService: cameraService)
+        let homeViewController = HomeViewController(accessToken: accessToken)
+        homeViewController.router = router
+        router.viewController = homeViewController
+        navigationController?.pushViewController(homeViewController, animated: true)
     }
 }
-
 // MARK: - Constant
 
 extension AgreementViewController {

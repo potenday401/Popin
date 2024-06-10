@@ -22,5 +22,4 @@ struct VerificationRequest: Request {
 }
 
 struct VerificationResponse: Decodable {
-    let verifiedToken: String
 }

@@ -25,9 +25,9 @@ struct Endpoint {
         var url: URL {
             switch self {
             case .requestVerificationCode:
-                Endpoint.baseURL.appending(path: "member/pre-signup")
-            case .requestVerification:
                 Endpoint.baseURL.appending(path: "users/send/email/confirm-code")
+            case .requestVerification:
+                Endpoint.baseURL.appending(path: "users/verify/email/confirm-code")
             case .signUp:
                 Endpoint.baseURL.appending(path: "users/sign-up")
             }

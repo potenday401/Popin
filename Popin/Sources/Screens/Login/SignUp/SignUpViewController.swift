@@ -67,7 +67,7 @@ extension SignUpViewController: PasswordViewControllerDelegate {
         router?.dismissFromPassword()
     }
     
-    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController) {
-        router?.routeToAgreement()
+    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController, accessToken: String, refreshToken: String) {
+        router?.routeToAgreement(accessToken: accessToken)
     }
 }

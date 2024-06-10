@@ -24,7 +24,6 @@ final class AlamofireNetwork: Network {
             }
     }
     
-    
     // MARK: - Interface
     func send<T>(
         _ request: T,
@@ -47,11 +46,16 @@ final class AlamofireNetwork: Network {
                     )
                     completion(.success(response))
                 case .failure(let error):
+                    if let data = dataResponse.data,
+                       let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
+                        print("Server error response: \(json)")
+                    } else {
+                        print("Request failed with error: \(error)")
+                    }
                     completion(.failure(error))
                 }
             }
     }
-
     // MARK: - Property
     
     private let session: Session

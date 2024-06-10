@@ -10,7 +10,7 @@ import SnapKit
 
 protocol PasswordViewControllerDelegate: AnyObject {
     func passwordViewControllerDidTapBack(_ viewController: PasswordViewController)
-    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController)
+    func passwordViewControllerDidSuccessRequest(_ viewController: PasswordViewController, accessToken: String, refreshToken: String)
 }
 
 final class PasswordViewController: LoginDetailBaseViewController {
@@ -60,7 +60,7 @@ final class PasswordViewController: LoginDetailBaseViewController {
     
     init(title: String, numberOfStep: Int, step: Int, dependency: Dependency) {
         self.dependency = dependency
-        super.init(title: title, numberOfStep: numberOfStep, step: step)
+        super.init(title: title, numberOfStep: numberOfStep, step: step, accessToken: "")
     }
     
     // MARK: - Setup
@@ -120,31 +120,30 @@ private extension PasswordViewController {
         
         dependency.passwordService.requestUpdatePassword(
             email: dependency.email,
-            password: password,
-            confirmedPassword: confirmedPassword
+            password: password
         ) { [weak self] result in
             guard let self else {
                 return
             }
-            
-            do {
-                try result.get()
-                delegate?.passwordViewControllerDidSuccessRequest(self)
-            } catch {
-                resetFailureState()
-                updateAlertMessage(text: error.localizedDescription, state: .error)
+            switch result {
+            case .success(let response):
+                self.delegate?.passwordViewControllerDidSuccessRequest(self, accessToken: response.accessToken, refreshToken: response.refreshToken)
+            case .failure(let error):
+                self.resetFailureState()
+                self.updateAlertMessage(text: error.localizedDescription, state: .error)
                 
                 switch error {
                 case PasswordError.invalidPassword:
-                    passwordInputField.isFailure = true
+                    self.passwordInputField.isFailure = true
                 case PasswordError.confirmingError:
-                    confirmedPasswordInputField.isFailure = true
+                    self.confirmedPasswordInputField.isFailure = true
                 default:
                     return
                 }
             }
         }
     }
+    
     
     private func resetFailureState() {
         passwordInputField.isFailure = false

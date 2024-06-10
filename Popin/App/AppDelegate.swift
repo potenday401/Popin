@@ -31,16 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private var sessionConfiguration: URLSessionConfiguration {
-#if DEBUG
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [PopinURLProtocolMock.self]
-        PopinTestSupport.setUpURLProtocol()
-#else
         let configuration = URLSessionConfiguration.default
-#endif
-        
-        
         return configuration
     }
 }
-
