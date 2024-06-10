@@ -87,9 +87,9 @@ final class SignUpRouterImp: SignUpRouter {
     }
     
     func routeToAgreement(accessToken:String) {
-        let viewController = AgreementViewController(title: "약관동의", numberOfStep: numberOfStep, step: 4, accessToken: accessToken)
+        let dependency = AgreementViewController.Dependency(network: dependency.network)
+        let viewController = AgreementViewController(dependency: dependency, title: "약관동의", numberOfStep: numberOfStep, step: 4, accessToken: accessToken)
         viewController.configure(withAccessToken: accessToken)
-
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -104,6 +104,7 @@ final class SignUpRouterImp: SignUpRouter {
     struct Dependency {
         let verificationService: VerificationService
         let passwordService: PasswordService
+        let network: Network
     }
     
     init(dependency: Dependency) {
