@@ -14,7 +14,7 @@ import CoreLocation
 import MapKit
 import CoreLocation
 
-final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate, CLLocationManagerDelegate {
+final class HomeViewController: BaseViewController, HomeMapViewControllerDelegate,  CLLocationManagerDelegate, UINavigationControllerDelegate {
     func didSelectLocation(annotations: [CustomImageAnnotation]) {
         let albumViewController = AlbumViewController(accessToken: accessToken ?? "")
         albumViewController.annotations = annotations
@@ -92,6 +92,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 let imagePickerController = UIImagePickerController()
                 imagePickerController.sourceType = .camera
+                imagePickerController.delegate = self
                 self.present(imagePickerController, animated: true, completion: nil)
             } else {
                 print("Camera not available")
@@ -175,14 +176,14 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
         locationManager.startUpdatingLocation()
         let searchRequest = MKLocalSearch.Request(__naturalLanguageQuery: "롯데월드")
         let search = MKLocalSearch(request: searchRequest)
-//        search.start { response, error in
-//            if let response = response {
-//                let boundingRegion = response.boundingRegion
-//                let centerCoordinate = boundingRegion.center
-//            } else {
-//                print("Error performing search: \(error?.localizedDescription ?? "")")
-//            }
-//        }
+        //        search.start { response, error in
+        //            if let response = response {
+        //                let boundingRegion = response.boundingRegion
+        //                let centerCoordinate = boundingRegion.center
+        //            } else {
+        //                print("Error performing search: \(error?.localizedDescription ?? "")")
+        //            }
+        //        }
         
         navigationBar.leftItem = .init(
             image: UIImage(resource: .cameraButton),
