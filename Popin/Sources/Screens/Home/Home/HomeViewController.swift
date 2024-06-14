@@ -134,7 +134,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     @objc private func moveToProfileScreen() {
-        router?.routeToEditProfile()
+        router?.routeToEditProfile(accessToken: accessToken ?? "")
     }
     
     @objc private func cameraUploadButtonTapped() {

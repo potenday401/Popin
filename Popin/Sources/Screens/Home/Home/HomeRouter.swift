@@ -9,7 +9,7 @@ import CoreLocation
 protocol HomeRouter {
     func routeToHomeMapView(accessToken: String)
     func routeToCameraView(with image: [UIImage], ImageData: [ImageData], locationString: String, accessToken: String, location: CLLocation)
-    func routeToEditProfile()
+    func routeToEditProfile(accessToken: String)
     func dismissFromProfileScreen()
     func dismissFromCameraScreen()
 }
@@ -47,9 +47,10 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
         }
     }
     
-    func routeToEditProfile() {
+    func routeToEditProfile(accessToken: String) {
         DispatchQueue.main.async {
             let profileViewController = ProfileViewController()
+            profileViewController.accessToken = accessToken
             profileViewController.delegate = self
             self.viewController?.navigationController?.pushViewController( profileViewController, animated: true)
         }

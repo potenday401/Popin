@@ -17,24 +17,12 @@ protocol EncodableRequest: Encodable, Requestable {}
 protocol Network {
     func send<T: Request>(_ request: T, completion: @escaping (Result<Response<T.Output>, Error>) -> Void)
     func upload(
-          multipartFormData: @escaping (MultipartFormData) -> Void,
-          to url: URL,
-          method: HTTPMethod,
-          headers: [String: String],
-          encodingCompletion: @escaping (Result<Any, Error>) -> Void
-      )
-//    func uploads(
-//          multipartFormData: @escaping (MultipartFormData) -> Void,
-//          title: String,
-//          address: String,
-//          latitude: Double,
-//          longitude: Double,
-//          memorizedAt: String,
-//          to url: URL,
-//          method: HTTPMethod,
-//          headers: [String: String],
-//          encodingCompletion: @escaping (Result<Any, Error>) -> Void
-//      )
+        multipartFormData: @escaping (MultipartFormData) -> Void,
+        to url: URL,
+        method: HTTPMethod,
+        headers: [String: String],
+        encodingCompletion: @escaping (Result<Any, Error>) -> Void
+    )
 }
 
 extension Network {
@@ -69,48 +57,24 @@ extension Network {
         method: HTTPMethod,
         headers: [String: String],
         completion: @escaping (Result<Response<T>, Error>) -> Void
-      ) {
-          upload(
+    ) {
+        upload(
             multipartFormData: multipartFormData,
-                 to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
-          switch result {
-          case .success(let urlRequest):
-              AF.request(urlRequest as! URLRequestConvertible)
-              .responseDecodable(of: T.self) { response in
-                switch response.result {
-                case .success(let decodedResponse):
-                    completion(.success(Response(output: decodedResponse, statusCode: response.response?.statusCode ?? 500)))
+            to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
+                switch result {
+                case .success(let urlRequest):
+                    AF.request(urlRequest as! URLRequestConvertible)
+                        .responseDecodable(of: T.self) { response in
+                            switch response.result {
+                            case .success(let decodedResponse):
+                                completion(.success(Response(output: decodedResponse, statusCode: response.response?.statusCode ?? 500)))
+                            case .failure(let error):
+                                completion(.failure(error))
+                            }
+                        }
                 case .failure(let error):
-                  completion(.failure(error))
+                    completion(.failure(error))
                 }
-              }
-          case .failure(let error):
-            completion(.failure(error))
-          }
-        }
-      }
-//    func uploads<T: Decodable>(
-//        multipartFormData: @escaping (MultipartFormData) -> Void,
-//        to url: URL,
-//        method: HTTPMethod,
-//        headers: [String: String],
-//        completion: @escaping (Result<Response<T>, Error>) -> Void
-//      ) {
-//        upload(multipartFormData: multipartFormData, to: url, method: method, headers: headers) { (result: Result<Response<String>, Error>) in
-//          switch result {
-//          case .success(let urlRequest):
-//              AF.request(urlRequest as! URLRequestConvertible)
-//              .responseDecodable(of: T.self) { response in
-//                switch response.result {
-//                case .success(let decodedResponse):
-//                    completion(.success(Response(output: decodedResponse, statusCode: response.response?.statusCode ?? 500)))
-//                case .failure(let error):
-//                  completion(.failure(error))
-//                }
-//              }
-//          case .failure(let error):
-//            completion(.failure(error))
-//          }
-//        }
-//      }
+            }
+    }
 }
