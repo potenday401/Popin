@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LoginRouter {
-    func routeToHome(accessToken: String)
+    func routeToHome(accessToken: String, refreshToken: String)
     func routeToSignUp()
 }
 
@@ -28,9 +28,9 @@ final class LoginRouterImp: LoginRouter {
         self.dependency = dependency
     }
     
-    func routeToHome(accessToken: String) {
+    func routeToHome(accessToken: String, refreshToken: String) {
         DispatchQueue.main.async {
-            let homeViewController = HomeViewController(accessToken: accessToken)
+            let homeViewController = HomeViewController(accessToken: accessToken, refreshToken: refreshToken)
             let cameraService = CameraService(network: self.dependency.network)
             let router = HomeRouterImp(cameraService: cameraService)
             homeViewController.router = router

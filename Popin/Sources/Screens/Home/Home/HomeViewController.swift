@@ -28,6 +28,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     private var locationManager = CLLocationManager()
     private var locationString:String = ""
     private var accessToken: String?
+    private var refreshToken: String?
     private let homeMapViewController: HomeMapViewController
     func cameraAuth() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
@@ -40,8 +41,9 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
             }
         }
     }
-    init(accessToken: String? = nil, location: CLLocation? = nil) {
+    init(accessToken: String? = nil, refreshToken: String? = nil, location: CLLocation? = nil) {
         self.accessToken = accessToken
+        self.refreshToken = refreshToken
         self.location = location
         self.homeMapViewController = HomeMapViewController(accessToken: accessToken ?? "")
         super.init()
@@ -134,7 +136,7 @@ final class HomeViewController: BaseViewController, HomeMapViewControllerDelegat
     }
     
     @objc private func moveToProfileScreen() {
-        router?.routeToEditProfile(accessToken: accessToken ?? "")
+        router?.routeToEditProfile(accessToken: accessToken ?? "", refreshToken: refreshToken ?? "")
     }
     
     @objc private func cameraUploadButtonTapped() {
