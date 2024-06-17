@@ -36,9 +36,15 @@ final class LoginRouterImp: LoginRouter {
             homeViewController.router = router
             router.viewController = homeViewController
             
-            if let window = self.window {
-                window.rootViewController = UINavigationController(rootViewController: homeViewController)
-                window.makeKeyAndVisible()
+            if let keyWindow = UIApplication.shared.keyWindow {
+                keyWindow.rootViewController = UINavigationController(rootViewController: homeViewController)
+                keyWindow.makeKeyAndVisible()
+            } else {
+                if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+                    rootViewController.present(homeViewController, animated: true, completion: nil)
+                } else {
+                    print("Could not present homeViewController: rootViewController is nil")
+                }
             }
         }
     }

@@ -17,13 +17,20 @@ final class ProfileViewController: BaseViewController {
     var accessToken: String?
     var refreshToken: String?
     var appRouter: AppRouter?
+    var dependency: Dependency? {
+        didSet {
+            initializeDependencyIfNeeded()
+        }
+    }
     weak var window: UIWindow?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
+        initializeDependencyIfNeeded()
     }
-
+    
     private lazy var myLoginInfo: UILabel = {
         let label = UILabel()
         let text = "사용자 이메일\nabcd@abcd.com"
@@ -63,7 +70,7 @@ final class ProfileViewController: BaseViewController {
         return button
     }()
     
-    private func makeButton(title: String, backgroundColor: UIColor, titleColor:UIColor) -> UIButton {
+    private func makeButton(title: String, backgroundColor: UIColor, titleColor: UIColor) -> UIButton {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = backgroundColor
@@ -83,9 +90,10 @@ final class ProfileViewController: BaseViewController {
         stackView.spacing = 16
         return stackView
     }()
+    
     @objc
     func changePasswordDidTap() {
-        
+        // Handle change password action
     }
     
     @objc func logoutDidTap(_ sender: UIButton) {
@@ -118,32 +126,44 @@ final class ProfileViewController: BaseViewController {
     }
     
     private func handleLogoutSuccess() {
-        guard let appRouter = self.appRouter as? AppRouterImp else {
-            print("AppRouter is nil or not of expected type")
+        guard let dependency = self.dependency else {
+            print("Dependency is not set")
             return
         }
         
-        let loginDependency = LoginViewController.Dependency(
-            loginService: LoginServiceImp(
-                network: appRouter.dependency.network,
-                validator: appRouter.dependency.validator
-            ),
-            tokenRepository: appRouter.dependency.tokenRepository
+        let loginService = LoginServiceImp(
+            network: dependency.network,
+            validator: dependency.validator
         )
         
+        let loginDependency = LoginViewController.Dependency(
+            loginService: loginService,
+            tokenRepository: dependency.tokenRepository
+        )
+        
+        let loginRouter = LoginRouterImp(
+            dependency: .init(
+                network: dependency.network,
+                validator: dependency.validator
+            )
+        )
+        
+        loginRouter.window = window
+        
         let loginViewController = LoginViewController(dependency: loginDependency)
-        let navigationController = UINavigationController(rootViewController: loginViewController)
+        loginViewController.router = loginRouter
+        loginRouter.viewController = loginViewController
         
         DispatchQueue.main.async {
             if let window = UIApplication.shared.windows.first {
-                window.rootViewController = navigationController
+                window.rootViewController = loginViewController
                 UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
             } else {
                 print("UIApplication.shared.windows.first is nil")
             }
         }
     }
-
+    
     @objc func withdrawDidTap() {
         guard let accessToken = self.accessToken, let refreshToken = self.refreshToken else {
             print("No access token or refresh token available")
@@ -172,7 +192,7 @@ final class ProfileViewController: BaseViewController {
         }
         task.resume()
     }
-
+    
     private func handleWithdrawSuccess() {
         guard let appRouter = self.appRouter as? AppRouterImp else {
             print("AppRouter is nil or not of expected type")
@@ -256,6 +276,19 @@ final class ProfileViewController: BaseViewController {
             target: self,
             action: #selector(backDidTap)
         )
+    }
+    
+    private func initializeDependencyIfNeeded() {
+        guard dependency == nil else { return }
+        var sessionConfiguration: URLSessionConfiguration {
+            let configuration = URLSessionConfiguration.default
+            return configuration
+        }
+        let network = AlamofireNetwork(configuration: sessionConfiguration)
+        let tokenStorage = TokenKeychainStorage()
+        let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
+        let validator = EmailPasswordValidator()
+        dependency = Dependency(network: network, tokenRepository: tokenRepository, validator: validator)
     }
 }
 
