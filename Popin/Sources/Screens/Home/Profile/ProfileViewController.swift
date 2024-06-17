@@ -14,11 +14,21 @@ protocol ProfileViewControllerDelegate: AnyObject {
 final class ProfileViewController: BaseViewController {
     weak var delegate: ProfileViewControllerDelegate?
     var router: HomeRouter?
+    var accessToken: String?
+    var refreshToken: String?
+    var appRouter: AppRouter?
+    var dependency: Dependency? {
+        didSet {
+            initializeDependencyIfNeeded()
+        }
+    }
+    weak var window: UIWindow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
+        initializeDependencyIfNeeded()
     }
     
     private lazy var myLoginInfo: UILabel = {
@@ -41,27 +51,26 @@ final class ProfileViewController: BaseViewController {
         label.clipsToBounds = true
         return label
     }()
-
     
     private lazy var changePasswordButton: UIButton = {
         let button = makeButton(title: "비밀번호 수정", backgroundColor: .gray500, titleColor: .white)
         button.addTarget(self, action: #selector(changePasswordDidTap), for: .touchUpInside)
         return button
     }()
-
+    
     private lazy var logoutButton: UIButton = {
         let button = makeButton(title: "로그아웃", backgroundColor: .gray500, titleColor: .white)
         button.addTarget(self, action: #selector(logoutDidTap), for: .touchUpInside)
         return button
     }()
-
+    
     private lazy var withdrawButton: UIButton = {
         let button = makeButton(title: "탈퇴하기", backgroundColor: .black, titleColor: .red)
         button.addTarget(self, action: #selector(withdrawDidTap), for: .touchUpInside)
         return button
     }()
-
-    private func makeButton(title: String, backgroundColor: UIColor, titleColor:UIColor) -> UIButton {
+    
+    private func makeButton(title: String, backgroundColor: UIColor, titleColor: UIColor) -> UIButton {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = backgroundColor
@@ -81,21 +90,136 @@ final class ProfileViewController: BaseViewController {
         stackView.spacing = 16
         return stackView
     }()
+    
     @objc
     func changePasswordDidTap() {
-        
+        // Handle change password action
     }
-
-    @objc
-    func logoutDidTap() {
+    
+    @objc func logoutDidTap(_ sender: UIButton) {
+        guard let accessToken = self.accessToken else {
+            print("No access token available")
+            return
+        }
         
-    }
-
-    @objc
-    func withdrawDidTap() {
+        var request = URLRequest(url: Endpoint.Member.logout.url)
+        request.httpMethod = "POST"
         
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.handleLogoutSuccess()
+                    }
+                } else {
+                    print("Logout failed with status code \(httpResponse.statusCode)")
+                }
+            }
+        }
+        task.resume()
     }
-
+    
+    private func handleLogoutSuccess() {
+        guard let dependency = self.dependency else {
+            print("Dependency is not set")
+            return
+        }
+        
+        let loginService = LoginServiceImp(
+            network: dependency.network,
+            validator: dependency.validator
+        )
+        
+        let loginDependency = LoginViewController.Dependency(
+            loginService: loginService,
+            tokenRepository: dependency.tokenRepository
+        )
+        
+        let loginRouter = LoginRouterImp(
+            dependency: .init(
+                network: dependency.network,
+                validator: dependency.validator
+            )
+        )
+        
+        loginRouter.window = window
+        
+        let loginViewController = LoginViewController(dependency: loginDependency)
+        loginViewController.router = loginRouter
+        loginRouter.viewController = loginViewController
+        
+        DispatchQueue.main.async {
+            if let window = UIApplication.shared.windows.first {
+                window.rootViewController = loginViewController
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+            } else {
+                print("UIApplication.shared.windows.first is nil")
+            }
+        }
+    }
+    
+    @objc func withdrawDidTap() {
+        guard let accessToken = self.accessToken, let refreshToken = self.refreshToken else {
+            print("No access token or refresh token available")
+            return
+        }
+        
+        var request = URLRequest(url: Endpoint.Member.withdrawal.url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue(refreshToken, forHTTPHeaderField: "RefreshToken")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.handleWithdrawSuccess()
+                    }
+                } else {
+                    print("Withdraw failed with status code \(httpResponse.statusCode)")
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    private func handleWithdrawSuccess() {
+        guard let appRouter = self.appRouter as? AppRouterImp else {
+            print("AppRouter is nil or not of expected type")
+            return
+        }
+        
+        let loginDependency = LoginViewController.Dependency(
+            loginService: LoginServiceImp(
+                network: appRouter.dependency.network,
+                validator: appRouter.dependency.validator
+            ),
+            tokenRepository: appRouter.dependency.tokenRepository
+        )
+        
+        let loginViewController = LoginViewController(dependency: loginDependency)
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        
+        DispatchQueue.main.async {
+            if let window = UIApplication.shared.windows.first {
+                window.rootViewController = navigationController
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+            } else {
+                print("UIApplication.shared.windows.first is nil")
+            }
+        }
+    }
+    
     @objc
     func backDidTap() {
         delegate?.requestProfileViewControllerBackDidTap(self)
@@ -116,11 +240,11 @@ final class ProfileViewController: BaseViewController {
         
         view.addSubview(myLoginInfo)
         myLoginInfo.snp.makeConstraints { make in
-             make.top.equalTo(navigationBar.snp.bottom).offset(16)
-             make.leading.trailing.equalToSuperview().inset(16)
-             make.height.equalTo(62)
-             make.width.equalTo(343)
-         }
+            make.top.equalTo(navigationBar.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(62)
+            make.width.equalTo(343)
+        }
         
         view.addSubview(buttonStackView)
         buttonStackView.snp.makeConstraints { make in
@@ -129,22 +253,22 @@ final class ProfileViewController: BaseViewController {
         }
         
         changePasswordButton.snp.makeConstraints { make in
-               make.height.equalTo(56)
-               make.width.equalTo(343)
-           }
-
-           logoutButton.snp.makeConstraints { make in
-               make.height.equalTo(56)
-               make.width.equalTo(343)
-           }
-
-           withdrawButton.snp.makeConstraints { make in
-               make.height.equalTo(56)
-               make.width.equalTo(343)
-           }
-
+            make.height.equalTo(56)
+            make.width.equalTo(343)
+        }
+        
+        logoutButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
+        }
+        
+        withdrawButton.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(343)
+        }
+        
         buttonStackView.axis = .vertical
-
+        
         [changePasswordButton, logoutButton, withdrawButton].forEach(buttonStackView.addArrangedSubview(_:))
         
         navigationBar.leftItem = .init(
@@ -153,9 +277,23 @@ final class ProfileViewController: BaseViewController {
             action: #selector(backDidTap)
         )
     }
-
+    
+    private func initializeDependencyIfNeeded() {
+        guard dependency == nil else { return }
+        var sessionConfiguration: URLSessionConfiguration {
+            let configuration = URLSessionConfiguration.default
+            return configuration
+        }
+        let network = AlamofireNetwork(configuration: sessionConfiguration)
+        let tokenStorage = TokenKeychainStorage()
+        let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
+        let validator = EmailPasswordValidator()
+        dependency = Dependency(network: network, tokenRepository: tokenRepository, validator: validator)
+    }
 }
 
-//#Preview {
-//    ProfileViewController()
-//}
+struct Dependency {
+    let network: Network
+    let tokenRepository: TokenRepository
+    let validator: EmailPasswordValidatorType
+}

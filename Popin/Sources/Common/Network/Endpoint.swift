@@ -21,6 +21,8 @@ struct Endpoint {
         case requestVerificationCode
         case requestVerification
         case signUp
+        case logout
+        case withdrawal
         
         var url: URL {
             switch self {
@@ -30,6 +32,10 @@ struct Endpoint {
                 Endpoint.baseURL.appending(path: "users/verify/email/confirm-code")
             case .signUp:
                 Endpoint.baseURL.appending(path: "users/sign-up")
+            case .logout:
+                Endpoint.baseURL.appending(path: "users/logout")
+            case .withdrawal:
+                Endpoint.baseURL.appending(path: "users/withdrawal")
             }
         }
     }

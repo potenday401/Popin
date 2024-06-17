@@ -217,7 +217,7 @@ private extension LoginViewController {
                                     accessToken: accessToken,
                                     refreshToken: refreshToken
                                 )
-                                self.router?.routeToHome(accessToken: accessToken)
+                                self.router?.routeToHome(accessToken: accessToken, refreshToken: refreshToken)
                             } else {
                                 print("accessToken 또는 refreshToken을 찾을 수 없습니다.")
                             }
@@ -248,7 +248,7 @@ private extension LoginViewController {
                         accessToken: response.accessToken,
                         refreshToken: response.refreshToken
                     )
-                    self?.router?.routeToHome(accessToken: response.accessToken)
+                    self?.router?.routeToHome(accessToken: response.accessToken, refreshToken: response.refreshToken)
                 } catch {
                     self?.alertLabel.text = error.localizedDescription
                     self?.alertLabel.isHidden = false

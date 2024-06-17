@@ -9,6 +9,7 @@ import UIKit
 
 protocol AppRouter {
     var window: UIWindow? { get set }
+    var dependency: AppRouterImp.Dependency { get }
     func launch()
 }
 
@@ -55,7 +56,7 @@ final class AppRouterImp: AppRouter {
     
     // MARK: - Property
     
-    private let dependency: Dependency
+    internal let dependency: Dependency
     private var isLoggedIn = false
     
     // MARK: - Initializer
