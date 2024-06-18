@@ -296,6 +296,15 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         setupStatusBarView()
         isSelectionEnabled = true
         navigationItem.hidesBackButton = true
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDeleteDidFinishNotification), name: .deleteDidFinish, object: nil)
+    }
+    
+    @objc private func handleDeleteDidFinishNotification() {
+            mapView.removeAnnotations(mapView.annotations)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func selectButtonTapped() {
@@ -363,6 +372,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
+                    NotificationCenter.default.post(name: .deleteDidFinish, object: nil)
                 }
                 print("Successfully deleted photo with id \(photoId)")
             } else {

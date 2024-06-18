@@ -36,7 +36,6 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
     func routeToHomeMapView(accessToken: String) {
         DispatchQueue.main.async {
             let homeMapViewController = HomeMapViewController(accessToken: accessToken)
-            self.homeMapViewController = homeMapViewController
             self.viewController?.navigationController?.pushViewController(homeMapViewController, animated: true)
         }
     }

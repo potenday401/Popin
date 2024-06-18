@@ -63,6 +63,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .uploadDidFinish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .deleteDidFinish, object: nil)
 
         setupMapView()
         setupLocationManager()
@@ -316,4 +317,5 @@ extension HomeMapViewController: UIGestureRecognizerDelegate {
 
 extension Notification.Name {
     static let uploadDidFinish = Notification.Name("uploadDidFinish")
+    static let deleteDidFinish = Notification.Name("deleteDidFinish")
 }
