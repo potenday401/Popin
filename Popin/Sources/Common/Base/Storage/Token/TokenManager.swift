@@ -14,6 +14,25 @@ class TokenManager {
     
     private let keychain = Keychain(service: "com.popin.popin")
     
+    var accessToken: String? {
+        get {
+            return keychain["accessToken"]
+        }
+        set {
+            keychain["accessToken"] = newValue
+        }
+    }
+    
+    var refreshToken: String? {
+        get {
+            return keychain["refreshToken"]
+        }
+        set {
+            keychain["refreshToken"] = newValue
+        }
+    }
+    
+    
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
     

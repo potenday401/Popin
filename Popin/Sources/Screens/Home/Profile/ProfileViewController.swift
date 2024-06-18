@@ -114,6 +114,7 @@ final class ProfileViewController: BaseViewController {
             }
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
+                    TokenManager.shared.clearTokens()
                     DispatchQueue.main.async {
                         self.handleLogoutSuccess()
                     }

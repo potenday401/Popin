@@ -18,8 +18,6 @@ final class AppRouterImp: AppRouter {
     weak var window: UIWindow?
     
     func launch() {
-        isLoggedIn = TokenManager.shared.getAccessToken() != nil && TokenManager.shared.getRefreshToken() != nil
-
         window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
         window?.makeKeyAndVisible()
 
@@ -61,7 +59,9 @@ final class AppRouterImp: AppRouter {
     // MARK: - Property
     
     internal let dependency: Dependency
-    private var isLoggedIn = false
+    private var isLoggedIn: Bool {
+        return TokenManager.shared.accessToken != nil
+    }
     
     // MARK: - Initializer
     

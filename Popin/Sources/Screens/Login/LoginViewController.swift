@@ -217,6 +217,9 @@ private extension LoginViewController {
                                     accessToken: accessToken,
                                     refreshToken: refreshToken
                                 )
+                                TokenManager.shared.accessToken = accessToken
+                                TokenManager.shared.refreshToken = refreshToken
+
                                 self.router?.routeToHome(accessToken: accessToken, refreshToken: refreshToken)
                             } else {
                                 print("accessToken 또는 refreshToken을 찾을 수 없습니다.")

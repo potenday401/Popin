@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        if isFirstLaunch() {
+            TokenManager.shared.clearTokens()
+            setFirstLaunchFlag()
+        }
+        
         let network = AlamofireNetwork(configuration: sessionConfiguration)
         let tokenStorage = TokenKeychainStorage()
         let tokenRepository = TokenRepositoryImp(storage: tokenStorage)
@@ -29,10 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-//    func applicationWillTerminate(_ application: UIApplication) {
-//        TokenManager.shared.clearTokens()
-//    }
+    private func isFirstLaunch() -> Bool {
+        return !UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
+    }
     
+    private func setFirstLaunchFlag() {
+        UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+    }
+
     private func refreshAccessToken(refreshToken: String) {
         // 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
         // 성공 시 routeToHome(accessToken: newAccessToken)
