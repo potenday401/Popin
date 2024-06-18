@@ -35,7 +35,8 @@ final class LoginRouterImp: LoginRouter {
             let router = HomeRouterImp(cameraService: cameraService)
             homeViewController.router = router
             router.viewController = homeViewController
-            
+            TokenManager.shared.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
+
             if let keyWindow = UIApplication.shared.keyWindow {
                 keyWindow.rootViewController = UINavigationController(rootViewController: homeViewController)
                 keyWindow.makeKeyAndVisible()

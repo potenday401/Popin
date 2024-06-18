@@ -19,6 +19,8 @@ final class AppRouterImp: AppRouter {
     
     func launch() {
         window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
+        window?.makeKeyAndVisible()
+
     }
     
     private var loginViewController: UIViewController {
@@ -57,7 +59,9 @@ final class AppRouterImp: AppRouter {
     // MARK: - Property
     
     internal let dependency: Dependency
-    private var isLoggedIn = false
+    private var isLoggedIn: Bool {
+        return TokenManager.shared.accessToken != nil
+    }
     
     // MARK: - Initializer
     
