@@ -23,11 +23,9 @@ final class CameraService: CameraServiceProtocol {
     }
     
     func uploadPin(selectedPhoto: [UIImage], capturedPhoto: [UIImage], initialLocation: CLLocation?, accessToken: String, contentId: Int, currentDateString: String, completion: @escaping (Result<String, Error>) -> Void) {
-        print(currentDateString, "date string")
         if let imageData = selectedPhoto.first?.jpegData(compressionQuality: 0.1) {
             let imageDataStruct = ImageDataa(imageData: imageData)
             let jsonData = try? JSONEncoder().encode(imageDataStruct)
-            //            print(String(data: jsonData ?? Data(), encoding: .utf8) ?? "")
         }
         
         guard let selectedImage = selectedPhoto.first,

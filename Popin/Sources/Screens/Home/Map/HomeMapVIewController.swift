@@ -62,9 +62,20 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .uploadDidFinish, object: nil)
+
         setupMapView()
         setupLocationManager()
     }
+    
+    @objc func handleUploadDidFinish() {
+        getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
+    }
+    
+    deinit {
+            NotificationCenter.default.removeObserver(self)
+    }
+
     
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: mapView)
@@ -301,4 +312,8 @@ extension HomeMapViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+extension Notification.Name {
+    static let uploadDidFinish = Notification.Name("uploadDidFinish")
 }

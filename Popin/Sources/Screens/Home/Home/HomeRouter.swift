@@ -3,6 +3,7 @@
 //
 //  Created by Jihaha kim on 2024/03/13.
 //
+
 import UIKit
 import CoreLocation
 
@@ -17,10 +18,11 @@ protocol HomeRouter {
 final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraViewControllerDelegate {
     
     private let cameraService: CameraService
-    
+
     init(cameraService: CameraService) {
         self.cameraService = cameraService
     }
+    
     func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
         self.dismissFromCameraScreen()
     }
@@ -34,6 +36,7 @@ final class HomeRouterImp: HomeRouter, ProfileViewControllerDelegate, CameraView
     func routeToHomeMapView(accessToken: String) {
         DispatchQueue.main.async {
             let homeMapViewController = HomeMapViewController(accessToken: accessToken)
+            self.homeMapViewController = homeMapViewController
             self.viewController?.navigationController?.pushViewController(homeMapViewController, animated: true)
         }
     }

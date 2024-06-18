@@ -380,7 +380,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
                         let removedAnnotation = self.annotations.remove(at: index)
-                        print(removedAnnotation, "check removed Annotation")
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
                     }
@@ -567,7 +566,9 @@ extension AlbumViewController: MKMapViewDelegate {
                 date: date
             )
             newAnnotation.hidePinCountLabel = true
-            mapView.addAnnotation(newAnnotation)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(newAnnotation)
+            }
             addedAnnotationsCount += 1
             index += 1
         }
@@ -588,7 +589,9 @@ extension AlbumViewController: MKMapViewDelegate {
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, date:String) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false, date: date)
-        mapView.addAnnotation(imageAnnotation)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(imageAnnotation)
+        }
     }
 }
 

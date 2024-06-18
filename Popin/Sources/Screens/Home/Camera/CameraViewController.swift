@@ -402,7 +402,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         dependency.cameraService.uploadPin(selectedPhoto: dependency.image, capturedPhoto: dependency.image, initialLocation: location, accessToken: accessToken, contentId: contentId, currentDateString: currentDateString) { result in
             switch result {
             case .success(let response):
-                print("업로드 성공: \(response)")
+                NotificationCenter.default.post(name: .uploadDidFinish, object: nil)
                 self.delegate?.requestCameraViewControllerBackDidTap(self)
             case .failure(let error):
                 print(error, "errorcheck")

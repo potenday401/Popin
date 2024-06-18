@@ -292,12 +292,6 @@ extension HomeViewController: ProfileViewControllerDelegate {
     }
 }
 
-extension HomeViewController: CameraViewControllerDelegate {
-    func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
-        router?.dismissFromCameraScreen()
-    }
-}
-
 extension HomeViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
