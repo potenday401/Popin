@@ -18,7 +18,11 @@ final class AppRouterImp: AppRouter {
     weak var window: UIWindow?
     
     func launch() {
+        isLoggedIn = TokenManager.shared.getAccessToken() != nil && TokenManager.shared.getRefreshToken() != nil
+
         window?.rootViewController = isLoggedIn ? homeViewController : loginViewController
+        window?.makeKeyAndVisible()
+
     }
     
     private var loginViewController: UIViewController {

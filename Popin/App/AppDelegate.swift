@@ -26,7 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appRouter = AppRouterImp(dependency: .init(network: network, tokenRepository: tokenRepository, validator: validator))
         appRouter?.window = window
         appRouter?.launch()
-        
+        return true
+    }
+    
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        TokenManager.shared.clearTokens()
+//    }
+    
+    private func refreshAccessToken(refreshToken: String) {
+        // 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
+        // 성공 시 routeToHome(accessToken: newAccessToken)
+        // 실패 시 routeToLogin()
+    }
+    
+    private func isValidToken(_ token: String) -> Bool {
+        // 토큰 유효성 검사 로직
         return true
     }
     

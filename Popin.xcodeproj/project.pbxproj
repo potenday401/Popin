@@ -120,6 +120,8 @@
 		9FC267F62B847261000BD089 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267F52B847261000BD089 /* SnapKit */; };
 		9FC267F92B847282000BD089 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267F82B847282000BD089 /* FSCalendar */; };
 		9FC267FC2B8472B3000BD089 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC267FB2B8472B3000BD089 /* Tabman */; };
+		9FC2B3312C2130E400470DF0 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC2B3302C2130E400470DF0 /* TokenManager.swift */; };
+		9FC2B3342C21319100470DF0 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC2B3332C21319100470DF0 /* KeychainAccess */; };
 		9FF759EA2BB3E7B00061B112 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF759E92BB3E7B00061B112 /* CardListView.swift */; };
 /* End PBXBuildFile section */
 
@@ -244,6 +246,7 @@
 		9FC025E12BA9235600D9130F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		9FC025E32BA9238600D9130F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9FC025E82BA923DD00D9130F /* ProfileVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIewController.swift; sourceTree = "<group>"; };
+		9FC2B3302C2130E400470DF0 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		9FF759E92BB3E7B00061B112 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -254,6 +257,7 @@
 			files = (
 				654082312BC017A600F5143A /* ScalingCarousel in Frameworks */,
 				9FC267F32B847237000BD089 /* Kingfisher in Frameworks */,
+				9FC2B3342C21319100470DF0 /* KeychainAccess in Frameworks */,
 				9FC267F62B847261000BD089 /* SnapKit in Frameworks */,
 				9FC267F92B847282000BD089 /* FSCalendar in Frameworks */,
 				9FC267F02B8471E1000BD089 /* Alamofire in Frameworks */,
@@ -603,6 +607,7 @@
 			children = (
 				6567E7AF2B92E170000D932C /* TokenStorage.swift */,
 				6567E7B22B92E1A8000D932C /* TokenKeychainStorage.swift */,
+				9FC2B3302C2130E400470DF0 /* TokenManager.swift */,
 			);
 			path = Token;
 			sourceTree = "<group>";
@@ -964,6 +969,7 @@
 				9FC267F82B847282000BD089 /* FSCalendar */,
 				9FC267FB2B8472B3000BD089 /* Tabman */,
 				654082302BC017A600F5143A /* ScalingCarousel */,
+				9FC2B3332C21319100470DF0 /* KeychainAccess */,
 			);
 			productName = fourpin;
 			productReference = 9F0BA2AB2B68A0D600677403 /* Popin.app */;
@@ -1024,6 +1030,7 @@
 				9FC267F72B847282000BD089 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */,
 				6540822F2BC017A600F5143A /* XCRemoteSwiftPackageReference "ScalingCarousel" */,
+				9FC2B3322C21319100470DF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = 9F0BA2AC2B68A0D600677403 /* Products */;
 			projectDirPath = "";
@@ -1115,6 +1122,7 @@
 				652C0E782B94591B00A87458 /* HTTPMethod.swift in Sources */,
 				65D2D1882B8CA9290015CD0D /* PDSCheckbox.swift in Sources */,
 				6567E7B02B92E170000D932C /* TokenStorage.swift in Sources */,
+				9FC2B3312C2130E400470DF0 /* TokenManager.swift in Sources */,
 				6584711E2B98221C00875FEE /* KeyboardNotificationUserInfo.swift in Sources */,
 				9E46845E2B6E6FA900AD005A /* DateRecord.swift in Sources */,
 				6513C3F12B9AEB1900E14C0F /* VerificationCodeRequest.swift in Sources */,
@@ -1502,6 +1510,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		9FC2B3322C21319100470DF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1534,6 +1550,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9FC267FA2B8472B3000BD089 /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
+		};
+		9FC2B3332C21319100470DF0 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FC2B3322C21319100470DF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 
