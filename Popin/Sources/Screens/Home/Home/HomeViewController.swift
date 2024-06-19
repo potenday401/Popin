@@ -358,6 +358,10 @@ extension HomeViewController: PHPickerViewControllerDelegate {
             return
         }
         
+        if accessToken == nil {
+            accessToken = TokenManager.shared.getAccessToken()
+        }
+        
         if let accessToken = accessToken, let location = location {
             router?.routeToCameraView(with: images, ImageData: imageData, locationString: locationString, accessToken: accessToken, location: location)
         } else {

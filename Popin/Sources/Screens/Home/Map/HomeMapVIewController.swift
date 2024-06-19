@@ -119,10 +119,19 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             return
         }
         var request = URLRequest(url: url)
+        var token = accessToken
+        if token.isEmpty {
+            
+            token = TokenManager.shared.getAccessToken() ?? ""
+        }
         
+        guard !token.isEmpty else {
+            print("Access token is nil or empty")
+            return
+        }
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
