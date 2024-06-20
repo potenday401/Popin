@@ -153,52 +153,48 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                 print("No data received")
                 return
             }
-            guard let jsonData = try? JSONSerialization.jsonObject(with: responseData) else {
-                print("Failed to convert JSON data")
-                return
-            }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData, options: [])
+                
                 if let jsonDict = json as? [String: Any],
-                   let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
+                   let responseData = jsonDict["responseData"] as? [String: Any] {
                     var photoPinContainer = [PhotoPin]()
-                    var photoIds:Int = 0
-                    var photoImageUrl:String = ""
+                    var photoIds: Int = 0
+                    var photoImageUrl: String = ""
                     let dateFormatter: DateFormatter = {
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
                         return formatter
                     }()
                     
-                    for pinDict in jsonArray {
-                        if let photosData = pinDict["photos"] as? [String: Any] {
-                            if let photoUrl = photosData["url"] as? String {
-                                photoImageUrl = photoUrl
-                            } else {
-                                print("url not found or not an String")
-                            }
-                            if let photoId = photosData["id"] as? Int {
-                                photoIds = photoId
-                            } else {
-                                print("ID not found or not an Int")
-                            }
+                    if let photosData = responseData["photos"] as? [String: Any] {
+                        if let photoUrl = photosData["url"] as? String {
+                            photoImageUrl = photoUrl
                         } else {
-                            print("Photos data is not a dictionary or is nil")
+                            print("url not found or not a String")
                         }
-                        guard let contentId = pinDict["contentId"] as? Int,
-                              let title = pinDict["title"] as? String,
-                              let latitude = pinDict["latitude"] as? Double,
-                              let longitude = pinDict["longitude"] as? Double,
-                              let userId = pinDict["userId"] as? String,
-                              let memorizedAtString = pinDict["memorizedAt"] as? String else {
-                            print("Failed to decode photo pin: \(pinDict)")
-                            continue
+                        if let photoId = photosData["id"] as? Int {
+                            photoIds = photoId
+                        } else {
+                            print("ID not found or not an Int")
                         }
-                        
-                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: photoImageUrl, userId: userId, memorizedAt: memorizedAtString)
-                        photoPinContainer.append(photoPin)
+                    } else {
+                        print("Photos data is not a dictionary or is nil")
                     }
+                    
+                    guard let contentId = responseData["contentId"] as? Int,
+                          let title = responseData["title"] as? String,
+                          let latitude = responseData["latitude"] as? Double,
+                          let longitude = responseData["longitude"] as? Double,
+                          let userId = responseData["userId"] as? String,
+                          let memorizedAtString = responseData["memorizedAt"] as? String else {
+                        print("Failed to decode photo pin: \(responseData)")
+                        return
+                    }
+                    
+                    let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: photoImageUrl, userId: userId, memorizedAt: memorizedAtString)
+                    photoPinContainer.append(photoPin)
                     
                     if !photoPinContainer.isEmpty {
                         DispatchQueue.main.async {
@@ -208,7 +204,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                         print("No photo pins found in the response")
                     }
                 } else {
-                    print("Unexpected response format: Not an array of dictionaries")
+                    print("Unexpected response format: Not a dictionary containing 'responseData'")
                 }
             } catch {
                 print("Error decoding JSON: \(error)")
@@ -216,6 +212,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         }
         task.resume()
     }
+
     
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
         for pin in photoPinContainer {
