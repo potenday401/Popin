@@ -71,7 +71,7 @@ class AlbumInfoView: UIView {
         dateLabel.snp.makeConstraints { make in
             make.leading.equalTo(dateIconView.snp.trailing).offset(8)
             make.top.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-25)
         }
         
         mapIconView.snp.makeConstraints { make in
@@ -83,7 +83,7 @@ class AlbumInfoView: UIView {
         photoCountLabel.snp.makeConstraints { make in
             make.leading.equalTo(mapIconView.snp.trailing).offset(8)
             make.top.equalTo(dateLabel.snp.bottom).offset(8)
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-25)
         }
         
     }

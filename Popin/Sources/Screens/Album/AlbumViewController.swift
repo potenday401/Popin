@@ -70,7 +70,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var annotationsAlreadyAdded = false
     var existingAnnotations: [CustomImageAnnotation] = []
     private var isMapCentered = false
-    
+
     init(accessToken: String) {
         self.accessToken = accessToken
         super.init()
@@ -390,7 +390,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
                         let removedAnnotation = self.annotations.remove(at: index)
-                        self.mapView.removeAnnotation(removedAnnotation)
+                        self.mapView.removeAnnotation(removedAnnotation) // Remove from mapView
                         self.setupCardListView()
                     }
                 }
@@ -402,6 +402,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         photoTask.resume()
         contentTask.resume()
     }
+
     
     private func removeAnnotation(with photoId: Int) {
         if let index = annotations.firstIndex(where: { $0.photoId == photoId }) {
