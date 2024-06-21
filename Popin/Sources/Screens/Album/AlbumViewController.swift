@@ -71,7 +71,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     var existingAnnotations: [CustomImageAnnotation] = []
     private var isMapCentered = false
     private var infoView: AlbumInfoView?
-    
+    private var geocodingCache = [CLLocation: CLPlacemark]()
+    private var geocoder = CLGeocoder()
+
     init(accessToken: String) {
         self.accessToken = accessToken
         super.init()
@@ -524,6 +526,28 @@ extension AlbumViewController: MKMapViewDelegate {
         return view
     }
     
+    func reverseGeocode(location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
+            if let cachedPlacemark = geocodingCache[location] {
+                completion(cachedPlacemark)
+                return
+            }
+            
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                if let error = error {
+                    print("Geocoding error: \(error)")
+                    completion(nil)
+                    return
+                }
+                
+                if let placemark = placemarks?.first {
+                    self.geocodingCache[location] = placemark
+                    completion(placemark)
+                } else {
+                    completion(nil)
+                }
+            }
+    }
+    
     private func showAlbumDetailViewController() {
         let albumDetailViewController = AlbumDetailViewController()
         albumDetailViewController.annotations = existingAnnotations
@@ -589,10 +613,10 @@ extension AlbumViewController: MKMapViewDelegate {
                 pinCount: pinCount,
                 photoId: photoId,
                 contentId: contentId,
-                hidePinCountLabel: true,
+                hidePinCountLabel: false,
                 date: date
             )
-            newAnnotation.hidePinCountLabel = true
+            newAnnotation.hidePinCountLabel = false
             DispatchQueue.main.async {
                 self.mapView.addAnnotation(newAnnotation)
             }
@@ -614,10 +638,21 @@ extension AlbumViewController: MKMapViewDelegate {
         }
     }
     
-    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, date:String) {
-        let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false, date: date)
-        DispatchQueue.main.async {
-            self.mapView.addAnnotation(imageAnnotation)
+    func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, date: String) {
+        reverseGeocode(location: location) { placemark in
+            guard let placemark = placemark else { return }
+            let imageAnnotation = CustomImageAnnotation(
+                coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude),
+                imageUrl: imageUrl,
+                pinCount: pinCount,
+                photoId: photoId,
+                contentId: contentId,
+                hidePinCountLabel: false,
+                date: date
+            )
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(imageAnnotation)
+            }
         }
     }
 }

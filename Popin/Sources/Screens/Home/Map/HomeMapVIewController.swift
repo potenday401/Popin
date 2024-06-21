@@ -113,119 +113,54 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     func getPin(latitude: Double, longitude: Double) {
         let polygon = "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
         let urlString = baseUrl + "contents?area=\(polygon)"
-        
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        var token = accessToken.isEmpty ? TokenManager.shared.getAccessToken() ?? "" : accessToken
-        
-        guard !token.isEmpty else {
-            print("Access token is nil or empty")
-            return
-        }
-        
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Network request failed with error: \(error)")
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("Invalid response")
-                return
-            }
-            
-            guard 200..<300 ~= httpResponse.statusCode else {
-                print("Invalid status code: \(httpResponse.statusCode)")
-                return
-            }
-            
-            guard let responseData = data else {
-                print("No data received")
-                return
-            }
-            
-            do {
-                let json = try JSONSerialization.jsonObject(with: responseData, options: [])
-                
-                if let jsonDict = json as? [String: Any] {
-                    if let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
-                        var photoPinContainer = [PhotoPin]()
-                        
-                        for pinDict in jsonArray {
-                            if let photosData = pinDict["photos"] as? [String: Any],
-                               let photoUrl = photosData["url"] as? String,
-                               let photoId = photosData["id"] as? Int {
-                                let photoPin = PhotoPin(contentId: pinDict["contentId"] as? Int ?? 0,
-                                                        photoId: photoId,
-                                                        title: pinDict["title"] as? String ?? "",
-                                                        latitude: pinDict["latitude"] as? Double ?? 0.0,
-                                                        longitude: pinDict["longitude"] as? Double ?? 0.0,
-                                                        photoUrl: photoUrl,
-                                                        userId: pinDict["userId"] as? String ?? "",
-                                                        memorizedAt: pinDict["memorizedAt"] as? String ?? "")
-                                photoPinContainer.append(photoPin)
-                            } else {
-                                print("Invalid pin format: \(pinDict)")
-                            }
-                        }
-                        
-                        DispatchQueue.main.async {
-                            if !photoPinContainer.isEmpty {
-                                self.handlePhotoPins(photoPinContainer)
-                            } else {
-                                self.mapView.removeAnnotations(self.mapView.annotations)
-                                print("No photo pins found in the response")
-                            }
-                        }
-                    } else if let responseData = jsonDict["responseData"] as? [String: Any] {
-                        var photoPinContainer = [PhotoPin]()
-                        
-                        if let photosData = responseData["photos"] as? [String: Any],
-                           let photoUrl = photosData["url"] as? String,
-                           let photoId = photosData["id"] as? Int {
-                            let photoPin = PhotoPin(contentId: responseData["contentId"] as? Int ?? 0,
-                                                    photoId: photoId,
-                                                    title: responseData["title"] as? String ?? "",
-                                                    latitude: responseData["latitude"] as? Double ?? 0.0,
-                                                    longitude: responseData["longitude"] as? Double ?? 0.0,
-                                                    photoUrl: photoUrl,
-                                                    userId: responseData["userId"] as? String ?? "",
-                                                    memorizedAt: responseData["memorizedAt"] as? String ?? "")
-                            photoPinContainer.append(photoPin)
-                        } else {
-                            print("Invalid single pin format: \(responseData)")
-                        }
-                        
-                        DispatchQueue.main.async {
-                            if !photoPinContainer.isEmpty {
-                                self.handlePhotoPins(photoPinContainer)
-                            } else {
-                                self.mapView.removeAnnotations(self.mapView.annotations)
-                                // todo: 앨범뷰에서 삭제하면 바로 홈에 반영되야함
-                                print("No photo pins found in the response")
-                            }
-                        }
-                    } else {
-                        print("Unexpected response format: Not a dictionary containing 'responseData'")
-                    }
-                } else {
-                    print("Unexpected response format: Not a dictionary")
+
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
+
+        AF.request(urlString, headers: headers).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                guard let jsonDict = value as? [String: Any] else {
+                    print("Invalid response format")
+                    return
                 }
-            } catch {
-                print("Error decoding JSON: \(error)")
+                self.handlePinResponse(jsonDict)
+            case .failure(let error):
+                print("Request failed with error: \(error)")
             }
         }
-        task.resume()
     }
+
+    func handlePinResponse(_ jsonDict: [String: Any]) {
+        if let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
+            var photoPinContainer = [PhotoPin]()
+            for pinDict in jsonArray {
+                if let photosData = pinDict["photos"] as? [String: Any],
+                   let photoUrl = photosData["url"] as? String,
+                   let photoId = photosData["id"] as? Int {
+                    let photoPin = PhotoPin(contentId: pinDict["contentId"] as? Int ?? 0,
+                                            photoId: photoId,
+                                            title: pinDict["title"] as? String ?? "",
+                                            latitude: pinDict["latitude"] as? Double ?? 0.0,
+                                            longitude: pinDict["longitude"] as? Double ?? 0.0,
+                                            photoUrl: photoUrl,
+                                            userId: pinDict["userId"] as? String ?? "",
+                                            memorizedAt: pinDict["memorizedAt"] as? String ?? "")
+                    photoPinContainer.append(photoPin)
+                } else {
+                    print("Invalid pin format: \(pinDict)")
+                }
+            }
+            DispatchQueue.main.async {
+                self.handlePhotoPins(photoPinContainer)
+            }
+        } else {
+            print("Unexpected response format: Not a dictionary containing 'responseData'")
+        }
+    }
+
 
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
         for pin in photoPinContainer {
