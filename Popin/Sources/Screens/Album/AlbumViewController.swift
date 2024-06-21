@@ -70,6 +70,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var annotationsAlreadyAdded = false
     var existingAnnotations: [CustomImageAnnotation] = []
     private var isMapCentered = false
+    private var infoView: AlbumInfoView?
 
     init(accessToken: String) {
         self.accessToken = accessToken
@@ -135,6 +136,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0)
         }
+        self.infoView = infoView
     }
     
     func setupMapView() {
@@ -371,6 +373,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                         let removedAnnotation = self.annotations.remove(at: index)
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
+                        self.infoView?.updatePhotoCount(self.annotations.count)
                     }
                     NotificationCenter.default.post(name: .deleteDidFinish, object: nil)
                 }
@@ -390,8 +393,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
                         let removedAnnotation = self.annotations.remove(at: index)
-                        self.mapView.removeAnnotation(removedAnnotation) // Remove from mapView
+                        self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
+                        self.infoView?.updatePhotoCount(self.annotations.count)
                     }
                 }
                 print("Successfully deleted content with id \(contentId)")
