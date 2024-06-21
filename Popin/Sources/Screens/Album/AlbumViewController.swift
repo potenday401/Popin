@@ -70,6 +70,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     private var annotationsAlreadyAdded = false
     var existingAnnotations: [CustomImageAnnotation] = []
     private var isMapCentered = false
+    private var infoView: AlbumInfoView?
     
     init(accessToken: String) {
         self.accessToken = accessToken
@@ -135,6 +136,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(0)
         }
+        self.infoView = infoView
     }
     
     func setupMapView() {
@@ -229,10 +231,12 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         }
         stackView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalToSuperview()
+            make.height.equalToSuperview()
         }
         
         let maxImagesPerColumn = 2
         var currentRowStackView: UIStackView?
+        var rowIndex = 0
         
         for (index, annotation) in annotations.enumerated() {
             if index % maxImagesPerColumn == 0 {
@@ -241,6 +245,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 currentRowStackView?.distribution = .fillEqually
                 currentRowStackView?.spacing = 8
                 stackView.addArrangedSubview(currentRowStackView!)
+                rowIndex += 1
             }
             
             let iconView = IconView(photoId: annotation.photoId, contentId: annotation.contentId)
@@ -256,7 +261,8 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             
             iconView.addSubview(imageView)
             imageView.snp.makeConstraints { make in
-                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8,
+                                                                 left: 8, bottom: 8, right: 8))
                 make.width.equalTo(86)
                 make.height.equalTo(86)
             }
@@ -268,6 +274,13 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             iconView.isUserInteractionEnabled = true
             
             currentRowStackView?.addArrangedSubview(iconView)
+        }
+        
+        if annotations.count % maxImagesPerColumn != 0 {
+            for _ in 0..<(maxImagesPerColumn - annotations.count % maxImagesPerColumn) {
+                let emptyView = UIView()
+                currentRowStackView?.addArrangedSubview(emptyView)
+            }
         }
     }
     
@@ -296,6 +309,16 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         setupStatusBarView()
         isSelectionEnabled = true
         navigationItem.hidesBackButton = true
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDeleteDidFinishNotification), name: .deleteDidFinish, object: nil)
+    }
+    
+    
+    @objc private func handleDeleteDidFinishNotification() {
+        mapView.removeAnnotations(mapView.annotations)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func selectButtonTapped() {
@@ -362,7 +385,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                         let removedAnnotation = self.annotations.remove(at: index)
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
+                        self.infoView?.updatePhotoCount(self.annotations.count)
                     }
+                    NotificationCenter.default.post(name: .deleteDidFinish, object: nil)
                 }
                 print("Successfully deleted photo with id \(photoId)")
             } else {
@@ -380,9 +405,9 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
                 DispatchQueue.main.async {
                     if let index = self.annotations.firstIndex(where: { $0.contentId == contentId }) {
                         let removedAnnotation = self.annotations.remove(at: index)
-                        print(removedAnnotation, "check removed Annotation")
                         self.mapView.removeAnnotation(removedAnnotation)
                         self.setupCardListView()
+                        self.infoView?.updatePhotoCount(self.annotations.count)
                     }
                 }
                 print("Successfully deleted content with id \(contentId)")
@@ -393,6 +418,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
         photoTask.resume()
         contentTask.resume()
     }
+    
     
     private func removeAnnotation(with photoId: Int) {
         if let index = annotations.firstIndex(where: { $0.photoId == photoId }) {
@@ -567,7 +593,9 @@ extension AlbumViewController: MKMapViewDelegate {
                 date: date
             )
             newAnnotation.hidePinCountLabel = true
-            mapView.addAnnotation(newAnnotation)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(newAnnotation)
+            }
             addedAnnotationsCount += 1
             index += 1
         }
@@ -588,7 +616,9 @@ extension AlbumViewController: MKMapViewDelegate {
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, date:String) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false, date: date)
-        mapView.addAnnotation(imageAnnotation)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(imageAnnotation)
+        }
     }
 }
 

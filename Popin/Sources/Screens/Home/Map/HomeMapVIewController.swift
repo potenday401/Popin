@@ -62,10 +62,21 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .uploadDidFinish, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .deleteDidFinish, object: nil)
+
         setupMapView()
         setupLocationManager()
     }
     
+    @objc func handleUploadDidFinish() {
+        getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
+    }
+    
+    deinit {
+            NotificationCenter.default.removeObserver(self)
+    }
+
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -100,19 +111,28 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     func getPin(latitude: Double, longitude: Double) {
-        let polygon =
-        "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
+        let polygon = "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
         let urlString = baseUrl + "contents?area=\(polygon)"
+        
         guard let url = URL(string: urlString) else {
             return
         }
+        
         var request = URLRequest(url: url)
+        var token = accessToken.isEmpty ? TokenManager.shared.getAccessToken() ?? "" : accessToken
+        
+        guard !token.isEmpty else {
+            print("Access token is nil or empty")
+            return
+        }
         
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("Network request failed with error: \(error)")
                 return
@@ -132,62 +152,73 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                 print("No data received")
                 return
             }
-            guard let jsonData = try? JSONSerialization.jsonObject(with: responseData) else {
-                print("Failed to convert JSON data")
-                return
-            }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: responseData, options: [])
-                if let jsonDict = json as? [String: Any],
-                   let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
-                    var photoPinContainer = [PhotoPin]()
-                    var photoIds:Int = 0
-                    var photoImageUrl:String = ""
-                    let dateFormatter: DateFormatter = {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-                        return formatter
-                    }()
-                    
-                    for pinDict in jsonArray {
-                        if let photosData = pinDict["photos"] as? [String: Any] {
-                            if let photoUrl = photosData["url"] as? String {
-                                photoImageUrl = photoUrl
+                
+                if let jsonDict = json as? [String: Any] {
+                    if let jsonArray = jsonDict["responseData"] as? [[String: Any]] {
+                        var photoPinContainer = [PhotoPin]()
+                        
+                        for pinDict in jsonArray {
+                            if let photosData = pinDict["photos"] as? [String: Any],
+                               let photoUrl = photosData["url"] as? String,
+                               let photoId = photosData["id"] as? Int {
+                                let photoPin = PhotoPin(contentId: pinDict["contentId"] as? Int ?? 0,
+                                                        photoId: photoId,
+                                                        title: pinDict["title"] as? String ?? "",
+                                                        latitude: pinDict["latitude"] as? Double ?? 0.0,
+                                                        longitude: pinDict["longitude"] as? Double ?? 0.0,
+                                                        photoUrl: photoUrl,
+                                                        userId: pinDict["userId"] as? String ?? "",
+                                                        memorizedAt: pinDict["memorizedAt"] as? String ?? "")
+                                photoPinContainer.append(photoPin)
                             } else {
-                                print("url not found or not an String")
+                                print("Invalid pin format: \(pinDict)")
                             }
-                            if let photoId = photosData["id"] as? Int {
-                                photoIds = photoId
-                            } else {
-                                print("ID not found or not an Int")
-                            }
-                        } else {
-                            print("Photos data is not a dictionary or is nil")
-                        }
-                        guard let contentId = pinDict["contentId"] as? Int,
-                              let title = pinDict["title"] as? String,
-                              let latitude = pinDict["latitude"] as? Double,
-                              let longitude = pinDict["longitude"] as? Double,
-                              let userId = pinDict["userId"] as? String,
-                              let memorizedAtString = pinDict["memorizedAt"] as? String else {
-                            print("Failed to decode photo pin: \(pinDict)")
-                            continue
                         }
                         
-                        let photoPin = PhotoPin(contentId: contentId, photoId: photoIds, title: title, latitude: latitude, longitude: longitude, photoUrl: photoImageUrl, userId: userId, memorizedAt: memorizedAtString)
-                        photoPinContainer.append(photoPin)
-                    }
-                    
-                    if !photoPinContainer.isEmpty {
                         DispatchQueue.main.async {
-                            self.handlePhotoPins(photoPinContainer)
+                            if !photoPinContainer.isEmpty {
+                                self.handlePhotoPins(photoPinContainer)
+                            } else {
+                                self.mapView.removeAnnotations(self.mapView.annotations)
+                                print("No photo pins found in the response")
+                            }
+                        }
+                    } else if let responseData = jsonDict["responseData"] as? [String: Any] {
+                        var photoPinContainer = [PhotoPin]()
+                        
+                        if let photosData = responseData["photos"] as? [String: Any],
+                           let photoUrl = photosData["url"] as? String,
+                           let photoId = photosData["id"] as? Int {
+                            let photoPin = PhotoPin(contentId: responseData["contentId"] as? Int ?? 0,
+                                                    photoId: photoId,
+                                                    title: responseData["title"] as? String ?? "",
+                                                    latitude: responseData["latitude"] as? Double ?? 0.0,
+                                                    longitude: responseData["longitude"] as? Double ?? 0.0,
+                                                    photoUrl: photoUrl,
+                                                    userId: responseData["userId"] as? String ?? "",
+                                                    memorizedAt: responseData["memorizedAt"] as? String ?? "")
+                            photoPinContainer.append(photoPin)
+                        } else {
+                            print("Invalid single pin format: \(responseData)")
+                        }
+                        
+                        DispatchQueue.main.async {
+                            if !photoPinContainer.isEmpty {
+                                self.handlePhotoPins(photoPinContainer)
+                            } else {
+                                self.mapView.removeAnnotations(self.mapView.annotations)
+                                // todo: 앨범뷰에서 삭제하면 바로 홈에 반영되야함
+                                print("No photo pins found in the response")
+                            }
                         }
                     } else {
-                        print("No photo pins found in the response")
+                        print("Unexpected response format: Not a dictionary containing 'responseData'")
                     }
                 } else {
-                    print("Unexpected response format: Not an array of dictionaries")
+                    print("Unexpected response format: Not a dictionary")
                 }
             } catch {
                 print("Error decoding JSON: \(error)")
@@ -195,7 +226,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         }
         task.resume()
     }
-    
+
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
         for pin in photoPinContainer {
             let latitude = pin.latitude
@@ -301,4 +332,9 @@ extension HomeMapViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+extension Notification.Name {
+    static let uploadDidFinish = Notification.Name("uploadDidFinish")
+    static let deleteDidFinish = Notification.Name("deleteDidFinish")
 }

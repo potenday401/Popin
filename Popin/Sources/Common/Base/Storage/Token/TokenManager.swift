@@ -32,9 +32,18 @@ class TokenManager {
         }
     }
     
+    var Email: String? {
+        get {
+            return keychain["email"]
+        }
+        set {
+            keychain["email"] = newValue
+        }
+    }
     
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
+    private let emailKey = "email"
     
     private init() {}
     
@@ -49,6 +58,10 @@ class TokenManager {
     
     func getRefreshToken() -> String? {
         return keychain[refreshTokenKey]
+    }
+    
+    func getEmail() -> String? {
+        return keychain[emailKey]
     }
     
     func clearTokens() {

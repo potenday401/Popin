@@ -292,12 +292,6 @@ extension HomeViewController: ProfileViewControllerDelegate {
     }
 }
 
-extension HomeViewController: CameraViewControllerDelegate {
-    func requestCameraViewControllerBackDidTap(_ viewController: CameraViewController) {
-        router?.dismissFromCameraScreen()
-    }
-}
-
 extension HomeViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
@@ -362,6 +356,10 @@ extension HomeViewController: PHPickerViewControllerDelegate {
         guard let images = images, !images.isEmpty else {
             print("이미지 선택이 취소되었습니다.")
             return
+        }
+        
+        if accessToken == nil {
+            accessToken = TokenManager.shared.getAccessToken()
         }
         
         if let accessToken = accessToken, let location = location {

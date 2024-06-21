@@ -33,7 +33,8 @@ final class ProfileViewController: BaseViewController {
     
     private lazy var myLoginInfo: UILabel = {
         let label = UILabel()
-        let text = "사용자 이메일\nabcd@abcd.com"
+        let email = TokenManager.shared.getEmail() ?? ""
+        let text = "\(email)"
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = 16
         paragraphStyle.lineSpacing = 8
