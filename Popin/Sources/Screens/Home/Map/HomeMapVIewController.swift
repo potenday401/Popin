@@ -37,7 +37,12 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     var pinCountByCoordinate: [String: Int] = [:]
     var selectedLocation: CLLocation?
     private let geocodingService = GeocodingService()
-    
+    var lastRequestTime: Date?
+    var requestInterval: TimeInterval = 10.0
+    var backoffInterval: TimeInterval = 20.0
+    var cache: [CLLocation: [CLPlacemark]] = [:]
+    var requestQueue: [CLLocation] = []
+
     private let accessToken: String
     
     init(accessToken: String) {
@@ -87,17 +92,62 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first!
-        DispatchQueue.main.async { [self] in
-            mapView.centerToLocation(location)
+        guard let location = locations.first else { return }
+        self.location = location
+
+        DispatchQueue.main.async {
+            self.mapView.centerToLocation(location)
         }
-        getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
-        if locations.last != nil {
-            locationManager.stopUpdatingLocation()
+
+        let now = Date()
+        if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < requestInterval {
+            requestQueue.append(location)
+            return
+        }
+        lastRequestTime = now
+
+        if let cachedPlacemarks = cache[location] {
+            handleGeocodedLocation(cachedPlacemarks)
         } else {
-            print("No valid location found in the update1.")
+            requestReverseGeocoding(for: location)
         }
     }
+    
+    func requestReverseGeocoding(for location: CLLocation) {
+        CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
+            guard let self = self else { return }
+            
+            if let error = error as NSError? {
+                if error.domain == kCLErrorDomain && error.code == 2 {
+                    print("Reverse geocoding failed: \(error.localizedDescription)")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
+                        self.requestReverseGeocoding(for: location)
+                    }
+                } else if error.code == -3 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
+                        self.requestReverseGeocoding(for: location)
+                    }
+                } else {
+                    print("Reverse geocoding failed: \(error)")
+                }
+            } else if let placemarks = placemarks {
+                self.cache[location] = placemarks
+                self.handleGeocodedLocation(placemarks)
+                self.processRequestQueue()
+            }
+        }
+    }
+
+    func processRequestQueue() {
+        guard let nextLocation = requestQueue.first else { return }
+        requestQueue.removeFirst()
+        requestReverseGeocoding(for: nextLocation)
+    }
+    
+    func handleGeocodedLocation(_ placemarks: [CLPlacemark]) {
+        getPin(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+    }
+    
     
     func getPin(latitude: Double, longitude: Double) {
         let polygon = "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
@@ -331,38 +381,34 @@ extension Notification.Name {
 
 class GeocodingService {
     private var lastRequestTime: Date?
-    private let requestInterval: TimeInterval = 1.0
-    private let backoffInterval: TimeInterval = 5.0
-    private var cache: [CLLocation: [CLPlacemark]] = [:]
-    
+    private let requestInterval: TimeInterval = 61.0
+
     func requestReverseGeocoding(for location: CLLocation, completion: @escaping (Result<[CLPlacemark], Error>) -> Void) {
-        if let cachedPlacemarks = cache[location] {
-            completion(.success(cachedPlacemarks))
-            return
-        }
-        
         let now = Date()
         if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < requestInterval {
-            return // 너무 짧은 간격으로 요청을 보내지 않음
+//            completion(.failure(GEOError.throttled)) // API 제한에 걸렸을 때 적절한 오류 처리
+            return
         }
-        
         lastRequestTime = now
-        
-        CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
-            guard let self = self else { return }
-            if let error = error as NSError?, error.code == -3 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
-                    self.requestReverseGeocoding(for: location, completion: completion)
+
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error as NSError? {
+                if error.domain == kCLErrorDomain && error.code == 2 {
+//                    completion(.failure(GEOError.reverseGeocodingFailed(error)))
+                    // Backoff and retry logic can be added here
+                } else {
+                    completion(.failure(error))
                 }
-            } else if let error = error {
-                completion(.failure(error))
             } else if let placemarks = placemarks {
-                self.cache[location] = placemarks
                 completion(.success(placemarks))
+            } else {
+//                completion(.failure(GEOError.unexpectedResponse))
             }
         }
     }
 }
+
+
 
 struct PhotoPin: Codable {
     let contentId: Int
