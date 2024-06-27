@@ -276,6 +276,10 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let coordinateKey = "\(latitude)-\(longitude)"
             
+            if annotations.contains(where: { $0.contentId == contentId }) {
+                       continue
+            }
+            
             if let count = self.pinCountByCoordinate[coordinateKey] {
                 self.pinCountByCoordinate[coordinateKey] = count + 1
             } else {
@@ -295,7 +299,6 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             annotations.append(imageAnnotation)
         }
     }
-    
     
     func setupAnnotation(location: CLLocation, imageUrl: String, pinCount: Int, photoId: Int, contentId: Int, date: String) {
         let imageAnnotation = CustomImageAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude), imageUrl: imageUrl, pinCount: pinCount, photoId: photoId, contentId: contentId, hidePinCountLabel: false, date: date)
@@ -407,8 +410,6 @@ class GeocodingService {
         }
     }
 }
-
-
 
 struct PhotoPin: Codable {
     let contentId: Int
