@@ -108,35 +108,30 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
 
         if let cachedPlacemarks = cache[location] {
             handleGeocodedLocation(cachedPlacemarks)
+            processRequestQueue()
         } else {
             requestReverseGeocoding(for: location)
         }
     }
     
     func requestReverseGeocoding(for location: CLLocation) {
-        CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
-            guard let self = self else { return }
-            
-            if let error = error as NSError? {
-                if error.domain == kCLErrorDomain && error.code == 2 {
-                    print("Reverse geocoding failed: \(error.localizedDescription)")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
-                        self.requestReverseGeocoding(for: location)
-                    }
-                } else if error.code == -3 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
-                        self.requestReverseGeocoding(for: location)
-                    }
-                } else {
+            geocodingService.requestReverseGeocoding(for: location) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let placemarks):
+                    self.cache[location] = placemarks
+                    self.handleGeocodedLocation(placemarks)
+                    self.processRequestQueue()
+                case .failure(let error):
                     print("Reverse geocoding failed: \(error)")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
+                        self.requestReverseGeocoding(for: location)
+                    }
                 }
-            } else if let placemarks = placemarks {
-                self.cache[location] = placemarks
-                self.handleGeocodedLocation(placemarks)
-                self.processRequestQueue()
             }
-        }
     }
+
 
     func processRequestQueue() {
         guard let nextLocation = requestQueue.first else { return }
@@ -249,7 +244,6 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                                 self.handlePhotoPins(photoPinContainer)
                             } else {
                                 self.mapView.removeAnnotations(self.mapView.annotations)
-                                // todo: 앨범뷰에서 삭제하면 바로 홈에 반영되야함
                                 print("No photo pins found in the response")
                             }
                         }
