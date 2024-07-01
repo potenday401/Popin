@@ -11,6 +11,7 @@ final class VerificationServiceImp: VerificationService {
     func requestVerificationCode(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let request = VerificationCodeRequest(query: ["email": email])
         network.send(request) { result in
+            print("check")
             switch result {
             case .success(let response):
                 switch response.statusCode {

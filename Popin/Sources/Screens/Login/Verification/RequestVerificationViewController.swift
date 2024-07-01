@@ -149,6 +149,6 @@ private extension RequestVerificationViewController {
     }
     
     enum Text {
-        static let verificationButtonTitle = "이메일 재인증받기"
+        static let verificationButtonTitle = "이메일 인증받기"
     }
 }

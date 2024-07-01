@@ -3,23 +3,11 @@
 //  Popin
 //
 //  Created by Jihaha kim on 2024/02/04.
-//
 
 import UIKit
 import MapKit
 import CoreLocation
 import Alamofire
-
-struct PhotoPin: Codable {
-    let contentId: Int
-    let photoId: Int
-    let title: String
-    let latitude: Double
-    let longitude: Double
-    let photoUrl: String
-    let userId: String
-    let memorizedAt: String
-}
 
 class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?
@@ -48,7 +36,13 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     var annotations: [CustomImageAnnotation] = []
     var pinCountByCoordinate: [String: Int] = [:]
     var selectedLocation: CLLocation?
-    
+    private let geocodingService = GeocodingService()
+    var lastRequestTime: Date?
+    var requestInterval: TimeInterval = 10.0
+    var backoffInterval: TimeInterval = 20.0
+    var cache: [CLLocation: [CLPlacemark]] = [:]
+    var requestQueue: [CLLocation] = []
+
     private let accessToken: String
     
     init(accessToken: String) {
@@ -64,7 +58,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .uploadDidFinish, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleUploadDidFinish), name: .deleteDidFinish, object: nil)
-
+        
         setupMapView()
         setupLocationManager()
     }
@@ -74,9 +68,9 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     deinit {
-            NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
-
+    
     @objc private func mapViewTapped(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: mapView)
         let coordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -98,17 +92,57 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first!
-        DispatchQueue.main.async { [self] in
-            mapView.centerToLocation(location)
+        guard let location = locations.first else { return }
+        self.location = location
+
+        DispatchQueue.main.async {
+            self.mapView.centerToLocation(location)
         }
-        getPin(latitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude))
-        if locations.last != nil {
-            locationManager.stopUpdatingLocation()
+
+        let now = Date()
+        if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < requestInterval {
+            requestQueue.append(location)
+            return
+        }
+        lastRequestTime = now
+
+        if let cachedPlacemarks = cache[location] {
+            handleGeocodedLocation(cachedPlacemarks)
+            processRequestQueue()
         } else {
-            print("No valid location found in the update1.")
+            requestReverseGeocoding(for: location)
         }
     }
+    
+    func requestReverseGeocoding(for location: CLLocation) {
+            geocodingService.requestReverseGeocoding(for: location) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let placemarks):
+                    self.cache[location] = placemarks
+                    self.handleGeocodedLocation(placemarks)
+                    self.processRequestQueue()
+                case .failure(let error):
+                    print("Reverse geocoding failed: \(error)")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.backoffInterval) {
+                        self.requestReverseGeocoding(for: location)
+                    }
+                }
+            }
+    }
+
+
+    func processRequestQueue() {
+        guard let nextLocation = requestQueue.first else { return }
+        requestQueue.removeFirst()
+        requestReverseGeocoding(for: nextLocation)
+    }
+    
+    func handleGeocodedLocation(_ placemarks: [CLPlacemark]) {
+        getPin(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+    }
+    
     
     func getPin(latitude: Double, longitude: Double) {
         let polygon = "POLYGON((\(longitude - 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude - 0.1),\(longitude + 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude + 0.1),\(longitude - 0.1) \(latitude - 0.1)))"
@@ -210,7 +244,6 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
                                 self.handlePhotoPins(photoPinContainer)
                             } else {
                                 self.mapView.removeAnnotations(self.mapView.annotations)
-                                // todo: 앨범뷰에서 삭제하면 바로 홈에 반영되야함
                                 print("No photo pins found in the response")
                             }
                         }
@@ -226,7 +259,7 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
         }
         task.resume()
     }
-
+    
     func handlePhotoPins(_ photoPinContainer: [PhotoPin]) {
         for pin in photoPinContainer {
             let latitude = pin.latitude
@@ -236,6 +269,10 @@ class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
             let memorizedAt = pin.memorizedAt
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let coordinateKey = "\(latitude)-\(longitude)"
+            
+            if annotations.contains(where: { $0.contentId == contentId }) {
+                       continue
+            }
             
             if let count = self.pinCountByCoordinate[coordinateKey] {
                 self.pinCountByCoordinate[coordinateKey] = count + 1
@@ -337,4 +374,44 @@ extension HomeMapViewController: UIGestureRecognizerDelegate {
 extension Notification.Name {
     static let uploadDidFinish = Notification.Name("uploadDidFinish")
     static let deleteDidFinish = Notification.Name("deleteDidFinish")
+}
+
+class GeocodingService {
+    private var lastRequestTime: Date?
+    private let requestInterval: TimeInterval = 61.0
+
+    func requestReverseGeocoding(for location: CLLocation, completion: @escaping (Result<[CLPlacemark], Error>) -> Void) {
+        let now = Date()
+        if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < requestInterval {
+//            completion(.failure(GEOError.throttled)) // API 제한에 걸렸을 때 적절한 오류 처리
+            return
+        }
+        lastRequestTime = now
+
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error as NSError? {
+                if error.domain == kCLErrorDomain && error.code == 2 {
+//                    completion(.failure(GEOError.reverseGeocodingFailed(error)))
+                    // Backoff and retry logic can be added here
+                } else {
+                    completion(.failure(error))
+                }
+            } else if let placemarks = placemarks {
+                completion(.success(placemarks))
+            } else {
+//                completion(.failure(GEOError.unexpectedResponse))
+            }
+        }
+    }
+}
+
+struct PhotoPin: Codable {
+    let contentId: Int
+    let photoId: Int
+    let title: String
+    let latitude: Double
+    let longitude: Double
+    let photoUrl: String
+    let userId: String
+    let memorizedAt: String
 }
