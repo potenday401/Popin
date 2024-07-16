@@ -23,7 +23,8 @@ final class ProfileViewController: BaseViewController {
         }
     }
     weak var window: UIWindow?
-    
+    private var isLogoutRequestInProgress = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -98,33 +99,64 @@ final class ProfileViewController: BaseViewController {
     }
     
     @objc func logoutDidTap(_ sender: UIButton) {
-        guard let accessToken = self.accessToken else {
+        guard !isLogoutRequestInProgress else { return }
+        isLogoutRequestInProgress = true
+
+        guard let accessToken = TokenManager.shared.accessToken else {
             print("No access token available")
+            isLogoutRequestInProgress = false
             return
         }
-        
+
         var request = URLRequest(url: Endpoint.Member.logout.url)
         request.httpMethod = "POST"
-        
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            self.isLogoutRequestInProgress = false
+            
             if let error = error {
+                DispatchQueue.main.async {
+                    self.showAlert(message: "Logout failed: \(error.localizedDescription)")
+                }
                 print("Error: \(error)")
                 return
             }
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    TokenManager.shared.clearTokens()
-                    DispatchQueue.main.async {
-                        self.handleLogoutSuccess()
-                    }
-                } else {
-                    print("Logout failed with status code \(httpResponse.statusCode)")
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                DispatchQueue.main.async {
+                    self.showAlert(message: "Logout failed: Invalid response")
                 }
+                return
+            }
+
+            if httpResponse.statusCode == 200 {
+                TokenManager.shared.clearTokens()
+                DispatchQueue.main.async {
+                    self.handleLogoutSuccess()
+                }
+            } 
+            else {
+                DispatchQueue.main.async {
+                    self.showAlert(message: "Logout failed with status code \(httpResponse.statusCode)")
+                }
+                print("Logout failed with status code \(httpResponse.statusCode)")
             }
         }
         task.resume()
+    }
+    
+    private func handleUnauthorized() {
+        DispatchQueue.main.async {
+            self.showAlert(message: "Session expired. Please log in again.")
+            self.handleLogoutSuccess()
+        }
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     private func handleLogoutSuccess() {
@@ -166,35 +198,6 @@ final class ProfileViewController: BaseViewController {
         }
     }
     
-    @objc func withdrawDidTap() {
-        guard let accessToken = self.accessToken, let refreshToken = self.refreshToken else {
-            print("No access token or refresh token available")
-            return
-        }
-        
-        var request = URLRequest(url: Endpoint.Member.withdrawal.url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        request.setValue(refreshToken, forHTTPHeaderField: "RefreshToken")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    DispatchQueue.main.async {
-                        self.handleWithdrawSuccess()
-                    }
-                } else {
-                    print("Withdraw failed with status code \(httpResponse.statusCode)")
-                }
-            }
-        }
-        task.resume()
-    }
-    
     private func handleWithdrawSuccess() {
         guard let appRouter = self.appRouter as? AppRouterImp else {
             print("AppRouter is nil or not of expected type")
@@ -220,6 +223,34 @@ final class ProfileViewController: BaseViewController {
                 print("UIApplication.shared.windows.first is nil")
             }
         }
+    }
+    @objc func withdrawDidTap() {
+        guard let accessToken = TokenManager.shared.accessToken, let refreshToken = TokenManager.shared.refreshToken else {
+            print("No access token or refresh token available")
+            return
+        }
+        
+        var request = URLRequest(url: Endpoint.Member.withdrawal.url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue(refreshToken, forHTTPHeaderField: "RefreshToken")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.handleWithdrawSuccess()
+                    }
+                } else {
+                    print("Withdraw failed with status code \(httpResponse.statusCode)")
+                }
+            }
+        }
+        task.resume()
     }
     
     @objc
