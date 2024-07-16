@@ -8,6 +8,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import Alamofire
+import AppIntents
 
 class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?

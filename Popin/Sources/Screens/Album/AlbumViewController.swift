@@ -121,9 +121,7 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
     
     func setupStatusBarView() {
         let statusBarView = UIView()
-        
         view.addSubview(statusBarView)
-        
         let infoView = AlbumInfoView(pinCount: annotations.count)
         statusBarView.addSubview(infoView)
         
@@ -475,7 +473,6 @@ final class AlbumViewController: BaseViewController, AlbumHeaderViewDelegate {
             cancelButton.isHidden = false
         }
     }
-    
 }
 
 extension MKMapView {
