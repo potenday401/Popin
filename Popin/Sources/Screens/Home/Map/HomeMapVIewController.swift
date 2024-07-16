@@ -9,7 +9,6 @@ import MapKit
 import CoreLocation
 import Alamofire
 
-
 class HomeMapViewController: BaseViewController, CLLocationManagerDelegate {
     weak var delegate: HomeMapViewControllerDelegate?
     func userDidSelectLocation() {
