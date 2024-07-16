@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 protocol LocationSearchControllerDelegate: AnyObject {
-    func didSelectLocation(_ location: String)
+    func didSelectLocation(_ location: String, coordinates: CLLocationCoordinate2D)
 }
 
 class LocationSearchController: UIViewController {
@@ -48,8 +48,8 @@ class LocationSearchController: UIViewController {
         navigationItem.hidesBackButton = true
     }
     
-    private func handleSelectedText(_ text: String) {
-        delegate?.didSelectLocation(text)
+    private func handleSelectedText(_ text: String, coordinates: CLLocationCoordinate2D) {
+        delegate?.didSelectLocation(text, coordinates: coordinates)
         navigationController?.popViewController(animated: true)
     }
 
@@ -148,7 +148,6 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
             label.addGestureRecognizer(tapGesture)
             stackView.addArrangedSubview(label)
-            geocodeSearchText(result.title)
         }
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
@@ -169,8 +168,28 @@ extension LocationSearchController: MKLocalSearchCompleterDelegate {
     @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
         guard let tappedLabel = gesture.view as? UILabel else { return }
         let selectedText = tappedLabel.text ?? ""
-        handleSelectedText(selectedText)
+        searchLocation(selectedText)
+    }
+    
+    private func searchLocation(_ searchText: String) {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = searchText
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+            guard let response = response else {
+                if let error = error {
+                    print("Local search error: \(error.localizedDescription)")
+                }
+                return
+            }
+            
+            guard let firstItem = response.mapItems.first else {
+                print("No locations found for: \(searchText)")
+                return
+            }
+            
+            let placemark = firstItem.placemark
+            self.handleSelectedText(searchText, coordinates: placemark.coordinate)
+        }
     }
 }
-
-

@@ -19,6 +19,7 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         guard let imageDataHandler = imageDataHandler else { return }
         imageDataHandler(imageData)
     }
+    private var selectedCoordinates: CLLocationCoordinate2D?
     weak var delegate: CameraViewControllerDelegate?
     private let imagePicker = UIImagePickerController()
     private let cameraAuthButton = UIButton(type: .system)
@@ -97,8 +98,9 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
         self.navigationController?.pushViewController(locationSearchController, animated: true)
     }
     
-    func didSelectLocation(_ location: String) {
+    func didSelectLocation(_ location: String, coordinates: CLLocationCoordinate2D) {
         selectedLocation = location
+        selectedCoordinates = coordinates
         updatePlaceButtonTitle()
     }
     
@@ -113,11 +115,24 @@ final class CameraViewController: BaseViewController, LocationSearchControllerDe
     @objc
     func uploadButtonDidTap() {
         let currentDateString = currentDate()
+        let latitude: Double?
+            let longitude: Double?
+            
+        if let selectedCoordinates = selectedCoordinates {
+            latitude = selectedCoordinates.latitude
+            longitude = selectedCoordinates.longitude
+        } else if let currentLocation = location {
+            latitude = currentLocation.coordinate.latitude
+            longitude = currentLocation.coordinate.longitude
+        } else {
+            print("No location available")
+            return
+        }
         let bodyData: [String: Any] = [
             "title": "string",
             "address": "\(selectedLocation)",
-            "latitude": location?.coordinate.latitude,
-            "longitude": location?.coordinate.longitude,
+            "latitude": latitude as Any,
+            "longitude": longitude as Any,
             "memorizedAt": currentDateString
         ]
         guard let jsonData = try? JSONSerialization.data(withJSONObject: bodyData) else {
