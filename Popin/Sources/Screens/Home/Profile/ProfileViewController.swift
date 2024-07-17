@@ -26,6 +26,7 @@ final class ProfileViewController: BaseViewController {
     private var isLogoutRequestInProgress = false
 
     override func viewDidLoad() {
+        print(TokenManager.shared.accessToken, TokenManager.shared.refreshToken, "tokens check")
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
@@ -199,25 +200,37 @@ final class ProfileViewController: BaseViewController {
     }
     
     private func handleWithdrawSuccess() {
-        guard let appRouter = self.appRouter as? AppRouterImp else {
-            print("AppRouter is nil or not of expected type")
+        guard let dependency = self.dependency else {
+            print("Dependency is not set")
             return
         }
         
-        let loginDependency = LoginViewController.Dependency(
-            loginService: LoginServiceImp(
-                network: appRouter.dependency.network,
-                validator: appRouter.dependency.validator
-            ),
-            tokenRepository: appRouter.dependency.tokenRepository
+        let loginService = LoginServiceImp(
+            network: dependency.network,
+            validator: dependency.validator
         )
         
+        let loginDependency = LoginViewController.Dependency(
+            loginService: loginService,
+            tokenRepository: dependency.tokenRepository
+        )
+        
+        let loginRouter = LoginRouterImp(
+            dependency: .init(
+                network: dependency.network,
+                validator: dependency.validator
+            )
+        )
+        
+        loginRouter.window = window
+        
         let loginViewController = LoginViewController(dependency: loginDependency)
-        let navigationController = UINavigationController(rootViewController: loginViewController)
+        loginViewController.router = loginRouter
+        loginRouter.viewController = loginViewController
         
         DispatchQueue.main.async {
             if let window = UIApplication.shared.windows.first {
-                window.rootViewController = navigationController
+                window.rootViewController = loginViewController
                 UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
             } else {
                 print("UIApplication.shared.windows.first is nil")

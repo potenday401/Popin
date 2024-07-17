@@ -19,9 +19,10 @@ final class AgreementViewController: LoginDetailBaseViewController {
     
     private let dependency: Dependency
     
-    init(dependency: Dependency, title: String, numberOfStep: Int, step: Int, accessToken: String) {
+    init(dependency: Dependency, title: String, numberOfStep: Int, step: Int, accessToken: String, refreshToken: String) {
         self.dependency = dependency
         self.accessToken = accessToken
+        self.refreshToken = refreshToken
         super.init(title: title, numberOfStep: numberOfStep, step: step, accessToken: accessToken)
     }
     
@@ -93,8 +94,9 @@ final class AgreementViewController: LoginDetailBaseViewController {
             make.trailing.bottom.equalToSuperview()
         }
     }
-    func configure(withAccessToken accessToken: String) {
+    func configure(withAccessToken accessToken: String, withRefreshToken refreshToken:String) {
            self.accessToken = accessToken
+           self.refreshToken = refreshToken
        }
 }
 
@@ -103,12 +105,14 @@ final class AgreementViewController: LoginDetailBaseViewController {
 private extension AgreementViewController {
     @objc
     func submitDidTap() {
-        guard let accessToken = accessToken else {
-            fatalError("Access token is not set")
+        guard let accessToken = accessToken, let refreshToken = refreshToken else {
+            fatalError("tokens are not set")
         }
+        TokenManager.shared.accessToken = accessToken
+        TokenManager.shared.refreshToken = refreshToken
         let cameraService = CameraService(network: dependency.network)
         let router = HomeRouterImp(cameraService: cameraService)
-        let homeViewController = HomeViewController(accessToken: accessToken)
+        let homeViewController = HomeViewController(accessToken: accessToken, refreshToken: refreshToken)
         homeViewController.router = router
         router.viewController = homeViewController
         navigationController?.pushViewController(homeViewController, animated: true)
