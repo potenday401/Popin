@@ -14,7 +14,7 @@ protocol SignUpRouter {
     func dismissFromRequestVerification()
     func routeToPassword(email: String)
     func dismissFromPassword()
-    func routeToAgreement(accessToken: String)
+    func routeToAgreement(accessToken: String, refreshToken: String)
 }
 
 final class SignUpRouterImp: SignUpRouter {
@@ -86,10 +86,10 @@ final class SignUpRouterImp: SignUpRouter {
         signUpViewController?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToAgreement(accessToken:String) {
+    func routeToAgreement(accessToken:String, refreshToken:String) {
         let dependency = AgreementViewController.Dependency(network: dependency.network)
-        let viewController = AgreementViewController(dependency: dependency, title: "약관동의", numberOfStep: numberOfStep, step: 4, accessToken: accessToken)
-        viewController.configure(withAccessToken: accessToken)
+        let viewController = AgreementViewController(dependency: dependency, title: "약관동의", numberOfStep: numberOfStep, step: 4, accessToken: accessToken, refreshToken: refreshToken)
+        viewController.configure(withAccessToken: accessToken, withRefreshToken: refreshToken)
         signUpViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
